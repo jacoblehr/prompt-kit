@@ -13,7 +13,7 @@ The canonical rules are documented in [docs/ONTOLOGY.md](./docs/ONTOLOGY.md).
 
 ## What This Repo Is For
 
-- better framing
+- better framing (including finding the real job behind a request)
 - better option generation
 - better decisions
 - better plans
@@ -35,7 +35,7 @@ That overhead can come later if the assets prove useful. For now, the repo is op
 
 ## How To Use It
 
-1. Start with a saved stack from `stacks/` if one already fits.
+1. Start with a saved stack from `stacks/` if one already fits. Lightweight stacks (2–3 blocks) are listed first — try those before reaching for a full sequence.
 2. Otherwise pick a mode block from `modes/`.
 3. Add a strategy block from `strategies/` if the task needs a specific reasoning move.
 4. Add one or two core or lens blocks from `prompts/`.
@@ -63,6 +63,15 @@ These folders are implementation details for the source library. The browse surf
 - `docs/` - guidance, not framework machinery
 
 ## Good First Compositions
+
+Start with a lightweight stack if the task is fuzzy:
+
+- `mode.explore` + `core.clarify-task` + `core.scope.frame` (orient before acting)
+- `mode.explore` + `core.clarify-task` + `core.frame.success-criteria` (clarify the real job)
+- `mode.decide` + `core.frame.success-criteria` + `core.assumption.audit` (design for outcomes)
+- `mode.explore` + `core.cause-mapping` + `lens.incentive-audit` (map adoption blockers)
+
+Or go deeper with a full sequence:
 
 - `mode.explore` + `strategy.problem_split` + `core.frame.task`
 - `mode.decide` + `core.frame.success-criteria` + `core.schema.decision-memo`

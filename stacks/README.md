@@ -4,7 +4,16 @@ These are saved combinations of blocks, not automated pipelines.
 
 Each stack file shows a practical sequence of blocks you can combine by hand.
 
-Available stacks:
+## Lightweight stacks (2–3 blocks)
+
+Good starting points when you don't need a full sequence yet.
+
+- orient before acting
+- clarify the real job
+- design for outcomes
+- map adoption blockers
+
+## Full stacks (4–8 blocks)
 
 - problem framing
 - explore to decision
