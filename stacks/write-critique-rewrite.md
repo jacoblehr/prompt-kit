@@ -10,7 +10,7 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.write-first-draft`
+1. `core.brief-to-draft`
 2. `mode.critique`
 3. `core.critique-argument`
 4. `core.rewrite-for-clarity`

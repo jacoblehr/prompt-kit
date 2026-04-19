@@ -14,7 +14,7 @@ Suggested blocks:
 2. `core.stakeholder-map`
 3. `lens.coordination-plan`
 4. `lens.signaling-check`
-5. `core.meeting-prep`
+5. `core.alignment-conversation-plan`
 6. `core.schema.execution-brief`
 
 Expected outcome:

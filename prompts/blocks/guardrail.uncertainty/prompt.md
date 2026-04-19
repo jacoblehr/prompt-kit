@@ -4,15 +4,18 @@ State uncertainty explicitly for this current analysis, recommendation, or draft
 
 Requirements:
 
+- separate facts from interpretation
 - distinguish assumptions from unknowns
 - express confidence in plain language
 - name the single update that would most change the answer
 
 Return:
 
+- facts relied on
 - assumptions
 - unknowns
 - confidence level
+- what to verify next
 - what would most change the conclusion
 
 Input:

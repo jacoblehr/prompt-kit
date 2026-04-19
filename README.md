@@ -61,9 +61,9 @@ These folders are implementation details for the source library. The browse surf
 - `modes/` — mode blocks: explore, decide, critique, and reflect
 - `strategies/` — strategy blocks: problem splitting, premortem, steelman, inversion, red team
 - `prompts/blocks/` — compact core blocks: framing, guardrails, and output schemas
-- `prompts/snippets/` — full-task snippets for nine families: Thinking & Framing, Deciding & Prioritising, Planning & Execution, Writing & Communication, Research & Synthesis, Review & Reflection, Software Engineering, Statistics, and Prompt Craft (69 snippets)
+- `prompts/snippets/` — full-task snippets for focused families including framing, decisions, research, writing, prompt craft, and developer workflows (75 snippets)
 - `prompts/concepts/` — lens blocks drawn from game theory, psychology, computer science, economics, systems thinking, philosophy, statistics, and design (27 lens blocks)
-- `stacks/` — saved combinations of blocks for practical use cases, grouped by family (60 stacks across nine families)
+- `stacks/` — saved combinations of blocks for practical use cases, grouped by family (64 stacks across nine families)
 - `rubrics/` — rubric blocks for judging output quality
 - `docs/` — guidance, not framework machinery
 
@@ -87,6 +87,7 @@ Or go deeper with a full sequence:
 - `mode.explore` + `lens.incentive-audit` + `core.frame.success-criteria`
 - `mode.explore` + `core.hypothesis-generation` + `core.design-cheap-test`
 - `mode.explore` + `lens.jobs-to-be-done` + `lens.user-mental-model` + `lens.constraint-mapping`
+- `mode.explore` + `core.codepath-walkthrough` + `lens.invariant-check`
 - `mode.reflect` + `lens.bias-check` + `core.decision-journal-entry`
 - `mode.reflect` + `core.cause-mapping` + `core.extract-insights` + `core.plan-next-actions`
 - `mode.decide` + `core.explore-exploit-decision` + `core.guardrail.uncertainty`
@@ -96,6 +97,7 @@ Or go deeper with a full sequence:
 - `mode.critique` + `lens.survivorship-bias` + `lens.base-rate-check` + `rubric.decision-quality`
 - `mode.explore` + `core.synthesize-sources` + `lens.survivorship-bias` + `core.extract-insights`
 - `mode.critique` + `core.security-review` + `lens.failure-mode-analysis` + `core.risk-register`
+- `mode.critique` + `core.change-impact-review` + `core.release-readiness`
 - `mode.decide` + `core.experiment-design` + `core.statistical-significance-check` + `core.extract-insights`
 - `mode.explore` + `core.prompt-decompose` + `core.prompt-rewrite` + `core.prompt-compare`
 

@@ -11,13 +11,15 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.critique`
-2. `lens.debugger-loop`
-3. `lens.interface-contract-review`
-4. `lens.invariant-check`
-5. `core.plan-next-actions`
+2. `core.bug-reproduction-brief`
+3. `lens.debugger-loop`
+4. `lens.interface-contract-review`
+5. `lens.invariant-check`
+6. `core.plan-next-actions`
 
 Expected outcome:
 
+- a reproducible investigation target
 - a tighter failure hypothesis
 - the highest-value next experiment
 - likely boundary or invariant break

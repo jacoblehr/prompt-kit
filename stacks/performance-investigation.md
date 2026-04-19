@@ -10,17 +10,17 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.debug-confusion`
-2. `lens.debugger-loop`
-3. `core.cause-mapping`
+1. `core.triage-the-unknown`
+2. `core.codepath-walkthrough`
+3. `lens.debugger-loop`
 4. `core.performance-analysis`
 5. `core.refactor-plan`
 
 Expected outcome:
 
 - ambiguity about what is actually slow cleared before any optimisation
+- the live code path mapped so measurement happens in the right place
 - systematic measurement cycle applied to isolate the real bottleneck
-- causal chain traced from symptom to structural root cause
 - performance problem fully characterised: location, cause, and why it exists
 - targeted refactor or optimisation plan addressing the confirmed root cause
 

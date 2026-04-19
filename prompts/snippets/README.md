@@ -19,6 +19,7 @@ Core snippet families:
 - critique and stress-testing
 - synthesis and learning
 - stakeholder alignment
+- developer workflows and release safety
 - prompt repair
 - lens prompts live in `prompts/concepts/`
 

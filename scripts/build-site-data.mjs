@@ -296,13 +296,14 @@ const SNIPPET_FAMILY = {
   "dependency-map":                "Planning & Execution",
   "milestone-design":              "Planning & Execution",
   // Writing & Communication
-  "write-first-draft":             "Writing & Communication",
+  "brief-to-draft":                "Writing & Communication",
   "rewrite-for-clarity":           "Writing & Communication",
   "critique-argument":             "Writing & Communication",
   "position-draft":                "Writing & Communication",
   "feedback-request":              "Writing & Communication",
   "negotiation-prep":              "Writing & Communication",
   "communication-brief":           "Writing & Communication",
+  "alignment-conversation-plan":   "Writing & Communication",
   "executive-summary":             "Writing & Communication",
   "persuasion-audit":              "Writing & Communication",
   // Research & Synthesis
@@ -311,14 +312,12 @@ const SNIPPET_FAMILY = {
   "extract-insights":              "Research & Synthesis",
   "cause-mapping":                 "Research & Synthesis",
   "research-questions":            "Research & Synthesis",
-  "gap-analysis":                  "Research & Synthesis",
   "competitive-analysis":          "Research & Synthesis",
   "interview-synthesis":           "Research & Synthesis",
   // Review & Reflection
   "blind-spot-check":              "Review & Reflection",
   "stakeholder-map":               "Review & Reflection",
-  "meeting-prep":                  "Review & Reflection",
-  "debug-confusion":               "Review & Reflection",
+  "triage-the-unknown":            "Review & Reflection",
   "decision-journal-entry":        "Review & Reflection",
   "weekly-review":                 "Review & Reflection",
   // Software Engineering
@@ -332,6 +331,13 @@ const SNIPPET_FAMILY = {
   "performance-analysis":          "Software Engineering",
   "database-design":               "Software Engineering",
   "onboarding-audit":              "Software Engineering",
+  "bug-reproduction-brief":        "Software Engineering",
+  "change-impact-review":          "Software Engineering",
+  "codepath-walkthrough":          "Software Engineering",
+  "log-triage":                    "Software Engineering",
+  "migration-plan":                "Software Engineering",
+  "release-readiness":             "Software Engineering",
+  "test-case-design":              "Software Engineering",
   // Statistics
   "statistical-significance-check": "Statistics",
   "correlation-vs-causation":      "Statistics",
@@ -555,13 +561,14 @@ const snippetOrder = [
   "rollout-plan.md",
   "delegation-brief.md",
   // Writing & communication
-  "write-first-draft.md",
+  "brief-to-draft.md",
   "rewrite-for-clarity.md",
   "critique-argument.md",
   "position-draft.md",
   "feedback-request.md",
   "negotiation-prep.md",
   "communication-brief.md",
+  "alignment-conversation-plan.md",
   // Research & synthesis
   "summarize-source.md",
   "synthesize-sources.md",
@@ -571,13 +578,19 @@ const snippetOrder = [
   // Reflection & review
   "blind-spot-check.md",
   "stakeholder-map.md",
-  "meeting-prep.md",
-  "debug-confusion.md",
+  "triage-the-unknown.md",
   "decision-journal-entry.md",
   "weekly-review.md",
   // Software engineering
   "code-review.md",
+  "bug-reproduction-brief.md",
+  "log-triage.md",
+  "codepath-walkthrough.md",
+  "change-impact-review.md",
+  "migration-plan.md",
+  "release-readiness.md",
   "refactor-plan.md",
+  "test-case-design.md",
   "test-strategy.md",
   "requirements-decomposition.md",
   // Statistics
@@ -712,15 +725,15 @@ const featuredStacks = [
   },
   {
     title: "Debug a Failure",
-    description: "When a bug, incident, or broken workflow needs a structured diagnosis. Localizes the failure, checks the boundary, and turns the next move into a concrete debug plan.",
+    description: "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with a reproducible target, checks the boundary, and turns the next move into a concrete debug plan.",
     tags: ["debugging", "incident", "diagnosis"],
-    refs: ["mode.critique", "lens.debugger-loop", "lens.interface-contract-review", "lens.invariant-check", "core.plan-next-actions"]
+    refs: ["mode.critique", "core.bug-reproduction-brief", "lens.debugger-loop", "lens.interface-contract-review", "lens.invariant-check", "core.plan-next-actions"]
   },
   {
     title: "Write and Sharpen",
-    description: "For content that needs to be good, not just done. Drafts fast, then critiques rigorously, then rewrites for clarity.",
+    description: "For content that needs to be good, not just done. Turns a brief into a real draft, critiques it rigorously, then rewrites for clarity.",
     tags: ["writing", "critique", "revision"],
-    refs: ["core.write-first-draft", "mode.critique", "core.critique-argument", "core.rewrite-for-clarity", "rubric.writing-quality"]
+    refs: ["core.brief-to-draft", "mode.critique", "core.critique-argument", "core.rewrite-for-clarity", "rubric.writing-quality"]
   },
   {
     title: "After-Action Review",
@@ -744,7 +757,13 @@ const featuredStacks = [
     title: "Align Stakeholders",
     description: "When the technical answer is not enough and alignment is the actual bottleneck. Maps stakeholders, checks coordination dynamics, and prepares the next conversation.",
     tags: ["alignment", "stakeholders", "coordination"],
-    refs: ["mode.explore", "core.stakeholder-map", "lens.coordination-plan", "lens.signaling-check", "core.meeting-prep", "core.schema.execution-brief"]
+    refs: ["mode.explore", "core.stakeholder-map", "lens.coordination-plan", "lens.signaling-check", "core.alignment-conversation-plan", "core.schema.execution-brief"]
+  },
+  {
+    title: "Read Before Changing",
+    description: "When a change looks simple but the surrounding codebase is unfamiliar. Maps the active code path, surfaces invariants, and checks blast radius before editing.",
+    tags: ["software engineering", "code reading", "change safety"],
+    refs: ["mode.explore", "core.codepath-walkthrough", "lens.invariant-check", "lens.interface-contract-review", "core.change-impact-review"]
   },
   {
     title: "Turn Sources Into Action",

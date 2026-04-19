@@ -12,12 +12,14 @@ Suggested blocks:
 
 1. `mode.critique`
 2. `core.code-review`
-3. `lens.invariant-check`
-4. `lens.interface-contract-review`
+3. `core.change-impact-review`
+4. `lens.invariant-check`
+5. `lens.interface-contract-review`
 
 Expected outcome:
 
 - correctness, security, and maintainability issues identified and localised
+- change blast radius made explicit before small-looking edits are approved
 - invariants that the code must preserve — and whether they hold — made explicit
 - boundary contracts checked for leaks or violations
 - a prioritised list of issues and suggested fixes

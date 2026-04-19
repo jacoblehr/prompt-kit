@@ -15,6 +15,10 @@ Good starting points when you don't need a full sequence yet.
 
 ## Full stacks (4–8 blocks)
 
+- read before change
+- trace to fix
+- safe migration
+- break a recurring incident
 - problem framing
 - explore to decision
 - explore vs exploit

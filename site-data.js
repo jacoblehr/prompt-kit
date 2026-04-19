@@ -329,7 +329,7 @@ globalThis.SITE_DATA = {
         "task",
         "frame"
       ],
-      "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- keep constraints literal\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- task\n- objective\n- constraints\n- knowns\n- unknowns\n- recommended next reasoning step\n\nInput:\n{paste raw request or situation}",
+      "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- state when the objective is inferred rather than explicit\n- keep constraints literal\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- stated ask\n- likely objective\n- constraints\n- knowns\n- unknowns\n- decision or action this frame is meant to support\n- recommended next reasoning step\n\nInput:\n{paste raw request or situation}",
       "body": [
         [
           "Best use",
@@ -380,7 +380,7 @@ globalThis.SITE_DATA = {
         "uncertainty",
         "guardrail"
       ],
-      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- distinguish assumptions from unknowns\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- assumptions\n- unknowns\n- confidence level\n- what would most change the conclusion\n\nInput:\n{paste current analysis, recommendation, or draft}",
+      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\nInput:\n{paste current analysis, recommendation, or draft}",
       "body": [
         [
           "Best use",
@@ -431,7 +431,7 @@ globalThis.SITE_DATA = {
         "assumption",
         "audit"
       ],
-      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- do not invent evidence that is not present\n\nReturn for each:\n\n- assumption\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- what would falsify it\n\nInput:\n{paste plan, decision, argument, or recommendation}",
+      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn for each:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\nInput:\n{paste plan, decision, argument, or recommendation}",
       "body": [
         [
           "Best use",
@@ -456,7 +456,7 @@ globalThis.SITE_DATA = {
         "scope",
         "frame"
       ],
-      "copy": "Define the scope of this task or project explicitly.\n\nRequirements:\n\n- distinguish boundaries from preferences\n- name the one boundary that matters most\n- explain what is being excluded if that exclusion prevents drift\n\nReturn:\n\n- what is in scope\n- what is out of scope\n- most important boundary to hold\n- what has been deliberately excluded and why\n\nInput:\n{paste task, project, or request}",
+      "copy": "Define the scope of this task or project explicitly.\n\nRequirements:\n\n- distinguish boundaries from preferences\n- name the one boundary that matters most\n- explain what is being excluded if that exclusion prevents drift\n- note what new information would justify expanding scope later\n\nReturn:\n\n- what is in scope\n- what is out of scope\n- most important boundary to hold\n- what has been deliberately excluded and why\n- re-entry trigger for excluded work\n\nInput:\n{paste task, project, or request}",
       "body": [
         [
           "Best use",
@@ -506,7 +506,7 @@ globalThis.SITE_DATA = {
         "execution",
         "brief"
       ],
-      "copy": "Render this chosen direction, plan, or handoff as a structured execution brief.\n\nRequirements:\n\n- make ownership and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n\nReturn:\n\n- objective\n- owner or responsible role\n- milestones\n- dependencies\n- major risks\n- first checkpoint\n- immediate next action\n\nInput:\n{paste chosen direction, plan, or handoff context}",
+      "copy": "Render this chosen direction, plan, or handoff as a structured execution brief.\n\nRequirements:\n\n- make ownership and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n- include the condition that would justify pausing or escalating\n\nReturn:\n\n- objective\n- owner or responsible role\n- sequence or milestones\n- dependencies\n- major risks\n- first checkpoint\n- pause or escalation trigger\n- immediate next action\n\nInput:\n{paste chosen direction, plan, or handoff context}",
       "body": [
         [
           "Best use",
@@ -991,22 +991,23 @@ globalThis.SITE_DATA = {
       "section": "Block",
       "blockType": "snippet",
       "sourceKind": "Snippet",
-      "key": "core.write-first-draft",
+      "key": "core.brief-to-draft",
       "aliases": [
-        "snippet.write-first-draft"
+        "snippet.brief-to-draft"
       ],
-      "title": "Write First Draft",
-      "summary": "Use when you want a working draft quickly.",
+      "title": "Brief To Draft",
+      "summary": "Use when you need a first draft that is structured enough to survive critique, not just a fast blob of text.",
       "tags": [
         "writing",
-        "content creation",
-        "communication"
+        "drafting",
+        "communication",
+        "revision"
       ],
-      "copy": "Write a strong first draft.\n\nRequirements:\n- optimize for clarity over polish\n- avoid filler and generic throat-clearing\n- make the structure easy to revise later\n\nAudience:\n{paste audience}\n\nGoal:\n{paste goal}\n\nKey points:\n{paste points}",
+      "copy": "Turn this brief into a draft that is clear enough to critique and refine.\n\nBefore writing:\n- infer the single most important takeaway the reader should leave with\n- choose the simplest structure that fits the audience and goal\n- flag any missing information that would materially weaken the draft\n\nThen write the draft.\n\nReturn:\n- chosen structure\n- draft\n- weakest part of the draft\n- the one thing to tighten in the next revision\n\nAudience:\n{paste audience}\n\nGoal:\n{paste goal}\n\nBrief or source points:\n{paste notes, outline, or rough brief}\n\nNon-negotiables:\n{paste tone, length, facts that must stay, or constraints}",
       "body": [],
       "family": "Writing & Communication",
       "group": "",
-      "sourcePath": "prompts/snippets/write-first-draft.md"
+      "sourcePath": "prompts/snippets/brief-to-draft.md"
     },
     {
       "section": "Block",
@@ -1136,6 +1137,28 @@ globalThis.SITE_DATA = {
       "family": "Writing & Communication",
       "group": "",
       "sourcePath": "prompts/snippets/communication-brief.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
+      "key": "core.alignment-conversation-plan",
+      "aliases": [
+        "snippet.alignment-conversation-plan"
+      ],
+      "title": "Alignment Conversation Plan",
+      "summary": "Use when a conversation matters because alignment, commitment, or resistance will shape the outcome.",
+      "tags": [
+        "communication planning",
+        "stakeholder alignment",
+        "negotiation",
+        "decision making"
+      ],
+      "copy": "Plan this conversation for alignment, not just information exchange.\n\nReturn:\n- my objective: what I need to leave with\n- their likely objective: incentives, pressures, or fears shaping their stance\n- what must be true by the end for this conversation to count as progress\n- unknowns to resolve during the conversation\n- strongest likely objection or tension\n- evidence or examples I should bring\n- best opening move\n- best questions to ask\n- concessions or tradeoffs I can make without harming the real goal\n- minimum acceptable outcome if full alignment is not possible today\n- follow-up move if no decision is reached\n\nContext:\n{paste the situation, people involved, and what is at stake}\n\nMy desired outcome:\n{paste the outcome I want from the conversation}",
+      "body": [],
+      "family": "Writing & Communication",
+      "group": "",
+      "sourcePath": "prompts/snippets/alignment-conversation-plan.md"
     },
     {
       "section": "Block",
@@ -1289,43 +1312,23 @@ globalThis.SITE_DATA = {
       "section": "Block",
       "blockType": "snippet",
       "sourceKind": "Snippet",
-      "key": "core.meeting-prep",
+      "key": "core.triage-the-unknown",
       "aliases": [
-        "snippet.meeting-prep"
+        "snippet.triage-the-unknown"
       ],
-      "title": "Meeting Prep",
-      "summary": "Use when you need to prepare for a conversation efficiently.",
+      "title": "Triage The Unknown",
+      "summary": "Use when a situation feels confusing because facts, interpretations, and assumptions are getting mixed together.",
       "tags": [
-        "communication",
-        "preparation",
-        "negotiation"
-      ],
-      "copy": "Prepare me for this meeting.\n\nReturn:\n- likely goals\n- what I need to know\n- smart questions to ask\n- likely risks or tensions\n- best outcome\n- minimum acceptable outcome\n\nMy desired outcome:\n{paste what I want from the meeting}\n\nContext:\n{paste meeting context}",
-      "body": [],
-      "family": "Review & Reflection",
-      "group": "",
-      "sourcePath": "prompts/snippets/meeting-prep.md"
-    },
-    {
-      "section": "Block",
-      "blockType": "snippet",
-      "sourceKind": "Snippet",
-      "key": "core.debug-confusion",
-      "aliases": [
-        "snippet.debug-confusion"
-      ],
-      "title": "Debug Confusion",
-      "summary": "Use when you feel stuck but do not know why.",
-      "tags": [
+        "diagnostics",
         "epistemics",
-        "reflection",
-        "causal reasoning"
+        "debugging",
+        "decision hygiene"
       ],
-      "copy": "Help me debug my confusion.\n\nReturn:\n- what I may be conflating\n- what assumptions might be wrong\n- what is still underspecified\n- what the real question might be\n- the smallest next step to reduce confusion\n\nSituation:\n{paste situation}",
+      "copy": "Triage this ambiguous situation before trying to solve it.\n\nSeparate:\n- observed facts: what is directly known or evidenced\n- interpretations: what story is being told about those facts\n- assumptions: what is currently being taken for granted\n- unknowns: what is genuinely missing\n\nThen produce:\n- the two or three most plausible explanations\n- the single confusion that matters most to resolve first\n- the smallest discriminating check or question that would collapse uncertainty fastest\n- what not to do yet because it would commit too early\n\nSituation:\n{paste the symptoms, questions, observations, and available evidence}",
       "body": [],
       "family": "Review & Reflection",
       "group": "",
-      "sourcePath": "prompts/snippets/debug-confusion.md"
+      "sourcePath": "prompts/snippets/triage-the-unknown.md"
     },
     {
       "section": "Block",
@@ -1394,6 +1397,138 @@ globalThis.SITE_DATA = {
       "section": "Block",
       "blockType": "snippet",
       "sourceKind": "Snippet",
+      "key": "core.bug-reproduction-brief",
+      "aliases": [
+        "snippet.bug-reproduction-brief"
+      ],
+      "title": "Bug Reproduction Brief",
+      "summary": "Use when a bug report is vague, inconsistent, or dependent on hidden state and you need a reproducible investigation target.",
+      "tags": [
+        "software engineering",
+        "debugging",
+        "reproduction",
+        "quality"
+      ],
+      "copy": "Turn this bug report or symptom into a reproducible investigation brief.\n\nReturn:\n- expected behavior\n- actual behavior\n- exact reproduction steps, or the missing details that prevent them\n- environment dimensions to control: OS, browser, device, flags, data state, timing, permissions\n- evidence to capture while reproducing: logs, screenshots, requests, traces, database state\n- likely sources of hidden state or non-determinism\n- smallest reliable reproduction target: test, endpoint, page flow, worker, or script\n- next move if the bug still cannot be reproduced\n\nBug report or symptom:\n{paste the report, issue description, or observed behavior}\n\nKnown evidence:\n{paste logs, screenshots, recent changes, or user reports}",
+      "body": [],
+      "family": "Software Engineering",
+      "group": "",
+      "sourcePath": "prompts/snippets/bug-reproduction-brief.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
+      "key": "core.log-triage",
+      "aliases": [
+        "snippet.log-triage"
+      ],
+      "title": "Log Triage",
+      "summary": "Use when you have logs, traces, or event streams but do not yet know which signals are symptoms, causes, or noise.",
+      "tags": [
+        "software engineering",
+        "observability",
+        "debugging",
+        "incident response"
+      ],
+      "copy": "Triage these logs or traces without jumping to a fix.\n\nWork through:\n1. Timeline - what happened first, what changed next, and what happened immediately before the visible failure?\n2. Signal separation - which entries are likely symptoms, cause candidates, retries, or secondary fallout?\n3. Last known good state - what appears to have been working before the anomaly?\n4. First anomalous event - what is the earliest event that meaningfully departs from normal behavior?\n5. Missing telemetry - what key observation is absent and prevents confident diagnosis?\n6. Hypotheses - generate two to four plausible explanations, with supporting evidence and contradictions for each\n\nReturn:\n- timeline summary\n- first anomalous event\n- top hypotheses\n- missing telemetry\n- highest-information next check\n- what should not yet be concluded\n\nLogs, traces, or events:\n{paste the relevant signals}\n\nSystem context and recent changes:\n{paste architecture context, deploys, config changes, or traffic shifts}",
+      "body": [],
+      "family": "Software Engineering",
+      "group": "",
+      "sourcePath": "prompts/snippets/log-triage.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
+      "key": "core.codepath-walkthrough",
+      "aliases": [
+        "snippet.codepath-walkthrough"
+      ],
+      "title": "Codepath Walkthrough",
+      "summary": "Use when you need to understand how a behavior actually flows through a codebase before debugging, refactoring, or extending it.",
+      "tags": [
+        "software engineering",
+        "code comprehension",
+        "debugging",
+        "architecture"
+      ],
+      "copy": "Map the code path for this behavior or request.\n\nReturn:\n- entry points\n- main execution path\n- important branch points, feature flags, and fallback paths\n- external calls and trust boundaries\n- state mutations and persistence points\n- caches, queues, background jobs, or async boundaries touched\n- best place to instrument, log, or breakpoint\n- safest seam for a change\n\nBehavior or request to trace:\n{paste the user flow, API request, job, or failing behavior}\n\nKnown code or architecture context:\n{paste any file paths, components, or diagrams already known}",
+      "body": [],
+      "family": "Software Engineering",
+      "group": "",
+      "sourcePath": "prompts/snippets/codepath-walkthrough.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
+      "key": "core.change-impact-review",
+      "aliases": [
+        "snippet.change-impact-review"
+      ],
+      "title": "Change Impact Review",
+      "summary": "Use when a code change seems local but might have a larger blast radius across contracts, state, or operations.",
+      "tags": [
+        "software engineering",
+        "change management",
+        "risk management",
+        "code review"
+      ],
+      "copy": "Assess the blast radius of this proposed change before it ships.\n\nReview:\n1. Directly affected components - what code paths are being changed on purpose?\n2. Indirectly affected components - what depends on those paths, contracts, schemas, caches, queues, or permissions?\n3. Boundary risk - what external callers, background jobs, or operators could experience breakage first?\n4. Partial rollout risk - what fails if this change is only partly deployed, behind a flag, or rolled back?\n5. Test implications - what must be covered before merge to trust the change?\n6. Observability implications - what should be monitored immediately after rollout?\n\nReturn:\n- directly affected components\n- indirectly affected components\n- highest-risk edge case\n- most likely user-visible failure if the change is wrong\n- pre-merge checks\n- post-release monitoring plan\n\nChange description or diff summary:\n{paste the proposed change}\n\nSystem context:\n{paste architecture notes, relevant services, or module boundaries}",
+      "body": [],
+      "family": "Software Engineering",
+      "group": "",
+      "sourcePath": "prompts/snippets/change-impact-review.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
+      "key": "core.migration-plan",
+      "aliases": [
+        "snippet.migration-plan"
+      ],
+      "title": "Migration Plan",
+      "summary": "Use when a schema, API, storage model, config shape, or workflow must change without breaking live traffic or corrupting state.",
+      "tags": [
+        "software engineering",
+        "migration",
+        "rollout",
+        "risk management"
+      ],
+      "copy": "Plan a safe migration for this change.\n\nReturn:\n- source state and target state\n- compatibility strategy: expand-contract, dual read, dual write, backfill, version bridge, or other\n- invariants that must stay true throughout the migration\n- phased migration plan\n- verification points after each phase\n- rollback or stop conditions\n- cleanup step to reach the final simplified end state\n- biggest irreversible risk\n\nMigration target:\n{paste the schema, API, config, or state change}\n\nOperational context:\n{paste traffic patterns, dependencies, release constraints, and data sensitivity}",
+      "body": [],
+      "family": "Software Engineering",
+      "group": "",
+      "sourcePath": "prompts/snippets/migration-plan.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
+      "key": "core.release-readiness",
+      "aliases": [
+        "snippet.release-readiness"
+      ],
+      "title": "Release Readiness",
+      "summary": "Use when deciding whether a change is actually ready to ship, not just feature-complete.",
+      "tags": [
+        "software engineering",
+        "release engineering",
+        "operations",
+        "risk management"
+      ],
+      "copy": "Assess whether this change is ready to release.\n\nCheck:\n1. Correctness confidence - what evidence says the change works in the cases that matter most?\n2. Operational visibility - what metrics, logs, traces, or alerts will show success or failure quickly?\n3. Rollback path - can this be reversed safely and quickly if needed?\n4. Dependency readiness - what external systems, migrations, support steps, or stakeholders must be ready first?\n5. User and operator readiness - what docs, runbooks, support notes, or comms should exist before ship?\n6. Control mechanisms - feature flag, kill switch, circuit breaker, rate limit, or staged rollout options\n7. Known unknowns - what is still unproven and how dangerous is it?\n\nReturn:\n- release verdict: ship now / ship behind guardrails / fix before ship\n- blockers\n- watch items\n- first 30 minutes monitoring plan\n- trigger to halt or rollback\n\nChange or release candidate:\n{paste the feature, fix, or release summary}\n\nKnown evidence:\n{paste test results, rollout constraints, operational context, and open risks}",
+      "body": [],
+      "family": "Software Engineering",
+      "group": "",
+      "sourcePath": "prompts/snippets/release-readiness.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
       "key": "core.refactor-plan",
       "aliases": [
         "snippet.refactor-plan"
@@ -1410,6 +1545,28 @@ globalThis.SITE_DATA = {
       "family": "Software Engineering",
       "group": "",
       "sourcePath": "prompts/snippets/refactor-plan.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "snippet",
+      "sourceKind": "Snippet",
+      "key": "core.test-case-design",
+      "aliases": [
+        "snippet.test-case-design"
+      ],
+      "title": "Test Case Design",
+      "summary": "Use when you do not need a full test strategy, just a compact set of high-value tests for one behavior, bug, or change.",
+      "tags": [
+        "software engineering",
+        "testing",
+        "quality",
+        "regression prevention"
+      ],
+      "copy": "Design a compact, high-value test set for this behavior or change.\n\nReturn:\n- core happy-path test\n- boundary tests\n- error-path tests\n- regression test for the known bug or risk\n- contract or integration test if a boundary is involved\n- minimal fixture or setup data needed\n- what not to test here because it belongs at another layer\n\nBehavior, bug, or change:\n{paste the requirement, bug, or diff summary}\n\nLanguage, test framework, and relevant constraints:\n{paste tooling, framework, and any setup limitations}",
+      "body": [],
+      "family": "Software Engineering",
+      "group": "",
+      "sourcePath": "prompts/snippets/test-case-design.md"
     },
     {
       "section": "Block",
@@ -1733,28 +1890,6 @@ globalThis.SITE_DATA = {
       "family": "Deciding & Prioritising",
       "group": "",
       "sourcePath": "prompts/snippets/forecast.md"
-    },
-    {
-      "section": "Block",
-      "blockType": "snippet",
-      "sourceKind": "Snippet",
-      "key": "core.gap-analysis",
-      "aliases": [
-        "snippet.gap-analysis"
-      ],
-      "title": "Gap Analysis",
-      "summary": "Use when you need to identify what is missing — in a plan, argument, knowledge base, or coverage area — relative to what is needed.",
-      "tags": [
-        "research",
-        "analysis",
-        "planning",
-        "quality"
-      ],
-      "copy": "Perform a gap analysis on the following.\n\nSubject: {subject}\n\nWhat it needs to cover or achieve: {requirements}\n\nCurrent state or coverage: {current_state}\n\nIdentify:\n1. Critical gaps — missing elements that would cause failure or significant harm if unaddressed\n2. Coverage gaps — areas present but insufficiently developed\n3. Assumption gaps — things being taken for granted that are not actually established\n4. Dependency gaps — things that cannot proceed until something else is in place\n5. Nice-to-have gaps — improvements that would add value but are not essential\n\nFor each gap:\n- Name it precisely\n- Explain the consequence of leaving it unaddressed\n- Suggest what addressing it would require\n\nPrioritise the list: which two gaps most need attention first and why?",
-      "body": [],
-      "family": "Research & Synthesis",
-      "group": "",
-      "sourcePath": "prompts/snippets/gap-analysis.md"
     },
     {
       "section": "Block",
@@ -3294,11 +3429,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.code-review` -> `lens.invariant-check` -> `lens.interface-contract-review`"
+          "`mode.critique` -> `core.code-review` -> `core.change-impact-review` -> `lens.invariant-check` -> `lens.interface-contract-review`"
         ],
         [
           "Expected outcome",
-          "correctness, security, and maintainability issues identified and localised, invariants that the code must preserve — and whether they hold — made explicit, boundary contracts checked for leaks or violations, a prioritised list of issues and suggested fixes"
+          "correctness, security, and maintainability issues identified and localised, change blast radius made explicit before small-looking edits are approved, invariants that the code must preserve — and whether they hold — made explicit, boundary contracts checked for leaks or violations, a prioritised list of issues and suggested fixes"
         ]
       ],
       "sourcePath": "stacks/code-review.md"
@@ -3321,11 +3456,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `core.plan-next-actions`"
+          "`mode.critique` -> `core.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `core.plan-next-actions`"
         ],
         [
           "Expected outcome",
-          "a tighter failure hypothesis, the highest-value next experiment, likely boundary or invariant break, a practical next-step plan"
+          "a reproducible investigation target, a tighter failure hypothesis, the highest-value next experiment, likely boundary or invariant break, a practical next-step plan"
         ]
       ],
       "sourcePath": "stacks/debug-a-failure.md"
@@ -3541,7 +3676,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.write-first-draft` -> `mode.critique` -> `core.critique-argument` -> `core.rewrite-for-clarity` -> `rubric.writing-quality`"
+          "`core.brief-to-draft` -> `mode.critique` -> `core.critique-argument` -> `core.rewrite-for-clarity` -> `rubric.writing-quality`"
         ],
         [
           "Expected outcome",
@@ -3595,11 +3730,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.requirements-decomposition` -> `core.frame.success-criteria` -> `core.test-strategy` -> `lens.failure-mode-analysis` -> `core.rollout-plan` -> `rubric.plan-quality`"
+          "`mode.decide` -> `core.requirements-decomposition` -> `core.frame.success-criteria` -> `core.test-strategy` -> `lens.failure-mode-analysis` -> `core.release-readiness` -> `core.rollout-plan` -> `rubric.plan-quality`"
         ],
         [
           "Expected outcome",
-          "feature decomposed into independently testable stories with acceptance criteria, success criteria set before implementation begins, test strategy covering risk-weighted coverage gaps, failure modes identified and resilience gaps flagged, rollout sequenced with go/no-go criteria and a rollback path, plan quality assessed before committing"
+          "feature decomposed into independently testable stories with acceptance criteria, success criteria set before implementation begins, test strategy covering risk-weighted coverage gaps, failure modes identified and resilience gaps flagged, release verdict made explicit: ship now, ship behind guardrails, or fix before ship, rollout sequenced with go/no-go criteria and a rollback path, plan quality assessed before committing"
         ]
       ],
       "sourcePath": "stacks/ship-a-feature.md"
@@ -3703,7 +3838,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.stakeholder-map` -> `lens.coordination-plan` -> `lens.signaling-check` -> `core.meeting-prep` -> `core.schema.execution-brief`"
+          "`mode.explore` -> `core.stakeholder-map` -> `lens.coordination-plan` -> `lens.signaling-check` -> `core.alignment-conversation-plan` -> `core.schema.execution-brief`"
         ],
         [
           "Expected outcome",
@@ -3793,6 +3928,34 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/ai-workflow-design.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.break-a-recurring-incident",
+      "title": "Break a Recurring Incident",
+      "family": "",
+      "summary": "Use when the same class of incident keeps resurfacing and the root problem is likely socio-technical, not just a single buggy line of code.",
+      "tags": [
+        "software engineering",
+        "incident management",
+        "systems thinking",
+        "reliability"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "a short history of the recurring incident pattern, what has already been fixed or changed after previous occurrences, who gets paged, who owns the system, and where work tends to stall"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.reflect` -> `core.incident-postmortem` -> `lens.feedback-loops` -> `lens.incentive-audit` -> `core.plan-next-actions`"
+        ],
+        [
+          "Expected outcome",
+          "incident pattern captured as a repeatable loop, not just an isolated event, reinforcing and balancing loops exposed: what keeps recreating the problem?, incentives or ownership gaps identified that quietly reward recurrence or delay prevention, action plan focused on breaking the loop, not merely cleaning up the latest failure"
+        ]
+      ],
+      "sourcePath": "stacks/break-a-recurring-incident.md"
     },
     {
       "section": "Stack",
@@ -3897,7 +4060,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.debug-confusion` -> `core.stress-test-assumptions` -> `core.second-order-effects` -> `core.extract-insights`"
+          "`core.triage-the-unknown` -> `core.stress-test-assumptions` -> `core.second-order-effects` -> `core.extract-insights`"
         ],
         [
           "Expected outcome",
@@ -4149,11 +4312,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.debug-confusion` -> `core.cause-mapping` -> `core.incident-postmortem` -> `core.plan-next-actions`"
+          "`core.triage-the-unknown` -> `core.log-triage` -> `core.cause-mapping` -> `core.incident-postmortem` -> `core.plan-next-actions`"
         ],
         [
           "Expected outcome",
-          "confusion about what is happening cleared before deeper investigation begins, causal chain traced from symptom back to root cause, structured post-mortem capturing timeline, contributing factors, and remediation, concrete action plan with owners and urgency for follow-through"
+          "confusion about what is happening cleared before deeper investigation begins, logs or traces separated into symptoms, causes, and missing telemetry, causal chain traced from symptom back to root cause, structured post-mortem capturing timeline, contributing factors, and remediation, concrete action plan with owners and urgency for follow-through"
         ]
       ],
       "sourcePath": "stacks/incident-response.md"
@@ -4205,11 +4368,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.debug-confusion` -> `lens.debugger-loop` -> `core.cause-mapping` -> `core.performance-analysis` -> `core.refactor-plan`"
+          "`core.triage-the-unknown` -> `core.codepath-walkthrough` -> `lens.debugger-loop` -> `core.performance-analysis` -> `core.refactor-plan`"
         ],
         [
           "Expected outcome",
-          "ambiguity about what is actually slow cleared before any optimisation, systematic measurement cycle applied to isolate the real bottleneck, causal chain traced from symptom to structural root cause, performance problem fully characterised: location, cause, and why it exists, targeted refactor or optimisation plan addressing the confirmed root cause"
+          "ambiguity about what is actually slow cleared before any optimisation, the live code path mapped so measurement happens in the right place, systematic measurement cycle applied to isolate the real bottleneck, performance problem fully characterised: location, cause, and why it exists, targeted refactor or optimisation plan addressing the confirmed root cause"
         ]
       ],
       "sourcePath": "stacks/performance-investigation.md"
@@ -4300,6 +4463,34 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.read-before-change",
+      "title": "Read Before Change",
+      "family": "",
+      "summary": "Use when you need to modify unfamiliar code and want to understand the safest place to intervene before making edits.",
+      "tags": [
+        "software engineering",
+        "code comprehension",
+        "debugging",
+        "change safety"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the behavior you need to change or the bug you need to fix, any known file paths, services, or recent changes nearby, the risk profile of getting the change wrong"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.codepath-walkthrough` -> `lens.invariant-check` -> `lens.interface-contract-review` -> `core.change-impact-review` -> `core.test-case-design`"
+        ],
+        [
+          "Expected outcome",
+          "the active code path mapped before any edits are made, invariants and boundary contracts surfaced so the change does not accidentally break them, blast radius reviewed: which callers, workers, or state transitions are riskier than they first appear?, minimal, high-value test set designed around the actual risk of the change"
+        ]
+      ],
+      "sourcePath": "stacks/read-before-change.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.risk-informed-decision",
       "title": "Risk-Informed Decision",
       "family": "Deciding & Prioritising",
@@ -4325,6 +4516,34 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/risk-informed-decision.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.safe-migration",
+      "title": "Safe Migration",
+      "family": "",
+      "summary": "Use when a schema, API, config, or state model needs to change in production without downtime, corruption, or one-way mistakes.",
+      "tags": [
+        "software engineering",
+        "migration",
+        "rollout",
+        "risk management"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the current and target state, traffic shape, rollout constraints, and data sensitivity, known dependencies, consumers, and rollback limitations"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.codepath-walkthrough` -> `core.migration-plan` -> `lens.abstraction-boundary` -> `lens.failure-mode-analysis` -> `core.release-readiness` -> `core.rollout-plan`"
+        ],
+        [
+          "Expected outcome",
+          "all major read and write paths mapped before migration design begins, migration strategy chosen explicitly rather than implied, boundary leaks and hidden consumers surfaced before rollout, failure modes reviewed for partial deploys, stale readers, and rollback attempts, release verdict and staged rollout plan defined with stop conditions"
+        ]
+      ],
+      "sourcePath": "stacks/safe-migration.md"
     },
     {
       "section": "Stack",
@@ -4381,6 +4600,34 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/technical-debt-triage.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.trace-to-fix",
+      "title": "Trace To Fix",
+      "family": "",
+      "summary": "Use when you have logs, traces, or a production symptom and need to move from noisy signals to a high-confidence fix path.",
+      "tags": [
+        "software engineering",
+        "debugging",
+        "observability",
+        "incident response"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "logs, traces, metrics, or error events tied to the failure, expected versus actual behavior, any recent deploys, config changes, or incident notes"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `core.triage-the-unknown` -> `core.log-triage` -> `core.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `core.change-impact-review`"
+        ],
+        [
+          "Expected outcome",
+          "ambiguity reduced before anyone reaches for a fix, earliest anomalous signal and strongest hypotheses separated from noise, smallest reliable reproduction target identified, boundary failures checked before blaming internal logic, blast radius reviewed so the eventual fix can be scoped and released safely"
+        ]
+      ],
+      "sourcePath": "stacks/trace-to-fix.md"
     },
     {
       "section": "Stack",
@@ -4510,7 +4757,7 @@ globalThis.SITE_DATA = {
     },
     {
       "title": "Debug a Failure",
-      "description": "When a bug, incident, or broken workflow needs a structured diagnosis. Localizes the failure, checks the boundary, and turns the next move into a concrete debug plan.",
+      "description": "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with a reproducible target, checks the boundary, and turns the next move into a concrete debug plan.",
       "tags": [
         "debugging",
         "incident",
@@ -4518,6 +4765,7 @@ globalThis.SITE_DATA = {
       ],
       "refs": [
         "mode.critique",
+        "core.bug-reproduction-brief",
         "lens.debugger-loop",
         "lens.interface-contract-review",
         "lens.invariant-check",
@@ -4526,14 +4774,14 @@ globalThis.SITE_DATA = {
     },
     {
       "title": "Write and Sharpen",
-      "description": "For content that needs to be good, not just done. Drafts fast, then critiques rigorously, then rewrites for clarity.",
+      "description": "For content that needs to be good, not just done. Turns a brief into a real draft, critiques it rigorously, then rewrites for clarity.",
       "tags": [
         "writing",
         "critique",
         "revision"
       ],
       "refs": [
-        "core.write-first-draft",
+        "core.brief-to-draft",
         "mode.critique",
         "core.critique-argument",
         "core.rewrite-for-clarity",
@@ -4599,8 +4847,24 @@ globalThis.SITE_DATA = {
         "core.stakeholder-map",
         "lens.coordination-plan",
         "lens.signaling-check",
-        "core.meeting-prep",
+        "core.alignment-conversation-plan",
         "core.schema.execution-brief"
+      ]
+    },
+    {
+      "title": "Read Before Changing",
+      "description": "When a change looks simple but the surrounding codebase is unfamiliar. Maps the active code path, surfaces invariants, and checks blast radius before editing.",
+      "tags": [
+        "software engineering",
+        "code reading",
+        "change safety"
+      ],
+      "refs": [
+        "mode.explore",
+        "core.codepath-walkthrough",
+        "lens.invariant-check",
+        "lens.interface-contract-review",
+        "core.change-impact-review"
       ]
     },
     {

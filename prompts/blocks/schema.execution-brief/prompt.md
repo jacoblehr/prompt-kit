@@ -7,15 +7,17 @@ Requirements:
 - make ownership and sequencing explicit
 - name dependencies before milestones drift
 - keep the first checkpoint close enough to catch early failure
+- include the condition that would justify pausing or escalating
 
 Return:
 
 - objective
 - owner or responsible role
-- milestones
+- sequence or milestones
 - dependencies
 - major risks
 - first checkpoint
+- pause or escalation trigger
 - immediate next action
 
 Input:

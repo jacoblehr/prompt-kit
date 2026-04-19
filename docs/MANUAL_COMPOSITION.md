@@ -79,7 +79,7 @@ Use this repo as a kit of parts.
 - `mode.explore`
 - `core.stakeholder-map`
 - `lens.coordination-plan`
-- `core.meeting-prep`
+- `core.alignment-conversation-plan`
 - `core.schema.execution-brief`
 
 ### Pressure-testing a belief or position
@@ -99,11 +99,27 @@ Use this repo as a kit of parts.
 
 ### Writing with rigor
 
-- `core.write-first-draft`
+- `core.brief-to-draft`
 - `mode.critique`
 - `core.critique-argument`
 - `core.rewrite-for-clarity`
 - `rubric.writing-quality`
+
+### Reading before changing code
+
+- `mode.explore`
+- `core.codepath-walkthrough`
+- `lens.invariant-check`
+- `lens.interface-contract-review`
+- `core.change-impact-review`
+
+### Debugging from logs
+
+- `mode.critique`
+- `core.triage-the-unknown`
+- `core.log-triage`
+- `core.bug-reproduction-brief`
+- `lens.debugger-loop`
 
 ## Keep It Light
 

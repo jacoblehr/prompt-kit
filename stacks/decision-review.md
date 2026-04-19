@@ -10,7 +10,7 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.debug-confusion`
+1. `core.triage-the-unknown`
 2. `core.stress-test-assumptions`
 3. `core.second-order-effects`
 4. `core.extract-insights`
