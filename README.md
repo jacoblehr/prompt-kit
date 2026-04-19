@@ -4,8 +4,8 @@ Prompt Kit is a lightweight library for composing prompt blocks by hand and savi
 
 The surfaced taxonomy is intentionally small:
 
-- `Blocks` - reusable prompt units, typed by role
-- `Stacks` - saved combinations of blocks for real tasks
+- `Blocks` — reusable prompt units, typed by role
+- `Stacks` — saved combinations of blocks for real tasks
 
 Open `index.html` first if you want the fastest browsing experience. The browser catalog is generated from the markdown source files into `site-data.js`, which is checked in so the site still opens directly with no setup.
 
@@ -14,17 +14,20 @@ The canonical rules are documented in [docs/ONTOLOGY.md](./docs/ONTOLOGY.md).
 ## What This Repo Is For
 
 - better framing (including finding the real job behind a request)
-- better option generation
+- better option generation and ideation
 - better decisions and goal-setting
 - better plans with measurable outcomes
 - better critique and assumption pressure-testing
 - better reflection and after-action learning
-- better prompt repair
-- better prioritization
-- better de-risking
+- better prompt repair and engineering
+- better prioritisation under constraints
+- better de-risking and threat modelling
 - better stakeholder alignment and negotiation
 - better foresight and scenario thinking
 - better process and workflow analysis
+- better statistical reasoning and experiment design
+- better research synthesis and evidence evaluation
+- better software engineering (design, review, debugging, security)
 
 ## What This Repo Is Not
 
@@ -37,7 +40,7 @@ That overhead can come later if the assets prove useful. For now, the repo is op
 
 ## How To Use It
 
-1. Start with a saved stack from `stacks/` if one already fits. Lightweight stacks (2–3 blocks) are listed first — try those before reaching for a full sequence.
+1. Start with a saved stack from `stacks/` if one already fits. Stacks are grouped by family — browse the family that matches your task.
 2. Otherwise pick a mode block from `modes/`.
 3. Add a strategy block from `strategies/` if the task needs a specific reasoning move.
 4. Add one or two core or lens blocks from `prompts/`.
@@ -55,14 +58,14 @@ That regenerates `site-data.js` from the markdown assets. `index.html` still wor
 
 These folders are implementation details for the source library. The browse surface still presents them as typed blocks and stacks.
 
-- `modes/` - mode blocks like explore, decide, critique, and reflect
-- `strategies/` - strategy blocks like problem splitting and premortem
-- `prompts/blocks/` - compact core blocks such as framing, guardrails, and output schemas
-- `prompts/snippets/` - broader core blocks for common tasks (43 snippets across ideation, decision-making, writing, analysis, planning, operations, and communication)
-- `prompts/concepts/` - lens blocks drawn from game theory, psychology, computer science, economics, systems thinking, philosophy, statistics, and design (24 lens blocks)
-- `stacks/` - saved combinations of blocks for practical use cases (33 stacks, organised Small / Medium / Large)
-- `rubrics/` - rubric blocks for judging output quality
-- `docs/` - guidance, not framework machinery
+- `modes/` — mode blocks: explore, decide, critique, and reflect
+- `strategies/` — strategy blocks: problem splitting, premortem, steelman, inversion, red team
+- `prompts/blocks/` — compact core blocks: framing, guardrails, and output schemas
+- `prompts/snippets/` — full-task snippets for nine families: Thinking & Framing, Deciding & Prioritising, Planning & Execution, Writing & Communication, Research & Synthesis, Review & Reflection, Software Engineering, Statistics, and Prompt Craft (69 snippets)
+- `prompts/concepts/` — lens blocks drawn from game theory, psychology, computer science, economics, systems thinking, philosophy, statistics, and design (27 lens blocks)
+- `stacks/` — saved combinations of blocks for practical use cases, grouped by family (60 stacks across nine families)
+- `rubrics/` — rubric blocks for judging output quality
+- `docs/` — guidance, not framework machinery
 
 ## Good First Compositions
 
@@ -90,7 +93,10 @@ Or go deeper with a full sequence:
 - `mode.decide` + `core.prioritize-opportunities` + `core.schema.execution-brief`
 - `mode.decide` + `core.stakeholder-map` + `core.negotiation-prep` + `lens.incentive-audit`
 - `mode.explore` + `core.scenario-planning` + `core.trend-analysis` + `lens.leverage-points`
-- `mode.critique` + `lens.survivorship-bias` + `lens.base-rate-check` + `rubric.research-quality`
+- `mode.critique` + `lens.survivorship-bias` + `lens.base-rate-check` + `rubric.decision-quality`
 - `mode.explore` + `core.synthesize-sources` + `lens.survivorship-bias` + `core.extract-insights`
+- `mode.critique` + `core.security-review` + `lens.failure-mode-analysis` + `core.risk-register`
+- `mode.decide` + `core.experiment-design` + `core.statistical-significance-check` + `core.extract-insights`
+- `mode.explore` + `core.prompt-decompose` + `core.prompt-rewrite` + `core.prompt-compare`
 
 Start small. Keep only the pieces that measurably improve your results.

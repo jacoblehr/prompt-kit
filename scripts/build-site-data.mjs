@@ -266,15 +266,96 @@ function makePromptBlock(dirName) {
   });
 }
 
+const SNIPPET_FAMILY = {
+  // Thinking & Framing
+  "generate-options":              "Thinking & Framing",
+  "brainstorm-angles":             "Thinking & Framing",
+  "reframe-the-problem":           "Thinking & Framing",
+  "analogical-reasoning":          "Thinking & Framing",
+  "hypothesis-generation":         "Thinking & Framing",
+  "clarify-task":                  "Thinking & Framing",
+  "define-success-metrics":        "Thinking & Framing",
+  "argument-structure":            "Thinking & Framing",
+  // Deciding & Prioritising
+  "compare-options":               "Deciding & Prioritising",
+  "choose-under-uncertainty":      "Deciding & Prioritising",
+  "explore-exploit-decision":      "Deciding & Prioritising",
+  "prioritize-opportunities":      "Deciding & Prioritising",
+  "scenario-planning":             "Deciding & Prioritising",
+  "trend-analysis":                "Deciding & Prioritising",
+  "second-order-effects":          "Deciding & Prioritising",
+  "design-cheap-test":             "Deciding & Prioritising",
+  "risk-register":                 "Deciding & Prioritising",
+  "stress-test-assumptions":       "Deciding & Prioritising",
+  "forecast":                      "Deciding & Prioritising",
+  // Planning & Execution
+  "plan-next-actions":             "Planning & Execution",
+  "process-audit":                 "Planning & Execution",
+  "rollout-plan":                  "Planning & Execution",
+  "delegation-brief":              "Planning & Execution",
+  "dependency-map":                "Planning & Execution",
+  "milestone-design":              "Planning & Execution",
+  // Writing & Communication
+  "write-first-draft":             "Writing & Communication",
+  "rewrite-for-clarity":           "Writing & Communication",
+  "critique-argument":             "Writing & Communication",
+  "position-draft":                "Writing & Communication",
+  "feedback-request":              "Writing & Communication",
+  "negotiation-prep":              "Writing & Communication",
+  "communication-brief":           "Writing & Communication",
+  "executive-summary":             "Writing & Communication",
+  "persuasion-audit":              "Writing & Communication",
+  // Research & Synthesis
+  "summarize-source":              "Research & Synthesis",
+  "synthesize-sources":            "Research & Synthesis",
+  "extract-insights":              "Research & Synthesis",
+  "cause-mapping":                 "Research & Synthesis",
+  "research-questions":            "Research & Synthesis",
+  "gap-analysis":                  "Research & Synthesis",
+  "competitive-analysis":          "Research & Synthesis",
+  "interview-synthesis":           "Research & Synthesis",
+  // Review & Reflection
+  "blind-spot-check":              "Review & Reflection",
+  "stakeholder-map":               "Review & Reflection",
+  "meeting-prep":                  "Review & Reflection",
+  "debug-confusion":               "Review & Reflection",
+  "decision-journal-entry":        "Review & Reflection",
+  "weekly-review":                 "Review & Reflection",
+  // Software Engineering
+  "code-review":                   "Software Engineering",
+  "refactor-plan":                 "Software Engineering",
+  "test-strategy":                 "Software Engineering",
+  "requirements-decomposition":    "Software Engineering",
+  "incident-postmortem":           "Software Engineering",
+  "security-review":               "Software Engineering",
+  "api-design":                    "Software Engineering",
+  "performance-analysis":          "Software Engineering",
+  "database-design":               "Software Engineering",
+  "onboarding-audit":              "Software Engineering",
+  // Statistics
+  "statistical-significance-check": "Statistics",
+  "correlation-vs-causation":      "Statistics",
+  "experiment-design":             "Statistics",
+  "data-quality-check":            "Statistics",
+  "metric-design":                 "Statistics",
+  "interpret-regression":          "Statistics",
+  // Prompt Craft
+  "prompt-critique":               "Prompt Craft",
+  "prompt-rewrite":                "Prompt Craft",
+  "prompt-compare":                "Prompt Craft",
+  "prompt-decompose":              "Prompt Craft",
+  "prompt-chain-design":           "Prompt Craft"
+};
+
 function makeSnippetBlock(fileName) {
   const relPath = `prompts/snippets/${fileName}`;
   const md = read(relPath);
   const baseName = fileName.replace(/\.md$/, "");
   const title = firstHeading(md);
-  const family = fileName.startsWith("prompt-") ? "Prompt Repair" : "";
+  const family = SNIPPET_FAMILY[baseName] || "";
 
   return makeBlock({
-    blockType: "core",
+    blockType: "snippet",
     sourceKind: "Snippet",
     key: `core.${baseName}`,
     aliases: [`snippet.${slugify(title)}`],
@@ -313,6 +394,80 @@ function makeLensBlock(group, fileName) {
   });
 }
 
+const STACK_FAMILY = {
+  // Thinking & Framing
+  "clarify-the-real-job":           "Thinking & Framing",
+  "ethical-review":                 "Thinking & Framing",
+  "fast-ideation":                  "Thinking & Framing",
+  "frame-the-ask":                  "Thinking & Framing",
+  "orient-before-acting":           "Thinking & Framing",
+  "problem-framing":                "Thinking & Framing",
+  "prompt-repair":                  "Thinking & Framing",
+  "quick-sense-check":              "Thinking & Framing",
+  "scenario-futures":               "Thinking & Framing",
+  "unblock-stuck-problem":          "Thinking & Framing",
+  // Deciding & Prioritising
+  "de-risk-with-test":              "Deciding & Prioritising",
+  "explore-to-decision":            "Deciding & Prioritising",
+  "explore-vs-exploit":             "Deciding & Prioritising",
+  "full-decision-process":          "Deciding & Prioritising",
+  "prioritize-portfolio":           "Deciding & Prioritising",
+  // Planning & Execution
+  "define-and-measure":             "Planning & Execution",
+  "design-for-outcomes":            "Planning & Execution",
+  "map-adoption-blockers":          "Planning & Execution",
+  "pressure-test-plan":             "Planning & Execution",
+  "product-design-sprint":          "Planning & Execution",
+  "ship-a-feature":                 "Planning & Execution",
+  // Research & Synthesis
+  "audit-the-argument":             "Research & Synthesis",
+  "deep-research-synthesis":        "Research & Synthesis",
+  "evidence-to-decision":           "Research & Synthesis",
+  "interpret-an-experiment":        "Research & Synthesis",
+  "learn-from-content":             "Research & Synthesis",
+  "source-to-brief":                "Research & Synthesis",
+  // Writing & Communication
+  "communicate-a-change":           "Writing & Communication",
+  "negotiate-a-deal":               "Writing & Communication",
+  "stakeholder-alignment":          "Writing & Communication",
+  "write-critique-rewrite":         "Writing & Communication",
+  // Review & Reflection
+  "after-action-review":            "Review & Reflection",
+  "capture-and-act":                "Review & Reflection",
+  "decision-review":                "Review & Reflection",
+  "project-retrospective":          "Review & Reflection",
+  "weekly-review":                  "Review & Reflection",
+  // Software Engineering
+  "code-review":                    "Software Engineering",
+  "debug-a-failure":                "Software Engineering",
+  "debug-a-system":                 "Software Engineering",
+  "feature-design":                 "Software Engineering",
+  "hypothesis-driven-development":  "Software Engineering",
+  "incident-response":              "Software Engineering",
+  "performance-investigation":      "Software Engineering",
+  "security-threat-model":          "Software Engineering",
+  "technical-architecture-review":  "Software Engineering",
+  "technical-debt-triage":          "Software Engineering",
+  // Statistics
+  "causal-inference":               "Statistics",
+  "data-to-story":                  "Statistics",
+  "design-a-study":                 "Statistics",
+  "forecast-and-decide":            "Statistics",
+  "measure-feature-impact":         "Statistics",
+  // Writing & Communication
+  "deliver-feedback":               "Writing & Communication",
+  "develop-a-position":             "Writing & Communication",
+  "write-a-proposal":               "Writing & Communication",
+  // Deciding & Prioritising
+  "prioritise-under-constraints":   "Deciding & Prioritising",
+  "risk-informed-decision":         "Deciding & Prioritising",
+  // Prompt Craft
+  "ai-workflow-design":             "Prompt Craft",
+  "build-a-system-prompt":          "Prompt Craft",
+  "evaluate-model-output":          "Prompt Craft",
+  "prompt-engineering-sprint":      "Prompt Craft"
+};
+
 function makeStack(fileName) {
   const relPath = `stacks/${fileName}`;
   const md = read(relPath);
@@ -322,12 +477,16 @@ function makeStack(fileName) {
   const sequence = extractSectionItems(md, ["Suggested blocks:", "Suggested sequence:"]);
   const outputs = extractSectionItems(md, ["Expected outcome:", "Expected output:"]);
 
+  const baseName = fileName.replace(/\.md$/, "");
+  const family = STACK_FAMILY[baseName] || "";
+
   return {
     section: "Stack",
     key: `stack.${slugify(title)}`,
     title,
+    family,
     summary: ensureSentence(useWhen),
-    tags: resolvedTags(md, title, fileName.replace(/\.md$/, "")),
+    tags: resolvedTags(md, title, baseName),
     body: [
       ["Useful inputs", joinItems(inputs)],
       ["Suggested blocks", sequence.join(" -> ")],

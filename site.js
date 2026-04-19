@@ -9,12 +9,13 @@ const {
   stacks = []
 } = siteData;
 
-const BLOCK_TYPE_ORDER = ["core", "lens", "mode", "strategy", "style", "rubric"];
+const BLOCK_TYPE_ORDER = ["mode", "strategy", "core", "snippet", "lens", "rubric"];
 const BLOCK_TYPE_LABELS = {
-  core: "Core",
-  lens: "Lens",
   mode: "Mode",
   strategy: "Strategy",
+  core: "Core",
+  snippet: "Snippet",
+  lens: "Lens",
   style: "Style",
   rubric: "Rubric"
 };
@@ -43,10 +44,11 @@ function blockTypeLabel(blockType = "") {
 }
 
 const BLOCK_TYPE_DESCRIPTIONS = {
-  core: "Task-ready prompt units, structural constraints, schemas, and reusable prompt building blocks.",
-  lens: "Perspective blocks that reframe a situation through a discipline, model, or angle.",
   mode: "Stance-setting blocks that define how the model should approach the session.",
   strategy: "Reasoning-mechanic blocks that introduce a specific analytical move.",
+  core: "Compact structural blocks — frames, guardrails, schemas, and output specifications.",
+  snippet: "Full-task prompts for thinking, analysis, writing, planning, engineering, and research.",
+  lens: "Perspective blocks that reframe a situation through a discipline, model, or framework.",
   style: "Tone, verbosity, and formatting blocks.",
   rubric: "Evaluation blocks for checking whether the result is actually good enough."
 };
@@ -57,8 +59,25 @@ const STACK_SIZES = [
   { key: "large",  label: "Large",  range: "6+ blocks",   test: (n) => n >= 6 }
 ];
 
+const STACK_FAMILY_ORDER = [
+  "Thinking & Framing",
+  "Deciding & Prioritising",
+  "Planning & Execution",
+  "Research & Synthesis",
+  "Writing & Communication",
+  "Review & Reflection",
+  "Software Engineering",
+  "Statistics",
+  "Prompt Craft"
+];
+
 function getStackSizeCategory(count) {
   return (STACK_SIZES.find((s) => s.test(count)) || STACK_SIZES[0]).key;
+}
+
+function getStackBlockCount(item) {
+  const seqEntry = (item.body || []).find(([l]) => l === "Suggested blocks");
+  return seqEntry ? (seqEntry[1].match(/`([^`]+)`/g) || []).length : 0;
 }
 
 // ─── Builder state ────────────────────────────────────────────────────────────
@@ -282,11 +301,6 @@ function getOntologyPath(item) {
   }
 
   const path = ["Block", blockTypeLabel(item.blockType)];
-  if (item.blockType === "core" && item.sourceKind === "Prompt Block") {
-    path.push("Prompt Block");
-  } else if (item.blockType === "core" && item.sourceKind === "Snippet") {
-    path.push("Snippet");
-  }
   if (item.group) path.push(item.group);
   if (item.family && !path.includes(item.family)) path.push(item.family);
   return path;
@@ -747,9 +761,10 @@ function openVarsModal() {
     const section = document.createElement("div");
     section.className = "vm-group";
     section.innerHTML = `<div class="vm-group-header"><span class="vm-step">${group.stepNum}</span><span class="vm-group-title">${escHtml(group.title)}</span><span class="vm-group-label">${escHtml(group.label)}</span></div>`;
-    group.fields.forEach((field) => {
+    group.fields.forEach((field, fieldIndex) => {
       section.appendChild(buildVmField({
         ...field,
+        fieldIndex,
         liveItems: group.liveItems
       }));
     });
@@ -771,10 +786,10 @@ function openVarsModal() {
   if (first) setTimeout(() => first.focus(), 40);
 }
 
-function buildVmField({ ph, itemKey = "", stepIndex = -1, chainSrcIdx = -1, manualValue = "", liveItems = [] }) {
+function buildVmField({ ph, itemKey = "", stepIndex = -1, fieldIndex = 0, chainSrcIdx = -1, manualValue = "", liveItems = [] }) {
   const item = document.createElement("div");
   item.className = "vm-field";
-  const canChain = stepIndex > 0;
+  const canChain = stepIndex > 0 && fieldIndex > 0;
   const chainOptions = canChain
     ? [
         `<option value=""${chainSrcIdx < 0 ? " selected" : ""}>Manual entry</option>`,
@@ -902,7 +917,7 @@ function applyFilters() {
     sectionEl.classList.toggle("hidden", !hasVisibleCard);
   });
 
-  document.querySelectorAll(".stack-size-group").forEach((groupEl) => {
+  document.querySelectorAll(".stack-family-group").forEach((groupEl) => {
     const cards = groupEl.querySelectorAll(".searchable");
     const hasVisibleCard = [...cards].some((card) => !card.classList.contains("hidden"));
     groupEl.classList.toggle("hidden", !hasVisibleCard);
@@ -942,6 +957,51 @@ function renderFilterChips() {
   });
 }
 
+const SNIPPET_FAMILY_ORDER = [
+  "Thinking & Framing",
+  "Deciding & Prioritising",
+  "Planning & Execution",
+  "Writing & Communication",
+  "Research & Synthesis",
+  "Review & Reflection",
+  "Software Engineering",
+  "Statistics",
+  "Prompt Craft"
+];
+
+const LENS_GROUP_ORDER = [
+  "Game Theory",
+  "Psychology",
+  "Computer Science",
+  "Economics",
+  "Systems Thinking",
+  "Statistics",
+  "Philosophy",
+  "Design"
+];
+
+function renderSubGroups(container, items, getGroupKey, groupOrder) {
+  const seen = new Set();
+  const ordered = [...groupOrder.filter(g => items.some(i => getGroupKey(i) === g))];
+  items.forEach(i => { const g = getGroupKey(i); if (!seen.has(g)) { seen.add(g); if (!ordered.includes(g)) ordered.push(g); } });
+
+  ordered.forEach((groupName) => {
+    const groupItems = items.filter((i) => getGroupKey(i) === groupName);
+    if (groupItems.length === 0) return;
+    const subGroup = document.createElement("div");
+    subGroup.className = "block-subgroup";
+    const subHead = document.createElement("div");
+    subHead.className = "block-subgroup-head";
+    subHead.innerHTML = `<span class="block-subgroup-label">${escHtml(groupName)}</span><span class="block-subgroup-count">${groupItems.length}</span>`;
+    const subGrid = document.createElement("div");
+    subGrid.className = "card-grid";
+    groupItems.forEach((item) => subGrid.appendChild(createCard(item)));
+    subGroup.appendChild(subHead);
+    subGroup.appendChild(subGrid);
+    container.appendChild(subGroup);
+  });
+}
+
 function renderGroupedBlocks() {
   const mount = document.getElementById("blocks-groups");
   if (!mount) return;
@@ -965,14 +1025,20 @@ function renderGroupedBlocks() {
         </div>
         <div class="block-type-count">${items.length} block${items.length !== 1 ? "s" : ""}</div>
       `;
-
-      const grid = document.createElement("div");
-      grid.className = "card-grid";
-      grid.dataset.blockTypeGrid = type;
-      items.forEach((item) => grid.appendChild(createCard(item)));
-
       section.appendChild(head);
-      section.appendChild(grid);
+
+      if (type === "snippet") {
+        renderSubGroups(section, items, (i) => i.family || "Other", SNIPPET_FAMILY_ORDER);
+      } else if (type === "lens") {
+        renderSubGroups(section, items, (i) => i.group || "Other", LENS_GROUP_ORDER);
+      } else {
+        const grid = document.createElement("div");
+        grid.className = "card-grid";
+        grid.dataset.blockTypeGrid = type;
+        items.forEach((item) => grid.appendChild(createCard(item)));
+        section.appendChild(grid);
+      }
+
       mount.appendChild(section);
     });
 }
@@ -981,22 +1047,31 @@ function renderCards() {
   const stacksMount = document.getElementById("stacks-grid");
   if (stacksMount) {
     stacksMount.innerHTML = "";
-    STACK_SIZES.forEach(({ key, label, range }) => {
-      const groupItems = stacks.filter((item) => {
-        const seqEntry = (item.body || []).find(([l]) => l === "Suggested blocks");
-        const count = seqEntry ? (seqEntry[1].match(/`([^`]+)`/g) || []).length : 0;
-        return getStackSizeCategory(count) === key;
-      });
-      if (groupItems.length === 0) return;
+    const SIZE_ORDER = Object.fromEntries(STACK_SIZES.map(({ key }, i) => [key, i]));
+    const seen = new Set();
+    const familyOrder = [
+      ...STACK_FAMILY_ORDER.filter((f) => stacks.some((s) => s.family === f)),
+      ...stacks.map((s) => s.family || "Other").filter((f) => { if (!seen.has(f) && !STACK_FAMILY_ORDER.includes(f)) { seen.add(f); return true; } return false; })
+    ];
+    familyOrder.forEach((familyName) => {
+      const familyItems = stacks
+        .filter((item) => (item.family || "Other") === familyName)
+        .sort((a, b) => {
+          const ca = getStackBlockCount(a);
+          const cb = getStackBlockCount(b);
+          const sa = SIZE_ORDER[getStackSizeCategory(ca)] ?? 99;
+          const sb = SIZE_ORDER[getStackSizeCategory(cb)] ?? 99;
+          return sa !== sb ? sa - sb : ca - cb;
+        });
+      if (familyItems.length === 0) return;
       const group = document.createElement("div");
-      group.className = "stack-size-group";
-      group.dataset.sizeGroup = key;
+      group.className = "stack-family-group";
       const head = document.createElement("div");
-      head.className = "stack-size-head";
-      head.innerHTML = `<span class="stack-size-head-label">${escHtml(label)}</span><span class="stack-size-head-range">${escHtml(range)}</span>`;
+      head.className = "block-subgroup-head";
+      head.innerHTML = `<span class="block-subgroup-label">${escHtml(familyName)}</span><span class="block-subgroup-count">${familyItems.length}</span>`;
       const grid = document.createElement("div");
       grid.className = "card-grid";
-      groupItems.forEach((item) => grid.appendChild(createCard(item)));
+      familyItems.forEach((item) => grid.appendChild(createCard(item)));
       group.appendChild(head);
       group.appendChild(grid);
       stacksMount.appendChild(group);
