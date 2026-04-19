@@ -1703,6 +1703,109 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/weekly-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.clarify-the-real-job",
+      "title": "Clarify The Real Job",
+      "summary": "Use when you have a stated request but aren't sure what the person actually needs to accomplish.",
+      "tags": [
+        "clarify",
+        "real",
+        "job"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the raw request or task as given, any context about who asked and why, any stated constraints or deadlines"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.clarify-task` -> `core.frame.success-criteria`"
+        ],
+        [
+          "Expected outcome",
+          "the functional job (what they need done), the emotional job (how they want to feel after), the social job (how they want to appear to others), a working definition of done, the real question to answer"
+        ]
+      ],
+      "sourcePath": "stacks/clarify-the-real-job.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.design-for-outcomes",
+      "title": "Design For Outcomes",
+      "summary": "Use when building, writing, or planning something and you want to anchor on what the person on the receiving end actually needs, not just what was requested.",
+      "tags": [
+        "design",
+        "outcomes"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "what you're building or creating, who will use it and in what situation, any assumptions you're carrying about what good looks like"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.frame.success-criteria` -> `core.assumption.audit`"
+        ],
+        [
+          "Expected outcome",
+          "outcome-oriented definition of success, explicit assumptions surfaced and ranked by risk, the version most likely to actually do the job"
+        ]
+      ],
+      "sourcePath": "stacks/design-for-outcomes.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.map-adoption-blockers",
+      "title": "Map Adoption Blockers",
+      "summary": "Use when something exists — a product, idea, plan, or process — but people aren't picking it up or using it.",
+      "tags": [
+        "map",
+        "adoption",
+        "blockers"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "what the thing is and what it's supposed to do, who the intended users are, what you already know about why adoption is low"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.cause-mapping` -> `lens.incentive-audit`"
+        ],
+        [
+          "Expected outcome",
+          "what job people are currently hiring their existing solution to do, friction and anxiety points blocking the switch, what would need to be true for someone to hire this instead, highest-leverage intervention to try first"
+        ]
+      ],
+      "sourcePath": "stacks/map-adoption-blockers.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.orient-before-acting",
+      "title": "Orient Before Acting",
+      "summary": "Use before starting any task where context is thin or the goal is loosely defined. A fast forcing function to avoid doing the wrong thing well.",
+      "tags": [
+        "orient",
+        "before",
+        "acting"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the task or request as stated, what you know about the situation so far, any deadline or constraint"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.clarify-task` -> `core.scope.frame`"
+        ],
+        [
+          "Expected outcome",
+          "what the task actually is, what's in scope and what's not, the one thing most likely to move this forward, what you'd need to know to be confident you're on the right track"
+        ]
+      ],
+      "sourcePath": "stacks/orient-before-acting.md"
     }
   ],
   "featuredStacks": [
