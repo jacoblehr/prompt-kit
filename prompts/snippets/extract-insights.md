@@ -22,3 +22,11 @@ Domain tags:
 - synthesis
 - analysis
 - knowledge management
+
+---
+
+Metadata:
+- type: frame
+- stage: conclude
+- strength: light
+- pairs with: `mode.reflect`, `frame.cause-mapping`, `frame.plan-next-actions`

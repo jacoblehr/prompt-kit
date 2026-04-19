@@ -31,3 +31,11 @@ Domain tags:
 - prioritization
 - resource allocation
 - strategic thinking
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: heavy
+- pairs with: `mode.decide`, `frame.success-criteria`, `frame.compare-options`

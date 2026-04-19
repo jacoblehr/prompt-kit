@@ -22,3 +22,11 @@ Domain tags:
 - software engineering
 - systems thinking
 - critical thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `lens.invariant-check`, `lens.abstraction-boundary`

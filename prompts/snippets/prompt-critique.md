@@ -33,3 +33,11 @@ Domain tags:
 - prompt engineering
 - quality improvement
 - evaluation
+
+---
+
+Metadata:
+- type: frame
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `frame.prompt-decompose`, `frame.prompt-rewrite`

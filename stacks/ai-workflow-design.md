@@ -10,11 +10,11 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.clarify-task`
-2. `core.requirements-decomposition`
-3. `core.prompt-chain-design`
-4. `core.test-strategy`
-5. `core.rollout-plan`
+1. `frame.clarify-task`
+2. `frame.requirements-decomposition`
+3. `frame.prompt-chain-design`
+4. `frame.test-strategy`
+5. `schema.rollout-plan`
 
 Expected outcome:
 
@@ -29,3 +29,15 @@ Domain tags:
 - AI workflow
 - planning
 - systems design
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.clarify-task`, `frame.prompt-chain-design`, `frame.test-strategy`
+
+**Why this order works:** Task clarity comes first because workflow design without a clear job creates elegant machinery for the wrong purpose. Requirements decomposition follows to surface what the workflow must handle independently. Prompt chain design then shapes the step sequence with handoff risks named. Test strategy closes the design phase — it is cheaper to name the highest-risk steps before build than after.
+
+**Common swaps:** Swap `frame.requirements-decomposition` for `strategy.problem-split` when the job is still tangled. Swap `frame.rollout-plan` for `frame.design-cheap-test` if you want a staged pilot rather than a full rollout plan.
+
+**Common failure mode:** Designing the workflow before clarifying the job. Prompt chains built on a fuzzy task tend to fail at the seams, not the steps.

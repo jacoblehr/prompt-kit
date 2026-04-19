@@ -20,3 +20,11 @@ Domain tags:
 - first principles
 - critical thinking
 - creative thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: explore
+- strength: heavy
+- pairs with: `mode.explore`, `strategy.problem-split`, `frame.reframe-the-problem`

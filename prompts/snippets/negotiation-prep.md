@@ -30,3 +30,11 @@ Domain tags:
 - interest-based bargaining
 - conflict resolution
 - influence
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: medium
+- pairs with: `mode.decide`, `frame.stakeholder-map`, `lens.incentive-audit`

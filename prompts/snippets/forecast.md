@@ -28,3 +28,11 @@ Domain tags:
 - decision making
 - uncertainty
 - epistemics
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `lens.base-rate-check`, `frame.scenario-planning`, `frame.choose-under-uncertainty`

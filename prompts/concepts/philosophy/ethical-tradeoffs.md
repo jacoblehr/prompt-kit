@@ -24,3 +24,11 @@ Domain tags:
 - ethics
 - critical thinking
 - decision theory
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: heavy
+- pairs with: `mode.critique`, `frame.second-order-effects`, `guardrail.disconfirming-evidence`

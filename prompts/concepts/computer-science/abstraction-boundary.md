@@ -24,3 +24,11 @@ Domain tags:
 - software engineering
 - systems thinking
 - design
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `lens.interface-contract-review`, `lens.invariant-check`

@@ -26,3 +26,11 @@ Domain tags:
 - epistemics
 - debugging
 - decision hygiene
+
+---
+
+Metadata:
+- type: guardrail
+- stage: frame
+- strength: light
+- pairs with: `mode.critique`, `frame.log-triage`, `frame.cause-mapping`

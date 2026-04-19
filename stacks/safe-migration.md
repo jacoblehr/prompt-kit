@@ -11,12 +11,12 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.decide`
-2. `core.codepath-walkthrough`
-3. `core.migration-plan`
+2. `frame.codepath-walkthrough`
+3. `frame.migration-plan`
 4. `lens.abstraction-boundary`
 5. `lens.failure-mode-analysis`
-6. `core.release-readiness`
-7. `core.rollout-plan`
+6. `guardrail.release-readiness`
+7. `schema.rollout-plan`
 
 Expected outcome:
 
@@ -31,3 +31,15 @@ Domain tags:
 - migration
 - rollout
 - risk management
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.decide`, `frame.codepath-walkthrough`, `frame.migration-plan`
+
+**Why this order works:** Decide mode commits to a migration strategy rather than exploring alternatives mid-migration. Codepath-walkthrough maps all read and write paths before the migration is designed — unexpected consumers cause the most migration failures. Migration-plan selects the strategy explicitly. Abstraction-boundary surfaces boundary leaks and hidden couplings. Failure-mode-analysis reviews partial-deploy and rollback risks. Release-readiness and rollout-plan close with a staged deployment and stop conditions.
+
+**Common swaps:** Swap `lens.abstraction-boundary` for `lens.interface-contract-review` when the migration involves API or protocol changes. Swap `frame.rollout-plan` for `frame.plan-next-actions` for smaller, lower-risk migrations.
+
+**Common failure mode:** Discovering consumers during the migration. Unmapped consumers cause mid-migration rollbacks that are more disruptive than the migration itself.

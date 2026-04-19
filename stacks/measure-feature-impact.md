@@ -10,12 +10,12 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.define-success-metrics`
-2. `core.metric-design`
+1. `frame.define-success-metrics`
+2. `frame.metric-design`
 3. `lens.survivorship-bias`
-4. `core.statistical-significance-check`
-5. `core.correlation-vs-causation`
-6. `core.extract-insights`
+4. `guardrail.statistical-significance-check`
+5. `guardrail.correlation-vs-causation`
+6. `frame.extract-insights`
 
 Expected outcome:
 
@@ -31,3 +31,15 @@ Domain tags:
 - product measurement
 - feature evaluation
 - causal inference
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.define-success-metrics`, `frame.statistical-significance-check`
+
+**Why this order works:** Success-metrics are defined first to prevent Goodhart's Law from operating retroactively. Metric-design builds the measurement instrument with counter-metrics to prevent gaming. Survivorship-bias check guards against selection effects in the exposed population. Statistical-significance-check separates statistical from practical significance. Correlation-vs-causation check prevents the feature from claiming credit for exogenous changes. Extract-insights closes by naming what the data does and does not support.
+
+**Common swaps:** Swap `frame.statistical-significance-check` for `frame.experiment-design` when the impact analysis requires a more formal study design. Swap `frame.correlation-vs-causation` for `frame.stress-test-assumptions` when the causal claim is embedded in a set of broader assumptions.
+
+**Common failure mode:** Interpreting metrics defined after the feature shipped. Post-hoc metrics are almost always selected to confirm the feature worked.

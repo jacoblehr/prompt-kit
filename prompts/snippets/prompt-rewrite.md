@@ -30,3 +30,11 @@ Domain tags:
 - prompt engineering
 - iteration
 - revision
+
+---
+
+Metadata:
+- type: frame
+- stage: refine
+- strength: medium
+- pairs with: `mode.critique`, `frame.prompt-critique`, `frame.prompt-compare`

@@ -25,3 +25,11 @@ Domain tags:
 - philosophy
 - critical thinking
 - epistemics
+
+---
+
+Metadata:
+- type: lens
+- stage: explore
+- strength: medium
+- pairs with: `mode.explore`, `frame.generate-options`, `lens.first-principles`

@@ -36,3 +36,11 @@ Domain tags:
 - drafting
 - communication
 - revision
+
+---
+
+Metadata:
+- type: frame
+- stage: refine
+- strength: medium
+- pairs with: `mode.critique`, `frame.critique-argument`, `frame.rewrite-for-clarity`

@@ -20,3 +20,11 @@ Domain tags:
 - task framing
 - requirements
 - scoping
+
+---
+
+Metadata:
+- type: frame
+- stage: frame
+- strength: light
+- pairs with: `mode.explore`, `frame.task`, `frame.success-criteria`

@@ -21,3 +21,11 @@ Domain tags:
 - systems thinking
 - causal reasoning
 - planning
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `frame.cause-mapping`, `lens.leverage-points`

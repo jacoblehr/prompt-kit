@@ -26,3 +26,11 @@ Domain tags:
 - project planning
 - contingency planning
 - decision quality
+
+---
+
+Metadata:
+- type: frame
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `strategy.premortem`, `guardrail.assumption-audit`

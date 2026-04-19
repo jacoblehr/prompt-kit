@@ -24,3 +24,11 @@ Domain tags:
 - systems thinking
 - critical thinking
 - risk management
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `frame.scenario-planning`, `guardrail.uncertainty`

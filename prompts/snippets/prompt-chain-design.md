@@ -29,3 +29,11 @@ Domain tags:
 - chain
 - workflow
 - design
+
+---
+
+Metadata:
+- type: frame
+- stage: frame
+- strength: heavy
+- pairs with: `frame.clarify-task`, `frame.prompt-decompose`, `frame.test-strategy`

@@ -23,3 +23,11 @@ Domain tags:
 - behavioral science
 - psychology
 - planning
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.decide`, `lens.motivation-diagnosis`, `lens.incentive-audit`

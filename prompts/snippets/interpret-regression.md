@@ -30,3 +30,11 @@ Domain tags:
 - regression
 - model interpretation
 - data analysis
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `frame.statistical-significance-check`, `lens.survivorship-bias`, `lens.base-rate-check`

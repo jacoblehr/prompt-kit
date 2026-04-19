@@ -31,3 +31,11 @@ Domain tags:
 - API design
 - systems design
 - contracts
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `frame.requirements-decomposition`, `lens.interface-contract-review`, `frame.test-strategy`

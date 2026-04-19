@@ -1,8 +1,10 @@
 # Stacks
 
-These are saved combinations of blocks, not automated pipelines.
+These are named assemblies of blocks for recurring jobs, not automated pipelines.
 
-Each stack file shows a practical sequence of blocks you can combine by hand.
+Each stack shows a practical sequence of blocks you can combine by hand, along with composition notes explaining why the order works.
+
+See [docs/COMPOSITION.md](../docs/COMPOSITION.md) for the full composition rules.
 
 ## Lightweight stacks (2–3 blocks)
 

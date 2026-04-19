@@ -27,3 +27,11 @@ Domain tags:
 - planning
 - communication
 - organizational learning
+
+---
+
+Metadata:
+- type: schema
+- stage: conclude
+- strength: light
+- pairs with: `mode.decide`, `schema.execution-brief`, `frame.success-criteria`

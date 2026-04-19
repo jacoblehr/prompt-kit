@@ -25,3 +25,11 @@ Domain tags:
 - execution
 - planning
 - action design
+
+---
+
+Metadata:
+- type: schema
+- stage: conclude
+- strength: light
+- pairs with: `mode.reflect`, `mode.decide`, `frame.extract-insights`

@@ -23,3 +23,11 @@ Domain tags:
 - statistics
 - epistemics
 - research
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: light
+- pairs with: `mode.critique`, `guardrail.disconfirming-evidence`, `lens.base-rate-check`

@@ -25,3 +25,11 @@ Domain tags:
 - operations
 - systems analysis
 - workflow design
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `lens.feedback-loops`, `frame.cause-mapping`

@@ -27,3 +27,11 @@ Domain tags:
 - incident management
 - reliability
 - learning
+
+---
+
+Metadata:
+- type: schema
+- stage: conclude
+- strength: heavy
+- pairs with: `mode.reflect`, `frame.cause-mapping`, `frame.plan-next-actions`

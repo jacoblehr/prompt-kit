@@ -24,3 +24,11 @@ Domain tags:
 - communication
 - continuous improvement
 - quality improvement
+
+---
+
+Metadata:
+- type: frame
+- stage: refine
+- strength: light
+- pairs with: `mode.critique`, `frame.blind-spot-check`, `rubric.writing-quality`

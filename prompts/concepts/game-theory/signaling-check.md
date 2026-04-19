@@ -20,3 +20,11 @@ Domain tags:
 - game theory
 - communication
 - influence
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: light
+- pairs with: `mode.decide`, `frame.communication-brief`, `lens.incentive-audit`

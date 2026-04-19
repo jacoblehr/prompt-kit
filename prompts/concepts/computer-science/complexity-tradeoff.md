@@ -21,3 +21,11 @@ Domain tags:
 - software engineering
 - decision theory
 - systems thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `lens.interface-contract-review`, `frame.refactor-plan`

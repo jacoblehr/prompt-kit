@@ -25,3 +25,11 @@ Domain tags:
 - data quality
 - analysis
 - research
+
+---
+
+Metadata:
+- type: guardrail
+- stage: analyze
+- strength: medium
+- pairs with: `frame.experiment-design`, `lens.survivorship-bias`, `frame.statistical-significance-check`

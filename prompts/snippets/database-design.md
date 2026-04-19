@@ -30,3 +30,11 @@ Domain tags:
 - databases
 - schema design
 - query performance
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `frame.requirements-decomposition`, `lens.invariant-check`, `frame.test-strategy`

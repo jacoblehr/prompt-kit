@@ -11,9 +11,9 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.explore`
-2. `core.scenario-planning`
-3. `core.second-order-effects`
-4. `core.guardrail.uncertainty`
+2. `frame.scenario-planning`
+3. `frame.second-order-effects`
+4. `guardrail.uncertainty`
 
 Expected outcome:
 
@@ -26,3 +26,15 @@ Domain tags:
 - strategic thinking
 - foresight
 - risk management
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.explore`, `frame.scenario-planning`
+
+**Why this order works:** Explore mode opens the futures space before any scenario is privileged. Scenario-planning builds the distinct futures rather than variations on the most likely one. Second-order-effects traces the consequences of each scenario beyond the obvious first-order impacts. Uncertainty guardrail closes by naming the residual unknowns and what to watch for as each scenario develops.
+
+**Common swaps:** Swap `frame.second-order-effects` for `strategy.inversion` when the goal is finding the scenario where the current strategy fails most catastrophically. Add `frame.forecast` when probability estimates are needed rather than just scenario identification.
+
+**Common failure mode:** Generating variations on the most likely scenario rather than genuinely distinct futures. Scenario planning that produces minor variations of the expected future provides no new strategic insight.

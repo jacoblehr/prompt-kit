@@ -29,3 +29,11 @@ Domain tags:
 - design
 - behavioral science
 - strategic thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: frame
+- strength: medium
+- pairs with: `mode.explore`, `frame.stakeholder-map`, `frame.frame.task`

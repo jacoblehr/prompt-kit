@@ -10,7 +10,7 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.explore`
-2. `core.brainstorm-angles`
+2. `frame.brainstorm-angles`
 
 Expected outcome:
 
@@ -22,3 +22,15 @@ Domain tags:
 - creative thinking
 - ideation
 - decision theory
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.explore`, `frame.brainstorm-angles`
+
+**Why this order works:** Explore mode sets the breadth-first stance and explicitly suppresses premature judgment. Brainstorm-angles provides the generative structure. The stack is intentionally minimal — adding strategy or guardrail blocks defeats the purpose by reintroducing the analytical frame that fast ideation is trying to suspend.
+
+**Common swaps:** Swap `frame.brainstorm-angles` for `frame.generate-options` when the task is option generation for a specific decision rather than open ideation. Add `frame.reframe-the-problem` if the ideation is stalled and a new frame would unlock it.
+
+**Common failure mode:** Adding critique or analysis blocks during ideation. Evaluation during generation collapses the option set before it has real breadth.

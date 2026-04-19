@@ -30,3 +30,11 @@ Domain tags:
 - stakeholder alignment
 - negotiation
 - decision making
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: medium
+- pairs with: `mode.decide`, `frame.stakeholder-map`, `lens.coordination-plan`

@@ -23,3 +23,11 @@ Domain tags:
 - behavioral science
 - psychology
 - organizational learning
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `lens.incentive-audit`, `lens.behavior-change-plan`

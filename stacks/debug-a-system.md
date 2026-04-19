@@ -11,10 +11,10 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.explore`
-2. `core.hypothesis-generation`
+2. `frame.hypothesis-generation`
 3. `lens.debugger-loop`
 4. `lens.failure-mode-analysis`
-5. `core.cause-mapping`
+5. `frame.cause-mapping`
 
 Expected outcome:
 
@@ -28,3 +28,15 @@ Domain tags:
 - software engineering
 - causal reasoning
 - systems thinking
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.explore`, `frame.hypothesis-generation`, `lens.debugger-loop`
+
+**Why this order works:** Explore mode prevents premature convergence on a single hypothesis before the failure space has been mapped. Hypothesis-generation creates multiple competing candidates to test in parallel. Debugger-loop provides the iterative isolation structure. Failure-mode-analysis covers component-level failure modes that hypothesis generation might miss. Cause-mapping closes by distinguishing root cause from contributing factors.
+
+**Common swaps:** Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when boundary failures are more likely than internal logic failures. Add `frame.log-triage` before the debugger loop when telemetry is available.
+
+**Common failure mode:** Beginning with a single hypothesis and building an investigation around confirming it. The single-hypothesis approach is fast when the guess is correct and catastrophically slow when it is not.

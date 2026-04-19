@@ -11,10 +11,10 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.critique`
-2. `core.clarify-task`
-3. `core.prompt-critique`
-4. `core.prompt-rewrite`
-5. `core.prompt-compare`
+2. `frame.clarify-task`
+3. `frame.prompt-critique`
+4. `frame.prompt-rewrite`
+5. `frame.prompt-compare`
 6. `rubric.prompt-quality`
 
 Expected outcome:
@@ -28,3 +28,15 @@ Domain tags:
 - prompt engineering
 - quality improvement
 - iteration
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.critique`, `frame.prompt-critique`, `frame.prompt-rewrite`
+
+**Why this order works:** Critique mode sets the defect-finding stance before any analysis begins. Clarify-task surfaces whether the prompt's job is actually clear before diagnosing what is wrong with it. Prompt-critique identifies specific failure modes. Prompt-rewrite addresses them. Prompt-compare calibrates the revision. The rubric closes with a quality gate before the repaired prompt is reused.
+
+**Common swaps:** Swap `frame.clarify-task` for `frame.frame.task` when the task needs to be fully reframed rather than clarified. Skip `frame.prompt-compare` for rapid iteration cycles where the improvement is obvious.
+
+**Common failure mode:** Rewriting a prompt without diagnosing the failure mode first. Rewrites without a diagnosis tend to change the style while leaving the structural problem intact.

@@ -25,3 +25,11 @@ Domain tags:
 - critique
 - structure
 - meta
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `frame.prompt-critique`, `frame.prompt-rewrite`

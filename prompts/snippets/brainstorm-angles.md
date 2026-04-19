@@ -19,3 +19,11 @@ Domain tags:
 - ideation
 - creative thinking
 - reframing
+
+---
+
+Metadata:
+- type: frame
+- stage: explore
+- strength: light
+- pairs with: `mode.explore`, `frame.generate-options`, `frame.reframe-the-problem`

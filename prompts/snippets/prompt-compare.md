@@ -29,3 +29,11 @@ Domain tags:
 - prompt engineering
 - evaluation
 - testing
+
+---
+
+Metadata:
+- type: frame
+- stage: refine
+- strength: light
+- pairs with: `mode.critique`, `frame.prompt-critique`, `rubric.prompt-quality`

@@ -33,3 +33,11 @@ Domain tags:
 - observability
 - debugging
 - incident response
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `frame.triage-the-unknown`, `frame.bug-reproduction-brief`

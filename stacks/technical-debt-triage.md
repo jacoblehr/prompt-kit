@@ -10,11 +10,11 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.process-audit`
+1. `frame.process-audit`
 2. `lens.complexity-tradeoff`
-3. `core.risk-register`
-4. `core.prioritize-opportunities`
-5. `core.refactor-plan`
+3. `frame.risk-register`
+4. `frame.prioritize-opportunities`
+5. `frame.refactor-plan`
 
 Expected outcome:
 
@@ -29,3 +29,15 @@ Domain tags:
 - technical debt
 - refactoring
 - prioritisation
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.process-audit`, `lens.complexity-tradeoff`, `frame.risk-register`
+
+**Why this order works:** Process-audit first identifies where debt actually causes delay or defects in the current development workflow — not all debt is equally painful. Complexity-tradeoff distinguishes structural risk from cosmetic ugliness. Risk-register builds the ranked portfolio view. Prioritize-opportunities evaluates value-to-effort. Refactor-plan scopes the highest-priority item with clear exit criteria.
+
+**Common swaps:** Swap `frame.process-audit` for `frame.cause-mapping` when a recent incident or quality regression is the entry point. Swap `frame.refactor-plan` for `schema.execution-brief` when the output needs to be handed off to another team.
+
+**Common failure mode:** Addressing the most visible debt rather than the most impactful. Visible debt is noticed by the team; impactful debt is measured against delivery velocity and incident rate.

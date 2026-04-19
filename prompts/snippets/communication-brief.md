@@ -26,3 +26,11 @@ Domain tags:
 - change management
 - stakeholder management
 - messaging strategy
+
+---
+
+Metadata:
+- type: schema
+- stage: conclude
+- strength: medium
+- pairs with: `mode.decide`, `frame.stakeholder-map`, `lens.signaling-check`

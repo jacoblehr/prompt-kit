@@ -21,3 +21,11 @@ Domain tags:
 - risk management
 - critical thinking
 - planning
+
+---
+
+Metadata:
+- type: guardrail
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `guardrail.assumption-audit`, `strategy.premortem`

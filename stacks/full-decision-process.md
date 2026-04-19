@@ -11,11 +11,11 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.decide`
-2. `core.frame.success-criteria`
-3. `core.compare-options`
-4. `core.assumption.audit`
-5. `core.guardrail.disconfirming-evidence`
-6. `core.schema.decision-memo`
+2. `frame.success-criteria`
+3. `frame.compare-options`
+4. `guardrail.assumption-audit`
+5. `guardrail.disconfirming-evidence`
+6. `schema.decision-memo`
 7. `rubric.decision-quality`
 
 Expected outcome:
@@ -31,3 +31,15 @@ Domain tags:
 - decision theory
 - critical thinking
 - strategic thinking
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.decide`, `frame.success-criteria`, `frame.compare-options`
+
+**Why this order works:** Decide mode first locks in the convergent stance. Success-criteria before options prevents the criteria from being reverse-engineered to favor the preferred option. Compare-options evaluates against shared criteria. Assumption-audit surfaces the implicit bets behind the leading option. Disconfirming-evidence guardrail forces the strongest counter-argument an honest hearing. Decision-memo captures the reasoning. The rubric is the final quality gate before committing.
+
+**Common swaps:** Swap `guardrail.disconfirming-evidence` for `strategy.red_team` when the decision needs an adversarial challenge rather than a structured counter-argument. Skip `frame.assumption-audit` for lower-stakes decisions where speed matters more than rigor.
+
+**Common failure mode:** Setting success criteria after options are evaluated. Post-hoc criteria tend to match the preferred option rather than the actual goal, turning comparison into rationalization.

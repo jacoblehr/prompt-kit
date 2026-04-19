@@ -20,3 +20,11 @@ Domain tags:
 - writing
 - editing
 - communication
+
+---
+
+Metadata:
+- type: frame
+- stage: refine
+- strength: light
+- pairs with: `mode.critique`, `frame.brief-to-draft`, `rubric.writing-quality`

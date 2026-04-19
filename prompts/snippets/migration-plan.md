@@ -27,3 +27,11 @@ Domain tags:
 - migration
 - rollout
 - risk management
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `mode.decide`, `lens.abstraction-boundary`, `lens.failure-mode-analysis`

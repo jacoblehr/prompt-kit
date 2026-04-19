@@ -27,3 +27,11 @@ Domain tags:
 - code comprehension
 - debugging
 - architecture
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `lens.invariant-check`, `lens.interface-contract-review`

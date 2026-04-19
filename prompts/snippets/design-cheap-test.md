@@ -26,3 +26,11 @@ Domain tags:
 - experimentation
 - lean methodology
 - validation
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: medium
+- pairs with: `mode.decide`, `frame.success-criteria`, `guardrail.uncertainty`
