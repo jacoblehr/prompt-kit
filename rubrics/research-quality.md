@@ -1,4 +1,4 @@
-# Research Quality
+# rubric.research-quality
 
 Use this checklist after completing an investigation or research pass.
 
@@ -12,8 +12,11 @@ Questions:
 - Is the confidence level on each key claim explicit?
 - Would a skeptical expert with opposing priors find this research intellectually honest?
 
-Domain tags:
-- research methodology
-- epistemic quality
-- evidence evaluation
-- critical thinking
+Pairs with: `mode.critique`, `guardrail.uncertainty`, `lens.survivorship-bias`, `lens.base-rate-check`
+
+---
+
+Metadata:
+- type: rubric
+- stage: analyze
+- strength: medium

@@ -5,10 +5,14 @@ Use this repo as a kit of parts.
 ## Default Pattern
 
 1. start with a saved stack if one already matches the task
-2. otherwise pick a mode block
-3. add a strategy block if the task needs one
-4. add one or two core or lens blocks
-5. finish with a rubric block if the stakes justify it
+2. otherwise start with a `frame` block to clarify the task
+3. add a `mode` block to set the cognitive stance
+4. add a `strategy` or `lens` block if the task needs one (1–2 max)
+5. add a `guardrail` block if a specific failure mode is likely
+6. add a `schema` block if the output format matters
+7. finish with a `rubric` block if the stakes justify evaluation criteria
+
+See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 
 ## Example Compositions
 
@@ -16,56 +20,56 @@ Use this repo as a kit of parts.
 
 - `mode.explore`
 - `strategy.problem_split`
-- `core.frame.task`
-- `core.scope.frame`
-- `core.guardrail.uncertainty`
+- `frame.task`
+- `frame.scope`
+- `guardrail.uncertainty`
 
 ### Choosing between options
 
 - `mode.decide`
 - `strategy.steelman`
-- `core.frame.success-criteria`
-- `core.compare-options`
-- `core.schema.decision-memo`
+- `frame.success-criteria`
+- `frame.compare-options`
+- `schema.decision-memo`
 
 ### Explore versus exploit
 
 - `mode.decide`
-- `core.frame.success-criteria`
-- `core.explore-exploit-decision`
-- `core.guardrail.uncertainty`
-- `core.schema.execution-brief`
+- `frame.success-criteria`
+- `frame.explore-exploit-decision`
+- `guardrail.uncertainty`
+- `schema.execution-brief`
 
 ### Prioritizing a portfolio
 
 - `mode.decide`
-- `core.frame.success-criteria`
-- `core.prioritize-opportunities`
-- `core.schema.execution-brief`
-- `core.guardrail.uncertainty`
+- `frame.success-criteria`
+- `frame.prioritize-opportunities`
+- `schema.execution-brief`
+- `guardrail.uncertainty`
 
 ### De-risking before full commitment
 
 - `mode.decide`
-- `core.frame.success-criteria`
-- `core.design-cheap-test`
-- `core.schema.execution-brief`
-- `core.guardrail.uncertainty`
+- `frame.success-criteria`
+- `frame.design-cheap-test`
+- `schema.execution-brief`
+- `guardrail.uncertainty`
 
 ### Pressure-testing a plan
 
 - `mode.critique`
 - `strategy.premortem`
 - `strategy.red_team`
-- `core.assumption.audit`
-- `core.stress-test-assumptions`
+- `guardrail.assumption-audit`
+- `frame.stress-test-assumptions`
 
 ### Improving a prompt
 
 - `mode.critique`
-- `core.clarify-task`
-- `core.prompt-critique`
-- `core.prompt-rewrite`
+- `frame.clarify-task`
+- `frame.prompt-critique`
+- `frame.prompt-rewrite`
 - `rubric.prompt-quality`
 
 ### Concept lenses
@@ -77,52 +81,52 @@ Use this repo as a kit of parts.
 ### Aligning stakeholders
 
 - `mode.explore`
-- `core.stakeholder-map`
+- `frame.stakeholder-map`
 - `lens.coordination-plan`
-- `core.alignment-conversation-plan`
-- `core.schema.execution-brief`
+- `frame.alignment-conversation-plan`
+- `schema.execution-brief`
 
 ### Pressure-testing a belief or position
 
 - `strategy.steelman`
 - `strategy.inversion`
-- `core.critique-argument`
+- `frame.critique-argument`
 - `rubric.argument-quality`
 
 ### Learning from an outcome
 
 - `mode.reflect`
-- `core.cause-mapping`
-- `core.decision-journal-entry`
-- `core.weekly-review`
+- `frame.cause-mapping`
+- `frame.decision-journal-entry`
+- `frame.weekly-review`
 - `rubric.reflection-quality`
 
 ### Writing with rigor
 
-- `core.brief-to-draft`
+- `frame.brief-to-draft`
 - `mode.critique`
-- `core.critique-argument`
-- `core.rewrite-for-clarity`
+- `frame.critique-argument`
+- `frame.rewrite-for-clarity`
 - `rubric.writing-quality`
 
 ### Reading before changing code
 
 - `mode.explore`
-- `core.codepath-walkthrough`
+- `frame.codepath-walkthrough`
 - `lens.invariant-check`
 - `lens.interface-contract-review`
-- `core.change-impact-review`
+- `frame.change-impact-review`
 
 ### Debugging from logs
 
 - `mode.critique`
-- `core.triage-the-unknown`
-- `core.log-triage`
-- `core.bug-reproduction-brief`
+- `frame.triage-the-unknown`
+- `frame.log-triage`
+- `frame.bug-reproduction-brief`
 - `lens.debugger-loop`
 
 ## Keep It Light
 
 - use the smallest useful combination
-- prefer one good mode block plus one good core block over a huge stack
+- prefer one good mode block plus one good frame block over a huge stack
 - when a piece feels repetitive or low-value, cut it

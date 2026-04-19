@@ -1,4 +1,4 @@
-# Writing Quality
+# rubric.writing-quality
 
 Use this checklist after drafting or rewriting.
 
@@ -11,7 +11,11 @@ Questions:
 - Does each paragraph earn its place?
 - Is the next action or takeaway obvious?
 
-Domain tags:
-- writing craft
-- editing
-- communication
+Pairs with: `mode.critique`, `frame.rewrite-for-clarity`, `frame.critique-argument`
+
+---
+
+Metadata:
+- type: rubric
+- stage: refine
+- strength: light

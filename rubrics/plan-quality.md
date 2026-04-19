@@ -1,4 +1,4 @@
-# Plan Quality
+# rubric.plan-quality
 
 Use this checklist after a plan.
 
@@ -11,7 +11,11 @@ Questions:
 - Does the plan avoid unnecessary complexity?
 - Is there a check point after early execution?
 
-Domain tags:
-- planning
-- execution readiness
-- quality assurance
+Pairs with: `mode.decide`, `frame.plan-next-actions`, `strategy.premortem`
+
+---
+
+Metadata:
+- type: rubric
+- stage: refine
+- strength: light
