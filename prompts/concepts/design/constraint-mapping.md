@@ -34,4 +34,4 @@ Metadata:
 - type: lens
 - stage: frame
 - strength: medium
-- pairs with: `mode.explore`, `lens.jobs-to-be-done`, `frame.scope.frame`
+- pairs with: `mode.explore`, `lens.jobs-to-be-done`, `frame.scope`
