@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>Prompt Kit</title>
+    <meta name="description" content="A curated library of reusable prompt blocks and practical stacks for manual composition.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="eyebrow">Prompt Kit</div>
+          <h1>Prompt Kit</h1>
+          <p>A lightweight library of typed prompt blocks and saved stacks for fast manual composition.</p>
+        </div>
+
+        <nav class="nav">
+          <details class="nav-group" open>
+            <summary>Library</summary>
+            <div class="nav-children">
+              <a href="#stacks">Stacks</a>
+              <a href="#blocks">Blocks</a>
+              <a href="#docs">Docs</a>
+            </div>
+          </details>
+          <button type="button" class="builder-toggle-btn" id="builder-toggle" aria-expanded="false" aria-label="Toggle stack builder">
+            Stack Builder
+            <span class="builder-badge" id="builder-badge" hidden aria-hidden="true">0</span>
+          </button>
+        </nav>
+
+        <div class="search-wrap">
+          <div class="search-label-row">
+            <label for="search">Filter</label>
+            <div class="search-label-actions">
+              <button type="button" class="search-clear-btn" id="filter-clear" hidden aria-label="Clear filter">Clear</button>
+              <kbd class="search-hint" title="Press / to focus">/</kbd>
+            </div>
+          </div>
+          <input id="search" type="search" placeholder="Search blocks and stacks...">
+          <div class="filter-count" id="filter-count" hidden></div>
+          <div class="filter-chips" id="filter-chips"></div>
+        </div>
+
+        <div class="sidebar-note">
+          <p>Open this file directly in your browser. No build step, no install, no setup.</p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section id="stacks" class="section">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Composition</div>
+              <h2>Stacks</h2>
+            </div>
+            <p>Saved combinations of blocks for practical use cases. Stack notes describe an order of use and the output you should expect.</p>
+          </div>
+          <div class="card-grid" id="stacks-grid"></div>
+        </section>
+
+        <section id="blocks" class="section">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Primitive</div>
+              <h2>Blocks</h2>
+            </div>
+            <p>Reusable prompt units typed by role. Use filters to narrow by core, lens, mode, strategy, or rubric.</p>
+          </div>
+          <div class="block-groups" id="blocks-groups"></div>
+        </section>
+
+        <section id="docs" class="section docs-links">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Repo Docs</div>
+              <h2>Source Docs</h2>
+            </div>
+            <p>These notes explain the taxonomy, composition rules, and intended usage patterns.</p>
+          </div>
+          <div class="docs-grid">
+            <a class="doc-link" href="./README.md">README.md</a>
+            <a class="doc-link" href="./docs/FOUNDATION.md">docs/FOUNDATION.md</a>
+            <a class="doc-link" href="./docs/ONTOLOGY.md">docs/ONTOLOGY.md</a>
+            <a class="doc-link" href="./docs/MANUAL_COMPOSITION.md">docs/MANUAL_COMPOSITION.md</a>
+            <a class="doc-link" href="./docs/PLAN.md">docs/PLAN.md</a>
+          </div>
+        </section>
+      </main>
+
+      <aside class="builder-panel" id="builder-panel" aria-label="Stack Builder">
+        <div class="builder-resize-handle" aria-hidden="true"></div>
+        <div class="builder-header">
+          <div>
+            <div class="eyebrow">Compose</div>
+            <h2 class="builder-heading">Stack Builder</h2>
+          </div>
+          <button type="button" class="builder-close-btn" id="builder-close" aria-label="Close builder">Close</button>
+        </div>
+
+        <div class="builder-scroll">
+          <p class="builder-empty" id="builder-empty">
+            Click <strong>Add</strong> on any block.<br>
+            Reorder items here, then edit the draft or export when ready.
+          </p>
+          <div class="builder-list" id="builder-list" hidden></div>
+        </div>
+
+        <div class="builder-section-resize-handle" aria-hidden="true"></div>
+
+        <div class="builder-footer" id="builder-footer" hidden>
+          <div class="builder-footer-head">
+            <span class="builder-footer-label">Editable stack</span>
+            <div class="builder-footer-actions">
+              <button type="button" class="builder-clear-btn" id="clear-builder">Reset</button>
+              <button type="button" class="builder-rebuild-btn" id="rebuild-builder">Rebuild</button>
+              <button type="button" class="builder-download-btn" id="download-assembled">Export .md</button>
+              <button type="button" class="builder-copy-btn" id="copy-assembled">Copy stack</button>
+            </div>
+          </div>
+          <div class="builder-footer-body">
+            <div class="builder-footer-meta">
+              <div class="builder-stats" id="builder-stats" hidden></div>
+              <button type="button" class="builder-fillin-btn" id="fill-placeholders" hidden>Fill in</button>
+            </div>
+            <div class="builder-state-note" id="builder-state-note" hidden></div>
+            <textarea id="builder-output" class="builder-output" spellcheck="false" aria-label="Editable stack output" placeholder="The assembled stack appears here. You can edit it directly, then copy or export it."></textarea>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <template id="card-template">
+      <article class="card searchable">
+        <div class="card-top">
+          <div class="card-meta"></div>
+          <div class="card-actions">
+            <button class="add-btn" type="button" aria-pressed="false">Add</button>
+            <button class="copy-btn" type="button">Copy</button>
+            <button class="details-btn" type="button" aria-expanded="false">Details</button>
+          </div>
+        </div>
+        <h3></h3>
+        <p class="card-summary"></p>
+        <div class="tags"></div>
+        <div class="card-details" hidden>
+          <div class="card-body"></div>
+          <pre class="prompt"></pre>
+        </div>
+      </article>
+    </template>
+
+    <dialog id="vars-modal" class="vars-modal" aria-labelledby="vm-title">
+      <div class="vm-header">
+        <div>
+          <h3 class="vm-title" id="vm-title">Fill in Variables</h3>
+        </div>
+        <button type="button" class="vm-close" id="vm-close" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="vm-body" id="vm-body"></div>
+      <div class="vm-footer">
+        <button type="button" class="vm-cancel" id="vm-cancel">Cancel</button>
+        <button type="button" class="vm-apply" id="vm-apply">Apply</button>
+      </div>
+    </dialog>
+
+    <div id="step-popover" class="step-popover" hidden></div>
+
+    <script src="site-data.js"></script>
+    <script src="site.js"></script>
+  </body>
+</html>

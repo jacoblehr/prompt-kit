@@ -1,0 +1,18 @@
+# Game Theory: Coordination Plan
+
+Use when the main problem is getting multiple actors to align without drift.
+
+```text
+Analyze this as a coordination problem.
+
+Return:
+- what must be coordinated
+- likely focal points
+- sources of misalignment
+- commitments needed
+- communication or protocol changes
+- how to detect drift early
+
+Situation:
+{paste situation}
+```
