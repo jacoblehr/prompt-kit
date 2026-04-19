@@ -31,6 +31,8 @@ function normalizeRef(ref = "") {
   return ref.trim().toLowerCase().replace(/_/g, "-");
 }
 
+const PLACEHOLDER_RE = /\{[^}\n]{1,80}\}/g;
+
 function normalizeSection(item) {
   if (item.section === "Stack") return "stack";
   return (item.blockType || item.section || "").toLowerCase();
@@ -75,7 +77,8 @@ const builderState = (() => {
     return {
       ...item,
       ...legacyMap[item.section],
-      chains: item.chains || {}
+      chains: item.chains || {},
+      inputs: item.inputs || {}
     };
   }
 
@@ -90,6 +93,7 @@ const builderState = (() => {
         items = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
           .map((item) => migrateLegacyItem(item));
         items.forEach((i) => { if (!i.chains) i.chains = {}; });
+        items.forEach((i) => { if (!i.inputs) i.inputs = {}; });
         items.forEach((item, idx) => {
           Object.entries(item.chains).forEach(([ph, source]) => {
             if (typeof source === "number") {
@@ -121,7 +125,8 @@ const builderState = (() => {
         title: item.title,
         summary: item.summary || "",
         copy: item.copy || bodyCopy(item),
-        chains: {}
+        chains: {},
+        inputs: {}
       });
       save();
       return true;
@@ -154,6 +159,7 @@ const builderState = (() => {
       const item = items.find((i) => `${i.section}:${i.title}` === itemKeyValue);
       if (!item) return;
       if (!item.chains) item.chains = {};
+      if (!item.inputs) item.inputs = {};
       if (srcIdx === null || srcIdx === undefined || srcIdx < 0) {
         delete item.chains[ph];
       } else {
@@ -162,7 +168,21 @@ const builderState = (() => {
           delete item.chains[ph];
         } else {
           item.chains[ph] = itemKey(sourceItem);
+          delete item.inputs[ph];
         }
+      }
+      save();
+    },
+    setInput(itemKeyValue, ph, value) {
+      const item = items.find((i) => `${i.section}:${i.title}` === itemKeyValue);
+      if (!item) return;
+      if (!item.inputs) item.inputs = {};
+      if (!item.chains) item.chains = {};
+      if (value === "") {
+        delete item.inputs[ph];
+      } else {
+        item.inputs[ph] = value;
+        delete item.chains[ph];
       }
       save();
     },
@@ -273,10 +293,21 @@ function buildChainGlue(item, itemIndex = -1, items = []) {
   return `Input wiring:\n${chains.join("\n")}\n\n`;
 }
 
+function extractPlaceholders(text = "") {
+  return [...new Set(text.match(PLACEHOLDER_RE) || [])];
+}
+
+function applyManualInputs(text = "", item = {}) {
+  return Object.entries(item.inputs || {}).reduce((nextText, [ph, value]) => {
+    if (value === "") return nextText;
+    return nextText.split(ph).join(value);
+  }, text);
+}
+
 function formatStackBlock(item, itemIndex = -1, items = []) {
   const label = getOntologyLabel(item);
   const glue = buildChainGlue(item, itemIndex, items);
-  return `## ${item.title}\n_${label}_\n\n${glue}${item.copy}`;
+  return `## ${item.title}\n_${label}_\n\n${glue}${applyManualInputs(item.copy, item)}`;
 }
 
 function bodyCopy(item) {
@@ -474,6 +505,62 @@ function syncAddButtons() {
   });
 }
 
+function getPlaceholderUiState() {
+  const output = document.getElementById("builder-output");
+  const liveItems = builderState.items.filter((i) => i.copy && i.copy.trim());
+  const groups = liveItems
+    .map((item, idx) => {
+      const fields = extractPlaceholders(item.copy || "").map((ph) => {
+        const chainSrcIdx = getChainSourceIndex((item.chains || {})[ph], liveItems, idx);
+        const manualValue = (item.inputs && typeof item.inputs[ph] === "string") ? item.inputs[ph] : "";
+        return {
+          ph,
+          itemKey: `${item.section}:${item.title}`,
+          stepIndex: idx,
+          chainSrcIdx,
+          manualValue
+        };
+      });
+
+      return fields.length > 0
+        ? {
+            stepNum: idx + 1,
+            title: item.title,
+            label: getOntologyLabel(item),
+            fields,
+            liveItems
+          }
+        : null;
+    })
+    .filter(Boolean);
+
+  const knownPlaceholders = new Set(groups.flatMap((group) => group.fields.map((field) => field.ph)));
+  const ungrouped = extractPlaceholders(output ? output.value : "")
+    .filter((ph) => !knownPlaceholders.has(ph))
+    .map((ph) => ({
+      ph,
+      itemKey: "",
+      stepIndex: -1,
+      chainSrcIdx: -1,
+      manualValue: "",
+      liveItems: []
+    }));
+
+  const unresolvedCount = groups.reduce((count, group) => count + group.fields.reduce((groupCount, field) => {
+    const resolved = field.chainSrcIdx >= 0 || field.manualValue !== "";
+    return groupCount + (resolved ? 0 : 1);
+  }, 0), 0) + ungrouped.length;
+
+  const totalCount = groups.reduce((count, group) => count + group.fields.length, 0) + ungrouped.length;
+
+  return {
+    groups,
+    ungrouped,
+    unresolvedCount,
+    totalCount
+  };
+}
+
 let builderDraftDirty = false;
 
 function updateBuilderStateNote() {
@@ -547,7 +634,7 @@ function renderBuilder(flashKey = null) {
     el.dataset.key = key;
     el.draggable = true;
     const preview = item.summary ? `<div class="bi-preview">${escHtml(item.summary)}</div>` : "";
-    const phs = [...new Set((item.copy || "").match(/\{[^}\n]{1,80}\}/g) || [])];
+    const phs = extractPlaceholders(item.copy || "");
     const chains = item.chains || {};
     let chainHtml = "";
 
@@ -594,59 +681,35 @@ function updateStats() {
   }
   statsEl.hidden = false;
   const chars = text.length;
-  const placeholders = (text.match(/\{[^}]+\}/g) || []).length;
+  const { unresolvedCount, totalCount } = getPlaceholderUiState();
   const items = builderState.items.length;
   const charStr = `${chars.toLocaleString()} chars`;
   const itemStr = `${items} item${items !== 1 ? "s" : ""}`;
-  const phStr = placeholders > 0
-    ? `<button class="stat-ph-btn" type="button">${placeholders} placeholder${placeholders !== 1 ? "s" : ""} to fill</button>`
-    : '<span class="stat-ok">Ready to copy</span>';
+  const phStr = unresolvedCount > 0
+    ? `<button class="stat-ph-btn" type="button">${unresolvedCount} input${unresolvedCount !== 1 ? "s" : ""} to fill</button>`
+    : totalCount > 0
+      ? '<button class="stat-ph-btn" type="button">Review inputs</button>'
+      : '<span class="stat-ok">Ready to copy</span>';
   statsEl.innerHTML = `<span>${itemStr}</span><span>${charStr}</span>${phStr}`;
 }
 
 function updateVarButton() {
-  const output = document.getElementById("builder-output");
   const btn = document.getElementById("fill-placeholders");
-  if (!btn || !output) return;
-  const unique = new Set((output.value.match(/\{[^}\n]{1,80}\}/g) || []));
-  if (unique.size > 0) {
+  if (!btn) return;
+  const { unresolvedCount, totalCount } = getPlaceholderUiState();
+  if (totalCount > 0) {
     btn.hidden = false;
-    btn.textContent = `Fill in (${unique.size})`;
+    btn.textContent = unresolvedCount > 0 ? `Fill in (${unresolvedCount})` : "Review inputs";
   } else {
     btn.hidden = true;
   }
 }
 
 function openVarsModal() {
-  const output = document.getElementById("builder-output");
-  const text = output.value;
-  const allMatches = text.match(/\{[^}\n]{1,80}\}/g);
-  if (!allMatches) return;
-
   const modal = document.getElementById("vars-modal");
   const body = document.getElementById("vm-body");
-  const seen = new Set();
-  const groups = [];
-  const ungrouped = [];
-  const liveItems = builderState.items.filter((i) => i.copy && i.copy.trim());
-
-  liveItems.forEach((item, idx) => {
-    const phs = (item.copy || "").match(/\{[^}\n]{1,80}\}/g) || [];
-    if (phs.length === 0) return;
-    const unique = [...new Set(phs)].filter((p) => !seen.has(p));
-    if (unique.length === 0) return;
-    unique.forEach((p) => seen.add(p));
-    groups.push({
-      stepNum: idx + 1,
-      title: item.title,
-      label: getOntologyLabel(item),
-      placeholders: unique.map((ph) => ({ ph }))
-    });
-  });
-
-  [...new Set(allMatches)].filter((p) => !seen.has(p)).forEach((ph) => {
-    ungrouped.push({ ph });
-  });
+  const { groups, ungrouped } = getPlaceholderUiState();
+  if (groups.length === 0 && ungrouped.length === 0) return;
 
   body.innerHTML = "";
 
@@ -654,17 +717,10 @@ function openVarsModal() {
     const section = document.createElement("div");
     section.className = "vm-group";
     section.innerHTML = `<div class="vm-group-header"><span class="vm-step">${group.stepNum}</span><span class="vm-group-title">${escHtml(group.title)}</span><span class="vm-group-label">${escHtml(group.label)}</span></div>`;
-    const srcItem = liveItems[group.stepNum - 1];
-    const srcChains = (srcItem && srcItem.chains) ? srcItem.chains : {};
-    const itemKey = srcItem ? `${srcItem.section}:${srcItem.title}` : "";
-    group.placeholders.forEach(({ ph }) => {
-      const chainSrcIdx = getChainSourceIndex(srcChains[ph], liveItems, group.stepNum - 1);
+    group.fields.forEach((field) => {
       section.appendChild(buildVmField({
-        ph,
-        itemKey,
-        stepIndex: group.stepNum - 1,
-        chainSrcIdx,
-        liveItems
+        ...field,
+        liveItems: group.liveItems
       }));
     });
     body.appendChild(section);
@@ -674,8 +730,8 @@ function openVarsModal() {
     const section = document.createElement("div");
     section.className = "vm-group";
     section.innerHTML = '<div class="vm-group-header"><span class="vm-group-title">Other</span></div>';
-    ungrouped.forEach(({ ph }) => {
-      section.appendChild(buildVmField({ ph, liveItems }));
+    ungrouped.forEach((field) => {
+      section.appendChild(buildVmField(field));
     });
     body.appendChild(section);
   }
@@ -685,7 +741,7 @@ function openVarsModal() {
   if (first) setTimeout(() => first.focus(), 40);
 }
 
-function buildVmField({ ph, itemKey = "", stepIndex = -1, chainSrcIdx = -1, liveItems = [] }) {
+function buildVmField({ ph, itemKey = "", stepIndex = -1, chainSrcIdx = -1, manualValue = "", liveItems = [] }) {
   const item = document.createElement("div");
   item.className = "vm-field";
   const canChain = stepIndex > 0;
@@ -711,7 +767,7 @@ function buildVmField({ ph, itemKey = "", stepIndex = -1, chainSrcIdx = -1, live
   item.innerHTML = `
     <div class="vm-field-head"><code class="vm-ph">${escHtml(ph)}</code></div>
     ${chainControl}
-    <textarea class="vm-input" data-placeholder="${escHtml(ph)}" spellcheck="false" placeholder="Type or paste your value…"></textarea>
+    <textarea class="vm-input" data-item-key="${escHtml(itemKey)}" data-placeholder="${escHtml(ph)}" spellcheck="false" placeholder="Type or paste your value…">${escHtml(manualValue)}</textarea>
   `;
   return item;
 }
@@ -725,20 +781,26 @@ function applyVarModal() {
     const input = field.querySelector(".vm-input");
     const select = field.querySelector(".vm-chain-select");
     if (!input) return;
+    const itemKey = input.dataset.itemKey || (select ? select.dataset.itemKey : "");
     const ph = input.dataset.placeholder;
     const manualValue = input.value;
 
     if (manualValue !== "") {
-      if (select) {
-        builderState.setChain(select.dataset.itemKey, ph, null);
+      if (itemKey) {
+        builderState.setInput(itemKey, ph, manualValue);
+      } else {
+        manualOverrides.push({ ph, value: manualValue });
       }
-      manualOverrides.push({ ph, value: manualValue });
       return;
     }
 
-    if (select) {
+    if (itemKey) {
+      builderState.setInput(itemKey, ph, "");
+    }
+
+    if (select && itemKey) {
       const srcIdx = select.value === "" ? null : parseInt(select.value, 10);
-      builderState.setChain(select.dataset.itemKey, ph, srcIdx);
+      builderState.setChain(itemKey, ph, srcIdx);
     }
   });
 
@@ -1062,6 +1124,7 @@ builderList.addEventListener("change", (e) => {
   const ph = select.dataset.ph;
   const srcIdx = select.value === "" ? null : parseInt(select.value, 10);
   builderState.setChain(key, ph, srcIdx);
+  syncBuilderOutput();
 });
 
 document.getElementById("copy-assembled").addEventListener("click", async () => {
