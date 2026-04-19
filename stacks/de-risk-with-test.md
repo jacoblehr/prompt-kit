@@ -22,3 +22,8 @@ Expected outcome:
 - cheapest credible test
 - success and failure signals
 - next action with checkpoint
+
+Domain tags:
+- experimentation
+- risk management
+- lean methodology

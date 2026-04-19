@@ -51,6 +51,16 @@ const BLOCK_TYPE_DESCRIPTIONS = {
   rubric: "Evaluation blocks for checking whether the result is actually good enough."
 };
 
+const STACK_SIZES = [
+  { key: "small",  label: "Small",  range: "1–3 blocks",  test: (n) => n <= 3 },
+  { key: "medium", label: "Medium", range: "4–5 blocks",  test: (n) => n >= 4 && n <= 5 },
+  { key: "large",  label: "Large",  range: "6+ blocks",   test: (n) => n >= 6 }
+];
+
+function getStackSizeCategory(count) {
+  return (STACK_SIZES.find((s) => s.test(count)) || STACK_SIZES[0]).key;
+}
+
 // ─── Builder state ────────────────────────────────────────────────────────────
 const builderState = (() => {
   const STORAGE_KEY = "agent-library-builder";
@@ -184,6 +194,25 @@ const builderState = (() => {
         item.inputs[ph] = value;
         delete item.chains[ph];
       }
+      save();
+    },
+    restore(newItems) {
+      items = (Array.isArray(newItems) ? newItems : [])
+        .map((item) => migrateLegacyItem({
+          section: item.section || "Block",
+          blockType: item.blockType || "",
+          sourceKind: item.sourceKind || "",
+          family: item.family || "",
+          group: item.group || "",
+          title: item.title || "",
+          summary: item.summary || "",
+          copy: item.copy || "",
+          chains: item.chains || {},
+          inputs: item.inputs || {}
+        }))
+        .filter((item) => item && item.title);
+      items.forEach((i) => { if (!i.chains) i.chains = {}; });
+      items.forEach((i) => { if (!i.inputs) i.inputs = {}; });
       save();
     },
     assemble() {
@@ -365,6 +394,7 @@ function createCard(item) {
     : [];
 
   if (item.section === "Stack") {
+    card.dataset.stackSize = getStackSizeCategory(stackRefs.length);
     const countBadge = document.createElement("span");
     countBadge.className = "stack-size-badge";
     countBadge.textContent = `${stackRefs.length} block${stackRefs.length !== 1 ? "s" : ""}`;
@@ -767,8 +797,20 @@ function buildVmField({ ph, itemKey = "", stepIndex = -1, chainSrcIdx = -1, manu
   item.innerHTML = `
     <div class="vm-field-head"><code class="vm-ph">${escHtml(ph)}</code></div>
     ${chainControl}
-    <textarea class="vm-input" data-item-key="${escHtml(itemKey)}" data-placeholder="${escHtml(ph)}" spellcheck="false" placeholder="Type or paste your value…">${escHtml(manualValue)}</textarea>
+    <textarea class="vm-input" data-item-key="${escHtml(itemKey)}" data-placeholder="${escHtml(ph)}" spellcheck="false" placeholder="Type or paste your value…"${(canChain && chainSrcIdx >= 0) ? ' disabled' : ''}>${escHtml(manualValue)}</textarea>
   `;
+
+  if (canChain) {
+    const select = item.querySelector(".vm-chain-select");
+    const textarea = item.querySelector(".vm-input");
+    select.addEventListener("change", () => {
+      const isManual = select.value === "";
+      textarea.disabled = !isManual;
+      if (!isManual) textarea.value = "";
+      if (isManual) setTimeout(() => textarea.focus(), 0);
+    });
+  }
+
   return item;
 }
 
@@ -783,7 +825,7 @@ function applyVarModal() {
     if (!input) return;
     const itemKey = input.dataset.itemKey || (select ? select.dataset.itemKey : "");
     const ph = input.dataset.placeholder;
-    const manualValue = input.value;
+    const manualValue = input.disabled ? "" : input.value;
 
     if (manualValue !== "") {
       if (itemKey) {
@@ -860,6 +902,12 @@ function applyFilters() {
     sectionEl.classList.toggle("hidden", !hasVisibleCard);
   });
 
+  document.querySelectorAll(".stack-size-group").forEach((groupEl) => {
+    const cards = groupEl.querySelectorAll(".searchable");
+    const hasVisibleCard = [...cards].some((card) => !card.classList.contains("hidden"));
+    groupEl.classList.toggle("hidden", !hasVisibleCard);
+  });
+
   const hasFilter = !!(q || section);
   if (filterCount) {
     filterCount.textContent = `${visible} of ${all.length} shown`;
@@ -933,7 +981,26 @@ function renderCards() {
   const stacksMount = document.getElementById("stacks-grid");
   if (stacksMount) {
     stacksMount.innerHTML = "";
-    stacks.forEach((item) => stacksMount.appendChild(createCard(item)));
+    STACK_SIZES.forEach(({ key, label, range }) => {
+      const groupItems = stacks.filter((item) => {
+        const seqEntry = (item.body || []).find(([l]) => l === "Suggested blocks");
+        const count = seqEntry ? (seqEntry[1].match(/`([^`]+)`/g) || []).length : 0;
+        return getStackSizeCategory(count) === key;
+      });
+      if (groupItems.length === 0) return;
+      const group = document.createElement("div");
+      group.className = "stack-size-group";
+      group.dataset.sizeGroup = key;
+      const head = document.createElement("div");
+      head.className = "stack-size-head";
+      head.innerHTML = `<span class="stack-size-head-label">${escHtml(label)}</span><span class="stack-size-head-range">${escHtml(range)}</span>`;
+      const grid = document.createElement("div");
+      grid.className = "card-grid";
+      groupItems.forEach((item) => grid.appendChild(createCard(item)));
+      group.appendChild(head);
+      group.appendChild(grid);
+      stacksMount.appendChild(group);
+    });
   }
 
   renderGroupedBlocks();
@@ -1153,6 +1220,56 @@ document.getElementById("download-assembled").addEventListener("click", () => {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+});
+
+// ─── Save / Load JSON ─────────────────────────────────────────────────────────
+
+function saveBuilderAsJson() {
+  const state = {
+    version: 1,
+    saved: new Date().toISOString(),
+    items: builderState.items.map((item) => ({ ...item }))
+  };
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "stack.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function loadBuilderFromJson(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const newItems = Array.isArray(data) ? data : (Array.isArray(data.items) ? data.items : null);
+      if (!newItems) throw new Error("No items array found");
+      builderState.restore(newItems);
+      builderDraftDirty = false;
+      if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
+      renderBuilder();
+      syncAddButtons();
+    } catch {
+      window.alert("Could not load stack. Make sure the file is a valid Prompt Kit JSON export.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+document.getElementById("save-stack-json").addEventListener("click", saveBuilderAsJson);
+
+document.getElementById("load-stack-trigger").addEventListener("click", () => {
+  document.getElementById("load-stack-input").click();
+});
+
+document.getElementById("load-stack-input").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) loadBuilderFromJson(file);
+  e.target.value = "";
 });
 
 document.getElementById("clear-builder").addEventListener("click", () => {

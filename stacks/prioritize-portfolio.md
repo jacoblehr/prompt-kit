@@ -22,3 +22,8 @@ Expected outcome:
 - now versus later cuts
 - execution brief for the top priority
 - visible uncertainty
+
+Domain tags:
+- resource allocation
+- portfolio management
+- prioritization

@@ -26,3 +26,8 @@ Problem:
 Constraints, limits, or non-goals:
 {paste constraints, limits, or non-goals}
 ```
+
+Domain tags:
+- ideation
+- option generation
+- decision support

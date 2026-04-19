@@ -22,3 +22,8 @@ Expected outcome:
 - repeated frictions
 - next-week focus
 - decisions worth tracking
+
+Domain tags:
+- reflection
+- personal effectiveness
+- learning

@@ -22,3 +22,8 @@ Expected outcome:
 - exposed assumptions
 - hardest-to-dismiss objections
 - concrete mitigations
+
+Domain tags:
+- risk management
+- critical thinking
+- planning

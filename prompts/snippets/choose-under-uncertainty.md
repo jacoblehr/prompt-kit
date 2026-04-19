@@ -18,3 +18,8 @@ Context:
 Options:
 {paste options}
 ```
+
+Domain tags:
+- decision theory
+- risk management
+- judgment under uncertainty

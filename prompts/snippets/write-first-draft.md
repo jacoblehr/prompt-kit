@@ -19,3 +19,8 @@ Goal:
 Key points:
 {paste points}
 ```
+
+Domain tags:
+- writing
+- content creation
+- communication

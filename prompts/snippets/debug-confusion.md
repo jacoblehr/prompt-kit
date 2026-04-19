@@ -15,3 +15,8 @@ Return:
 Situation:
 {paste situation}
 ```
+
+Domain tags:
+- epistemics
+- reflection
+- causal reasoning

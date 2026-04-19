@@ -26,3 +26,8 @@ Context:
 Items:
 {paste items}
 ```
+
+Domain tags:
+- prioritization
+- resource allocation
+- strategic thinking

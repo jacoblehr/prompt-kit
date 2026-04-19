@@ -572,6 +572,41 @@ kbd.search-hint {
 
 /* ─── Suggested Stacks ──────────────────────────────────────────────────────────────── */
 
+.stacks-groups {
+  display: grid;
+  gap: 28px;
+}
+
+.stack-size-group {
+  display: grid;
+  gap: 12px;
+}
+
+.stack-size-group.hidden {
+  display: none;
+}
+
+.stack-size-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stack-size-head-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.stack-size-head-range {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
 .stacks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -765,6 +800,31 @@ kbd.search-hint {
   padding: 22px 18px 16px;
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
+}
+
+.builder-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.builder-load-btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  flex-shrink: 0;
+  transition: color 0.12s, border-color 0.12s;
+}
+
+.builder-load-btn:hover {
+  color: var(--ink);
+  border-color: var(--accent);
 }
 
 .builder-heading {
@@ -1002,6 +1062,7 @@ kbd.search-hint {
 }
 
 .bi-btn {
+  border: 1px solid var(--line);
   border-radius: 7px;
   background: transparent;
   color: var(--muted);
@@ -1123,6 +1184,23 @@ kbd.search-hint {
 }
 
 .builder-download-btn:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.builder-save-json-btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  padding: 6px 11px;
+  transition: color 0.1s, border-color 0.1s;
+}
+
+.builder-save-json-btn:hover {
   color: var(--ink);
   border-color: var(--accent);
 }
@@ -1386,6 +1464,12 @@ kbd.search-hint {
   font-size: 0.78rem;
   line-height: 1.5;
   transition: border-color 0.12s;
+}
+
+.vm-input:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  resize: none;
 }
 
 .vm-input:focus {

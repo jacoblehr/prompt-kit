@@ -19,3 +19,8 @@ My desired outcome:
 Context:
 {paste meeting context}
 ```
+
+Domain tags:
+- communication
+- preparation
+- negotiation

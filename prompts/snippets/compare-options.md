@@ -23,3 +23,8 @@ Criteria:
 Options:
 {paste options}
 ```
+
+Domain tags:
+- evaluation
+- decision support
+- analysis

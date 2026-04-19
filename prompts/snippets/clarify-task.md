@@ -15,3 +15,8 @@ Return:
 Task:
 {paste task}
 ```
+
+Domain tags:
+- task framing
+- requirements
+- scoping

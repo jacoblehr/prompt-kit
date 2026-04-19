@@ -16,3 +16,8 @@ Return:
 Situation:
 {paste situation}
 ```
+
+Domain tags:
+- game theory
+- organizational learning
+- influence

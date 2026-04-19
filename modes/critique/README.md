@@ -31,3 +31,8 @@ Inspect the current artifact for weaknesses, blind spots, and likely failure poi
 Prioritize the highest-leverage findings and give concrete revision advice.
 Do not soften the critique with filler praise.
 ```
+
+Domain tags:
+- critical review
+- quality improvement
+- adversarial thinking

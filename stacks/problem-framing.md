@@ -22,3 +22,8 @@ Expected outcome:
 - subproblems
 - open questions
 - best next step
+
+Domain tags:
+- strategic thinking
+- problem definition
+- planning

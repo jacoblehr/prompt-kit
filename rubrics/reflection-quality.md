@@ -10,3 +10,8 @@ Questions:
 - Did it identify what actually caused the outcome?
 - Did it avoid blame theater?
 - Will this make a future decision or workflow better?
+
+Domain tags:
+- reflection
+- personal effectiveness
+- epistemics

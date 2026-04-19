@@ -17,3 +17,8 @@ My purpose:
 Topic:
 {paste topic}
 ```
+
+Domain tags:
+- research design
+- epistemic planning
+- inquiry

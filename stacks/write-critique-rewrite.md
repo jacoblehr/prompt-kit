@@ -21,3 +21,8 @@ Expected outcome:
 - first draft
 - prioritized critique
 - stronger revision
+
+Domain tags:
+- writing
+- editorial process
+- quality improvement

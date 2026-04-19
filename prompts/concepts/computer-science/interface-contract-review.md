@@ -17,3 +17,8 @@ Return:
 Boundary:
 {paste boundary}
 ```
+
+Domain tags:
+- software engineering
+- systems thinking
+- critical thinking

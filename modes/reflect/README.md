@@ -31,3 +31,8 @@ Compare what was expected with what actually happened.
 Extract reusable lessons and identify what should change in my prompts, stacks, or decisions next time.
 Do not stop at recap.
 ```
+
+Domain tags:
+- reflection
+- retrospective
+- learning

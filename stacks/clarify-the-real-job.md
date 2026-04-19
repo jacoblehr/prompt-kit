@@ -23,3 +23,8 @@ Expected outcome:
 - the social job (how they want to appear to others)
 - a working definition of done
 - the real question to answer
+
+Domain tags:
+- product thinking
+- customer understanding
+- requirements

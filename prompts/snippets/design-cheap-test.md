@@ -21,3 +21,8 @@ Context:
 Resource ceiling, if any:
 {paste time, budget, or effort limit}
 ```
+
+Domain tags:
+- experimentation
+- lean methodology
+- validation

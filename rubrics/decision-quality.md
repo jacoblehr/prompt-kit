@@ -10,3 +10,8 @@ Questions:
 - Is uncertainty acknowledged?
 - Is there a concrete next action?
 - Would future-you understand why this decision was made?
+
+Domain tags:
+- decision theory
+- quality assurance
+- critical thinking

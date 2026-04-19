@@ -17,3 +17,8 @@ Return:
 Situation:
 {paste situation}
 ```
+
+Domain tags:
+- game theory
+- behavioral science
+- organizational learning

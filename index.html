@@ -62,7 +62,7 @@
             </div>
             <p>Saved combinations of blocks for practical use cases. Stack notes describe an order of use and the output you should expect.</p>
           </div>
-          <div class="card-grid" id="stacks-grid"></div>
+          <div class="stacks-groups" id="stacks-grid"></div>
         </section>
 
         <section id="blocks" class="section">
@@ -101,7 +101,10 @@
             <div class="eyebrow">Compose</div>
             <h2 class="builder-heading">Stack Builder</h2>
           </div>
-          <button type="button" class="builder-close-btn" id="builder-close" aria-label="Close builder">Close</button>
+          <div class="builder-header-actions">
+            <button type="button" class="builder-load-btn" id="load-stack-trigger">Load JSON</button>
+            <button type="button" class="builder-close-btn" id="builder-close" aria-label="Close builder">Close</button>
+          </div>
         </div>
 
         <div class="builder-scroll">
@@ -121,6 +124,7 @@
               <button type="button" class="builder-clear-btn" id="clear-builder">Reset</button>
               <button type="button" class="builder-rebuild-btn" id="rebuild-builder">Rebuild</button>
               <button type="button" class="builder-download-btn" id="download-assembled">Export .md</button>
+              <button type="button" class="builder-save-json-btn" id="save-stack-json">Save JSON</button>
               <button type="button" class="builder-copy-btn" id="copy-assembled">Copy stack</button>
             </div>
           </div>
@@ -170,7 +174,9 @@
       </div>
     </dialog>
 
-    <div id="step-popover" class="step-popover" hidden></div>
+        <div id="step-popover" class="step-popover" hidden></div>
+
+    <input type="file" id="load-stack-input" accept=".json" hidden aria-hidden="true">
 
     <script src="site-data.js"></script>
     <script src="site.js"></script>

@@ -25,3 +25,8 @@ Observed failure modes, if any:
 Prompt:
 {paste prompt}
 ```
+
+Domain tags:
+- prompt engineering
+- iteration
+- revision

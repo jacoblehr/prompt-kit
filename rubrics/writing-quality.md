@@ -10,3 +10,8 @@ Questions:
 - Is the structure easy to follow?
 - Does each paragraph earn its place?
 - Is the next action or takeaway obvious?
+
+Domain tags:
+- writing craft
+- editing
+- communication

@@ -15,3 +15,8 @@ Return:
 Topic or question:
 {paste topic}
 ```
+
+Domain tags:
+- argumentation
+- persuasion
+- writing

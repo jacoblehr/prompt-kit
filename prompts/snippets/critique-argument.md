@@ -21,3 +21,8 @@ Return:
 Argument:
 {paste argument}
 ```
+
+Domain tags:
+- critical thinking
+- argumentation
+- logic

@@ -16,3 +16,8 @@ Return:
 System or argument:
 {paste system or argument}
 ```
+
+Domain tags:
+- software engineering
+- critical thinking
+- epistemics

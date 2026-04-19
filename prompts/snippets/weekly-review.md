@@ -17,3 +17,8 @@ Return:
 Notes:
 {paste notes}
 ```
+
+Domain tags:
+- reflection
+- personal effectiveness
+- retrospective

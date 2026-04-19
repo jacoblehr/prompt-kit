@@ -30,3 +30,8 @@ Argue against this plan as a hostile critic whose goal is to defeat it.
 Prioritize arguments that are both credible and hard to dismiss.
 Do not soften the critique or suggest fixes until the attack is complete.
 ```
+
+Domain tags:
+- adversarial review
+- critical thinking
+- stress testing

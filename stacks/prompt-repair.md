@@ -23,3 +23,8 @@ Expected outcome:
 - fewer failure modes
 - a tighter revision
 - a prompt that is easier to test and reuse
+
+Domain tags:
+- prompt engineering
+- quality improvement
+- iteration

@@ -18,3 +18,8 @@ My purpose:
 Source:
 {paste source}
 ```
+
+Domain tags:
+- synthesis
+- knowledge management
+- comprehension

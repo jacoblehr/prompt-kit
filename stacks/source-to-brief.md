@@ -22,3 +22,8 @@ Expected outcome:
 - the most decision-relevant insights
 - the most useful open questions
 - clear next actions
+
+Domain tags:
+- synthesis
+- knowledge management
+- research

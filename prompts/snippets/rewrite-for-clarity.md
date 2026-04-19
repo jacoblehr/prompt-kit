@@ -15,3 +15,8 @@ Requirements:
 Text:
 {paste draft}
 ```
+
+Domain tags:
+- writing
+- editing
+- communication

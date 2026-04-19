@@ -27,3 +27,8 @@ Expected outcome:
 - chosen direction
 - rationale
 - next action
+
+Domain tags:
+- decision making
+- option generation
+- evaluation

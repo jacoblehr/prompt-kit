@@ -16,3 +16,8 @@ Return:
 Context:
 {paste context}
 ```
+
+Domain tags:
+- software engineering
+- decision theory
+- systems thinking

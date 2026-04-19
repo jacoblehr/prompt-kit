@@ -15,3 +15,8 @@ Look for:
 Context:
 {paste context}
 ```
+
+Domain tags:
+- critical thinking
+- reflection
+- epistemics

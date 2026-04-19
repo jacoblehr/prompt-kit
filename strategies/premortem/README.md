@@ -24,3 +24,8 @@ Quick invocation:
 Apply the PREMORTEM strategy.
 Assume this plan failed. List the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.
 ```
+
+Domain tags:
+- adversarial planning
+- risk identification
+- prospective hindsight

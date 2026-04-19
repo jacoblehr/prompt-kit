@@ -22,3 +22,8 @@ Expected outcome:
 - friction and anxiety points blocking the switch
 - what would need to be true for someone to hire this instead
 - highest-leverage intervention to try first
+
+Domain tags:
+- change management
+- behavioral analysis
+- adoption

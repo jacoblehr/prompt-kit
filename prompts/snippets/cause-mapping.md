@@ -15,3 +15,8 @@ Requirements:
 Problem or outcome:
 {paste problem or outcome}
 ```
+
+Domain tags:
+- root cause analysis
+- diagnostics
+- systems thinking

@@ -17,3 +17,8 @@ Return:
 Decision context:
 {paste context}
 ```
+
+Domain tags:
+- reflection
+- decision tracking
+- personal effectiveness

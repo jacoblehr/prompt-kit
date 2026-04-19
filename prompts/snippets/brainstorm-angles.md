@@ -14,3 +14,8 @@ Requirements:
 Topic:
 {paste topic}
 ```
+
+Domain tags:
+- ideation
+- creative thinking
+- reframing

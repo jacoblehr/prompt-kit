@@ -27,3 +27,8 @@ Argue the strongest version of the position I am considering challenging.
 Make the case as well as its best proponent would.
 Then identify what would actually be required to defeat that strongest version.
 ```
+
+Domain tags:
+- intellectual honesty
+- argumentation
+- adversarial thinking

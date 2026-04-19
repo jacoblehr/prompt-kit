@@ -181,6 +181,15 @@ function makeBlock({
   };
 }
 
+function extractDomainTags(md) {
+  return extractSectionItems(md, "domain tags:");
+}
+
+function resolvedTags(md, ...fallbackParts) {
+  const domain = extractDomainTags(md);
+  return domain.length > 0 ? unique(domain).slice(0, 5) : makeTags(...fallbackParts);
+}
+
 function makeMode(dirName) {
   const relPath = `modes/${dirName}/README.md`;
   const md = read(relPath);
@@ -196,7 +205,7 @@ function makeMode(dirName) {
     key: `mode.${slugify(title)}`,
     title,
     summary: ensureSentence(`Use when ${useWhen[0] || title.toLowerCase()}`),
-    tags: makeTags(title),
+    tags: resolvedTags(md, title),
     copy: extractCodeBlock(md),
     body: [
       ["Use when", joinItems(useWhen)],
@@ -223,7 +232,7 @@ function makeStrategy(dirName) {
     aliases: [`strategy.${dirName}`],
     title,
     summary: ensureSentence(`Use when ${useWhen[0] || title.toLowerCase()}`),
-    tags: makeTags(title),
+    tags: resolvedTags(md, title),
     copy: extractCodeBlock(md),
     body: [
       ["Use when", joinItems(useWhen)],
@@ -250,7 +259,7 @@ function makePromptBlock(dirName) {
     aliases: hyphenAlias ? [`core.${hyphenAlias}`] : [],
     title,
     summary: ensureSentence(extractLeadLine(readme)),
-    tags: makeTags(title, dirName),
+    tags: resolvedTags(readme, title, dirName),
     copy: stripFirstHeading(prompt),
     body: bestUse.length > 0 ? [["Best use", joinItems(bestUse)]] : [],
     sourcePath: promptPath
@@ -271,7 +280,7 @@ function makeSnippetBlock(fileName) {
     aliases: [`snippet.${slugify(title)}`],
     title,
     summary: ensureSentence(extractLeadLine(md)),
-    tags: makeTags(title, family, baseName),
+    tags: resolvedTags(md, title, family, baseName),
     copy: extractCodeBlock(md),
     body: [],
     family,
@@ -296,7 +305,7 @@ function makeLensBlock(group, fileName) {
     aliases: [`lens.${slugify(title)}`],
     title: titleWithoutPrefix,
     summary: ensureSentence(extractLeadLine(md)),
-    tags: makeTags(titleWithoutPrefix, groupLabel, fileName.replace(/\.md$/, "")),
+    tags: resolvedTags(md, titleWithoutPrefix, groupLabel, fileName.replace(/\.md$/, "")),
     copy: extractCodeBlock(md),
     body: [],
     group: groupLabel,
@@ -318,7 +327,7 @@ function makeStack(fileName) {
     key: `stack.${slugify(title)}`,
     title,
     summary: ensureSentence(useWhen),
-    tags: makeTags(title, fileName.replace(/\.md$/, "")),
+    tags: resolvedTags(md, title, fileName.replace(/\.md$/, "")),
     body: [
       ["Useful inputs", joinItems(inputs)],
       ["Suggested blocks", sequence.join(" -> ")],
@@ -340,7 +349,7 @@ function makeRubric(fileName) {
     key: `rubric.${slugify(title)}`,
     title,
     summary: ensureSentence(extractLeadLine(md)),
-    tags: makeTags(title, fileName.replace(/\.md$/, "")),
+    tags: resolvedTags(md, title, fileName.replace(/\.md$/, "")),
     body: questions.length > 0 ? [["Questions", joinItems(questions)]] : [],
     sourcePath: relPath
   });
@@ -359,52 +368,115 @@ const promptBlockOrder = [
   "schema.execution-brief"
 ];
 const snippetOrder = [
+  // Ideation & generation
   "generate-options.md",
   "brainstorm-angles.md",
+  "reframe-the-problem.md",
+  "analogical-reasoning.md",
+  "hypothesis-generation.md",
+  // Framing & clarification
   "clarify-task.md",
+  "define-success-metrics.md",
+  "argument-structure.md",
+  // Decision & prioritisation
   "compare-options.md",
   "choose-under-uncertainty.md",
   "explore-exploit-decision.md",
   "prioritize-opportunities.md",
+  // Foresight & risk
+  "scenario-planning.md",
+  "trend-analysis.md",
+  "second-order-effects.md",
   "design-cheap-test.md",
-  "decision-journal-entry.md",
-  "plan-next-actions.md",
+  "risk-register.md",
   "stress-test-assumptions.md",
+  // Planning & execution
+  "plan-next-actions.md",
+  "process-audit.md",
+  "rollout-plan.md",
+  "delegation-brief.md",
+  // Writing & communication
   "write-first-draft.md",
   "rewrite-for-clarity.md",
   "critique-argument.md",
   "position-draft.md",
+  "feedback-request.md",
+  "negotiation-prep.md",
+  "communication-brief.md",
+  // Research & synthesis
   "summarize-source.md",
+  "synthesize-sources.md",
   "extract-insights.md",
   "cause-mapping.md",
-  "blind-spot-check.md",
   "research-questions.md",
+  // Reflection & review
+  "blind-spot-check.md",
   "stakeholder-map.md",
   "meeting-prep.md",
   "debug-confusion.md",
+  "decision-journal-entry.md",
   "weekly-review.md",
+  // Software engineering
+  "code-review.md",
+  "refactor-plan.md",
+  "test-strategy.md",
+  "requirements-decomposition.md",
+  // Statistics
+  "statistical-significance-check.md",
+  "correlation-vs-causation.md",
+  // Prompt engineering
   "prompt-critique.md",
   "prompt-rewrite.md",
   "prompt-compare.md"
 ];
 const stackOrder = [
+  // Small (≤3) — quick-start stacks
+  "quick-sense-check.md",
+  "fast-ideation.md",
+  "frame-the-ask.md",
+  "capture-and-act.md",
+  "audit-the-argument.md",
+  "orient-before-acting.md",
+  "clarify-the-real-job.md",
+  "design-for-outcomes.md",
+  "map-adoption-blockers.md",
+  // Medium (4–5) — focused workflows
   "problem-framing.md",
-  "explore-to-decision.md",
+  "define-and-measure.md",
+  "unblock-stuck-problem.md",
+  "scenario-futures.md",
+  "ethical-review.md",
+  "communicate-a-change.md",
   "explore-vs-exploit.md",
-  "prioritize-portfolio.md",
   "de-risk-with-test.md",
   "pressure-test-plan.md",
+  "prioritize-portfolio.md",
+  "code-review.md",
   "debug-a-failure.md",
+  "debug-a-system.md",
+  "interpret-an-experiment.md",
+  "technical-architecture-review.md",
   "source-to-brief.md",
-  "stakeholder-alignment.md",
+  "learn-from-content.md",
+  "after-action-review.md",
+  "negotiate-a-deal.md",
   "write-critique-rewrite.md",
+  "weekly-review.md",
+  // Large (6+) — deep end-to-end sequences
+  "ship-a-feature.md",
+  "full-decision-process.md",
+  "product-design-sprint.md",
+  "deep-research-synthesis.md",
+  "stakeholder-alignment.md",
   "prompt-repair.md",
-  "weekly-review.md"
+  "explore-to-decision.md",
 ];
 const rubricOrder = [
   "decision-quality.md",
   "argument-quality.md",
+  "strategy-quality.md",
   "plan-quality.md",
+  "research-quality.md",
   "writing-quality.md",
   "reflection-quality.md",
   "prompt-quality.md"
@@ -419,7 +491,12 @@ const snippetBlocks = orderNames(list("prompts/snippets"), snippetOrder)
 const lensBlocks = [
   ...list("prompts/concepts/game-theory").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("game-theory", fileName)),
   ...list("prompts/concepts/psychology").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("psychology", fileName)),
-  ...list("prompts/concepts/computer-science").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("computer-science", fileName))
+  ...list("prompts/concepts/computer-science").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("computer-science", fileName)),
+  ...list("prompts/concepts/economics").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("economics", fileName)),
+  ...list("prompts/concepts/systems-thinking").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("systems-thinking", fileName)),
+  ...list("prompts/concepts/philosophy").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("philosophy", fileName)),
+  ...list("prompts/concepts/statistics").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("statistics", fileName)),
+  ...list("prompts/concepts/design").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("design", fileName))
 ];
 const rubricBlocks = orderNames(list("rubrics"), rubricOrder)
   .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md")

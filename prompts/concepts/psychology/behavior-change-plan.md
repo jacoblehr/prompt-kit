@@ -18,3 +18,8 @@ Return:
 Intention:
 {paste intention}
 ```
+
+Domain tags:
+- behavioral science
+- psychology
+- planning

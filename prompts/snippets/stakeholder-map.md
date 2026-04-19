@@ -24,3 +24,8 @@ Decision, project, or goal:
 Situation:
 {paste situation}
 ```
+
+Domain tags:
+- stakeholder analysis
+- change management
+- influence

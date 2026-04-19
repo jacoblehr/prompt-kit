@@ -28,3 +28,8 @@ Observed failure modes, if any:
 Prompt:
 {paste prompt}
 ```
+
+Domain tags:
+- prompt engineering
+- quality improvement
+- evaluation

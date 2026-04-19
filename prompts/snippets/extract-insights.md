@@ -17,3 +17,8 @@ My purpose:
 Material:
 {paste material}
 ```
+
+Domain tags:
+- synthesis
+- analysis
+- knowledge management

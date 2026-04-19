@@ -24,3 +24,8 @@ Desired task or output:
 Variants:
 {paste prompt variants}
 ```
+
+Domain tags:
+- prompt engineering
+- evaluation
+- testing

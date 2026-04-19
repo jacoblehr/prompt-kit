@@ -18,3 +18,8 @@ Return:
 Situation:
 {paste situation}
 ```
+
+Domain tags:
+- behavioral science
+- psychology
+- organizational learning

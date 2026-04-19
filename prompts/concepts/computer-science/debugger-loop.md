@@ -17,3 +17,8 @@ Return:
 Bug or failure:
 {paste bug or failure}
 ```
+
+Domain tags:
+- software engineering
+- causal reasoning
+- critical thinking

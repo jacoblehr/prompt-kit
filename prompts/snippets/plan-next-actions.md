@@ -20,3 +20,8 @@ Context:
 Deadline, constraint, or time horizon:
 {paste deadline, constraint, or time horizon}
 ```
+
+Domain tags:
+- execution
+- planning
+- action design

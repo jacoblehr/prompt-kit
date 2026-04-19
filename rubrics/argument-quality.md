@@ -10,3 +10,8 @@ Questions:
 - Is the strongest objection acknowledged and addressed?
 - Does the conclusion actually follow from the argument?
 - Is anything being asserted that should be proven?
+
+Domain tags:
+- logic
+- argumentation
+- critical thinking

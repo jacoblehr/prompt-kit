@@ -20,3 +20,8 @@ Expected outcome:
 - what's in scope and what's not
 - the one thing most likely to move this forward
 - what you'd need to know to be confident you're on the right track
+
+Domain tags:
+- planning
+- scoping
+- execution readiness

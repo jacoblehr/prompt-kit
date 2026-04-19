@@ -16,3 +16,8 @@ Focus first on assumptions where being wrong would most damage the outcome.
 Input:
 {paste plan, decision, or argument}
 ```
+
+Domain tags:
+- risk management
+- critical thinking
+- planning

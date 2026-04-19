@@ -27,3 +27,8 @@ Define clearly what a bad outcome looks like for this situation.
 List the most plausible paths to that bad outcome.
 Then flip: what conditions would prevent each path?
 ```
+
+Domain tags:
+- inversion thinking
+- risk mapping
+- failure analysis

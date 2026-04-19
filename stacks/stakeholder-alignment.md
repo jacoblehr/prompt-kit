@@ -23,3 +23,8 @@ Expected outcome:
 - the main alignment risk
 - the most important next conversation
 - an execution-ready coordination plan
+
+Domain tags:
+- change management
+- communication
+- influence

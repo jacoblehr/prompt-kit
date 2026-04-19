@@ -22,3 +22,8 @@ Expected outcome:
 - the highest-value next experiment
 - likely boundary or invariant break
 - a practical next-step plan
+
+Domain tags:
+- diagnostics
+- root cause analysis
+- engineering

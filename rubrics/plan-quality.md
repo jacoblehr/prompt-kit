@@ -10,3 +10,8 @@ Questions:
 - Is the first action concrete enough to do now?
 - Does the plan avoid unnecessary complexity?
 - Is there a check point after early execution?
+
+Domain tags:
+- planning
+- execution readiness
+- quality assurance

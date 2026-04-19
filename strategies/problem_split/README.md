@@ -25,3 +25,8 @@ Apply the PROBLEM SPLIT strategy.
 Break this into distinct subproblems, surface open questions, and suggest the best order of attack.
 Keep the decomposition practical rather than exhaustive.
 ```
+
+Domain tags:
+- decomposition
+- problem structure
+- systems thinking

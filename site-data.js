@@ -10,7 +10,9 @@ globalThis.SITE_DATA = {
       "title": "Explore",
       "summary": "Use when the problem is still underframed.",
       "tags": [
-        "explore"
+        "open exploration",
+        "divergent thinking",
+        "problem setup"
       ],
       "copy": "Enter EXPLORE mode.\nGenerate multiple plausible directions instead of converging too early.\nSurface unknowns and contrasting options.\nDo not choose yet unless I explicitly ask you to.",
       "body": [
@@ -44,7 +46,9 @@ globalThis.SITE_DATA = {
       "title": "Decide",
       "summary": "Use when real options already exist.",
       "tags": [
-        "decide"
+        "decision making",
+        "convergent thinking",
+        "commitment"
       ],
       "copy": "Enter DECIDE mode.\nCompare the available options against explicit criteria.\nChoose the best current option, state tradeoffs, and name the next action.\nDo not expand the option set unless it is clearly too weak to decide from.",
       "body": [
@@ -78,7 +82,9 @@ globalThis.SITE_DATA = {
       "title": "Critique",
       "summary": "Use when a draft, plan, or decision already exists.",
       "tags": [
-        "critique"
+        "critical review",
+        "quality improvement",
+        "adversarial thinking"
       ],
       "copy": "Enter CRITIQUE mode.\nInspect the current artifact for weaknesses, blind spots, and likely failure points.\nPrioritize the highest-leverage findings and give concrete revision advice.\nDo not soften the critique with filler praise.",
       "body": [
@@ -112,7 +118,9 @@ globalThis.SITE_DATA = {
       "title": "Reflect",
       "summary": "Use when an outcome exists.",
       "tags": [
-        "reflect"
+        "reflection",
+        "retrospective",
+        "learning"
       ],
       "copy": "Enter REFLECT mode.\nCompare what was expected with what actually happened.\nExtract reusable lessons and identify what should change in my prompts, stacks, or decisions next time.\nDo not stop at recap.",
       "body": [
@@ -148,8 +156,9 @@ globalThis.SITE_DATA = {
       "title": "Problem Split",
       "summary": "Use when the task feels vague, tangled, or overloaded.",
       "tags": [
-        "problem",
-        "split"
+        "decomposition",
+        "problem structure",
+        "systems thinking"
       ],
       "copy": "Apply the PROBLEM SPLIT strategy.\nBreak this into distinct subproblems, surface open questions, and suggest the best order of attack.\nKeep the decomposition practical rather than exhaustive.",
       "body": [
@@ -181,7 +190,9 @@ globalThis.SITE_DATA = {
       "title": "Premortem",
       "summary": "Use when a plan seems plausible but failure would matter.",
       "tags": [
-        "premortem"
+        "adversarial planning",
+        "risk identification",
+        "prospective hindsight"
       ],
       "copy": "Apply the PREMORTEM strategy.\nAssume this plan failed. List the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.",
       "body": [
@@ -213,7 +224,9 @@ globalThis.SITE_DATA = {
       "title": "Steelman",
       "summary": "Use when you are about to reject or override a position.",
       "tags": [
-        "steelman"
+        "intellectual honesty",
+        "argumentation",
+        "adversarial thinking"
       ],
       "copy": "Apply the STEELMAN strategy.\nArgue the strongest version of the position I am considering challenging.\nMake the case as well as its best proponent would.\nThen identify what would actually be required to defeat that strongest version.",
       "body": [
@@ -245,7 +258,9 @@ globalThis.SITE_DATA = {
       "title": "Inversion",
       "summary": "Use when you want to find constraints that forward-planning misses.",
       "tags": [
-        "inversion"
+        "inversion thinking",
+        "risk mapping",
+        "failure analysis"
       ],
       "copy": "Apply the INVERSION strategy.\nDefine clearly what a bad outcome looks like for this situation.\nList the most plausible paths to that bad outcome.\nThen flip: what conditions would prevent each path?",
       "body": [
@@ -277,8 +292,9 @@ globalThis.SITE_DATA = {
       "title": "Red Team",
       "summary": "Use when you have a plan you are inclined to proceed with.",
       "tags": [
-        "red",
-        "team"
+        "adversarial review",
+        "critical thinking",
+        "stress testing"
       ],
       "copy": "Apply the RED TEAM strategy.\nArgue against this plan as a hostile critic whose goal is to defeat it.\nPrioritize arguments that are both credible and hard to dismiss.\nDo not soften the critique or suggest fixes until the attack is complete.",
       "body": [
@@ -512,8 +528,9 @@ globalThis.SITE_DATA = {
       "title": "Generate Options",
       "summary": "Use when you need multiple directions before choosing.",
       "tags": [
-        "generate",
-        "options"
+        "ideation",
+        "option generation",
+        "decision support"
       ],
       "copy": "Generate a diverse set of plausible options.\n\nRequirements:\n- include genuinely different approaches, not small variations\n- include at least one option that contradicts the default instinct\n- note what each option optimizes for\n- note the main downside of each option\n- surface any obvious unknowns\n- name the comparison dimension that matters most next\n\nReturn:\n- option\n- what it optimizes for\n- downside\n- unknowns\n- next comparison angle\n\nProblem:\n{paste problem}\n\nConstraints, limits, or non-goals:\n{paste constraints, limits, or non-goals}",
       "body": [],
@@ -532,14 +549,81 @@ globalThis.SITE_DATA = {
       "title": "Brainstorm Angles",
       "summary": "Use when you want fresh perspectives rather than polished ideas.",
       "tags": [
-        "brainstorm",
-        "angles"
+        "ideation",
+        "creative thinking",
+        "reframing"
       ],
       "copy": "Brainstorm unexpected but plausible angles on this.\n\nRequirements:\n- avoid obvious first-pass ideas\n- include at least one contrarian angle\n- include at least one practical angle\n- include at least one high-upside angle\n\nTopic:\n{paste topic}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/brainstorm-angles.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.reframe-the-problem",
+      "aliases": [
+        "snippet.reframe-the-problem"
+      ],
+      "title": "Reframe the Problem",
+      "summary": "Use when the stated problem may be the wrong problem, or when solutions keep failing.",
+      "tags": [
+        "problem design",
+        "lateral thinking",
+        "reframing",
+        "creative problem solving"
+      ],
+      "copy": "Challenge the framing of this problem and offer better alternatives.\n\nRequirements:\n- state the problem as currently framed\n- identify the hidden assumption baked into that framing\n- generate three alternative framings that dissolve or transform the problem\n- for each: state what changes if you accept this frame instead\n- recommend which frame is most likely to lead to a tractable solution\n- name what would need to be true for the original framing to be correct\n\nProblem as stated:\n{paste problem statement}\n\nWhat has already been tried:\n{paste any prior attempts or constraints}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/reframe-the-problem.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.analogical-reasoning",
+      "aliases": [
+        "snippet.analogical-reasoning"
+      ],
+      "title": "Analogical Reasoning",
+      "summary": "Use when a problem is stuck and a solution from a structurally similar domain might transfer.",
+      "tags": [
+        "analogical reasoning",
+        "transfer learning",
+        "creative problem solving",
+        "cross-domain thinking"
+      ],
+      "copy": "Find analogous problems from other domains and extract transferable solutions.\n\nRequirements:\n- identify the structural pattern or constraint at the core of this problem\n- find three domains or fields that have solved structurally similar problems\n- for each: describe the analogous problem, the solution used, and what specifically transfers\n- identify the key differences that might limit transfer\n- propose one concrete adaptation based on the best analogy\n\nProblem:\n{paste problem or challenge}\n\nWhat makes it hard:\n{paste the key constraint or tension}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/analogical-reasoning.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.hypothesis-generation",
+      "aliases": [
+        "snippet.hypothesis-generation"
+      ],
+      "title": "Hypothesis Generation",
+      "summary": "Use when you have a question or problem and need to generate competing explanations before committing to an investigation path.",
+      "tags": [
+        "hypothesis generation",
+        "scientific thinking",
+        "epistemic practice",
+        "causal reasoning"
+      ],
+      "copy": "Generate a set of competing hypotheses to explain or address this.\n\nRequirements:\n- produce at least 4–6 distinct hypotheses, not variations of the same idea\n- span different levels of explanation (proximate, structural, behavioural)\n- state each as a falsifiable claim: if X is true, we would expect Y\n- briefly note what evidence would confirm or disconfirm each\n- rank them roughly by prior plausibility given what is already known\n- flag any hypothesis that is uncomfortable but worth taking seriously\n\nQuestion or problem:\n{paste question, anomaly, or problem}\n\nKnown evidence or context:\n{paste what is already known}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/hypothesis-generation.md"
     },
     {
       "section": "Block",
@@ -552,14 +636,58 @@ globalThis.SITE_DATA = {
       "title": "Clarify Task",
       "summary": "Use when a request is vague or overloaded.",
       "tags": [
-        "clarify",
-        "task"
+        "task framing",
+        "requirements",
+        "scoping"
       ],
       "copy": "Clarify this task before trying to solve it.\n\nReturn:\n- what the task most likely means\n- the biggest missing details\n- the best clarifying questions to ask next\n- a cleaner version of the task if I want to hand it back\n- the best next reasoning step\n\nTask:\n{paste task}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/clarify-task.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.define-success-metrics",
+      "aliases": [
+        "snippet.define-success-metrics"
+      ],
+      "title": "Define Success Metrics",
+      "summary": "Use when a goal, task, or initiative needs clearer measurement criteria before work begins.",
+      "tags": [
+        "metrics design",
+        "goal setting",
+        "measurement",
+        "outcome thinking"
+      ],
+      "copy": "Define the success metrics for this goal or initiative.\n\nFor each dimension of success:\n- name it clearly\n- describe what \"good\" looks like at completion (not during the process)\n- suggest the most direct way to measure it\n- identify a leading indicator that would signal early progress\n- flag any metrics that could be gamed or that measure the wrong thing\n\nDistinguish between metrics that measure output (activity) and ones that measure\noutcome (actual impact).\n\nThen identify: which single metric, if it moved, would most definitively confirm\nthat the goal was achieved?\n\nGoal or initiative:\n{paste goal, task, or project description}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/define-success-metrics.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.argument-structure",
+      "aliases": [
+        "snippet.argument-structure"
+      ],
+      "title": "Argument Structure",
+      "summary": "Use when you need to understand the logical anatomy of a claim before evaluating or responding to it.",
+      "tags": [
+        "critical thinking",
+        "argumentation",
+        "logic"
+      ],
+      "copy": "Extract and map the logical structure of this argument.\n\nIdentify:\n- the main conclusion (what the author wants you to accept)\n- the premises (stated reasons given to support the conclusion)\n- any hidden or unstated premises the argument depends on\n- the logical form: is the conclusion deductively entailed, or only made probable?\n- any key definitions or distinctions the argument relies on\n\nThen assess:\n- which premise is doing the most structural work?\n- which premise is most contestable?\n- does the conclusion follow given the premises, or is there a gap?\n\nArgument:\n{paste argument, essay, position, or chain of reasoning}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/argument-structure.md"
     },
     {
       "section": "Block",
@@ -572,8 +700,9 @@ globalThis.SITE_DATA = {
       "title": "Compare Options",
       "summary": "Use when you already have options and need a structured comparison.",
       "tags": [
-        "compare",
-        "options"
+        "evaluation",
+        "decision support",
+        "analysis"
       ],
       "copy": "Compare these options in a compact decision table.\n\nReturn columns:\n- option\n- criteria fit\n- strengths\n- weaknesses\n- best use case\n- key risk\n- overall judgment\n\nContext:\n{paste context}\n\nCriteria:\n{paste criteria}\n\nOptions:\n{paste options}",
       "body": [],
@@ -592,9 +721,9 @@ globalThis.SITE_DATA = {
       "title": "Choose Under Uncertainty",
       "summary": "Use when you need a best current choice, not a perfect answer.",
       "tags": [
-        "choose",
-        "under",
-        "uncertainty"
+        "decision theory",
+        "risk management",
+        "judgment under uncertainty"
       ],
       "copy": "Choose the best current option under uncertainty.\n\nRequirements:\n- state the criteria being used\n- choose one option or explicitly say no decision yet\n- name the biggest uncertainty\n- name what evidence would most change the decision\n- give the next action\n\nContext:\n{paste context}\n\nOptions:\n{paste options}",
       "body": [],
@@ -613,9 +742,9 @@ globalThis.SITE_DATA = {
       "title": "Explore / Exploit Decision",
       "summary": "Use when you need to decide whether to keep searching, learning, or generating options versus committing to the best current path.",
       "tags": [
-        "explore",
-        "exploit",
-        "decision"
+        "decision theory",
+        "strategic thinking",
+        "planning"
       ],
       "copy": "Decide whether this situation calls for more exploration or for exploitation of the best current option.\n\nReturn:\n- current decision context\n- best current option\n- reasons to keep exploring\n- reasons to exploit now\n- value of additional information\n- cost of delay\n- reversibility of the decision\n- decision: explore more / exploit now / exploit with a bounded test\n- trigger that would flip the decision\n- next action\n\nRequirements:\n- prefer exploitation when the best current option is already strong and further search has low expected value\n- prefer exploration when uncertainty is still highly decision-relevant and cheap learning is available\n- if the answer is mixed, recommend a bounded exploration window or cheap test rather than open-ended searching\n\nContext:\n{paste context}\n\nCurrent options or path:\n{paste options or current path}",
       "body": [],
@@ -634,14 +763,79 @@ globalThis.SITE_DATA = {
       "title": "Prioritize Opportunities",
       "summary": "Use when you have too many plausible projects, bets, or tasks competing for attention.",
       "tags": [
-        "prioritize",
-        "opportunities"
+        "prioritization",
+        "resource allocation",
+        "strategic thinking"
       ],
       "copy": "Prioritize these opportunities or tasks.\n\nReturn columns:\n- item\n- expected upside\n- strategic fit\n- effort or cost\n- urgency or timing\n- reversibility\n- key risk\n- recommendation (do now / later / drop)\n\nRequirements:\n- explain the top two picks\n- identify one attractive option that should still wait\n- avoid ranking purely by excitement\n\nContext:\n{paste context}\n\nItems:\n{paste items}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/prioritize-opportunities.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.scenario-planning",
+      "aliases": [
+        "snippet.scenario-planning"
+      ],
+      "title": "Scenario Planning",
+      "summary": "Use when a decision depends on how the future unfolds and the range of plausible futures is wide.",
+      "tags": [
+        "strategic thinking",
+        "foresight",
+        "risk management"
+      ],
+      "copy": "Generate three to four distinct future scenarios for this situation.\n\nRequirements:\n- scenarios should differ on the key uncertainties, not just optimism\n- each should be internally consistent and plausible\n- name the driving forces that distinguish each scenario\n- for each scenario: name it, describe the world it implies, and note what would be different about the right strategy in that world\n- identify which scenario would be the worst to be unprepared for\n- identify the earliest observable signal that each scenario is forming\n\nSituation or decision:\n{paste situation or decision}\n\nKey uncertainties:\n{paste main unknowns driving the range of outcomes}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/scenario-planning.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.trend-analysis",
+      "aliases": [
+        "snippet.trend-analysis"
+      ],
+      "title": "Trend Analysis",
+      "summary": "Use when scanning an environment for emerging shifts that could affect a strategy, market, or plan.",
+      "tags": [
+        "trend analysis",
+        "foresight",
+        "strategic intelligence",
+        "environmental scanning"
+      ],
+      "copy": "Analyse the trends relevant to this domain or situation.\n\nFor each significant trend:\n- name it and describe it in one sentence\n- assess its trajectory: accelerating, stable, or reversing\n- note the time horizon over which it will likely have material impact\n- describe the direct first-order effects and the less-obvious second-order effects\n- identify which current assumptions or strategies it challenges\n- suggest the adaptive move it implies\n\nThen:\n- highlight the two or three trends most likely to compound or intersect\n- identify any counter-trends that could slow or reverse the main pattern\n- name the one development in this environment that most people are underweighting\n\nDomain or situation:\n{paste sector, challenge, or strategic context}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/trend-analysis.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.second-order-effects",
+      "aliases": [
+        "snippet.second-order-effects"
+      ],
+      "title": "Second-Order Effects",
+      "summary": "Use when a decision or action may trigger consequences beyond the obvious first-order outcomes.",
+      "tags": [
+        "systems thinking",
+        "critical thinking",
+        "risk management"
+      ],
+      "copy": "Map the second and third-order effects of this action or decision.\n\nRequirements:\n- first: state the intended or obvious first-order effect\n- second: for each first-order effect, name what it causes in turn\n- third: trace at least one chain two levels deeper\n- flag any effects that contradict the intended outcome (backfire risk)\n- flag any effects that disproportionately impact a group not currently in view\n- identify the most likely unintended consequence and its magnitude\n\nAction or decision:\n{paste action or decision}\n\nContext:\n{paste relevant context, constraints, or system in which this takes place}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/second-order-effects.md"
     },
     {
       "section": "Block",
@@ -654,9 +848,9 @@ globalThis.SITE_DATA = {
       "title": "Design Cheap Test",
       "summary": "Use when uncertainty is blocking commitment and you need the smallest useful experiment.",
       "tags": [
-        "design",
-        "cheap",
-        "test"
+        "experimentation",
+        "lean methodology",
+        "validation"
       ],
       "copy": "Design the cheapest useful test for this idea, decision, or plan.\n\nReturn:\n- what decision or assumption needs de-risking\n- the riskiest unknown\n- the cheapest credible test\n- success signal\n- failure signal\n- time or cost ceiling\n- what to do if the signal is positive\n- what to do if the signal is negative\n\nContext:\n{paste context}\n\nResource ceiling, if any:\n{paste time, budget, or effort limit}",
       "body": [],
@@ -668,43 +862,23 @@ globalThis.SITE_DATA = {
       "section": "Block",
       "blockType": "core",
       "sourceKind": "Snippet",
-      "key": "core.decision-journal-entry",
+      "key": "core.risk-register",
       "aliases": [
-        "snippet.decision-journal-entry"
+        "snippet.risk-register"
       ],
-      "title": "Decision Journal Entry",
-      "summary": "Use when you want to record a decision well enough to reflect on it later.",
+      "title": "Risk Register",
+      "summary": "Use when you need a structured inventory of risks before committing to a plan or project.",
       "tags": [
-        "decision",
-        "journal",
-        "entry"
+        "risk management",
+        "project planning",
+        "contingency planning",
+        "decision quality"
       ],
-      "copy": "Turn this into a decision journal entry.\n\nReturn:\n- decision\n- options considered\n- criteria used\n- key assumptions\n- confidence level\n- what would prove this wrong\n- next checkpoint date\n\nDecision context:\n{paste context}",
+      "copy": "Build a risk register for this plan or situation.\n\nFor each significant risk:\n- risk name\n- description of the failure mode\n- likelihood: high / medium / low\n- impact if it materialises: high / medium / low\n- risk score: combine likelihood and impact\n- earliest warning signal\n- mitigation: what reduces likelihood or impact before the risk fires\n- contingency: what to do if it fires anyway\n\nReturn them sorted by risk score, highest first.\n\nPlan or project:\n{paste plan, project, or upcoming decision}",
       "body": [],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/snippets/decision-journal-entry.md"
-    },
-    {
-      "section": "Block",
-      "blockType": "core",
-      "sourceKind": "Snippet",
-      "key": "core.plan-next-actions",
-      "aliases": [
-        "snippet.plan-next-actions"
-      ],
-      "title": "Plan Next Actions",
-      "summary": "Use when you have a chosen direction and need an executable plan.",
-      "tags": [
-        "plan",
-        "next",
-        "actions"
-      ],
-      "copy": "Turn this into a practical next-step plan.\n\nReturn:\n- goal\n- ordered steps\n- dependencies\n- likely blockers\n- first checkpoint\n- first concrete action\n- what to check after step one\n\nContext:\n{paste context}\n\nDeadline, constraint, or time horizon:\n{paste deadline, constraint, or time horizon}",
-      "body": [],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/snippets/plan-next-actions.md"
+      "sourcePath": "prompts/snippets/risk-register.md"
     },
     {
       "section": "Block",
@@ -717,15 +891,101 @@ globalThis.SITE_DATA = {
       "title": "Stress Test Assumptions",
       "summary": "Use when a plan or decision rests on assumptions that have not been pressure-tested.",
       "tags": [
-        "stress",
-        "test",
-        "assumptions"
+        "risk management",
+        "critical thinking",
+        "planning"
       ],
       "copy": "Stress test the assumptions behind this.\n\nFor each significant assumption:\n- state the assumption\n- rate confidence (high / medium / low)\n- name the failure mode if the assumption is wrong\n- suggest the cheapest way to verify it before committing\n\nFocus first on assumptions where being wrong would most damage the outcome.\n\nInput:\n{paste plan, decision, or argument}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/stress-test-assumptions.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.plan-next-actions",
+      "aliases": [
+        "snippet.plan-next-actions"
+      ],
+      "title": "Plan Next Actions",
+      "summary": "Use when you have a chosen direction and need an executable plan.",
+      "tags": [
+        "execution",
+        "planning",
+        "action design"
+      ],
+      "copy": "Turn this into a practical next-step plan.\n\nReturn:\n- goal\n- ordered steps\n- dependencies\n- likely blockers\n- first checkpoint\n- first concrete action\n- what to check after step one\n\nContext:\n{paste context}\n\nDeadline, constraint, or time horizon:\n{paste deadline, constraint, or time horizon}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/plan-next-actions.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.process-audit",
+      "aliases": [
+        "snippet.process-audit"
+      ],
+      "title": "Process Audit",
+      "summary": "Use when a workflow, process, or routine needs to be examined for inefficiency, gaps, or hidden failure modes.",
+      "tags": [
+        "process improvement",
+        "operations",
+        "systems analysis",
+        "workflow design"
+      ],
+      "copy": "Audit this process for inefficiencies, gaps, and failure modes.\n\nFor each major step:\n- describe what is supposed to happen\n- identify where variation or failure most commonly occurs\n- note which steps depend on tacit knowledge or specific people\n- flag handoffs that introduce delay or information loss\n\nThen provide:\n- the three highest-leverage improvement opportunities\n- any steps that could be eliminated without harming the outcome\n- the single most likely place the process quietly fails without being noticed\n\nProcess or workflow:\n{paste process description, sequence of steps, or system description}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/process-audit.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.rollout-plan",
+      "aliases": [
+        "snippet.rollout-plan"
+      ],
+      "title": "Rollout Plan",
+      "summary": "Use when you have a decision or design and need a concrete, sequenced plan for releasing, deploying, or implementing it.",
+      "tags": [
+        "planning",
+        "risk management",
+        "process improvement",
+        "execution"
+      ],
+      "copy": "Create a rollout plan for this initiative.\n\nStructure the plan as:\n\n1. Pre-launch: what must be true before rollout begins\n   - dependencies that must be resolved\n   - stakeholders who need to be informed or aligned\n   - the minimum viable version of the thing being released\n\n2. Rollout sequence: the ordered steps, with the rationale for that order\n   - which steps are sequential (one must complete before the next starts)?\n   - which can happen in parallel?\n   - what is the single most fragile step?\n\n3. Go/no-go criteria: what would cause you to pause or abort?\n\n4. Monitoring: how will you know the rollout is going well?\n   - leading signal of success\n   - early signal of a problem\n\n5. Rollback: if you had to reverse this, how would you do it?\n\nInitiative or change:\n{paste what you are rolling out}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/rollout-plan.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.delegation-brief",
+      "aliases": [
+        "snippet.delegation-brief"
+      ],
+      "title": "Delegation Brief",
+      "summary": "Use when handing off a task to ensure the person receiving it has everything they need to succeed without coming back for clarification.",
+      "tags": [
+        "planning",
+        "communication",
+        "organizational learning"
+      ],
+      "copy": "Write a delegation brief for this task.\n\nInclude:\n- the goal: what done looks like, not just what to do\n- context: why this matters and how it connects to the larger objective\n- scope: what is in and out of scope — what decisions they can make without checking back\n- constraints: non-negotiables (timing, budget, quality bar, style, stakeholders to involve)\n- resources: what they have access to and who they can ask\n- check-ins: when and how to sync (not how often — when it is actually needed)\n- success signal: how you will both know the task is complete and good enough\n\nAvoid describing how to do the work. Focus on what is needed and what good looks like.\n\nTask:\n{paste task description}\n\nContext about the person receiving it (optional):\n{paste any relevant context about their background or current workload}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/delegation-brief.md"
     },
     {
       "section": "Block",
@@ -738,9 +998,9 @@ globalThis.SITE_DATA = {
       "title": "Write First Draft",
       "summary": "Use when you want a working draft quickly.",
       "tags": [
-        "write",
-        "first",
-        "draft"
+        "writing",
+        "content creation",
+        "communication"
       ],
       "copy": "Write a strong first draft.\n\nRequirements:\n- optimize for clarity over polish\n- avoid filler and generic throat-clearing\n- make the structure easy to revise later\n\nAudience:\n{paste audience}\n\nGoal:\n{paste goal}\n\nKey points:\n{paste points}",
       "body": [],
@@ -759,8 +1019,9 @@ globalThis.SITE_DATA = {
       "title": "Rewrite For Clarity",
       "summary": "Use when a draft is muddled, bloated, or indirect.",
       "tags": [
-        "rewrite",
-        "clarity"
+        "writing",
+        "editing",
+        "communication"
       ],
       "copy": "Rewrite this for clarity.\n\nRequirements:\n- keep the meaning\n- remove redundancy\n- tighten structure\n- make the key point obvious earlier\n- preserve useful nuance\n\nText:\n{paste draft}",
       "body": [],
@@ -779,8 +1040,9 @@ globalThis.SITE_DATA = {
       "title": "Critique Argument",
       "summary": "Use when you want the weaknesses in a claim, draft, or argument.",
       "tags": [
-        "critique",
-        "argument"
+        "critical thinking",
+        "argumentation",
+        "logic"
       ],
       "copy": "Critique this argument.\n\nFocus on:\n- hidden assumptions\n- weak evidence\n- logical gaps\n- overclaims\n- what a smart skeptic would attack first\n\nReturn:\n- strongest part\n- weakest part\n- top three findings\n- what would strengthen it most\n\nArgument:\n{paste argument}",
       "body": [],
@@ -799,14 +1061,81 @@ globalThis.SITE_DATA = {
       "title": "Position Draft",
       "summary": "Use when you need to argue a clear position with evidence and honest counter-acknowledgment.",
       "tags": [
-        "position",
-        "draft"
+        "argumentation",
+        "persuasion",
+        "writing"
       ],
       "copy": "Write a clear position on this topic.\n\nReturn:\n- the position stated in one sentence\n- two or three strongest supporting reasons with evidence\n- the strongest objection to this position\n- a direct response to that objection\n- what evidence would change this position\n\nTopic or question:\n{paste topic}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/position-draft.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.feedback-request",
+      "aliases": [
+        "snippet.feedback-request"
+      ],
+      "title": "Feedback Request",
+      "summary": "Use when you need actionable feedback rather than general impressions.",
+      "tags": [
+        "feedback design",
+        "communication",
+        "continuous improvement",
+        "quality improvement"
+      ],
+      "copy": "Help me request feedback on this work in a way that produces useful signal.\n\nReturn:\n- the specific question I should lead with to get the most useful response\n- the context I should give the reviewer before asking\n- two or three targeted questions that surface different kinds of feedback\n- the question that will surface what I most want to avoid hearing but most need to know\n- what I should do with the feedback once I receive it\n\nWork to be reviewed:\n{paste the output, plan, or draft being submitted for review}\n\nWhat I want to get from the feedback:\n{paste what kind of improvement you are looking for}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/feedback-request.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.negotiation-prep",
+      "aliases": [
+        "snippet.negotiation-prep"
+      ],
+      "title": "Negotiation Prep",
+      "summary": "Use when preparing for a negotiation, difficult conversation, or situation where conflicting interests need to be reconciled.",
+      "tags": [
+        "negotiation",
+        "interest-based bargaining",
+        "conflict resolution",
+        "influence"
+      ],
+      "copy": "Prepare a negotiation analysis for this situation.\n\nCover:\n- our primary interests (what we actually need, beneath stated positions)\n- their likely primary interests (infer from available context)\n- our BATNA: best alternative if no agreement is reached\n- their likely BATNA\n- the zone of possible agreement (ZOPA): the range where both sides could accept a deal\n- potential trades or package deals that create value for both sides\n- the concession to give last: what seems costly to us but matters most to them\n- the most likely objection they will raise, and how to address it honestly\n\nThen recommend an opening position strategy: what to ask for first and how to set\na credible anchor.\n\nSituation:\n{paste negotiation context and background}\n\nOur stated position vs. our actual interests:\n{paste if you can distinguish them}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/negotiation-prep.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.communication-brief",
+      "aliases": [
+        "snippet.communication-brief"
+      ],
+      "title": "Communication Brief",
+      "summary": "Use when a message, announcement, or change needs a plan for who hears what, when, and how.",
+      "tags": [
+        "communication planning",
+        "change management",
+        "stakeholder management",
+        "messaging strategy"
+      ],
+      "copy": "Build a communication brief for this situation.\n\nReturn:\n- core message: one sentence that captures what must land\n- audiences: list each distinct audience and what they specifically need to hear\n- sequencing: who should hear this first and why\n- channel recommendation for each audience\n- likely questions or objections, and prepared responses\n- what success looks like 48 hours after communication goes out\n- what to do if the message lands badly\n\nSituation:\n{paste the change, decision, or news to communicate}\n\nAudiences:\n{paste the groups or individuals involved}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/communication-brief.md"
     },
     {
       "section": "Block",
@@ -819,14 +1148,37 @@ globalThis.SITE_DATA = {
       "title": "Summarize Source",
       "summary": "Use when you need a dense source turned into something useful.",
       "tags": [
-        "summarize",
-        "source"
+        "synthesis",
+        "knowledge management",
+        "comprehension"
       ],
       "copy": "Summarize this source for practical use.\n\nReturn:\n- core thesis\n- most important supporting points\n- useful facts or evidence\n- caveats or limitations\n- what matters for my purpose\n\nMy purpose:\n{paste purpose}\n\nSource:\n{paste source}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/summarize-source.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.synthesize-sources",
+      "aliases": [
+        "snippet.synthesize-sources"
+      ],
+      "title": "Synthesize Sources",
+      "summary": "Use when you have consumed multiple sources and need to integrate them into a coherent, unified view rather than a list of summaries.",
+      "tags": [
+        "knowledge management",
+        "synthesis",
+        "research",
+        "epistemics"
+      ],
+      "copy": "Synthesize these sources into a unified analysis.\n\nSteps:\n- identify the core question or problem all the sources address\n- map the points of agreement across sources\n- map the points of genuine disagreement, noting what drives each difference\n  (different evidence, different values, different framing, or different time period)\n- identify any significant gap: the important point that none of the sources address\n- produce an integrated position that honestly reflects the weight of evidence,\n  explicitly noting remaining uncertainty\n\nFormat as a synthesis, not as a sequence of summaries. Cite the source when\ncrediting a specific claim.\n\nSources:\n{paste or summarize the key content from each source, labelled Source 1, Source 2, etc.}\n\nCentral question:\n{paste the question or problem you are trying to resolve}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/synthesize-sources.md"
     },
     {
       "section": "Block",
@@ -839,8 +1191,9 @@ globalThis.SITE_DATA = {
       "title": "Extract Insights",
       "summary": "Use when notes, transcripts, or documents contain signal buried in noise.",
       "tags": [
-        "extract",
-        "insights"
+        "synthesis",
+        "analysis",
+        "knowledge management"
       ],
       "copy": "Extract the highest-value insights from this material.\n\nReturn:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\nMy purpose:\n{paste purpose or decision this should inform}\n\nMaterial:\n{paste material}",
       "body": [],
@@ -859,34 +1212,15 @@ globalThis.SITE_DATA = {
       "title": "Cause Mapping",
       "summary": "Use when you need to understand why an outcome happened, not just what happened.",
       "tags": [
-        "cause",
-        "mapping"
+        "root cause analysis",
+        "diagnostics",
+        "systems thinking"
       ],
       "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nProblem or outcome:\n{paste problem or outcome}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/cause-mapping.md"
-    },
-    {
-      "section": "Block",
-      "blockType": "core",
-      "sourceKind": "Snippet",
-      "key": "core.blind-spot-check",
-      "aliases": [
-        "snippet.blind-spot-check"
-      ],
-      "title": "Blind Spot Check",
-      "summary": "Use when you want to surface what you are probably not thinking about.",
-      "tags": [
-        "blind",
-        "spot"
-      ],
-      "copy": "Surface the blind spots I am probably missing here.\n\nLook for:\n- perspectives of stakeholders I may be underweighting\n- common failure categories that apply to this type of problem\n- hidden incentives or dynamics I may be ignoring\n- the question I should be asking but am not\n- evidence I might be filtering out because it is inconvenient\n\nContext:\n{paste context}",
-      "body": [],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/snippets/blind-spot-check.md"
     },
     {
       "section": "Block",
@@ -899,14 +1233,36 @@ globalThis.SITE_DATA = {
       "title": "Research Questions",
       "summary": "Use when you need to map what to investigate next.",
       "tags": [
-        "research",
-        "questions"
+        "research design",
+        "epistemic planning",
+        "inquiry"
       ],
       "copy": "Generate the best research questions for this topic.\n\nRequirements:\n- prioritize questions that would materially improve understanding\n- separate foundational questions from edge-case questions\n- note which questions are most decision-relevant\n- note what would change if each important question were answered\n\nMy purpose:\n{paste the decision, project, or output this research supports}\n\nTopic:\n{paste topic}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/research-questions.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.blind-spot-check",
+      "aliases": [
+        "snippet.blind-spot-check"
+      ],
+      "title": "Blind Spot Check",
+      "summary": "Use when you want to surface what you are probably not thinking about.",
+      "tags": [
+        "critical thinking",
+        "reflection",
+        "epistemics"
+      ],
+      "copy": "Surface the blind spots I am probably missing here.\n\nLook for:\n- perspectives of stakeholders I may be underweighting\n- common failure categories that apply to this type of problem\n- hidden incentives or dynamics I may be ignoring\n- the question I should be asking but am not\n- evidence I might be filtering out because it is inconvenient\n\nContext:\n{paste context}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/blind-spot-check.md"
     },
     {
       "section": "Block",
@@ -919,8 +1275,9 @@ globalThis.SITE_DATA = {
       "title": "Stakeholder Map",
       "summary": "Use when buy-in, resistance, or coordination will shape the outcome.",
       "tags": [
-        "stakeholder",
-        "map"
+        "stakeholder analysis",
+        "change management",
+        "influence"
       ],
       "copy": "Map the stakeholders in this situation.\n\nReturn for each stakeholder:\n- stakeholder\n- goals\n- likely concerns\n- influence level\n- current support level\n- what they need to say yes\n- best communication move\n\nThen return:\n- biggest alignment risk\n- the single most important conversation to have next\n\nDecision, project, or goal:\n{paste the outcome you are trying to achieve}\n\nSituation:\n{paste situation}",
       "body": [],
@@ -939,8 +1296,9 @@ globalThis.SITE_DATA = {
       "title": "Meeting Prep",
       "summary": "Use when you need to prepare for a conversation efficiently.",
       "tags": [
-        "meeting",
-        "prep"
+        "communication",
+        "preparation",
+        "negotiation"
       ],
       "copy": "Prepare me for this meeting.\n\nReturn:\n- likely goals\n- what I need to know\n- smart questions to ask\n- likely risks or tensions\n- best outcome\n- minimum acceptable outcome\n\nMy desired outcome:\n{paste what I want from the meeting}\n\nContext:\n{paste meeting context}",
       "body": [],
@@ -959,14 +1317,36 @@ globalThis.SITE_DATA = {
       "title": "Debug Confusion",
       "summary": "Use when you feel stuck but do not know why.",
       "tags": [
-        "debug",
-        "confusion"
+        "epistemics",
+        "reflection",
+        "causal reasoning"
       ],
       "copy": "Help me debug my confusion.\n\nReturn:\n- what I may be conflating\n- what assumptions might be wrong\n- what is still underspecified\n- what the real question might be\n- the smallest next step to reduce confusion\n\nSituation:\n{paste situation}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/debug-confusion.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.decision-journal-entry",
+      "aliases": [
+        "snippet.decision-journal-entry"
+      ],
+      "title": "Decision Journal Entry",
+      "summary": "Use when you want to record a decision well enough to reflect on it later.",
+      "tags": [
+        "reflection",
+        "decision tracking",
+        "personal effectiveness"
+      ],
+      "copy": "Turn this into a decision journal entry.\n\nReturn:\n- decision\n- options considered\n- criteria used\n- key assumptions\n- confidence level\n- what would prove this wrong\n- next checkpoint date\n\nDecision context:\n{paste context}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/decision-journal-entry.md"
     },
     {
       "section": "Block",
@@ -979,14 +1359,141 @@ globalThis.SITE_DATA = {
       "title": "Weekly Review",
       "summary": "Use when reflecting on a week of work or decisions.",
       "tags": [
-        "weekly",
-        "review"
+        "reflection",
+        "personal effectiveness",
+        "retrospective"
       ],
       "copy": "Run a useful weekly review.\n\nReturn:\n- what moved forward\n- what stalled\n- what created the most value\n- what created friction\n- what I should stop doing\n- what I should repeat next week\n- the single best focus for next week\n\nNotes:\n{paste notes}",
       "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/snippets/weekly-review.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.code-review",
+      "aliases": [
+        "snippet.code-review"
+      ],
+      "title": "Code Review",
+      "summary": "Use when reviewing a pull request, diff, or piece of code and you want to give structured, actionable feedback.",
+      "tags": [
+        "software engineering",
+        "critical thinking",
+        "quality"
+      ],
+      "copy": "Review this code and give structured, actionable feedback.\n\nCover:\n1. Correctness: does it do what it is supposed to? Are there edge cases it mishandles?\n2. Logic errors: are there off-by-one errors, incorrect conditionals, or missed branches?\n3. Security: are there injection points, untrusted inputs, or exposed secrets?\n4. Performance: are there obvious bottlenecks — O(n²) operations, repeated reads, redundant work?\n5. Maintainability: is the code understandable, correctly named, and structured for change?\n6. Test coverage: what cases are not covered and are most likely to fail in production?\n\nFormat each issue as:\n- Location (file, function, or line reference)\n- Issue (specific and factual)\n- Suggested fix or approach\n\nOnly flag real issues. Do not suggest changes that are purely stylistic preference\nwithout an objective cost.\n\nCode:\n{paste code under review}\n\nLanguage and context:\n{paste language, framework, and purpose of this code}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/code-review.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.refactor-plan",
+      "aliases": [
+        "snippet.refactor-plan"
+      ],
+      "title": "Refactor Plan",
+      "summary": "Use when code needs to be improved structurally without changing its behaviour, and you want to plan the work safely before touching anything.",
+      "tags": [
+        "software engineering",
+        "planning",
+        "quality"
+      ],
+      "copy": "Create a refactoring plan for this code.\n\nAssess the current state:\n- the primary structural problems (not style — things that make change expensive or risky)\n- the business logic or behaviour that must be preserved exactly\n- any parts of the code that are difficult to test as currently structured\n\nPlan the refactoring in safe, incremental steps:\n- each step should leave the code in a functioning state\n- earlier steps should not require later steps to complete\n- identify the step where test coverage can first be added if it is missing now\n- flag the step with the highest regression risk\n\nState the end state: what does the code structure look like when the refactoring is done?\n\nCode to refactor:\n{paste the code}\n\nConstraints (language, framework, things that cannot change):\n{paste constraints}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/refactor-plan.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.test-strategy",
+      "aliases": [
+        "snippet.test-strategy"
+      ],
+      "title": "Test Strategy",
+      "summary": "Use when designing or auditing the test coverage for a system, module, or feature.",
+      "tags": [
+        "software engineering",
+        "risk management",
+        "quality"
+      ],
+      "copy": "Design a test strategy for this system or feature.\n\nCover:\n1. Risk map: what are the highest-risk behaviours — where would a bug cause the worst outcome?\n2. Unit boundaries: what are the smallest testable units and what contracts do they have?\n3. Integration points: which component boundaries are most likely to fail?\n4. Happy path: what does the minimally working case look like?\n5. Edge cases and error paths: what inputs, states, or conditions are most likely to break things?\n6. Test types recommended: unit / integration / contract / end-to-end / load — which are needed and why?\n7. What should NOT be tested at a low level (because it would make tests brittle without adding value)?\n\nThen identify: what is the single most valuable test that does not exist yet?\n\nSystem or feature:\n{paste description, spec, or existing test suite}\n\nLanguage and framework:\n{paste language and testing tools in use}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/test-strategy.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.requirements-decomposition",
+      "aliases": [
+        "snippet.requirements-decomposition"
+      ],
+      "title": "Requirements Decomposition",
+      "summary": "Use when a high-level feature, epic, or user need must be broken into clear, independently shippable requirements before estimation or implementation begins.",
+      "tags": [
+        "software engineering",
+        "planning",
+        "communication"
+      ],
+      "copy": "Decompose this feature or requirement into clear, independently testable stories.\n\nFor each story:\n- state it as a specific capability the system should have after the story is complete\n- describe the acceptance criteria (what a tester would verify)\n- identify dependencies on other stories\n- estimate implementation complexity: small / medium / large\n\nAfter the stories:\n- identify the minimum viable subset that would deliver something demonstrably useful\n- flag any story that hides significant unknowns requiring a spike before estimation is reliable\n- note any non-functional requirements (performance, security, observability) that apply across multiple stories\n\nFeature or requirement:\n{paste the high-level description}\n\nContext (system, users, constraints):\n{paste relevant context}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/requirements-decomposition.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.statistical-significance-check",
+      "aliases": [
+        "snippet.statistical-significance-check"
+      ],
+      "title": "Statistical Significance Check",
+      "summary": "Use when interpreting results from an experiment, A/B test, or data analysis to avoid acting on noise.",
+      "tags": [
+        "statistics",
+        "epistemics",
+        "decision theory"
+      ],
+      "copy": "Interpret these test results with statistical rigour.\n\nCheck:\n1. Sample size: was the sample large enough to detect the effect size that would actually matter for a decision?\n2. Pre-registration: was the hypothesis and primary metric set before data collection, or post-hoc?\n3. Statistical significance: what is the p-value and confidence interval on the primary metric?\n4. Practical significance: is the effect size large enough to matter, even if statistically significant?\n5. Multiple comparisons: were many metrics or segments tested? If so, inflate the significance threshold accordingly.\n6. Novelty effects: could the result reflect short-term response to change rather than true steady-state behaviour?\n7. Segment breakdown: does the effect hold across key sub-groups, or is it driven by one segment?\n\nVerdict: should this result be acted on, replicated, or discarded — and why?\n\nExperiment or test results:\n{paste result summary: metric, p-value, confidence interval, sample size, duration}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/statistical-significance-check.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "core",
+      "sourceKind": "Snippet",
+      "key": "core.correlation-vs-causation",
+      "aliases": [
+        "snippet.correlation-vs-causation"
+      ],
+      "title": "Correlation Vs Causation",
+      "summary": "Use when an observed association is being used to justify a causal claim or a policy decision.",
+      "tags": [
+        "statistics",
+        "causal reasoning",
+        "epistemics"
+      ],
+      "copy": "Assess whether a causal claim is justified from this observed association.\n\nSteps:\n1. State the association precisely: what varies with what?\n2. Test reverse causation: could the effect be causing the cause instead?\n3. Test confounding: is there a third variable that causes both?\n4. Apply the Bradford Hill criteria where applicable:\n   - strength of association\n   - consistency across studies and populations\n   - temporality (cause precedes effect)\n   - dose-response relationship\n   - plausibility (a credible mechanism exists)\n5. What experiment would most efficiently establish or refute the causal direction?\n\nVerdict: is the claim well-supported, plausible but requiring more evidence, or unjustified?\n\nAlso note: what decision would change if causation is not established?\n\nClaim and supporting data:\n{paste the association, the data, and the causal claim being made}",
+      "body": [],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/snippets/correlation-vs-causation.md"
     },
     {
       "section": "Block",
@@ -999,8 +1506,9 @@ globalThis.SITE_DATA = {
       "title": "Prompt Critique",
       "summary": "Use when a prompt feels vague, bloated, or unreliable.",
       "tags": [
-        "critique",
-        "repair"
+        "prompt engineering",
+        "quality improvement",
+        "evaluation"
       ],
       "copy": "Critique this prompt for reliability and clarity.\n\nFocus on:\n- unclear goals\n- missing constraints\n- weak or ambiguous output format\n- failure modes\n- unnecessary verbosity\n- places where the model could reasonably misread intent\n\nReturn:\n- what the prompt is trying to do\n- the biggest weaknesses\n- the highest-leverage fixes\n- a revised prompt skeleton\n\nDesired task or output:\n{paste the job this prompt should do}\n\nObserved failure modes, if any:\n{paste what is going wrong, if known}\n\nPrompt:\n{paste prompt}",
       "body": [],
@@ -1019,8 +1527,9 @@ globalThis.SITE_DATA = {
       "title": "Prompt Rewrite",
       "summary": "Use when you want to turn a rough prompt into a sharper version quickly.",
       "tags": [
-        "rewrite",
-        "repair"
+        "prompt engineering",
+        "iteration",
+        "revision"
       ],
       "copy": "Rewrite this prompt for better model performance.\n\nRequirements:\n- preserve the original intent\n- make the desired output explicit\n- remove ambiguity and redundancy\n- add only the minimum useful constraints\n- keep it short unless detail clearly improves results\n\nReturn:\n- revised prompt\n- short note on what changed and why\n\nDesired task or output:\n{paste the job this prompt should do}\n\nObserved failure modes, if any:\n{paste what is going wrong, if known}\n\nPrompt:\n{paste prompt}",
       "body": [],
@@ -1039,8 +1548,9 @@ globalThis.SITE_DATA = {
       "title": "Prompt Compare",
       "summary": "Use when you have two or more prompt variants and want to choose the strongest one.",
       "tags": [
-        "compare",
-        "repair"
+        "prompt engineering",
+        "evaluation",
+        "testing"
       ],
       "copy": "Compare these prompt variants and recommend the best one.\n\nJudge them on:\n- clarity\n- specificity\n- likelihood of producing the requested output\n- token efficiency\n- risk of model confusion\n\nReturn:\n- best prompt\n- why it is strongest\n- what to borrow from the others\n- one or two targeted edits to make it even better\n\nDesired task or output:\n{paste the job these prompts should do}\n\nVariants:\n{paste prompt variants}",
       "body": [],
@@ -1059,10 +1569,9 @@ globalThis.SITE_DATA = {
       "title": "Coordination Plan",
       "summary": "Use when the main problem is getting multiple actors to align without drift.",
       "tags": [
-        "coordination",
-        "plan",
-        "game",
-        "theory"
+        "game theory",
+        "organizational learning",
+        "influence"
       ],
       "copy": "Analyze this as a coordination problem.\n\nReturn:\n- what must be coordinated\n- likely focal points\n- sources of misalignment\n- commitments needed\n- communication or protocol changes\n- how to detect drift early\n\nSituation:\n{paste situation}",
       "body": [],
@@ -1081,10 +1590,9 @@ globalThis.SITE_DATA = {
       "title": "Incentive Audit",
       "summary": "Use when behavior is being shaped by rewards, costs, or perverse incentives.",
       "tags": [
-        "incentive",
-        "audit",
-        "game",
-        "theory"
+        "game theory",
+        "behavioral science",
+        "organizational learning"
       ],
       "copy": "Analyze this situation as an incentive system.\n\nReturn:\n- actors\n- goals\n- explicit incentives\n- hidden incentives\n- likely equilibrium behavior\n- perverse incentives\n- one lever to realign behavior without creating new gaming\n\nSituation:\n{paste situation}",
       "body": [],
@@ -1103,9 +1611,9 @@ globalThis.SITE_DATA = {
       "title": "Signaling Check",
       "summary": "Use when words, status, or actions may be sending a signal to other people.",
       "tags": [
-        "signaling",
-        "game",
-        "theory"
+        "game theory",
+        "communication",
+        "influence"
       ],
       "copy": "Analyze the signals in this situation.\n\nReturn:\n- which signals are credible vs cheap talk\n- who is sending each signal\n- who the audience is\n- what action would be a stronger signal than words\n- where noise or ambiguity could mislead\n\nSituation:\n{paste situation}",
       "body": [],
@@ -1124,10 +1632,9 @@ globalThis.SITE_DATA = {
       "title": "Behavior Change Plan",
       "summary": "Use when an intention needs to become a repeatable habit.",
       "tags": [
-        "behavior",
-        "change",
-        "plan",
-        "psychology"
+        "behavioral science",
+        "psychology",
+        "planning"
       ],
       "copy": "Turn this intention into a behavior-change plan.\n\nReturn:\n- target behavior\n- cue\n- friction reduction\n- implementation intention\n- environment change\n- feedback loop\n- likely failure mode\n- minimum viable habit\n\nIntention:\n{paste intention}",
       "body": [],
@@ -1146,8 +1653,9 @@ globalThis.SITE_DATA = {
       "title": "Bias Check",
       "summary": "Use when judgment may be distorted by a known cognitive bias.",
       "tags": [
-        "bias",
-        "psychology"
+        "behavioral science",
+        "decision theory",
+        "reflection"
       ],
       "copy": "Review this through a cognitive-bias lens.\n\nReturn:\n- likely biases at play\n- how each bias would distort judgment\n- the most useful counter-question for each bias\n- what evidence would reduce the distortion\n- what a calmer outside observer would probably say\n\nSituation:\n{paste situation}",
       "body": [],
@@ -1166,15 +1674,36 @@ globalThis.SITE_DATA = {
       "title": "Motivation Diagnosis",
       "summary": "Use when behavior is stuck and you need to know why.",
       "tags": [
-        "motivation",
-        "diagnosis",
-        "psychology"
+        "behavioral science",
+        "psychology",
+        "organizational learning"
       ],
       "copy": "Diagnose why this behavior is or is not happening.\n\nReturn:\n- goal clarity\n- ability / skill gap\n- friction / effort\n- reward / feedback loop\n- identity / values conflict\n- social pressure\n- emotional resistance\n- smallest intervention\n\nSituation:\n{paste situation}",
       "body": [],
       "family": "",
       "group": "Psychology",
       "sourcePath": "prompts/concepts/psychology/motivation-diagnosis.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.abstraction-boundary",
+      "aliases": [
+        "lens.computer-science-abstraction-boundary"
+      ],
+      "title": "Abstraction Boundary",
+      "summary": "Apply when a design decision involves where to draw the lines between components, layers, or services — and what each side is allowed to know about the other.",
+      "tags": [
+        "software engineering",
+        "systems thinking",
+        "design"
+      ],
+      "copy": "Analyse the abstraction boundaries in this design.\n\nFor each major boundary:\n- what does each side expose to the other?\n- what is each side allowed to assume about the other's implementation?\n- is the boundary leaky? (does one side need to know things it shouldn't?)\n- what would change on one side if the other were replaced with a different implementation?\n\nIdentify:\n- the boundary that is most likely to become the wrong boundary as the system grows\n- any circular dependencies or bidirectional knowledge that should be resolved\n- the one abstraction that is doing too much and should be split\n\nDesign:\n{paste architecture description, diagram summary, or relevant code}",
+      "body": [],
+      "family": "",
+      "group": "Computer Science",
+      "sourcePath": "prompts/concepts/computer-science/abstraction-boundary.md"
     },
     {
       "section": "Block",
@@ -1187,10 +1716,9 @@ globalThis.SITE_DATA = {
       "title": "Complexity Tradeoff",
       "summary": "Use when you need to choose an approach based on cost, scale, or maintainability.",
       "tags": [
-        "complexity",
-        "tradeoff",
-        "computer",
-        "science"
+        "software engineering",
+        "decision theory",
+        "systems thinking"
       ],
       "copy": "Evaluate the algorithm or system tradeoffs.\n\nReturn:\n- time complexity\n- space complexity\n- latency or throughput impact\n- bottlenecks\n- maintainability cost\n- simplest adequate approach\n\nContext:\n{paste context}",
       "body": [],
@@ -1209,16 +1737,36 @@ globalThis.SITE_DATA = {
       "title": "Debugger Loop",
       "summary": "Use when you need a systematic way to localize a bug or failure.",
       "tags": [
-        "debugger",
-        "loop",
-        "computer",
-        "science"
+        "software engineering",
+        "causal reasoning",
+        "critical thinking"
       ],
       "copy": "Debug this systematically.\n\nReturn:\n- reproduction steps\n- observations\n- hypotheses\n- experiments\n- localization\n- fix\n- regression test\n\nBug or failure:\n{paste bug or failure}",
       "body": [],
       "family": "",
       "group": "Computer Science",
       "sourcePath": "prompts/concepts/computer-science/debugger-loop.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.failure-mode-analysis",
+      "aliases": [
+        "lens.computer-science-failure-mode-analysis"
+      ],
+      "title": "Failure Mode Analysis",
+      "summary": "Apply when designing, reviewing, or debugging a distributed system, service, or integration to surface how it fails and how gracefully it does so.",
+      "tags": [
+        "software engineering",
+        "risk management",
+        "systems thinking"
+      ],
+      "copy": "Analyse the failure modes of this system or integration.\n\nFor each major component or dependency:\n- how does it fail? (crash, hang, slow response, partial response, data corruption)\n- what is the blast radius when it fails? (what else breaks with it?)\n- how does the system currently detect this failure?\n- does the system degrade gracefully or fail hard?\n- is there a recovery path, and is it automatic or manual?\n\nThen assess:\n- which failure mode would be hardest to detect before users notice?\n- which failure mode has the largest blast radius?\n- what single change would most improve resilience?\n\nSystem or integration:\n{paste architecture description, service diagram, or relevant code}",
+      "body": [],
+      "family": "",
+      "group": "Computer Science",
+      "sourcePath": "prompts/concepts/computer-science/failure-mode-analysis.md"
     },
     {
       "section": "Block",
@@ -1231,11 +1779,9 @@ globalThis.SITE_DATA = {
       "title": "Interface Contract Review",
       "summary": "Use when failures may be happening at a boundary between components.",
       "tags": [
-        "interface",
-        "contract",
-        "review",
-        "computer",
-        "science"
+        "software engineering",
+        "systems thinking",
+        "critical thinking"
       ],
       "copy": "Review the interface boundary.\n\nReturn:\n- inputs\n- outputs\n- contracts\n- error handling\n- retry and idempotency assumptions\n- observability\n- one boundary-hardening change\n\nBoundary:\n{paste boundary}",
       "body": [],
@@ -1254,15 +1800,330 @@ globalThis.SITE_DATA = {
       "title": "Invariant Check",
       "summary": "Use when correctness depends on things staying true across steps.",
       "tags": [
-        "invariant",
-        "computer",
-        "science"
+        "software engineering",
+        "critical thinking",
+        "epistemics"
       ],
       "copy": "Find the invariants in this system or argument.\n\nReturn:\n- invariants\n- preconditions\n- postconditions\n- edge cases\n- failure modes\n- a test that would catch violations\n\nSystem or argument:\n{paste system or argument}",
       "body": [],
       "family": "",
       "group": "Computer Science",
       "sourcePath": "prompts/concepts/computer-science/invariant-check.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.marginal-analysis",
+      "aliases": [
+        "lens.economics-marginal-analysis"
+      ],
+      "title": "Marginal Analysis",
+      "summary": "Use when you need to decide how much of something to do, or whether to do one more unit.",
+      "tags": [
+        "economics",
+        "decision theory",
+        "planning"
+      ],
+      "copy": "Apply marginal analysis to this decision.\n\nReturn:\n- the marginal benefit of doing one more unit\n- the marginal cost of doing one more unit\n- the point of diminishing returns\n- whether the current level is below, at, or above the optimal margin\n- what changes if you shift the level up or down by 20%\n- the implied recommendation\n\nDecision or activity:\n{paste the decision, investment, or activity to analyze}",
+      "body": [],
+      "family": "",
+      "group": "Economics",
+      "sourcePath": "prompts/concepts/economics/marginal-analysis.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.opportunity-cost",
+      "aliases": [
+        "lens.economics-opportunity-cost"
+      ],
+      "title": "Opportunity Cost",
+      "summary": "Use when a choice implicitly rules out alternatives whose value is not being counted.",
+      "tags": [
+        "economics",
+        "decision theory",
+        "planning"
+      ],
+      "copy": "Analyze the opportunity cost of this choice.\n\nReturn:\n- the best forgone alternative\n- what that alternative would have produced or protected\n- the implicit cost of staying on the current path\n- whether the current choice is worth that cost given what is actually known\n- any reversibility asymmetry between the options\n- the key question that would change the answer\n\nChoice or commitment:\n{paste the choice being considered or already made}",
+      "body": [],
+      "family": "",
+      "group": "Economics",
+      "sourcePath": "prompts/concepts/economics/opportunity-cost.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.sunk-cost",
+      "aliases": [
+        "lens.economics-sunk-cost"
+      ],
+      "title": "Sunk Cost",
+      "summary": "Apply when a past investment (money, time, or effort) is influencing a forward-looking decision in a way that distorts it.",
+      "tags": [
+        "economics",
+        "decision theory",
+        "critical thinking"
+      ],
+      "copy": "Apply sunk cost analysis to this decision.\n\nReframe the decision as follows:\n- identify what has already been spent (the sunk cost)\n- state clearly: that cost cannot be recovered regardless of the choice ahead\n- restate the decision purely in terms of future costs and future benefits\n- given only the forward-looking view, what is the right choice?\n- if the answer changed once sunk costs were excluded, name what was distorting it\n\nAdditional check:\n- is there a legitimate forward-looking reason to stay the course?\n  (learning value, relationship capital, strategic positioning)\n- if yes, name it explicitly and separate it from the sunk cost argument\n\nDecision or situation:\n{paste the situation and the past investment involved}",
+      "body": [],
+      "family": "",
+      "group": "Economics",
+      "sourcePath": "prompts/concepts/economics/sunk-cost.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.feedback-loops",
+      "aliases": [
+        "lens.systems-thinking-feedback-loops"
+      ],
+      "title": "Feedback Loops",
+      "summary": "Use when a situation keeps recurring, surprising, or oscillating despite interventions.",
+      "tags": [
+        "systems thinking",
+        "causal reasoning",
+        "planning"
+      ],
+      "copy": "Map the feedback loops in this system.\n\nReturn:\n- reinforcing loops: what amplifies and accelerates in this system\n- balancing loops: what stabilises or resists change\n- key delays: where lag between cause and effect creates unpredictability\n- dominant loop: which loop is driving current behaviour\n- intervention risk: which loops would be accidentally strengthened by a naive fix\n- highest-leverage intervention that changes the loop structure rather than just current levels\n\nSystem or situation:\n{paste the recurring situation, system, or dynamic you are trying to understand}",
+      "body": [],
+      "family": "",
+      "group": "Systems Thinking",
+      "sourcePath": "prompts/concepts/systems-thinking/feedback-loops.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.leverage-points",
+      "aliases": [
+        "lens.systems-thinking-leverage-points"
+      ],
+      "title": "Leverage Points",
+      "summary": "Use when you want maximum effect from minimum intervention in a complex system.",
+      "tags": [
+        "systems thinking",
+        "strategic thinking",
+        "planning"
+      ],
+      "copy": "Identify the leverage points in this system.\n\nReturn:\n- the system's stated goal and its actual behaviour\n- the structural levers ordered from low to high leverage:\n  - numbers and flows (low leverage)\n  - feedback loop strength\n  - information flows and who can see what\n  - rules and constraints\n  - goals and incentives\n  - power to change rules\n  - system paradigm or mental model (high leverage)\n- the most accessible high-leverage point currently available\n- the most likely resistance to using it\n\nSystem or situation:\n{paste the system, organisation, or ongoing situation}",
+      "body": [],
+      "family": "",
+      "group": "Systems Thinking",
+      "sourcePath": "prompts/concepts/systems-thinking/leverage-points.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.ethical-tradeoffs",
+      "aliases": [
+        "lens.philosophy-ethical-tradeoffs"
+      ],
+      "title": "Ethical Tradeoffs",
+      "summary": "Use when a decision involves competing values, duties, or harms that cannot all be satisfied.",
+      "tags": [
+        "ethics",
+        "critical thinking",
+        "decision theory"
+      ],
+      "copy": "Analyze the ethical tradeoffs in this decision.\n\nReturn:\n- the values or duties in tension\n- what each ethical framework implies:\n  - consequentialist view: which choice produces the best outcomes across all affected parties\n  - deontological view: which choice respects duties, rights, or constraints regardless of outcome\n  - virtue view: what a person of good character would do in this situation\n- who bears the cost of each available choice\n- the choice that most frameworks converge on, if any\n- if they diverge: the clearest way to state what you are actually choosing between\n- what additional information would change the answer\n\nDecision or situation:\n{paste the decision or situation involving ethical tension}",
+      "body": [],
+      "family": "",
+      "group": "Philosophy",
+      "sourcePath": "prompts/concepts/philosophy/ethical-tradeoffs.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.first-principles",
+      "aliases": [
+        "lens.philosophy-first-principles"
+      ],
+      "title": "First Principles",
+      "summary": "Use when a problem or solution rests on inherited assumptions that should be examined from scratch.",
+      "tags": [
+        "first principles",
+        "critical thinking",
+        "creative thinking"
+      ],
+      "copy": "Break this down to first principles.\n\nRequirements:\n- identify what is assumed to be true without direct justification\n- strip each assumption back to the most fundamental claim that can still be verified\n- list what remains when all inherited assumptions are removed\n- from those fundamentals, re-derive the approach without retracing the same path\n- state what genuinely changes if you build back up from scratch\n\nProblem or assumption set:\n{paste the problem, system, approach, or belief to examine}",
+      "body": [],
+      "family": "",
+      "group": "Philosophy",
+      "sourcePath": "prompts/concepts/philosophy/first-principles.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.thought-experiment",
+      "aliases": [
+        "lens.philosophy-thought-experiment"
+      ],
+      "title": "Thought Experiment",
+      "summary": "Apply when an abstract claim, value, or principle needs to be tested against a hypothetical case to reveal its implications or limits.",
+      "tags": [
+        "philosophy",
+        "critical thinking",
+        "epistemics"
+      ],
+      "copy": "Design and run a thought experiment to test this principle or claim.\n\nSteps:\n1. State the principle or claim to be tested in precise terms\n2. Design a hypothetical case that isolates the relevant variable:\n   - select a scenario where the principle clearly applies\n   - introduce a variation that creates tension or forces a difficult implication\n   - strip away distracting real-world complexity\n3. Apply the principle rigorously to the hypothetical case\n4. Assess the result:\n   - is the implied outcome acceptable? If not, what does that reveal about the principle?\n   - does the principle need to be qualified, scoped, or revised?\n   - what does the thought experiment show that direct argument could not?\n\nPrinciple or claim:\n{paste the claim, rule, or value to examine}",
+      "body": [],
+      "family": "",
+      "group": "Philosophy",
+      "sourcePath": "prompts/concepts/philosophy/thought-experiment.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.base-rate-check",
+      "aliases": [
+        "lens.base-rate-check"
+      ],
+      "title": "Base Rate Check",
+      "summary": "Apply when estimating probabilities or making predictions, to avoid neglecting the historical frequency of similar cases.",
+      "tags": [
+        "statistics",
+        "epistemics",
+        "decision theory"
+      ],
+      "copy": "Apply base rate thinking to this forecast or estimate.\n\nSteps:\n- identify the reference class: what category of similar cases does this belong to?\n- find or estimate the base rate for that class (historical frequency of the outcome)\n- note how confident you are in the reference class — is it genuinely comparable?\n- adjust from the base rate only for specific, clearly relevant factors (not vague optimism)\n- state your final calibrated estimate with explicit reasoning for any departure from the base rate\n- identify where overconfidence or underconfidence is most likely to distort this estimate\n\nForecast or estimate:\n{paste claim, prediction, or probability assessment}",
+      "body": [],
+      "family": "",
+      "group": "Statistics",
+      "sourcePath": "prompts/concepts/statistics/base-rate-check.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.confidence-calibration",
+      "aliases": [
+        "lens.confidence-calibration"
+      ],
+      "title": "Confidence Calibration",
+      "summary": "Apply when a plan, argument, or claim rests on confident assertions that have not been examined for whether the expressed certainty is warranted.",
+      "tags": [
+        "statistics",
+        "epistemics",
+        "critical thinking"
+      ],
+      "copy": "Audit the confidence levels in this work for calibration.\n\nFor each major claim or estimate:\n- state the current implied confidence level (high / medium / low or a rough probability)\n- identify what would need to be true for that confidence level to be justified\n- flag claims where confidence exceeds the available evidence\n- flag claims where false modesty is blocking useful commitment\n- suggest the well-calibrated version of each problematic claim\n\nThen give an overall verdict: overconfident, underconfident, or well-calibrated —\nand name the single claim whose confidence most deserves scrutiny.\n\nWork to audit:\n{paste plan, argument, forecast, or set of claims}",
+      "body": [],
+      "family": "",
+      "group": "Statistics",
+      "sourcePath": "prompts/concepts/statistics/confidence-calibration.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.sample-design",
+      "aliases": [
+        "lens.statistics-sample-design"
+      ],
+      "title": "Sample Design",
+      "summary": "Apply when designing a study, survey, poll, or experiment where the quality of the sample determines whether conclusions can be generalised.",
+      "tags": [
+        "statistics",
+        "research",
+        "epistemics"
+      ],
+      "copy": "Evaluate or design the sample for this study or analysis.\n\nCover:\n- target population: what group are we trying to draw conclusions about?\n- sampling frame: what group are we actually sampling from, and how does it differ from the target?\n- sampling method: random, stratified, cluster, or convenience — and what biases does it introduce?\n- sample size: is it sufficient to detect the effect size that would matter for the decision? (rough power calculation)\n- non-response and attrition: who is least likely to respond or remain in the sample, and does that bias the result?\n- external validity: to what extent can results be generalised beyond the sample?\n\nIdentify the single biggest threat to the validity of conclusions from this sample.\n\nStudy or analysis:\n{paste description of what is being studied and how the sample is or will be collected}",
+      "body": [],
+      "family": "",
+      "group": "Statistics",
+      "sourcePath": "prompts/concepts/statistics/sample-design.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.survivorship-bias",
+      "aliases": [
+        "lens.statistics-survivorship-bias"
+      ],
+      "title": "Survivorship Bias",
+      "summary": "Apply when drawing conclusions from a sample that may only contain successes, completions, or survivors — and the excluded cases would change the conclusion.",
+      "tags": [
+        "statistics",
+        "epistemics",
+        "research"
+      ],
+      "copy": "Check this analysis for survivorship bias.\n\nAsk:\n- what cases are present in the sample? (what made it in)\n- what cases are absent? (what was filtered out before observation)\n- why were the absent cases excluded? (failure, dropout, inaccessibility, or selection)\n- if the absent cases were included, how would the pattern change?\n- is the conclusion being drawn only valid for the observed subset, or is it\n  being generalised to a broader population?\n\nIdentify: what would we need to examine to correct for this?\n\nAnalysis or claim:\n{paste the study, argument, case, or pattern you are reviewing}",
+      "body": [],
+      "family": "",
+      "group": "Statistics",
+      "sourcePath": "prompts/concepts/statistics/survivorship-bias.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.constraint-mapping",
+      "aliases": [
+        "lens.constraint-mapping"
+      ],
+      "title": "Constraint Mapping",
+      "summary": "Apply when designing a solution to surface all constraints, distinguish hard limits from soft ones, and find room for creative moves that are being blocked by unexamined assumptions.",
+      "tags": [
+        "design",
+        "creative thinking",
+        "systems thinking"
+      ],
+      "copy": "Map the constraints acting on this design problem.\n\nCategorise each constraint:\n- hard constraints: non-negotiable (legal, physical, safety, contractual)\n- soft constraints: preferences or norms that could be relaxed with justification\n- assumed constraints: things being treated as fixed without having been explicitly tested\n\nFor each soft and assumed constraint:\n- who imposed it and what was the original intent?\n- what would actually happen if it were relaxed or removed?\n- is there a version of the solution that is better precisely because it challenges\n  this constraint?\n\nIdentify the one constraint that, if removed, would unlock the most design freedom.\nIdentify the one assumed constraint most likely to be wrong.\n\nDesign problem or situation:\n{paste problem description and any stated constraints}",
+      "body": [],
+      "family": "",
+      "group": "Design",
+      "sourcePath": "prompts/concepts/design/constraint-mapping.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.jobs-to-be-done",
+      "aliases": [
+        "lens.design-jobs-to-be-done"
+      ],
+      "title": "Jobs to Be Done",
+      "summary": "Apply when designing or improving a product, service, or intervention to surface the underlying progress users are trying to make — not just what they do or ask for.",
+      "tags": [
+        "design",
+        "behavioral science",
+        "strategic thinking"
+      ],
+      "copy": "Apply jobs-to-be-done analysis to this product, feature, or user behaviour.\n\nIdentify the job:\n- what progress is the user trying to make in their life or work?\n- what is being hired to do this job now (the current solution, workaround, or non-consumption)?\n- what functional job are they trying to accomplish?\n- what emotional job are they trying to accomplish? (how do they want to feel?)\n- what social job are they trying to accomplish? (how do they want to be seen?)\n\nExamine the context (the \"when\" and \"where\"):\n- what situation triggers the hire?\n- what pushes them away from the current solution?\n- what pulls them toward a new solution?\n- what anxieties and habits are holding them in place?\n\nImplication:\n- what does a solution look like that does this job better than the current alternative?\n\nProduct, feature, or behaviour:\n{paste what you are analysing}",
+      "body": [],
+      "family": "",
+      "group": "Design",
+      "sourcePath": "prompts/concepts/design/jobs-to-be-done.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "lens",
+      "sourceKind": "Lens",
+      "key": "lens.user-mental-model",
+      "aliases": [
+        "lens.user-mental-model"
+      ],
+      "title": "User Mental Model",
+      "summary": "Apply when designing or improving a product, communication, or system for human use, to surface the gap between how users think and how the system actually works.",
+      "tags": [
+        "design",
+        "behavioral science",
+        "communication"
+      ],
+      "copy": "Map the user mental model and its gaps for this system or communication.\n\nCover:\n- how users most likely conceptualise this system (their internal working model)\n- where that mental model differs from how the system actually works\n- which mismatches will cause the most friction, errors, or abandonment\n- what vocabulary, metaphors, or analogies users are likely to bring in\n- what prior experience shapes their expectations\n\nThen suggest:\n- the two or three design or communication changes most likely to close the most\n  damaging gaps\n- any terminology that is creating silent confusion and should be changed\n\nSystem or communication to analyse:\n{paste product, interface, message, process, or feature description}",
+      "body": [],
+      "family": "",
+      "group": "Design",
+      "sourcePath": "prompts/concepts/design/user-mental-model.md"
     },
     {
       "section": "Block",
@@ -1273,8 +2134,9 @@ globalThis.SITE_DATA = {
       "title": "Decision Quality",
       "summary": "Use this checklist after a decision draft.",
       "tags": [
-        "decision",
-        "quality"
+        "decision theory",
+        "quality assurance",
+        "critical thinking"
       ],
       "copy": "",
       "body": [
@@ -1296,8 +2158,9 @@ globalThis.SITE_DATA = {
       "title": "Argument Quality",
       "summary": "Use this checklist after drafting or critiquing an argument.",
       "tags": [
-        "argument",
-        "quality"
+        "logic",
+        "argumentation",
+        "critical thinking"
       ],
       "copy": "",
       "body": [
@@ -1314,13 +2177,38 @@ globalThis.SITE_DATA = {
       "section": "Block",
       "blockType": "rubric",
       "sourceKind": "Rubric",
+      "key": "rubric.strategy-quality",
+      "aliases": [],
+      "title": "Strategy Quality",
+      "summary": "Use this checklist after drafting a strategy or strategic recommendation.",
+      "tags": [
+        "strategic thinking",
+        "critical thinking",
+        "quality"
+      ],
+      "copy": "",
+      "body": [
+        [
+          "Questions",
+          "Is the actual strategic choice explicit — what we will do and what we will not do?, Are the assumptions underlying the strategy named and testable?, Does the strategy address the key uncertainties, or does it assume them away?, Is there a clear theory of how inputs lead to the desired outcome?, Are the trade-offs acknowledged rather than buried?, Is the strategy differentiated enough to matter, or is it generic enough to apply to anyone?, Is there a clear signal that would tell us the strategy is working or failing?"
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "rubrics/strategy-quality.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "rubric",
+      "sourceKind": "Rubric",
       "key": "rubric.plan-quality",
       "aliases": [],
       "title": "Plan Quality",
       "summary": "Use this checklist after a plan.",
       "tags": [
-        "plan",
-        "quality"
+        "planning",
+        "execution readiness",
+        "quality assurance"
       ],
       "copy": "",
       "body": [
@@ -1337,13 +2225,39 @@ globalThis.SITE_DATA = {
       "section": "Block",
       "blockType": "rubric",
       "sourceKind": "Rubric",
+      "key": "rubric.research-quality",
+      "aliases": [],
+      "title": "Research Quality",
+      "summary": "Use this checklist after completing an investigation or research pass.",
+      "tags": [
+        "research methodology",
+        "epistemic quality",
+        "evidence evaluation",
+        "critical thinking"
+      ],
+      "copy": "",
+      "body": [
+        [
+          "Questions",
+          "Is the question being answered actually the question that matters for the decision?, Are the sources capable of answering this question, or is there a gap?, Has disconfirming evidence been actively sought, not just noted when encountered?, Are the strongest counter-arguments represented fairly?, Are the conclusions limited to what the evidence actually supports?, Is the confidence level on each key claim explicit?, Would a skeptical expert with opposing priors find this research intellectually honest?"
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "rubrics/research-quality.md"
+    },
+    {
+      "section": "Block",
+      "blockType": "rubric",
+      "sourceKind": "Rubric",
       "key": "rubric.writing-quality",
       "aliases": [],
       "title": "Writing Quality",
       "summary": "Use this checklist after drafting or rewriting.",
       "tags": [
-        "writing",
-        "quality"
+        "writing craft",
+        "editing",
+        "communication"
       ],
       "copy": "",
       "body": [
@@ -1366,7 +2280,8 @@ globalThis.SITE_DATA = {
       "summary": "Use this checklist after a review or retrospective.",
       "tags": [
         "reflection",
-        "quality"
+        "personal effectiveness",
+        "epistemics"
       ],
       "copy": "",
       "body": [
@@ -1388,7 +2303,9 @@ globalThis.SITE_DATA = {
       "title": "Prompt Quality",
       "summary": "Use this checklist after drafting or revising a prompt.",
       "tags": [
-        "quality"
+        "prompt engineering",
+        "quality assurance",
+        "evaluation"
       ],
       "copy": "",
       "body": [
@@ -1405,304 +2322,159 @@ globalThis.SITE_DATA = {
   "stacks": [
     {
       "section": "Stack",
-      "key": "stack.problem-framing",
-      "title": "Problem Framing",
-      "summary": "Use when the task is vague and you need a clean starting point.",
+      "key": "stack.quick-sense-check",
+      "title": "Quick Sense-Check",
+      "summary": "Use when you have a plan, draft, or decision and want a fast sanity check before committing further time to it.",
       "tags": [
-        "problem",
-        "framing"
+        "critical thinking",
+        "risk management",
+        "planning"
       ],
       "body": [
         [
           "Useful inputs",
-          "the raw request, problem statement, or situation, any visible constraints or deadlines, any facts you already know versus what still feels unclear"
+          "the plan, decision, or draft — even rough notes, the key assumption or bet it rests on"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.frame.task` -> `strategy.problem_split` -> `core.scope.frame` -> `core.guardrail.uncertainty`"
+          "`mode.critique` -> `core.guardrail.uncertainty`"
         ],
         [
           "Expected outcome",
-          "clear problem frame, subproblems, open questions, best next step"
+          "the weakest point in the current thinking named clearly, the key assumption laid bare and assessed for fragility, a clear steer on whether to proceed, revise, or pause"
         ]
       ],
-      "sourcePath": "stacks/problem-framing.md"
+      "sourcePath": "stacks/quick-sense-check.md"
     },
     {
       "section": "Stack",
-      "key": "stack.explore-to-decision",
-      "title": "Explore To Decision",
-      "summary": "Use when you need options first and a choice second.",
+      "key": "stack.fast-ideation",
+      "title": "Fast Ideation",
+      "summary": "Use when you need a broad set of ideas quickly and want to defer judgment until after the generation phase.",
       "tags": [
-        "explore",
-        "decision"
+        "creative thinking",
+        "ideation",
+        "decision theory"
       ],
       "body": [
         [
           "Useful inputs",
-          "the decision context or problem to solve, any candidate options already on the table, any known criteria, constraints, or deadline"
+          "the problem, question, or opportunity in one or two sentences, any constraints worth knowing (timing, resources, non-starters)"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.generate-options` -> `core.brainstorm-angles` -> `core.frame.success-criteria` -> `mode.decide` -> `core.compare-options` -> `core.choose-under-uncertainty` -> `core.schema.decision-memo`"
+          "`mode.explore` -> `core.brainstorm-angles`"
         ],
         [
           "Expected outcome",
-          "option set, explicit criteria, comparison, chosen direction, rationale, next action"
+          "a diverse spread of ideas across different approaches or framings, at least one unexpected option that would not have surfaced from standard thinking, enough raw material for a second pass of evaluation or prioritisation"
         ]
       ],
-      "sourcePath": "stacks/explore-to-decision.md"
+      "sourcePath": "stacks/fast-ideation.md"
     },
     {
       "section": "Stack",
-      "key": "stack.explore-vs-exploit",
-      "title": "Explore Vs Exploit",
-      "summary": "Use when you are unsure whether to keep searching or to commit to the best current option.",
+      "key": "stack.frame-the-ask",
+      "title": "Frame the Ask",
+      "summary": "Use when you have received a brief, request, or problem statement and need to understand what is really being asked before doing any work.",
       "tags": [
-        "explore",
-        "exploit"
+        "planning",
+        "communication",
+        "strategic thinking"
       ],
       "body": [
         [
           "Useful inputs",
-          "the current path or best known option, alternative options or search space, if any, the cost of delay, reversibility, or learning opportunity"
+          "the request as stated — verbatim if possible, any context about who is asking and why"
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.explore-exploit-decision` -> `core.guardrail.uncertainty` -> `core.schema.execution-brief`"
+          "`mode.explore` -> `core.clarify-task` -> `core.frame.success-criteria`"
         ],
         [
           "Expected outcome",
-          "clear recommendation to explore, exploit, or run a bounded test, explicit rationale, trigger that would change the call, immediate next action"
+          "the actual job behind the stated request made explicit, the criteria by which a good response will be judged, any ambiguities resolved or surfaced as explicit questions to ask back"
         ]
       ],
-      "sourcePath": "stacks/explore-vs-exploit.md"
+      "sourcePath": "stacks/frame-the-ask.md"
     },
     {
       "section": "Stack",
-      "key": "stack.prioritize-portfolio",
-      "title": "Prioritize Portfolio",
-      "summary": "Use when several plausible bets compete for limited time, money, or attention.",
+      "key": "stack.capture-and-act",
+      "title": "Capture and Act",
+      "summary": "Use after a meeting, conversation, piece of reading, or experience when you want to turn raw observations into something actionable before the signal decays.",
       "tags": [
-        "prioritize",
-        "portfolio"
+        "reflection",
+        "knowledge management",
+        "planning"
       ],
       "body": [
         [
           "Useful inputs",
-          "the list of candidate bets, projects, or tasks, resource constraints such as time, budget, or attention, any explicit success criteria or strategic priorities"
+          "rough notes, transcript, or key moments from the experience, the question or goal the experience was meant to serve"
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.prioritize-opportunities` -> `core.schema.execution-brief` -> `core.guardrail.uncertainty`"
+          "`mode.reflect` -> `core.extract-insights` -> `core.plan-next-actions`"
         ],
         [
           "Expected outcome",
-          "ranked bets, now versus later cuts, execution brief for the top priority, visible uncertainty"
+          "the two or three highest-leverage insights extracted from the experience, next actions defined with enough specificity to remove ambiguity, the decision or commitment surfaced, if any, that the experience implies"
         ]
       ],
-      "sourcePath": "stacks/prioritize-portfolio.md"
+      "sourcePath": "stacks/capture-and-act.md"
     },
     {
       "section": "Stack",
-      "key": "stack.de-risk-with-test",
-      "title": "De-Risk With Test",
-      "summary": "Use when uncertainty is too high for full commitment but low enough to test.",
+      "key": "stack.audit-the-argument",
+      "title": "Audit the Argument",
+      "summary": "Use when you want to evaluate whether an argument or position holds before accepting, rejecting, or acting on it.",
       "tags": [
-        "risk",
-        "test"
+        "critical thinking",
+        "argumentation",
+        "epistemics"
       ],
       "body": [
         [
           "Useful inputs",
-          "the current idea, plan, or decision under consideration, the main uncertainty blocking commitment, any real budget, time, or effort ceiling for a test"
+          "the argument, thesis, or position in full, the context in which it was made (optional, but useful)"
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.design-cheap-test` -> `core.schema.execution-brief` -> `core.guardrail.uncertainty`"
+          "`mode.critique` -> `core.argument-structure` -> `lens.confidence-calibration`"
         ],
         [
           "Expected outcome",
-          "core uncertainty, cheapest credible test, success and failure signals, next action with checkpoint"
+          "the premises and conclusion of the argument mapped clearly, the hidden assumptions named and assessed, the gap between evidence strength and claimed confidence identified, a verdict: does the argument hold, partially hold, or fail — and why"
         ]
       ],
-      "sourcePath": "stacks/de-risk-with-test.md"
+      "sourcePath": "stacks/audit-the-argument.md"
     },
     {
       "section": "Stack",
-      "key": "stack.pressure-test-plan",
-      "title": "Pressure Test Plan",
-      "summary": "Use when you have a plan and want to stress it before committing.",
+      "key": "stack.orient-before-acting",
+      "title": "Orient Before Acting",
+      "summary": "Use before starting any task where context is thin or the goal is loosely defined. A fast forcing function to avoid doing the wrong thing well.",
       "tags": [
-        "pressure",
-        "test",
-        "plan"
+        "planning",
+        "scoping",
+        "execution readiness"
       ],
       "body": [
         [
           "Useful inputs",
-          "the current plan, recommendation, or proposal, the intended outcome and constraints, any assumptions that already feel shaky"
+          "the task or request as stated, what you know about the situation so far, any deadline or constraint"
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `strategy.premortem` -> `strategy.red_team` -> `core.assumption.audit` -> `core.stress-test-assumptions`"
+          "`mode.explore` -> `core.clarify-task` -> `core.scope.frame`"
         ],
         [
           "Expected outcome",
-          "prioritized risks, exposed assumptions, hardest-to-dismiss objections, concrete mitigations"
+          "what the task actually is, what's in scope and what's not, the one thing most likely to move this forward, what you'd need to know to be confident you're on the right track"
         ]
       ],
-      "sourcePath": "stacks/pressure-test-plan.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.debug-a-failure",
-      "title": "Debug A Failure",
-      "summary": "Use when a bug, incident, or broken workflow needs a structured diagnosis instead of random guessing.",
-      "tags": [
-        "debug",
-        "failure"
-      ],
-      "body": [
-        [
-          "Useful inputs",
-          "expected behavior versus actual behavior, reproduction steps, logs, or error evidence, the system boundary or component most likely involved"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `core.plan-next-actions`"
-        ],
-        [
-          "Expected outcome",
-          "a tighter failure hypothesis, the highest-value next experiment, likely boundary or invariant break, a practical next-step plan"
-        ]
-      ],
-      "sourcePath": "stacks/debug-a-failure.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.source-to-brief",
-      "title": "Source To Brief",
-      "summary": "Use when a dense source needs to become something decision-useful quickly.",
-      "tags": [
-        "source",
-        "brief"
-      ],
-      "body": [
-        [
-          "Useful inputs",
-          "the source material or notes, the purpose, audience, or decision this should support, any known gaps or questions that still matter"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `core.summarize-source` -> `core.extract-insights` -> `core.research-questions` -> `core.plan-next-actions`"
-        ],
-        [
-          "Expected outcome",
-          "a compressed source summary, the most decision-relevant insights, the most useful open questions, clear next actions"
-        ]
-      ],
-      "sourcePath": "stacks/source-to-brief.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.stakeholder-alignment",
-      "title": "Stakeholder Alignment",
-      "summary": "Use when the right answer is not enough because coordination and buy-in are the real bottlenecks.",
-      "tags": [
-        "stakeholder",
-        "alignment"
-      ],
-      "body": [
-        [
-          "Useful inputs",
-          "the project, decision, or change you want to move forward, the key people or groups involved, current support, resistance, or tension signals"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `core.stakeholder-map` -> `lens.coordination-plan` -> `lens.signaling-check` -> `core.meeting-prep` -> `core.schema.execution-brief`"
-        ],
-        [
-          "Expected outcome",
-          "a clearer stakeholder map, the main alignment risk, the most important next conversation, an execution-ready coordination plan"
-        ]
-      ],
-      "sourcePath": "stacks/stakeholder-alignment.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.write-critique-rewrite",
-      "title": "Write, Critique, Rewrite",
-      "summary": "Use when the first draft should be fast but the final draft should be sharp.",
-      "tags": [
-        "write",
-        "critique",
-        "rewrite"
-      ],
-      "body": [
-        [
-          "Useful inputs",
-          "the intended audience and goal, source points, notes, or a rough draft, any constraints on length, tone, or format"
-        ],
-        [
-          "Suggested blocks",
-          "`core.write-first-draft` -> `mode.critique` -> `core.critique-argument` -> `core.rewrite-for-clarity` -> `rubric.writing-quality`"
-        ],
-        [
-          "Expected outcome",
-          "first draft, prioritized critique, stronger revision"
-        ]
-      ],
-      "sourcePath": "stacks/write-critique-rewrite.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.prompt-repair",
-      "title": "Prompt Repair",
-      "summary": "Use when a prompt is the thing you are trying to improve.",
-      "tags": [
-        "repair"
-      ],
-      "body": [
-        [
-          "Useful inputs",
-          "the current prompt, the job the prompt should do, examples of failure, ambiguity, or weak output if available"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `core.clarify-task` -> `core.prompt-critique` -> `core.prompt-rewrite` -> `core.prompt-compare` -> `rubric.prompt-quality`"
-        ],
-        [
-          "Expected outcome",
-          "clearer prompt intent, fewer failure modes, a tighter revision, a prompt that is easier to test and reuse"
-        ]
-      ],
-      "sourcePath": "stacks/prompt-repair.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.weekly-review",
-      "title": "Weekly Review",
-      "summary": "Use when you want to learn from a week without creating a huge ritual.",
-      "tags": [
-        "weekly",
-        "review"
-      ],
-      "body": [
-        [
-          "Useful inputs",
-          "weekly notes, outcomes, or calendar fragments, key wins, failures, or stuck points, any major decisions worth revisiting"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.reflect` -> `core.weekly-review` -> `core.cause-mapping` for key failures -> `core.decision-journal-entry` for any major decision worth revisiting -> `rubric.reflection-quality`"
-        ],
-        [
-          "Expected outcome",
-          "lessons, repeated frictions, next-week focus, decisions worth tracking"
-        ]
-      ],
-      "sourcePath": "stacks/weekly-review.md"
+      "sourcePath": "stacks/orient-before-acting.md"
     },
     {
       "section": "Stack",
@@ -1710,9 +2482,9 @@ globalThis.SITE_DATA = {
       "title": "Clarify The Real Job",
       "summary": "Use when you have a stated request but aren't sure what the person actually needs to accomplish.",
       "tags": [
-        "clarify",
-        "real",
-        "job"
+        "product thinking",
+        "customer understanding",
+        "requirements"
       ],
       "body": [
         [
@@ -1761,9 +2533,9 @@ globalThis.SITE_DATA = {
       "title": "Map Adoption Blockers",
       "summary": "Use when something exists — a product, idea, plan, or process — but people aren't picking it up or using it.",
       "tags": [
-        "map",
-        "adoption",
-        "blockers"
+        "change management",
+        "behavioral analysis",
+        "adoption"
       ],
       "body": [
         [
@@ -1783,29 +2555,739 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
-      "key": "stack.orient-before-acting",
-      "title": "Orient Before Acting",
-      "summary": "Use before starting any task where context is thin or the goal is loosely defined. A fast forcing function to avoid doing the wrong thing well.",
+      "key": "stack.problem-framing",
+      "title": "Problem Framing",
+      "summary": "Use when the task is vague and you need a clean starting point.",
       "tags": [
-        "orient",
-        "before",
-        "acting"
+        "strategic thinking",
+        "problem definition",
+        "planning"
       ],
       "body": [
         [
           "Useful inputs",
-          "the task or request as stated, what you know about the situation so far, any deadline or constraint"
+          "the raw request, problem statement, or situation, any visible constraints or deadlines, any facts you already know versus what still feels unclear"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.clarify-task` -> `core.scope.frame`"
+          "`mode.explore` -> `core.frame.task` -> `strategy.problem_split` -> `core.scope.frame` -> `core.guardrail.uncertainty`"
         ],
         [
           "Expected outcome",
-          "what the task actually is, what's in scope and what's not, the one thing most likely to move this forward, what you'd need to know to be confident you're on the right track"
+          "clear problem frame, subproblems, open questions, best next step"
         ]
       ],
-      "sourcePath": "stacks/orient-before-acting.md"
+      "sourcePath": "stacks/problem-framing.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.define-and-measure",
+      "title": "Define and Measure",
+      "summary": "Use when a goal or objective is vague and needs to be turned into something concrete enough to act on and track.",
+      "tags": [
+        "goal setting",
+        "measurement",
+        "strategy execution",
+        "planning"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the stated goal or desired outcome, any current attempts to measure progress, the stakeholders who will judge success"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.frame.success-criteria` -> `core.define-success-metrics` -> `core.design-cheap-test` -> `rubric.plan-quality`"
+        ],
+        [
+          "Expected outcome",
+          "success defined in terms of specific, observable outcomes (not activity), leading and lagging indicators identified, the cheapest early test named that would confirm the goal is reachable, a measurement plan that cannot be gamed without also achieving the real outcome"
+        ]
+      ],
+      "sourcePath": "stacks/define-and-measure.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.unblock-a-stuck-problem",
+      "title": "Unblock a Stuck Problem",
+      "summary": "Use when a problem keeps resisting solution and the current framing is part of the problem.",
+      "tags": [
+        "problem solving",
+        "creative thinking",
+        "ideation",
+        "lateral thinking"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the problem statement as currently understood, what has already been tried, any constraints that feel immovable"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.reframe-the-problem` -> `core.analogical-reasoning` -> `core.generate-options`"
+        ],
+        [
+          "Expected outcome",
+          "at least one reframe that dissolves or transforms the original problem, a structurally similar problem from another domain with a tested solution, fresh option set not available before the reframe"
+        ]
+      ],
+      "sourcePath": "stacks/unblock-stuck-problem.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.scenario-futures",
+      "title": "Scenario Futures",
+      "summary": "Use when a decision depends on how the future unfolds and committing to one path is premature.",
+      "tags": [
+        "strategic thinking",
+        "foresight",
+        "risk management"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the decision or strategy under consideration, the main external forces that are uncertain, the time horizon that matters"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.scenario-planning` -> `core.second-order-effects` -> `core.guardrail.uncertainty`"
+        ],
+        [
+          "Expected outcome",
+          "three or four distinct futures mapped, second-order consequences of each traced, residual uncertainties named, what to watch for as each scenario forms"
+        ]
+      ],
+      "sourcePath": "stacks/scenario-futures.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.ethical-review",
+      "title": "Ethical Review",
+      "summary": "Use when a decision, product, or plan may have ethical dimensions that have not been examined.",
+      "tags": [
+        "ethics",
+        "critical thinking",
+        "responsible decision making",
+        "value trade-offs"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the decision, plan, or artifact under review, affected parties and what is at stake for each, any ethical concerns already in view"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `lens.ethical-tradeoffs` -> `core.second-order-effects` -> `core.guardrail.disconfirming-evidence`"
+        ],
+        [
+          "Expected outcome",
+          "competing values and duties made explicit, what each ethical framework recommends and where they diverge, second-order harms surfaced that were not initially visible, the most uncomfortable objection named and addressed honestly"
+        ]
+      ],
+      "sourcePath": "stacks/ethical-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.communicate-a-change",
+      "title": "Communicate a Change",
+      "summary": "Use when a significant decision, change, or announcement needs to land with its audience rather than just reach them.",
+      "tags": [
+        "change management",
+        "communication",
+        "stakeholder management",
+        "influence"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the change, decision, or news to communicate, the audiences involved and their current state of information, any known concerns, resistance, or political dynamics"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.stakeholder-map` -> `lens.signaling-check` -> `core.communication-brief`"
+        ],
+        [
+          "Expected outcome",
+          "each audience mapped with what they specifically need to hear, signals checked so the message is read as intended, sequencing and channel plan, prepared responses to likely objections"
+        ]
+      ],
+      "sourcePath": "stacks/communicate-a-change.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.explore-vs-exploit",
+      "title": "Explore Vs Exploit",
+      "summary": "Use when you are unsure whether to keep searching or to commit to the best current option.",
+      "tags": [
+        "decision theory",
+        "resource allocation",
+        "timing"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the current path or best known option, alternative options or search space, if any, the cost of delay, reversibility, or learning opportunity"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.frame.success-criteria` -> `core.explore-exploit-decision` -> `core.guardrail.uncertainty` -> `core.schema.execution-brief`"
+        ],
+        [
+          "Expected outcome",
+          "clear recommendation to explore, exploit, or run a bounded test, explicit rationale, trigger that would change the call, immediate next action"
+        ]
+      ],
+      "sourcePath": "stacks/explore-vs-exploit.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.de-risk-with-test",
+      "title": "De-Risk With Test",
+      "summary": "Use when uncertainty is too high for full commitment but low enough to test.",
+      "tags": [
+        "experimentation",
+        "risk management",
+        "lean methodology"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the current idea, plan, or decision under consideration, the main uncertainty blocking commitment, any real budget, time, or effort ceiling for a test"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.frame.success-criteria` -> `core.design-cheap-test` -> `core.schema.execution-brief` -> `core.guardrail.uncertainty`"
+        ],
+        [
+          "Expected outcome",
+          "core uncertainty, cheapest credible test, success and failure signals, next action with checkpoint"
+        ]
+      ],
+      "sourcePath": "stacks/de-risk-with-test.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.pressure-test-plan",
+      "title": "Pressure Test Plan",
+      "summary": "Use when you have a plan and want to stress it before committing.",
+      "tags": [
+        "risk management",
+        "critical thinking",
+        "planning"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the current plan, recommendation, or proposal, the intended outcome and constraints, any assumptions that already feel shaky"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `strategy.premortem` -> `strategy.red_team` -> `core.assumption.audit` -> `core.stress-test-assumptions`"
+        ],
+        [
+          "Expected outcome",
+          "prioritized risks, exposed assumptions, hardest-to-dismiss objections, concrete mitigations"
+        ]
+      ],
+      "sourcePath": "stacks/pressure-test-plan.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.prioritize-portfolio",
+      "title": "Prioritize Portfolio",
+      "summary": "Use when several plausible bets compete for limited time, money, or attention.",
+      "tags": [
+        "resource allocation",
+        "portfolio management",
+        "prioritization"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the list of candidate bets, projects, or tasks, resource constraints such as time, budget, or attention, any explicit success criteria or strategic priorities"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.frame.success-criteria` -> `core.prioritize-opportunities` -> `core.schema.execution-brief` -> `core.guardrail.uncertainty`"
+        ],
+        [
+          "Expected outcome",
+          "ranked bets, now versus later cuts, execution brief for the top priority, visible uncertainty"
+        ]
+      ],
+      "sourcePath": "stacks/prioritize-portfolio.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.code-review",
+      "title": "Code Review",
+      "summary": "Use when reviewing a pull request or piece of code and you want thorough, structured feedback that covers correctness, security, and maintainability.",
+      "tags": [
+        "software engineering",
+        "critical thinking",
+        "quality"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the code diff or full file under review, the language, framework, and context, any specific concerns already in mind"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `core.code-review` -> `lens.invariant-check` -> `lens.interface-contract-review`"
+        ],
+        [
+          "Expected outcome",
+          "correctness, security, and maintainability issues identified and localised, invariants that the code must preserve — and whether they hold — made explicit, boundary contracts checked for leaks or violations, a prioritised list of issues and suggested fixes"
+        ]
+      ],
+      "sourcePath": "stacks/code-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.debug-a-failure",
+      "title": "Debug A Failure",
+      "summary": "Use when a bug, incident, or broken workflow needs a structured diagnosis instead of random guessing.",
+      "tags": [
+        "diagnostics",
+        "root cause analysis",
+        "engineering"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "expected behavior versus actual behavior, reproduction steps, logs, or error evidence, the system boundary or component most likely involved"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `core.plan-next-actions`"
+        ],
+        [
+          "Expected outcome",
+          "a tighter failure hypothesis, the highest-value next experiment, likely boundary or invariant break, a practical next-step plan"
+        ]
+      ],
+      "sourcePath": "stacks/debug-a-failure.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.debug-a-system",
+      "title": "Debug a System",
+      "summary": "Use when a system, service, or integration is behaving unexpectedly and you need to isolate the fault before attempting a fix.",
+      "tags": [
+        "software engineering",
+        "causal reasoning",
+        "systems thinking"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the symptom and the conditions under which it appears, what changed recently (deployment, config, traffic pattern), system architecture or service dependencies"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.hypothesis-generation` -> `lens.debugger-loop` -> `lens.failure-mode-analysis` -> `core.cause-mapping`"
+        ],
+        [
+          "Expected outcome",
+          "competing hypotheses for the cause generated before investigation begins, systematic isolation steps defined to confirm or rule out each hypothesis, failure mode of each component in the call chain assessed, root cause identified and distinguished from contributing factors, fix confirmed as addressing cause, not symptom"
+        ]
+      ],
+      "sourcePath": "stacks/debug-a-system.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.interpret-an-experiment",
+      "title": "Interpret an Experiment",
+      "summary": "Use when you have results from an A/B test, controlled experiment, or data analysis and need to decide whether to act on them.",
+      "tags": [
+        "statistics",
+        "decision theory",
+        "epistemics"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the test results: metric, p-value, confidence interval, sample size, duration, the hypothesis that was being tested, what decision depends on this result"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `core.statistical-significance-check` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `core.guardrail.disconfirming-evidence`"
+        ],
+        [
+          "Expected outcome",
+          "statistical and practical significance distinguished, sample quality and bias sources examined, base rate context applied: is this result surprising given prior evidence?, the strongest reason not to act on the result named honestly, a clear recommendation: act, replicate, or discard"
+        ]
+      ],
+      "sourcePath": "stacks/interpret-an-experiment.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.technical-architecture-review",
+      "title": "Technical Architecture Review",
+      "summary": "Use when a software design, system architecture, or technical approach needs rigorous pre-commit review.",
+      "tags": [
+        "software engineering",
+        "systems design",
+        "technical review",
+        "architecture"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the architecture diagram, design doc, or technical proposal, the intended behaviour and scale requirements, the main technical risks or open questions"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `lens.complexity-tradeoff` -> `rubric.decision-quality`"
+        ],
+        [
+          "Expected outcome",
+          "boundary and contract weaknesses exposed, invariants and correctness risks surfaced, complexity and maintainability costs assessed, clear decision on whether to proceed, revise, or reject"
+        ]
+      ],
+      "sourcePath": "stacks/technical-architecture-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.source-to-brief",
+      "title": "Source To Brief",
+      "summary": "Use when a dense source needs to become something decision-useful quickly.",
+      "tags": [
+        "synthesis",
+        "knowledge management",
+        "research"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the source material or notes, the purpose, audience, or decision this should support, any known gaps or questions that still matter"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.summarize-source` -> `core.extract-insights` -> `core.research-questions` -> `core.plan-next-actions`"
+        ],
+        [
+          "Expected outcome",
+          "a compressed source summary, the most decision-relevant insights, the most useful open questions, clear next actions"
+        ]
+      ],
+      "sourcePath": "stacks/source-to-brief.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.learn-from-content",
+      "title": "Learn From Content",
+      "summary": "Use when you have consumed a source — book, paper, transcript, or talk — and want to retain and use it.",
+      "tags": [
+        "learning",
+        "knowledge management",
+        "synthesis",
+        "epistemic practice"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the source material or your notes from it, the decision, project, or question the source should inform, any existing beliefs or frameworks the source challenges"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.reflect` -> `core.summarize-source` -> `core.extract-insights` -> `core.second-order-effects` -> `core.research-questions`"
+        ],
+        [
+          "Expected outcome",
+          "compressed summary with the core argument and key evidence, highest-leverage insights extracted and named, second-order implications traced beyond the obvious takeaways, open questions that would sharpen or challenge the material"
+        ]
+      ],
+      "sourcePath": "stacks/learn-from-content.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.after-action-review",
+      "title": "After-Action Review",
+      "summary": "Use when a project, sprint, incident, or significant event has ended and the team needs to extract learning before moving on.",
+      "tags": [
+        "retrospective",
+        "organizational learning",
+        "continuous improvement",
+        "reflection"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "what was attempted and what actually happened, who was involved and what each person observed, the original goal and the actual outcome"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.reflect` -> `core.cause-mapping` -> `core.extract-insights` -> `core.plan-next-actions` -> `rubric.reflection-quality`"
+        ],
+        [
+          "Expected outcome",
+          "clear account of what happened versus what was expected, root causes identified beneath the surface narrative, highest-leverage lessons named explicitly, concrete actions assigned so learning transfers to future work"
+        ]
+      ],
+      "sourcePath": "stacks/after-action-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.negotiate-a-deal",
+      "title": "Negotiate a Deal",
+      "summary": "Use when preparing for a negotiation, high-stakes conversation, or situation where multiple parties have interests that need to be aligned.",
+      "tags": [
+        "negotiation",
+        "influence",
+        "stakeholder management",
+        "conflict resolution"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "context on both parties and their relationship, the stated positions on each side, what a deal or no-deal would mean for each party"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.stakeholder-map` -> `core.negotiation-prep` -> `lens.incentive-audit` -> `lens.signaling-check`"
+        ],
+        [
+          "Expected outcome",
+          "interests separated from positions on both sides, BATNA and ZOPA made explicit, value-creating trades identified, a clear opening strategy with considered anchoring"
+        ]
+      ],
+      "sourcePath": "stacks/negotiate-a-deal.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.write-critique-rewrite",
+      "title": "Write, Critique, Rewrite",
+      "summary": "Use when the first draft should be fast but the final draft should be sharp.",
+      "tags": [
+        "writing",
+        "editorial process",
+        "quality improvement"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the intended audience and goal, source points, notes, or a rough draft, any constraints on length, tone, or format"
+        ],
+        [
+          "Suggested blocks",
+          "`core.write-first-draft` -> `mode.critique` -> `core.critique-argument` -> `core.rewrite-for-clarity` -> `rubric.writing-quality`"
+        ],
+        [
+          "Expected outcome",
+          "first draft, prioritized critique, stronger revision"
+        ]
+      ],
+      "sourcePath": "stacks/write-critique-rewrite.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.weekly-review",
+      "title": "Weekly Review",
+      "summary": "Use when you want to learn from a week without creating a huge ritual.",
+      "tags": [
+        "reflection",
+        "personal effectiveness",
+        "learning"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "weekly notes, outcomes, or calendar fragments, key wins, failures, or stuck points, any major decisions worth revisiting"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.reflect` -> `core.weekly-review` -> `core.cause-mapping` for key failures -> `core.decision-journal-entry` for any major decision worth revisiting -> `rubric.reflection-quality`"
+        ],
+        [
+          "Expected outcome",
+          "lessons, repeated frictions, next-week focus, decisions worth tracking"
+        ]
+      ],
+      "sourcePath": "stacks/weekly-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.ship-a-feature",
+      "title": "Ship a Feature",
+      "summary": "Use when a feature is ready for design-to-delivery and you want to move from requirement to rollout without skipping safety steps.",
+      "tags": [
+        "software engineering",
+        "planning",
+        "risk management"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the feature brief or user need, the existing system it will be built into, any hard deadlines or constraints"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.requirements-decomposition` -> `core.frame.success-criteria` -> `core.test-strategy` -> `lens.failure-mode-analysis` -> `core.rollout-plan` -> `rubric.plan-quality`"
+        ],
+        [
+          "Expected outcome",
+          "feature decomposed into independently testable stories with acceptance criteria, success criteria set before implementation begins, test strategy covering risk-weighted coverage gaps, failure modes identified and resilience gaps flagged, rollout sequenced with go/no-go criteria and a rollback path, plan quality assessed before committing"
+        ]
+      ],
+      "sourcePath": "stacks/ship-a-feature.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.full-decision-process",
+      "title": "Full Decision Process",
+      "summary": "Use for high-stakes decisions where the cost of a poor choice justifies a rigorous, end-to-end deliberation.",
+      "tags": [
+        "decision theory",
+        "critical thinking",
+        "strategic thinking"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the decision to be made and the deadline, the options currently on the table (even if incomplete), the stakeholders who will be affected or who must live with the outcome"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.decide` -> `core.frame.success-criteria` -> `core.compare-options` -> `core.assumption.audit` -> `core.guardrail.disconfirming-evidence` -> `core.schema.decision-memo` -> `rubric.decision-quality`"
+        ],
+        [
+          "Expected outcome",
+          "success criteria defined before evaluating options, options compared against shared criteria, not general impressions, the key assumptions behind the preferred option surfaced and stress-tested, the strongest counterargument to the preferred option given an honest hearing, a decision memo that documents the reasoning and is readable after the fact, quality of the decision process assessed before committing"
+        ]
+      ],
+      "sourcePath": "stacks/full-decision-process.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.product-design-sprint",
+      "title": "Product Design Sprint",
+      "summary": "Use when designing a new product, feature, or intervention from scratch and you want to move from user understanding to a testable concept without skipping steps.",
+      "tags": [
+        "design",
+        "strategic thinking",
+        "planning"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the opportunity or problem being addressed, what is known about the user and their current behaviour, any hard constraints on the solution space"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.frame.success-criteria` -> `lens.jobs-to-be-done` -> `lens.user-mental-model` -> `lens.constraint-mapping` -> `core.generate-options` -> `core.design-cheap-test` -> `rubric.plan-quality`"
+        ],
+        [
+          "Expected outcome",
+          "success criteria set before solution work begins, the job the user is trying to get done and the hiring context made explicit, the gap between user mental model and system behaviour surfaced, hard constraints separated from soft ones; assumed constraints examined, multiple design directions generated before narrowing, the cheapest test identified that would validate or invalidate the concept, plan quality assessed before committing to build"
+        ]
+      ],
+      "sourcePath": "stacks/product-design-sprint.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.deep-research-synthesis",
+      "title": "Deep Research Synthesis",
+      "summary": "Use when you need to build a well-grounded view from a body of evidence before making a high-stakes decision or writing a position.",
+      "tags": [
+        "research",
+        "epistemics",
+        "knowledge management"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the central question you are trying to answer, the sources, studies, or evidence you have gathered, any existing beliefs or hypotheses to test against the evidence"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.hypothesis-generation` -> `core.summarize-source` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `core.synthesize-sources` -> `core.extract-insights` -> `rubric.research-quality`"
+        ],
+        [
+          "Expected outcome",
+          "competing hypotheses generated before diving into sources (reduces confirmation bias), each source summarised independently before synthesis, survivorship bias checked: are the absent cases changing the picture?, base rates checked: does the evidence reflect historical frequencies?, sources integrated into a unified position that names points of disagreement, the highest-leverage insights extracted, research quality assessed for gaps and overconfidence before acting"
+        ]
+      ],
+      "sourcePath": "stacks/deep-research-synthesis.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.stakeholder-alignment",
+      "title": "Stakeholder Alignment",
+      "summary": "Use when the right answer is not enough because coordination and buy-in are the real bottlenecks.",
+      "tags": [
+        "change management",
+        "communication",
+        "influence"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the project, decision, or change you want to move forward, the key people or groups involved, current support, resistance, or tension signals"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.stakeholder-map` -> `lens.coordination-plan` -> `lens.signaling-check` -> `core.meeting-prep` -> `core.schema.execution-brief`"
+        ],
+        [
+          "Expected outcome",
+          "a clearer stakeholder map, the main alignment risk, the most important next conversation, an execution-ready coordination plan"
+        ]
+      ],
+      "sourcePath": "stacks/stakeholder-alignment.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.prompt-repair",
+      "title": "Prompt Repair",
+      "summary": "Use when a prompt is the thing you are trying to improve.",
+      "tags": [
+        "prompt engineering",
+        "quality improvement",
+        "iteration"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the current prompt, the job the prompt should do, examples of failure, ambiguity, or weak output if available"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `core.clarify-task` -> `core.prompt-critique` -> `core.prompt-rewrite` -> `core.prompt-compare` -> `rubric.prompt-quality`"
+        ],
+        [
+          "Expected outcome",
+          "clearer prompt intent, fewer failure modes, a tighter revision, a prompt that is easier to test and reuse"
+        ]
+      ],
+      "sourcePath": "stacks/prompt-repair.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.explore-to-decision",
+      "title": "Explore To Decision",
+      "summary": "Use when you need options first and a choice second.",
+      "tags": [
+        "decision making",
+        "option generation",
+        "evaluation"
+      ],
+      "body": [
+        [
+          "Useful inputs",
+          "the decision context or problem to solve, any candidate options already on the table, any known criteria, constraints, or deadline"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `core.generate-options` -> `core.brainstorm-angles` -> `core.frame.success-criteria` -> `mode.decide` -> `core.compare-options` -> `core.choose-under-uncertainty` -> `core.schema.decision-memo`"
+        ],
+        [
+          "Expected outcome",
+          "option set, explicit criteria, comparison, chosen direction, rationale, next action"
+        ]
+      ],
+      "sourcePath": "stacks/explore-to-decision.md"
     }
   ],
   "featuredStacks": [
