@@ -34,3 +34,11 @@ Domain tags:
 - risk management
 - process improvement
 - execution
+
+---
+
+Metadata:
+- type: schema
+- stage: conclude
+- strength: medium
+- pairs with: `mode.decide`, `frame.release-readiness`, `frame.migration-plan`

@@ -29,3 +29,11 @@ Domain tags:
 - communication
 - synthesis
 - executive communication
+
+---
+
+Metadata:
+- type: schema
+- stage: conclude
+- strength: light
+- pairs with: `mode.decide`, `frame.extract-insights`, `frame.brief-to-draft`

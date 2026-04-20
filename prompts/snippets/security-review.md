@@ -32,3 +32,11 @@ Domain tags:
 - software engineering
 - code review
 - OWASP
+
+---
+
+Metadata:
+- type: frame
+- stage: critique
+- strength: heavy
+- pairs with: `mode.critique`, `lens.failure-mode-analysis`, `frame.risk-register`

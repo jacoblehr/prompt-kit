@@ -20,3 +20,11 @@ Domain tags:
 - behavioral science
 - decision theory
 - reflection
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: light
+- pairs with: `mode.critique`, `guardrail.disconfirming-evidence`, `guardrail.assumption-audit`

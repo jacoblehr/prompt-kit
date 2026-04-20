@@ -25,3 +25,11 @@ Domain tags:
 - critical thinking
 - argumentation
 - logic
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `strategy.steelman`, `rubric.argument-quality`

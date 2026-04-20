@@ -27,3 +27,11 @@ Domain tags:
 - foresight
 - strategic intelligence
 - environmental scanning
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `frame.scenario-planning`, `lens.base-rate-check`

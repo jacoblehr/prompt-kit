@@ -21,3 +21,11 @@ Domain tags:
 - game theory
 - organizational learning
 - influence
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.decide`, `frame.stakeholder-map`, `lens.incentive-audit`

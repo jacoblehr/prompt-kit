@@ -29,3 +29,11 @@ Domain tags:
 - developer experience
 - documentation
 - onboarding
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `lens.jobs-to-be-done`, `frame.process-audit`

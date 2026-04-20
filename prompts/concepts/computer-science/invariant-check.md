@@ -21,3 +21,11 @@ Domain tags:
 - software engineering
 - critical thinking
 - epistemics
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `lens.interface-contract-review`, `frame.test-case-design`

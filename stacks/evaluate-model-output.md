@@ -10,11 +10,11 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.prompt-decompose`
-2. `core.blind-spot-check`
-3. `core.prompt-critique`
-4. `core.extract-insights`
-5. `core.prompt-compare`
+1. `frame.prompt-decompose`
+2. `guardrail.blind-spot-check`
+3. `frame.prompt-critique`
+4. `frame.extract-insights`
+5. `frame.prompt-compare`
 
 Expected outcome:
 
@@ -29,3 +29,15 @@ Domain tags:
 - evaluation
 - AI quality
 - critical thinking
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.prompt-decompose`, `frame.prompt-critique`
+
+**Why this order works:** Prompt-decompose comes first because output quality cannot be evaluated without understanding what was actually asked. Blind-spot-check surfaces the evaluator's biases before assessment begins. Prompt-critique then evaluates the output against the decomposed prompt. Extract-insights separates genuine content from plausible-sounding but unsupported claims. Prompt-compare provides the calibration reference — how would a better prompt have changed the output?
+
+**Common swaps:** Swap `frame.prompt-compare` for `rubric.prompt-quality` when you want a checklist verdict rather than a comparative analysis. Skip `frame.blind-spot-check` for routine low-stakes output evaluation.
+
+**Common failure mode:** Evaluating output without first understanding the prompt. Output from a weak prompt will be judged as the model's failure rather than a prompt engineering problem.

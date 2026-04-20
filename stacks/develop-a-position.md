@@ -10,11 +10,11 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.research-questions`
-2. `core.synthesize-sources`
-3. `core.argument-structure`
-4. `core.position-draft`
-5. `core.critique-argument`
+1. `frame.research-questions`
+2. `frame.synthesize-sources`
+3. `frame.argument-structure`
+4. `frame.position-draft`
+5. `frame.critique-argument`
 
 Expected outcome:
 
@@ -29,3 +29,15 @@ Domain tags:
 - argumentation
 - research
 - critical thinking
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.research-questions`, `frame.synthesize-sources`, `frame.argument-structure`
+
+**Why this order works:** Research-questions focus the investigation on only what is required to justify the position — without this, synthesis becomes comprehensive rather than purposeful. Synthesize-sources integrates evidence before any draft is written. Argument-structure maps the logical form before the prose is composed. Position-draft then follows the map. Critique-argument closes with the strongest counter-position to find the weakest links before the position is published.
+
+**Common swaps:** Swap `frame.critique-argument` for `strategy.steelman` when the main risk is that the counter-position has not been taken seriously enough. Add `rubric.argument-quality` as a final gate before publishing.
+
+**Common failure mode:** Writing the position before the argument structure is mapped. Positions drafted without a prior structure tend to be asserted rather than argued — they read as opinion rather than conclusion.

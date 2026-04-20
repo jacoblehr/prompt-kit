@@ -29,3 +29,11 @@ Domain tags:
 - stakeholder analysis
 - change management
 - influence
+
+---
+
+Metadata:
+- type: frame
+- stage: frame
+- strength: medium
+- pairs with: `mode.explore`, `lens.incentive-audit`, `lens.coordination-plan`

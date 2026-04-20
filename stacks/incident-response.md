@@ -10,11 +10,11 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.triage-the-unknown`
-2. `core.log-triage`
-3. `core.cause-mapping`
-4. `core.incident-postmortem`
-5. `core.plan-next-actions`
+1. `guardrail.triage-the-unknown`
+2. `frame.log-triage`
+3. `frame.cause-mapping`
+4. `schema.incident-postmortem`
+5. `schema.plan-next-actions`
 
 Expected outcome:
 
@@ -29,3 +29,15 @@ Domain tags:
 - incident management
 - debugging
 - reliability
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.triage-the-unknown`, `frame.log-triage`, `frame.cause-mapping`
+
+**Why this order works:** Triage-the-unknown clears confusion about what is actually happening before investigation begins — it is the fastest path to a shared understanding under pressure. Log-triage then separates symptoms from causes and identifies missing telemetry. Cause-mapping traces the causal chain from symptom to root cause. Incident-postmortem structures the full debrief. Plan-next-actions closes with owners and urgency for follow-through.
+
+**Common swaps:** Swap `frame.cause-mapping` for `frame.hypothesis-generation` when the failure has multiple plausible root causes that need to be distinguished before investigation. Swap `frame.incident-postmortem` for `frame.extract-insights` for a lighter debrief on smaller incidents.
+
+**Common failure mode:** Jumping to fix before the failure is understood. The fastest path to a correct fix is a clear reproduction target and a confident root cause, not the first plausible intervention.

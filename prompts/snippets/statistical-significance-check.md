@@ -24,3 +24,11 @@ Domain tags:
 - statistics
 - epistemics
 - decision theory
+
+---
+
+Metadata:
+- type: guardrail
+- stage: analyze
+- strength: medium
+- pairs with: `frame.experiment-design`, `lens.base-rate-check`, `frame.interpret-regression`

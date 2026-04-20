@@ -11,9 +11,9 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.decide`
-2. `core.stakeholder-map`
+2. `frame.stakeholder-map`
 3. `lens.signaling-check`
-4. `core.communication-brief`
+4. `schema.communication-brief`
 
 Expected outcome:
 
@@ -27,3 +27,15 @@ Domain tags:
 - communication
 - stakeholder management
 - influence
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.stakeholder-map`, `frame.communication-brief`
+
+**Why this order works:** Stakeholder mapping comes first because different audiences need different messages — a single announcement rarely lands with all of them. Signaling-check surfaces how the message will actually be read, not how it is intended. Communication-brief structures the sequencing and channel plan after the message is calibrated.
+
+**Common swaps:** Swap `lens.signaling-check` for `lens.coordination-plan` when the challenge is coordination rather than message framing. Add `frame.alignment-conversation-plan` when significant resistance is expected.
+
+**Common failure mode:** Sending one message to all audiences. Without stakeholder differentiation, the announcement lands as noise for most and risks misreading by the ones whose reaction matters most.

@@ -1,4 +1,4 @@
-# Strategy Quality
+# rubric.strategy-quality
 
 Use this checklist after drafting a strategy or strategic recommendation.
 
@@ -12,7 +12,11 @@ Questions:
 - Is the strategy differentiated enough to matter, or is it generic enough to apply to anyone?
 - Is there a clear signal that would tell us the strategy is working or failing?
 
-Domain tags:
-- strategic thinking
-- critical thinking
-- quality
+Pairs with: `mode.critique`, `guardrail.assumption-audit`, `strategy.inversion`
+
+---
+
+Metadata:
+- type: rubric
+- stage: critique
+- strength: medium

@@ -26,3 +26,11 @@ Domain tags:
 - systems thinking
 - strategic thinking
 - planning
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `lens.feedback-loops`, `frame.scenario-planning`

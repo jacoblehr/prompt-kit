@@ -11,9 +11,9 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.reflect`
-2. `core.cause-mapping`
-3. `core.extract-insights`
-4. `core.plan-next-actions`
+2. `frame.cause-mapping`
+3. `frame.extract-insights`
+4. `schema.plan-next-actions`
 5. `rubric.reflection-quality`
 
 Expected outcome:
@@ -28,3 +28,15 @@ Domain tags:
 - organizational learning
 - continuous improvement
 - reflection
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.reflect`, `frame.extract-insights`, `frame.plan-next-actions`
+
+**Why this order works:** Reflect first sets the lesson-extraction stance before cause-mapping digs into the why. Extract-insights follows because root causes become actionable only once patterns are visible. Plan-next-actions closes the loop so learning transfers to future work rather than staying as commentary. The rubric is the final gate — it prevents the review from stopping at recap.
+
+**Common swaps:** Swap `frame.cause-mapping` for `strategy.premortem` if the incident is still fresh and you want forward-looking mitigations. Swap `rubric.reflection-quality` for `rubric.strategy-quality` when the review is focused on a decision rather than an event.
+
+**Common failure mode:** Stopping at description. The review recounts what happened without tracing causes or naming lessons. Adding `frame.cause-mapping` before `frame.extract-insights` forces at least one step deeper.

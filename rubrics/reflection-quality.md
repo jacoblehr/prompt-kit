@@ -1,4 +1,4 @@
-# Reflection Quality
+# rubric.reflection-quality
 
 Use this checklist after a review or retrospective.
 
@@ -11,7 +11,11 @@ Questions:
 - Did it avoid blame theater?
 - Will this make a future decision or workflow better?
 
-Domain tags:
-- reflection
-- personal effectiveness
-- epistemics
+Pairs with: `mode.reflect`, `frame.cause-mapping`, `frame.extract-insights`
+
+---
+
+Metadata:
+- type: rubric
+- stage: conclude
+- strength: light

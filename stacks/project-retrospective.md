@@ -10,11 +10,11 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.blind-spot-check`
-2. `core.cause-mapping`
-3. `core.extract-insights`
-4. `core.decision-journal-entry`
-5. `core.plan-next-actions`
+1. `guardrail.blind-spot-check`
+2. `frame.cause-mapping`
+3. `frame.extract-insights`
+4. `schema.decision-journal-entry`
+5. `schema.plan-next-actions`
 
 Expected outcome:
 
@@ -29,3 +29,15 @@ Domain tags:
 - retrospective
 - learning
 - project management
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.blind-spot-check`, `frame.cause-mapping`, `frame.extract-insights`
+
+**Why this order works:** Blind-spot-check before cause-mapping prevents the retrospective from rationalizing outcomes through the lens of what was hoped for. Cause-mapping traces root causes rather than surface symptoms. Extract-insights distills the reusable lessons. Decision-journal-entry creates a permanent record of what was decided and why. Plan-next-actions closes with specific changes so the learning transfers.
+
+**Common swaps:** Swap `frame.cause-mapping` for `frame.incident-postmortem` when the project included a significant failure requiring formal documentation. Swap `rubric.reflection-quality` check (implicit) for explicit `rubric.reflection-quality` when the retrospective will be shared with stakeholders.
+
+**Common failure mode:** Retrospectives that stop at events rather than causes. Describing what happened is not a retrospective — tracing why it happened and what should change is.

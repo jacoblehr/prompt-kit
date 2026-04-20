@@ -11,10 +11,10 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.critique`
-2. `core.security-review`
+2. `frame.security-review`
 3. `lens.failure-mode-analysis`
-4. `core.risk-register`
-5. `core.stress-test-assumptions`
+4. `frame.risk-register`
+5. `guardrail.stress-test-assumptions`
 
 Expected outcome:
 
@@ -29,3 +29,15 @@ Domain tags:
 - security
 - risk
 - threat modelling
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.critique`, `frame.security-review`, `frame.risk-register`
+
+**Why this order works:** Critique mode sets the adversarial stance before the threat surface is mapped. Security-review maps the attack surface systematically. Failure-mode-analysis examines each trust boundary for exploitable failure modes. Risk-register ranks threats by severity and exploitability. Stress-test-assumptions closes by surfacing the security assumptions that are trusted but not verified.
+
+**Common swaps:** Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when the security model depends heavily on correct boundary enforcement. Add `strategy.red_team` when an adversarial challenge from a hostile-actor perspective is needed rather than a structured review.
+
+**Common failure mode:** Threat modeling from first principles on every feature. The most common security failures come from documented threat categories that were not applied — OWASP and similar taxonomies exist for this reason.

@@ -20,3 +20,11 @@ Domain tags:
 - root cause analysis
 - diagnostics
 - systems thinking
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.reflect`, `mode.critique`, `frame.extract-insights`

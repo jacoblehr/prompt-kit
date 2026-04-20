@@ -24,3 +24,11 @@ Domain tags:
 - transfer learning
 - creative problem solving
 - cross-domain thinking
+
+---
+
+Metadata:
+- type: strategy
+- stage: explore
+- strength: medium
+- pairs with: `mode.explore`, `frame.reframe-the-problem`, `frame.generate-options`

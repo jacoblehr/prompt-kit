@@ -22,3 +22,11 @@ Domain tags:
 - game theory
 - behavioral science
 - organizational learning
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `frame.stakeholder-map`, `lens.coordination-plan`

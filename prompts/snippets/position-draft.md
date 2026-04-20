@@ -20,3 +20,11 @@ Domain tags:
 - argumentation
 - persuasion
 - writing
+
+---
+
+Metadata:
+- type: frame
+- stage: refine
+- strength: medium
+- pairs with: `mode.decide`, `frame.argument-structure`, `frame.critique-argument`

@@ -12,6 +12,7 @@ The operating model is manual:
 ## Ontology
 
 The canonical ontology lives in [docs/ONTOLOGY.md](./ONTOLOGY.md).
+The composition rules live in [docs/COMPOSITION.md](./COMPOSITION.md).
 
 At a glance, the surfaced system uses two concepts:
 
@@ -24,13 +25,15 @@ Follow the canonical decision rules in [docs/ONTOLOGY.md](./ONTOLOGY.md).
 
 ## Design Rules
 
-1. Blocks stay reusable and easy to understand on their own.
-2. Block types should clarify role, not multiply ontology layers.
-3. Mode blocks are reasoning states, not writing styles.
+1. Blocks stay reusable and understandable on their own.
+2. Block types clarify role — they do not multiply ontology layers.
+3. Mode blocks are reasoning stances, not writing styles.
 4. Strategy blocks are methods of thought, not personalities.
 5. Lens blocks are conceptual frames, not task completions.
-6. Structured outputs beat eloquent vagueness.
-7. Critique and reflection matter more than completeness theater.
+6. Guardrail blocks target a specific failure mode — they are not decoration.
+7. Schema blocks define output shape — they come after reasoning instructions.
+8. Structured outputs beat eloquent vagueness.
+9. Critique and reflection matter more than completeness theater.
 
 ## Working Model
 

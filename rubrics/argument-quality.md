@@ -1,4 +1,4 @@
-# Argument Quality
+# rubric.argument-quality
 
 Use this checklist after drafting or critiquing an argument.
 
@@ -11,7 +11,11 @@ Questions:
 - Does the conclusion actually follow from the argument?
 - Is anything being asserted that should be proven?
 
-Domain tags:
-- logic
-- argumentation
-- critical thinking
+Pairs with: `mode.critique`, `strategy.steelman`, `frame.critique-argument`
+
+---
+
+Metadata:
+- type: rubric
+- stage: critique
+- strength: medium

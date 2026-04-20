@@ -28,3 +28,11 @@ Domain tags:
 - evaluation
 - decision support
 - analysis
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: medium
+- pairs with: `mode.decide`, `frame.success-criteria`, `schema.decision-memo`

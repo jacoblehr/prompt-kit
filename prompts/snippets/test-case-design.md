@@ -26,3 +26,11 @@ Domain tags:
 - testing
 - quality
 - regression prevention
+
+---
+
+Metadata:
+- type: frame
+- stage: critique
+- strength: medium
+- pairs with: `frame.requirements-decomposition`, `lens.invariant-check`, `frame.test-strategy`

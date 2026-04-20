@@ -29,3 +29,11 @@ Domain tags:
 - software engineering
 - planning
 - quality
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: medium
+- pairs with: `mode.decide`, `lens.complexity-tradeoff`, `frame.test-strategy`

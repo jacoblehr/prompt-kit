@@ -33,3 +33,11 @@ Domain tags:
 - release engineering
 - operations
 - risk management
+
+---
+
+Metadata:
+- type: guardrail
+- stage: critique
+- strength: medium
+- pairs with: `mode.decide`, `frame.test-strategy`, `frame.rollout-plan`

@@ -23,3 +23,11 @@ Domain tags:
 - synthesis
 - knowledge management
 - comprehension
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: light
+- pairs with: `mode.reflect`, `frame.extract-insights`, `frame.research-questions`

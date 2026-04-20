@@ -27,3 +27,11 @@ Domain tags:
 - software engineering
 - planning
 - communication
+
+---
+
+Metadata:
+- type: frame
+- stage: frame
+- strength: medium
+- pairs with: `frame.clarify-task`, `frame.define-success-metrics`, `frame.test-strategy`

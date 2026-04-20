@@ -23,3 +23,11 @@ Domain tags:
 - statistics
 - epistemics
 - critical thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: light
+- pairs with: `mode.critique`, `guardrail.uncertainty`, `lens.base-rate-check`

@@ -23,3 +23,11 @@ Domain tags:
 - sequencing
 - project management
 - dependencies
+
+---
+
+Metadata:
+- type: frame
+- stage: frame
+- strength: medium
+- pairs with: `mode.decide`, `frame.risk-register`, `frame.prioritize-opportunities`

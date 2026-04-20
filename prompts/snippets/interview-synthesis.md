@@ -28,3 +28,11 @@ Domain tags:
 - qualitative analysis
 - synthesis
 - user research
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `frame.synthesize-sources`, `frame.extract-insights`

@@ -32,3 +32,11 @@ Domain tags:
 - software engineering
 - critical thinking
 - quality
+
+---
+
+Metadata:
+- type: frame
+- stage: critique
+- strength: heavy
+- pairs with: `mode.critique`, `lens.invariant-check`, `lens.interface-contract-review`

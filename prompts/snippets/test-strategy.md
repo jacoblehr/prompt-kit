@@ -27,3 +27,11 @@ Domain tags:
 - software engineering
 - risk management
 - quality
+
+---
+
+Metadata:
+- type: frame
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `frame.requirements-decomposition`, `frame.release-readiness`

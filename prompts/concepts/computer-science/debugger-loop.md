@@ -22,3 +22,11 @@ Domain tags:
 - software engineering
 - causal reasoning
 - critical thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `frame.bug-reproduction-brief`, `lens.invariant-check`

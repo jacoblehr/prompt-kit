@@ -27,3 +27,11 @@ Domain tags:
 - goal setting
 - measurement
 - outcome thinking
+
+---
+
+Metadata:
+- type: frame
+- stage: frame
+- strength: medium
+- pairs with: `mode.decide`, `frame.success-criteria`, `rubric.plan-quality`

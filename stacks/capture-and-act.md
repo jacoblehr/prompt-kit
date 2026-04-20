@@ -10,8 +10,8 @@ Useful inputs:
 Suggested blocks:
 
 1. `mode.reflect`
-2. `core.extract-insights`
-3. `core.plan-next-actions`
+2. `frame.extract-insights`
+3. `schema.plan-next-actions`
 
 Expected outcome:
 
@@ -23,3 +23,15 @@ Domain tags:
 - reflection
 - knowledge management
 - planning
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `mode.reflect`, `frame.extract-insights`, `frame.plan-next-actions`
+
+**Why this order works:** Reflect mode shifts from passive consumption to active extraction. Extract-insights follows immediately while the signal is fresh. Plan-next-actions closes the session with specific, actionable commitments so insight does not decay into vague intention.
+
+**Common swaps:** Swap `mode.reflect` for `mode.explore` if the content raised new questions more than it produced conclusions. Add `frame.cause-mapping` between insights and actions when a failure or regret is the thing being reviewed.
+
+**Common failure mode:** Jumping straight to plan-next-actions without extracting the actual insight. The result is actions that are loosely connected to the content rather than driven by it.

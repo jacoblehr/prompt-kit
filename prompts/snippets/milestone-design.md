@@ -26,3 +26,11 @@ Domain tags:
 - milestones
 - project management
 - outcomes
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: medium
+- pairs with: `mode.decide`, `frame.success-criteria`, `rubric.plan-quality`

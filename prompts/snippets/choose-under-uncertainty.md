@@ -23,3 +23,11 @@ Domain tags:
 - decision theory
 - risk management
 - judgment under uncertainty
+
+---
+
+Metadata:
+- type: frame
+- stage: decide
+- strength: medium
+- pairs with: `mode.decide`, `guardrail.uncertainty`, `schema.decision-memo`

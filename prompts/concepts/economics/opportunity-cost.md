@@ -21,3 +21,11 @@ Domain tags:
 - economics
 - decision theory
 - planning
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: light
+- pairs with: `mode.decide`, `frame.compare-options`, `frame.prioritize-opportunities`

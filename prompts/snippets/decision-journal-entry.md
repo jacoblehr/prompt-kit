@@ -22,3 +22,11 @@ Domain tags:
 - reflection
 - decision tracking
 - personal effectiveness
+
+---
+
+Metadata:
+- type: schema
+- stage: conclude
+- strength: light
+- pairs with: `mode.reflect`, `mode.decide`, `rubric.reflection-quality`

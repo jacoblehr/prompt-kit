@@ -26,3 +26,11 @@ Domain tags:
 - experimentation
 - research
 - measurement
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `frame.hypothesis-generation`, `frame.statistical-significance-check`, `frame.research-questions`

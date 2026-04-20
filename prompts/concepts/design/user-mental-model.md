@@ -25,3 +25,11 @@ Domain tags:
 - design
 - behavioral science
 - communication
+
+---
+
+Metadata:
+- type: lens
+- stage: explore
+- strength: medium
+- pairs with: `mode.explore`, `lens.jobs-to-be-done`, `lens.constraint-mapping`

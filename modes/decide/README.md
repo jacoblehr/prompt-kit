@@ -1,31 +1,55 @@
-# Decide Mode
+# mode.decide
 
-Use when:
+## Purpose
+Set a convergent cognitive stance to move from options to a committed choice with explicit tradeoffs.
 
-- real options already exist
-- criteria can be stated
-- the main risk is drifting instead of choosing
+## Use when
+Real options already exist, criteria can be stated, and the main risk is drifting instead of choosing.
 
-Optimizes for:
+## Expects
+A set of options and, ideally, explicit criteria. Works best after `mode.explore` has generated a shortlist.
+
+## Adds
+A directive to compare options against criteria, commit to a choice, name tradeoffs, and specify the next action.
+
+## Returns
+A committed choice with rationale, named tradeoffs, and a concrete next step rather than further expansion.
+
+## Pairs with
+`frame.success-criteria`, `frame.compare-options`, `schema.decision-memo`, `rubric.decision-quality`
+
+## Avoid when
+The option set is too thin or criteria are not yet defined — in that case use `mode.explore` first.
+
+---
+
+## Metadata
+- type: mode
+- stage: decide
+- strength: medium
+
+---
+
+## Optimizes for
 
 - commitment
 - explicit tradeoffs
 - best current choice
 - action readiness
 
-Suppresses:
+## Suppresses
 
 - unnecessary expansion
 - vague comparisons
 - endless hedge language
 
-Exit when:
+## Exit when
 
 - a choice is made
 - uncertainty is named
 - a next action is clear
 
-Quick invocation:
+## Quick invocation
 
 ```text
 Enter DECIDE mode.

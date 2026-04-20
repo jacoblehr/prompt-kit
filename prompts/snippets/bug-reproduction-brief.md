@@ -27,3 +27,11 @@ Domain tags:
 - debugging
 - reproduction
 - quality
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.critique`, `lens.debugger-loop`, `lens.interface-contract-review`

@@ -20,3 +20,11 @@ Domain tags:
 - critical thinking
 - reflection
 - epistemics
+
+---
+
+Metadata:
+- type: guardrail
+- stage: critique
+- strength: light
+- pairs with: `mode.critique`, `guardrail.disconfirming-evidence`, `guardrail.uncertainty`

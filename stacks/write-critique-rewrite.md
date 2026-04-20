@@ -10,10 +10,10 @@ Useful inputs:
 
 Suggested blocks:
 
-1. `core.brief-to-draft`
+1. `frame.brief-to-draft`
 2. `mode.critique`
-3. `core.critique-argument`
-4. `core.rewrite-for-clarity`
+3. `frame.critique-argument`
+4. `frame.rewrite-for-clarity`
 5. `rubric.writing-quality`
 
 Expected outcome:
@@ -26,3 +26,15 @@ Domain tags:
 - writing
 - editorial process
 - quality improvement
+
+---
+
+## Composition notes
+
+**Minimum blocks:** `frame.brief-to-draft`, `mode.critique`, `frame.rewrite-for-clarity`
+
+**Why this order works:** Brief-to-draft produces a first draft fast. Critique mode then shifts the stance adversarially before any evaluation. Critique-argument provides the structured evaluation surface. Rewrite-for-clarity addresses the specific weaknesses identified. Writing-quality rubric is the final gate before the draft is considered done.
+
+**Common swaps:** Swap `frame.critique-argument` for `frame.prompt-critique` when the artifact being written is a prompt rather than natural language. Swap `rubric.writing-quality` for `rubric.argument-quality` when the writing is argumentative rather than expository.
+
+**Common failure mode:** Critiquing without setting the adversarial stance first. A critique without `mode.critique` active tends to produce a gentle improvement list rather than a rigorous evaluation.

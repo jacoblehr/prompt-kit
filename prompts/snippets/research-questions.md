@@ -22,3 +22,11 @@ Domain tags:
 - research design
 - epistemic planning
 - inquiry
+
+---
+
+Metadata:
+- type: frame
+- stage: explore
+- strength: light
+- pairs with: `mode.explore`, `frame.hypothesis-generation`, `frame.synthesize-sources`

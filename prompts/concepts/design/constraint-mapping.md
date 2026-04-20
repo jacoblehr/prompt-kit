@@ -27,3 +27,11 @@ Domain tags:
 - design
 - creative thinking
 - systems thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: frame
+- strength: medium
+- pairs with: `mode.explore`, `lens.jobs-to-be-done`, `frame.scope`

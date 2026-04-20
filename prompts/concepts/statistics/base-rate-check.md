@@ -21,3 +21,11 @@ Domain tags:
 - statistics
 - epistemics
 - decision theory
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: light
+- pairs with: `mode.critique`, `guardrail.uncertainty`, `lens.survivorship-bias`

@@ -31,3 +31,11 @@ Domain tags:
 - ideation
 - option generation
 - decision support
+
+---
+
+Metadata:
+- type: frame
+- stage: explore
+- strength: medium
+- pairs with: `mode.explore`, `frame.brainstorm-angles`, `frame.success-criteria`

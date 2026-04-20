@@ -33,3 +33,11 @@ Domain tags:
 - change management
 - risk management
 - code review
+
+---
+
+Metadata:
+- type: guardrail
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `lens.invariant-check`, `lens.interface-contract-review`

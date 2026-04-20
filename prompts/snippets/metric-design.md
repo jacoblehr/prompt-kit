@@ -27,3 +27,11 @@ Domain tags:
 - measurement
 - product
 - decision making
+
+---
+
+Metadata:
+- type: frame
+- stage: frame
+- strength: medium
+- pairs with: `frame.define-success-metrics`, `frame.experiment-design`, `lens.survivorship-bias`

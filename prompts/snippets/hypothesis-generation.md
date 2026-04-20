@@ -25,3 +25,11 @@ Domain tags:
 - scientific thinking
 - epistemic practice
 - causal reasoning
+
+---
+
+Metadata:
+- type: frame
+- stage: explore
+- strength: medium
+- pairs with: `mode.explore`, `frame.experiment-design`, `guardrail.uncertainty`

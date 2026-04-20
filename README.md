@@ -1,15 +1,16 @@
 # Prompt Kit
 
-Prompt Kit is a lightweight library for composing prompt blocks by hand and saving the combinations that actually work.
+Prompt Kit is a small cognitive composition system for building strong prompts quickly.
 
 The surfaced taxonomy is intentionally small:
 
-- `Blocks` — reusable prompt units, typed by role
-- `Stacks` — saved combinations of blocks for real tasks
+- `Blocks` — reusable cognitive units, typed by role
+- `Stacks` — named assemblies of blocks for recurring jobs
 
 Open `index.html` first if you want the fastest browsing experience. The browser catalog is generated from the markdown source files into `site-data.js`, which is checked in so the site still opens directly with no setup.
 
 The canonical rules are documented in [docs/ONTOLOGY.md](./docs/ONTOLOGY.md).
+The composition rules are in [docs/COMPOSITION.md](./docs/COMPOSITION.md).
 
 ## What This Repo Is For
 
@@ -40,11 +41,29 @@ That overhead can come later if the assets prove useful. For now, the repo is op
 
 ## How To Use It
 
-1. Start with a saved stack from `stacks/` if one already fits. Stacks are grouped by family — browse the family that matches your task.
-2. Otherwise pick a mode block from `modes/`.
-3. Add a strategy block from `strategies/` if the task needs a specific reasoning move.
-4. Add one or two core or lens blocks from `prompts/`.
-5. If the output matters, finish with a rubric block from `rubrics/`.
+### Start here
+
+| What you need | Start with |
+|---------------|-----------|
+| Clarify a vague task | `frame.task` block |
+| Open up the problem space | `mode.explore` block |
+| Structured reasoning | add one `strategy` block |
+| Prevent a specific failure | add a `guardrail` block |
+| Consistent output format | add a `schema` block |
+| Recurring workflow | find a matching `stack` |
+| Evaluate the output | add a `rubric` block |
+
+### Full workflow
+
+1. Start with a saved stack from `stacks/` if one already fits.
+2. Otherwise start with a `frame` block to clarify the task.
+3. Add a `mode` block to set the cognitive stance.
+4. Add a `strategy` or `lens` block if the task needs a specific reasoning move (1–2 max).
+5. Add a `guardrail` block if a specific failure mode is likely.
+6. Add a `schema` block if the output format matters.
+7. Add a `rubric` block if the stakes justify explicit evaluation criteria.
+
+See [docs/COMPOSITION.md](./docs/COMPOSITION.md) for the full assembly rules.
 
 ## Updating The Site
 
@@ -56,14 +75,14 @@ That regenerates `site-data.js` from the markdown assets. `index.html` still wor
 
 ## Repo Shape
 
-These folders are implementation details for the source library. The browse surface still presents them as typed blocks and stacks.
+These folders are implementation details for the source library. The browse surface presents them as typed blocks and stacks.
 
 - `modes/` — mode blocks: explore, decide, critique, and reflect
 - `strategies/` — strategy blocks: problem splitting, premortem, steelman, inversion, red team
-- `prompts/blocks/` — compact core blocks: framing, guardrails, and output schemas
-- `prompts/snippets/` — full-task snippets for focused families including framing, decisions, research, writing, prompt craft, and developer workflows (75 snippets)
+- `prompts/blocks/` — compact blocks: frame, guardrail, and schema blocks
+- `prompts/snippets/` — full-task blocks for common families including framing, decisions, research, writing, prompt craft, and developer workflows (75 blocks)
 - `prompts/concepts/` — lens blocks drawn from game theory, psychology, computer science, economics, systems thinking, philosophy, statistics, and design (27 lens blocks)
-- `stacks/` — saved combinations of blocks for practical use cases, grouped by family (64 stacks across nine families)
+- `stacks/` — named assemblies of blocks for practical use cases, grouped by family (64 stacks across nine families)
 - `rubrics/` — rubric blocks for judging output quality
 - `docs/` — guidance, not framework machinery
 
@@ -71,34 +90,34 @@ These folders are implementation details for the source library. The browse surf
 
 Start with a lightweight stack if the task is fuzzy:
 
-- `mode.critique` + `core.guardrail.uncertainty` (quick sense-check)
-- `mode.explore` + `core.brainstorm-angles` (fast ideation)
-- `mode.reflect` + `core.extract-insights` + `core.plan-next-actions` (capture and act)
-- `mode.explore` + `core.clarify-task` + `core.frame.success-criteria` (frame the ask)
-- `mode.explore` + `core.cause-mapping` + `lens.incentive-audit` (map adoption blockers)
+- `mode.critique` + `guardrail.uncertainty` (quick sense-check)
+- `mode.explore` + `frame.brainstorm-angles` (fast ideation)
+- `mode.reflect` + `frame.extract-insights` + `frame.plan-next-actions` (capture and act)
+- `mode.explore` + `frame.task` + `frame.success-criteria` (frame the ask)
+- `mode.explore` + `frame.cause-mapping` + `lens.incentive-audit` (map adoption blockers)
 
 Or go deeper with a full sequence:
 
-- `mode.decide` + `core.compare-options` + `core.assumption.audit` + `core.schema.decision-memo` + `rubric.decision-quality`
-- `mode.decide` + `core.define-success-metrics` + `core.design-cheap-test` + `rubric.plan-quality`
-- `mode.critique` + `core.argument-structure` + `lens.confidence-calibration` (audit an argument)
-- `mode.critique` + `strategy.premortem` + `core.guardrail.uncertainty`
-- `mode.critique` + `core.prompt-critique` + `core.prompt-rewrite` + `rubric.prompt-quality`
-- `mode.explore` + `lens.incentive-audit` + `core.frame.success-criteria`
-- `mode.explore` + `core.hypothesis-generation` + `core.design-cheap-test`
+- `mode.decide` + `frame.compare-options` + `guardrail.assumption-audit` + `schema.decision-memo` + `rubric.decision-quality`
+- `mode.decide` + `frame.success-criteria` + `frame.design-cheap-test` + `rubric.plan-quality`
+- `mode.critique` + `frame.argument-structure` + `lens.confidence-calibration` (audit an argument)
+- `mode.critique` + `strategy.premortem` + `guardrail.uncertainty`
+- `mode.critique` + `frame.prompt-critique` + `frame.prompt-rewrite` + `rubric.prompt-quality`
+- `mode.explore` + `lens.incentive-audit` + `frame.success-criteria`
+- `mode.explore` + `frame.hypothesis-generation` + `frame.design-cheap-test`
 - `mode.explore` + `lens.jobs-to-be-done` + `lens.user-mental-model` + `lens.constraint-mapping`
-- `mode.explore` + `core.codepath-walkthrough` + `lens.invariant-check`
-- `mode.reflect` + `lens.bias-check` + `core.decision-journal-entry`
-- `mode.reflect` + `core.cause-mapping` + `core.extract-insights` + `core.plan-next-actions`
-- `mode.decide` + `core.explore-exploit-decision` + `core.guardrail.uncertainty`
-- `mode.decide` + `core.prioritize-opportunities` + `core.schema.execution-brief`
-- `mode.decide` + `core.stakeholder-map` + `core.negotiation-prep` + `lens.incentive-audit`
-- `mode.explore` + `core.scenario-planning` + `core.trend-analysis` + `lens.leverage-points`
+- `mode.explore` + `frame.codepath-walkthrough` + `lens.invariant-check`
+- `mode.reflect` + `lens.bias-check` + `frame.decision-journal-entry`
+- `mode.reflect` + `frame.cause-mapping` + `frame.extract-insights` + `frame.plan-next-actions`
+- `mode.decide` + `frame.explore-exploit-decision` + `guardrail.uncertainty`
+- `mode.decide` + `frame.prioritize-opportunities` + `schema.execution-brief`
+- `mode.decide` + `frame.stakeholder-map` + `frame.negotiation-prep` + `lens.incentive-audit`
+- `mode.explore` + `frame.scenario-planning` + `frame.trend-analysis` + `lens.leverage-points`
 - `mode.critique` + `lens.survivorship-bias` + `lens.base-rate-check` + `rubric.decision-quality`
-- `mode.explore` + `core.synthesize-sources` + `lens.survivorship-bias` + `core.extract-insights`
-- `mode.critique` + `core.security-review` + `lens.failure-mode-analysis` + `core.risk-register`
-- `mode.critique` + `core.change-impact-review` + `core.release-readiness`
-- `mode.decide` + `core.experiment-design` + `core.statistical-significance-check` + `core.extract-insights`
-- `mode.explore` + `core.prompt-decompose` + `core.prompt-rewrite` + `core.prompt-compare`
+- `mode.explore` + `frame.synthesize-sources` + `lens.survivorship-bias` + `frame.extract-insights`
+- `mode.critique` + `frame.security-review` + `lens.failure-mode-analysis` + `frame.risk-register`
+- `mode.critique` + `frame.change-impact-review` + `frame.release-readiness`
+- `mode.decide` + `frame.experiment-design` + `frame.statistical-significance-check` + `frame.extract-insights`
+- `mode.explore` + `frame.prompt-decompose` + `frame.prompt-rewrite` + `frame.prompt-compare`
 
 Start small. Keep only the pieces that measurably improve your results.

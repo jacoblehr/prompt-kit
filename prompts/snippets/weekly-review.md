@@ -22,3 +22,11 @@ Domain tags:
 - reflection
 - personal effectiveness
 - retrospective
+
+---
+
+Metadata:
+- type: frame
+- stage: conclude
+- strength: light
+- pairs with: `mode.reflect`, `frame.cause-mapping`, `rubric.reflection-quality`

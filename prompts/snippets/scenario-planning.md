@@ -24,3 +24,11 @@ Domain tags:
 - strategic thinking
 - foresight
 - risk management
+
+---
+
+Metadata:
+- type: frame
+- stage: explore
+- strength: heavy
+- pairs with: `mode.explore`, `frame.second-order-effects`, `guardrail.uncertainty`

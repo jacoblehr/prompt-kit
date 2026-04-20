@@ -25,3 +25,11 @@ Domain tags:
 - software engineering
 - risk management
 - systems thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `strategy.premortem`, `frame.risk-register`

@@ -1,4 +1,4 @@
-# Decision Quality
+# rubric.decision-quality
 
 Use this checklist after a decision draft.
 
@@ -11,7 +11,11 @@ Questions:
 - Is there a concrete next action?
 - Would future-you understand why this decision was made?
 
-Domain tags:
-- decision theory
-- quality assurance
-- critical thinking
+Pairs with: `mode.decide`, `schema.decision-memo`, `frame.success-criteria`
+
+---
+
+Metadata:
+- type: rubric
+- stage: decide
+- strength: light

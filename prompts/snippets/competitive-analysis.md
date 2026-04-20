@@ -32,3 +32,11 @@ Domain tags:
 - strategy
 - competitive intelligence
 - synthesis
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `mode.explore`, `lens.incentive-audit`, `frame.stress-test-assumptions`

@@ -25,3 +25,11 @@ Domain tags:
 - economics
 - decision theory
 - critical thinking
+
+---
+
+Metadata:
+- type: lens
+- stage: critique
+- strength: light
+- pairs with: `mode.decide`, `guardrail.disconfirming-evidence`, `frame.compare-options`

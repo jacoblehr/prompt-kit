@@ -29,3 +29,11 @@ Domain tags:
 - synthesis
 - research
 - epistemics
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: medium
+- pairs with: `mode.explore`, `frame.summarize-source`, `frame.extract-insights`

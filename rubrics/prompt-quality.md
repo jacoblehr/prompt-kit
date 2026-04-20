@@ -1,4 +1,4 @@
-# Prompt Quality
+# rubric.prompt-quality
 
 Use this checklist after drafting or revising a prompt.
 
@@ -11,7 +11,11 @@ Questions:
 - Is there enough context to solve it without guessing?
 - Would a cleaner version of this prompt be easier to use?
 
-Domain tags:
-- prompt engineering
-- quality assurance
-- evaluation
+Pairs with: `mode.critique`, `frame.prompt-critique`, `frame.prompt-rewrite`
+
+---
+
+Metadata:
+- type: rubric
+- stage: critique
+- strength: light

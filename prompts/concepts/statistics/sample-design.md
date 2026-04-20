@@ -23,3 +23,11 @@ Domain tags:
 - statistics
 - research
 - epistemics
+
+---
+
+Metadata:
+- type: lens
+- stage: analyze
+- strength: medium
+- pairs with: `frame.experiment-design`, `frame.research-questions`, `frame.data-quality-check`

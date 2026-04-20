@@ -1,23 +1,23 @@
 # Prompts
 
-This folder has three curated groups of reusable prompt material:
+This folder has three curated groups of reusable prompt blocks:
 
 - `blocks/`
-  - compact core blocks such as framing prompts, guardrails, and schemas
+  - compact blocks: frame, guardrail, and schema blocks
 - `snippets/`
-  - broader core blocks for common tasks
-  - prompt-repair helpers for refining prompts themselves
-  - prioritization, de-risking, and alignment helpers for common project work
+  - full-task frame and strategy blocks for common tasks
+  - prompt-repair blocks for refining prompts themselves
+  - prioritization, de-risking, and alignment blocks for common project work
 - `concepts/`
-  - lens blocks such as game theory, psychology, and computer science
+  - lens blocks drawn from game theory, psychology, computer science, economics, systems thinking, philosophy, statistics, and design
 
-Use prompt blocks when you want fine control.
+All of these are blocks in the surfaced taxonomy. The folders only describe how the source library is organized.
 
-Use snippets when you want speed.
-
-Use lenses when a frame like incentives, bias, invariants, or debugging changes the quality of the reasoning itself.
-
-In the surfaced taxonomy, all of these are still blocks. The folders only describe how the source library is organized.
+Each file includes a Metadata section with:
+- `type` — frame, guardrail, schema, lens, strategy
+- `stage` — frame | explore | analyze | decide | critique | refine | conclude
+- `strength` — light | medium | heavy
+- `pairs with` — compatible companion blocks
 
 High-value browse paths:
 

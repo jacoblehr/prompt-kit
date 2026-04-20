@@ -27,3 +27,11 @@ Domain tags:
 - performance
 - systems
 - debugging
+
+---
+
+Metadata:
+- type: frame
+- stage: analyze
+- strength: heavy
+- pairs with: `frame.codepath-walkthrough`, `lens.debugger-loop`, `frame.refactor-plan`

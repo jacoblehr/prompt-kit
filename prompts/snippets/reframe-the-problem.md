@@ -25,3 +25,11 @@ Domain tags:
 - lateral thinking
 - reframing
 - creative problem solving
+
+---
+
+Metadata:
+- type: strategy
+- stage: explore
+- strength: medium
+- pairs with: `mode.explore`, `frame.analogical-reasoning`, `frame.generate-options`

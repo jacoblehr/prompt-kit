@@ -31,3 +31,11 @@ Domain tags:
 - rhetoric
 - communication
 - critique
+
+---
+
+Metadata:
+- type: guardrail
+- stage: critique
+- strength: medium
+- pairs with: `mode.critique`, `guardrail.disconfirming-evidence`, `rubric.argument-quality`
