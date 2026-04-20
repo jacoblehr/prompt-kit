@@ -202,7 +202,8 @@ function makeMode(dirName) {
   return makeBlock({
     blockType: "mode",
     sourceKind: "Mode",
-    key: `mode.${slugify(title)}`,
+    key: title,
+    aliases: [`mode.${dirName}`],
     title,
     summary: ensureSentence(`Use when ${useWhen[0] || title.toLowerCase()}`),
     tags: resolvedTags(md, title),
@@ -228,7 +229,7 @@ function makeStrategy(dirName) {
   return makeBlock({
     blockType: "strategy",
     sourceKind: "Strategy",
-    key: `strategy.${slugify(title)}`,
+    key: title,
     aliases: [`strategy.${dirName}`],
     title,
     summary: ensureSentence(`Use when ${useWhen[0] || title.toLowerCase()}`),
@@ -249,15 +250,20 @@ function makePromptBlock(dirName) {
   const readme = read(readmePath);
   const prompt = read(promptPath);
   const title = firstHeading(readme).replace(/\s+Block$/, "");
+  const blockType = title.split(".")[0] || "frame";
   const bestUse = extractSectionItems(readme, "Best use:");
   const hyphenAlias = dirName.includes(".") ? dirName.replace(/\./g, "-") : "";
 
   return makeBlock({
-    blockType: "core",
+    blockType,
     sourceKind: "Prompt Block",
-    key: `core.${dirName}`,
-    aliases: hyphenAlias ? [`core.${hyphenAlias}`] : [],
+    key: title,
+    aliases: [
+      `core.${dirName}`,
+      hyphenAlias ? `core.${hyphenAlias}` : ""
+    ].filter(Boolean),
     title,
+    family: blockType === "frame" ? "Core" : "",
     summary: ensureSentence(extractLeadLine(readme)),
     tags: resolvedTags(readme, title, dirName),
     copy: stripFirstHeading(prompt),
@@ -265,6 +271,31 @@ function makePromptBlock(dirName) {
     sourcePath: promptPath
   });
 }
+
+const SNIPPET_TYPE = {
+  // Guardrail type — prevent common failure modes and reasoning errors
+  "blind-spot-check":              "guardrail",
+  "change-impact-review":          "guardrail",
+  "correlation-vs-causation":      "guardrail",
+  "data-quality-check":            "guardrail",
+  "persuasion-audit":              "guardrail",
+  "release-readiness":             "guardrail",
+  "statistical-significance-check": "guardrail",
+  "stress-test-assumptions":       "guardrail",
+  "triage-the-unknown":            "guardrail",
+  // Schema type — shape output format or structure
+  "communication-brief":           "schema",
+  "decision-journal-entry":        "schema",
+  "delegation-brief":              "schema",
+  "executive-summary":             "schema",
+  "incident-postmortem":           "schema",
+  "plan-next-actions":             "schema",
+  "rollout-plan":                  "schema",
+  // Strategy type — control the reasoning mechanic or method of thought
+  "analogical-reasoning":          "strategy",
+  "reframe-the-problem":           "strategy"
+  // Default: "frame" (define the task, objective, scope, or approach)
+};
 
 const SNIPPET_FAMILY = {
   // Thinking & Framing
@@ -357,17 +388,18 @@ function makeSnippetBlock(fileName) {
   const relPath = `prompts/snippets/${fileName}`;
   const md = read(relPath);
   const baseName = fileName.replace(/\.md$/, "");
-  const title = firstHeading(md);
   const family = SNIPPET_FAMILY[baseName] || "";
+  const blockType = SNIPPET_TYPE[baseName] || "frame";
+  const title = `${blockType}.${baseName}`;
 
   return makeBlock({
-    blockType: "snippet",
+    blockType,
     sourceKind: "Snippet",
-    key: `core.${baseName}`,
-    aliases: [`snippet.${slugify(title)}`],
+    key: title,
+    aliases: [`core.${baseName}`],
     title,
     summary: ensureSentence(extractLeadLine(md)),
-    tags: resolvedTags(md, title, family, baseName),
+    tags: resolvedTags(md, baseName, family),
     copy: extractCodeBlock(md),
     body: [],
     family,
@@ -471,7 +503,12 @@ const STACK_FAMILY = {
   "ai-workflow-design":             "Prompt Craft",
   "build-a-system-prompt":          "Prompt Craft",
   "evaluate-model-output":          "Prompt Craft",
-  "prompt-engineering-sprint":      "Prompt Craft"
+  "prompt-engineering-sprint":      "Prompt Craft",
+  // Software Engineering (additional)
+  "break-a-recurring-incident":     "Software Engineering",
+  "read-before-change":             "Software Engineering",
+  "safe-migration":                 "Software Engineering",
+  "trace-to-fix":                   "Software Engineering"
 };
 
 function makeStack(fileName) {
@@ -511,7 +548,8 @@ function makeRubric(fileName) {
   return makeBlock({
     blockType: "rubric",
     sourceKind: "Rubric",
-    key: `rubric.${slugify(title)}`,
+    key: title,
+    aliases: [`rubric.${fileName.replace(/\.md$/, "")}`],
     title,
     summary: ensureSentence(extractLeadLine(md)),
     tags: resolvedTags(md, title, fileName.replace(/\.md$/, "")),

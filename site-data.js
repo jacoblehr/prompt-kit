@@ -6,33 +6,18 @@ globalThis.SITE_DATA = {
       "blockType": "mode",
       "sourceKind": "Mode",
       "key": "mode.explore",
-      "aliases": [],
-      "title": "Explore",
-      "summary": "Use when the problem is still underframed.",
+      "aliases": [
+        "mode.explore"
+      ],
+      "title": "mode.explore",
+      "summary": "Use when mode.explore.",
       "tags": [
         "open exploration",
         "divergent thinking",
         "problem setup"
       ],
       "copy": "Enter EXPLORE mode.\nGenerate multiple plausible directions instead of converging too early.\nSurface unknowns and contrasting options.\nDo not choose yet unless I explicitly ask you to.",
-      "body": [
-        [
-          "Use when",
-          "the problem is still underframed, you need options before decisions, premature narrowing is the main risk"
-        ],
-        [
-          "Optimizes for",
-          "breadth, variety, alternative framings, surfaced unknowns"
-        ],
-        [
-          "Suppresses",
-          "early commitment, single-path planning, fake certainty"
-        ],
-        [
-          "Exit when",
-          "repeated patterns appear, a shortlist exists, the next step is comparison or choice"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "modes/explore/README.md"
@@ -42,33 +27,18 @@ globalThis.SITE_DATA = {
       "blockType": "mode",
       "sourceKind": "Mode",
       "key": "mode.decide",
-      "aliases": [],
-      "title": "Decide",
-      "summary": "Use when real options already exist.",
+      "aliases": [
+        "mode.decide"
+      ],
+      "title": "mode.decide",
+      "summary": "Use when mode.decide.",
       "tags": [
         "decision making",
         "convergent thinking",
         "commitment"
       ],
       "copy": "Enter DECIDE mode.\nCompare the available options against explicit criteria.\nChoose the best current option, state tradeoffs, and name the next action.\nDo not expand the option set unless it is clearly too weak to decide from.",
-      "body": [
-        [
-          "Use when",
-          "real options already exist, criteria can be stated, the main risk is drifting instead of choosing"
-        ],
-        [
-          "Optimizes for",
-          "commitment, explicit tradeoffs, best current choice, action readiness"
-        ],
-        [
-          "Suppresses",
-          "unnecessary expansion, vague comparisons, endless hedge language"
-        ],
-        [
-          "Exit when",
-          "a choice is made, uncertainty is named, a next action is clear"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "modes/decide/README.md"
@@ -78,33 +48,18 @@ globalThis.SITE_DATA = {
       "blockType": "mode",
       "sourceKind": "Mode",
       "key": "mode.critique",
-      "aliases": [],
-      "title": "Critique",
-      "summary": "Use when a draft, plan, or decision already exists.",
+      "aliases": [
+        "mode.critique"
+      ],
+      "title": "mode.critique",
+      "summary": "Use when mode.critique.",
       "tags": [
         "critical review",
         "quality improvement",
         "adversarial thinking"
       ],
       "copy": "Enter CRITIQUE mode.\nInspect the current artifact for weaknesses, blind spots, and likely failure points.\nPrioritize the highest-leverage findings and give concrete revision advice.\nDo not soften the critique with filler praise.",
-      "body": [
-        [
-          "Use when",
-          "a draft, plan, or decision already exists, missing flaws would be costly, you want revision guidance, not reassurance"
-        ],
-        [
-          "Optimizes for",
-          "defect detection, blind spot exposure, sharper revision targets"
-        ],
-        [
-          "Suppresses",
-          "vague praise, politeness masking substance, unprioritized commentary"
-        ],
-        [
-          "Exit when",
-          "the most important weaknesses are visible, revision advice is concrete"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "modes/critique/README.md"
@@ -114,33 +69,18 @@ globalThis.SITE_DATA = {
       "blockType": "mode",
       "sourceKind": "Mode",
       "key": "mode.reflect",
-      "aliases": [],
-      "title": "Reflect",
-      "summary": "Use when an outcome exists.",
+      "aliases": [
+        "mode.reflect"
+      ],
+      "title": "mode.reflect",
+      "summary": "Use when mode.reflect.",
       "tags": [
         "reflection",
         "retrospective",
         "learning"
       ],
       "copy": "Enter REFLECT mode.\nCompare what was expected with what actually happened.\nExtract reusable lessons and identify what should change in my prompts, stacks, or decisions next time.\nDo not stop at recap.",
-      "body": [
-        [
-          "Use when",
-          "an outcome exists, you can compare expectation versus reality, the main risk is repeating the same mistake"
-        ],
-        [
-          "Optimizes for",
-          "lesson extraction, system improvement, reusable adjustments"
-        ],
-        [
-          "Suppresses",
-          "empty retrospectives, blame without change, narrative recap with no lesson"
-        ],
-        [
-          "Exit when",
-          "at least one reusable lesson exists, at least one concrete adjustment is named"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "modes/reflect/README.md"
@@ -153,28 +93,15 @@ globalThis.SITE_DATA = {
       "aliases": [
         "strategy.problem_split"
       ],
-      "title": "Problem Split",
-      "summary": "Use when the task feels vague, tangled, or overloaded.",
+      "title": "strategy.problem-split",
+      "summary": "Use when strategy.problem-split.",
       "tags": [
         "decomposition",
         "problem structure",
         "systems thinking"
       ],
       "copy": "Apply the PROBLEM SPLIT strategy.\nBreak this into distinct subproblems, surface open questions, and suggest the best order of attack.\nKeep the decomposition practical rather than exhaustive.",
-      "body": [
-        [
-          "Use when",
-          "the task feels vague, tangled, or overloaded, framing is the bottleneck"
-        ],
-        [
-          "Helps prevent",
-          "tackling the wrong subproblem, mixing framing, decision, and execution together, hidden dependencies staying invisible"
-        ],
-        [
-          "How to use",
-          "restate the problem, identify distinct subproblems, separate knowns from unknowns, identify which subproblem should be handled first"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "strategies/problem_split/README.md"
@@ -187,28 +114,15 @@ globalThis.SITE_DATA = {
       "aliases": [
         "strategy.premortem"
       ],
-      "title": "Premortem",
-      "summary": "Use when a plan seems plausible but failure would matter.",
+      "title": "strategy.premortem",
+      "summary": "Use when strategy.premortem.",
       "tags": [
         "adversarial planning",
         "risk identification",
         "prospective hindsight"
       ],
       "copy": "Apply the PREMORTEM strategy.\nAssume this plan failed. List the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.",
-      "body": [
-        [
-          "Use when",
-          "a plan seems plausible but failure would matter, you want risk visibility before committing"
-        ],
-        [
-          "Helps prevent",
-          "optimism bias, hidden execution risks, plans that look fine on first read but fail in practice"
-        ],
-        [
-          "How to use",
-          "assume the plan failed, list the most plausible reasons why, prioritize the highest-leverage risks, add mitigations before execution"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "strategies/premortem/README.md"
@@ -221,28 +135,15 @@ globalThis.SITE_DATA = {
       "aliases": [
         "strategy.steelman"
       ],
-      "title": "Steelman",
-      "summary": "Use when you are about to reject or override a position.",
+      "title": "strategy.steelman",
+      "summary": "Use when strategy.steelman.",
       "tags": [
         "intellectual honesty",
         "argumentation",
         "adversarial thinking"
       ],
       "copy": "Apply the STEELMAN strategy.\nArgue the strongest version of the position I am considering challenging.\nMake the case as well as its best proponent would.\nThen identify what would actually be required to defeat that strongest version.",
-      "body": [
-        [
-          "Use when",
-          "you are about to reject or override a position, you want to ensure you are defeating the best version of an argument, not a weaker caricature, you suspect your critique may be motivated rather than rigorous"
-        ],
-        [
-          "Helps prevent",
-          "attacking straw versions of opposing views, overconfident dismissal of alternatives, blind spots in your own position"
-        ],
-        [
-          "How to use",
-          "state the position you are considering challenging, argue it as strongly as possible — as its best proponent would, identify what evidence or reasoning would genuinely defeat that strongest version, proceed with critique only once you have met that bar"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "strategies/steelman/README.md"
@@ -255,28 +156,15 @@ globalThis.SITE_DATA = {
       "aliases": [
         "strategy.inversion"
       ],
-      "title": "Inversion",
-      "summary": "Use when you want to find constraints that forward-planning misses.",
+      "title": "strategy.inversion",
+      "summary": "Use when strategy.inversion.",
       "tags": [
         "inversion thinking",
         "risk mapping",
         "failure analysis"
       ],
       "copy": "Apply the INVERSION strategy.\nDefine clearly what a bad outcome looks like for this situation.\nList the most plausible paths to that bad outcome.\nThen flip: what conditions would prevent each path?",
-      "body": [
-        [
-          "Use when",
-          "you want to find constraints that forward-planning misses, a plan or decision needs stress-testing before commitment, you suspect optimism bias is obscuring real failure modes"
-        ],
-        [
-          "Helps prevent",
-          "optimism blindness, underestimating how things go wrong, plans that ignore structural failure modes"
-        ],
-        [
-          "How to use",
-          "define the worst realistic outcome for this situation, enumerate the most plausible paths to that outcome, flip each path: what conditions would prevent it?, treat the flipped conditions as design constraints or mitigations"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "strategies/inversion/README.md"
@@ -289,243 +177,199 @@ globalThis.SITE_DATA = {
       "aliases": [
         "strategy.red_team"
       ],
-      "title": "Red Team",
-      "summary": "Use when you have a plan you are inclined to proceed with.",
+      "title": "strategy.red-team",
+      "summary": "Use when strategy.red-team.",
       "tags": [
         "adversarial review",
         "critical thinking",
         "stress testing"
       ],
       "copy": "Apply the RED TEAM strategy.\nArgue against this plan as a hostile critic whose goal is to defeat it.\nPrioritize arguments that are both credible and hard to dismiss.\nDo not soften the critique or suggest fixes until the attack is complete.",
-      "body": [
-        [
-          "Use when",
-          "you have a plan you are inclined to proceed with, you want to surface objections before committing, you suspect motivated reasoning may be shaping your evaluation"
-        ],
-        [
-          "Helps prevent",
-          "motivated reasoning, premature commitment, plans that have not been genuinely challenged"
-        ],
-        [
-          "How to use",
-          "shift to an adversarial frame — your goal is to defeat the plan, not improve it, generate the most damaging, credible attacks you can, prioritize attacks that are hard to dismiss, only after the attack is complete, judge which require a real response before proceeding"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "strategies/red_team/README.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "frame",
       "sourceKind": "Prompt Block",
-      "key": "core.frame.task",
+      "key": "frame.task",
       "aliases": [
+        "core.frame.task",
         "core.frame-task"
       ],
-      "title": "Task Frame",
-      "summary": "Use this prompt block to turn a messy request into a clean starting frame.",
+      "title": "frame.task",
+      "summary": "## Purpose.",
       "tags": [
-        "task",
-        "frame"
+        "frame",
+        "task"
       ],
       "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- state when the objective is inferred rather than explicit\n- keep constraints literal\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- stated ask\n- likely objective\n- constraints\n- knowns\n- unknowns\n- decision or action this frame is meant to support\n- recommended next reasoning step\n\nInput:\n{paste raw request or situation}",
-      "body": [
-        [
-          "Best use",
-          "at the start of a stack, before selecting a strategy, before asking for options or plans"
-        ]
-      ],
-      "family": "",
+      "body": [],
+      "family": "Core",
       "group": "",
       "sourcePath": "prompts/blocks/frame.task/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "frame",
       "sourceKind": "Prompt Block",
-      "key": "core.frame.success-criteria",
+      "key": "frame.success-criteria",
       "aliases": [
+        "core.frame.success-criteria",
         "core.frame-success-criteria"
       ],
-      "title": "Success Criteria",
-      "summary": "Use this prompt block when a task lacks clear standards.",
+      "title": "frame.success-criteria",
+      "summary": "## Purpose.",
       "tags": [
+        "frame",
         "success",
-        "criteria",
-        "frame"
+        "criteria"
       ],
       "copy": "Define explicit success criteria for this task, decision, or plan.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\nInput:\n{paste target task, decision, or plan}",
-      "body": [
-        [
-          "Best use",
-          "before critique, before decision-making, before comparing alternatives"
-        ]
-      ],
-      "family": "",
+      "body": [],
+      "family": "Core",
       "group": "",
       "sourcePath": "prompts/blocks/frame.success-criteria/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "guardrail",
       "sourceKind": "Prompt Block",
-      "key": "core.guardrail.uncertainty",
+      "key": "guardrail.uncertainty",
       "aliases": [
+        "core.guardrail.uncertainty",
         "core.guardrail-uncertainty"
       ],
-      "title": "Uncertainty Guardrail",
-      "summary": "Use this prompt block when the model might hide uncertainty.",
+      "title": "guardrail.uncertainty",
+      "summary": "## Purpose.",
       "tags": [
-        "uncertainty",
-        "guardrail"
+        "guardrail",
+        "uncertainty"
       ],
       "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\nInput:\n{paste current analysis, recommendation, or draft}",
-      "body": [
-        [
-          "Best use",
-          "after exploration, before decisions, during critique, during reflection"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/guardrail.uncertainty/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "guardrail",
       "sourceKind": "Prompt Block",
-      "key": "core.guardrail.disconfirming-evidence",
+      "key": "guardrail.disconfirming-evidence",
       "aliases": [
+        "core.guardrail.disconfirming-evidence",
         "core.guardrail-disconfirming-evidence"
       ],
-      "title": "Disconfirming Evidence Guardrail",
-      "summary": "Use this prompt block when you may be talking yourself into a preferred answer.",
+      "title": "guardrail.disconfirming-evidence",
+      "summary": "## Purpose.",
       "tags": [
+        "guardrail",
         "disconfirming",
-        "evidence",
-        "guardrail"
+        "evidence"
       ],
       "copy": "Force a check against disconfirming evidence for this current conclusion, recommendation, or preferred option.\n\nRequirements:\n\n- prioritize the strongest real opposing case\n- do not manufacture weak objections\n- update the conclusion if the opposing evidence materially changes it\n\nReturn:\n\n- current conclusion\n- strongest opposing evidence or argument\n- what would be true if the conclusion were wrong\n- whether the conclusion still stands and why\n\nInput:\n{paste current conclusion, recommendation, or preferred option}",
-      "body": [
-        [
-          "Best use",
-          "before a high-stakes decision, after a persuasive draft or recommendation, when the current conclusion feels too smooth"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/guardrail.disconfirming-evidence/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "guardrail",
       "sourceKind": "Prompt Block",
-      "key": "core.assumption.audit",
+      "key": "guardrail.assumption-audit",
       "aliases": [
+        "core.assumption.audit",
         "core.assumption-audit"
       ],
-      "title": "Assumption Audit",
-      "summary": "Use this prompt block when a task depends on important assumptions.",
+      "title": "guardrail.assumption-audit",
+      "summary": "## Purpose.",
       "tags": [
+        "guardrail",
         "assumption",
         "audit"
       ],
       "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn for each:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\nInput:\n{paste plan, decision, argument, or recommendation}",
-      "body": [
-        [
-          "Best use",
-          "before committing to a plan or decision, before a critique that needs its premises checked, when uncertainty feels hidden"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/assumption.audit/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "frame",
       "sourceKind": "Prompt Block",
-      "key": "core.scope.frame",
+      "key": "frame.scope",
       "aliases": [
+        "core.scope.frame",
         "core.scope-frame"
       ],
-      "title": "Scope Frame",
-      "summary": "Use this prompt block when a task needs explicit boundaries.",
+      "title": "frame.scope",
+      "summary": "## Purpose.",
       "tags": [
-        "scope",
-        "frame"
+        "frame",
+        "scope"
       ],
       "copy": "Define the scope of this task or project explicitly.\n\nRequirements:\n\n- distinguish boundaries from preferences\n- name the one boundary that matters most\n- explain what is being excluded if that exclusion prevents drift\n- note what new information would justify expanding scope later\n\nReturn:\n\n- what is in scope\n- what is out of scope\n- most important boundary to hold\n- what has been deliberately excluded and why\n- re-entry trigger for excluded work\n\nInput:\n{paste task, project, or request}",
-      "body": [
-        [
-          "Best use",
-          "when a task is sprawling or underspecified, before work begins, when scope drift is a risk"
-        ]
-      ],
-      "family": "",
+      "body": [],
+      "family": "Core",
       "group": "",
       "sourcePath": "prompts/blocks/scope.frame/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "schema",
       "sourceKind": "Prompt Block",
-      "key": "core.schema.decision-memo",
+      "key": "schema.decision-memo",
       "aliases": [
+        "core.schema.decision-memo",
         "core.schema-decision-memo"
       ],
-      "title": "Decision Memo Schema",
-      "summary": "Use this prompt block to standardize how decisions are captured.",
+      "title": "schema.decision-memo",
+      "summary": "## Purpose.",
       "tags": [
         "decision",
         "memo"
       ],
       "copy": "Render this chosen direction or decision as a structured memo.\n\nRequirements:\n\n- make the actual choice explicit\n- keep rationale concise and decision-relevant\n- include only the risks and tradeoffs that matter to execution\n\nReturn:\n\n- decision\n- rationale\n- tradeoffs\n- risks\n- confidence\n- next action\n\nInput:\n{paste chosen option or decision context}",
-      "body": [
-        [
-          "Best use",
-          "after choosing, before execution planning, when you want later reflection to be easier"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/schema.decision-memo/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "core",
+      "blockType": "schema",
       "sourceKind": "Prompt Block",
-      "key": "core.schema.execution-brief",
+      "key": "schema.execution-brief",
       "aliases": [
+        "core.schema.execution-brief",
         "core.schema-execution-brief"
       ],
-      "title": "Execution Brief Schema",
-      "summary": "Use this prompt block to standardize how a chosen direction turns into action.",
+      "title": "schema.execution-brief",
+      "summary": "## Purpose.",
       "tags": [
         "execution",
         "brief"
       ],
       "copy": "Render this chosen direction, plan, or handoff as a structured execution brief.\n\nRequirements:\n\n- make ownership and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n- include the condition that would justify pausing or escalating\n\nReturn:\n\n- objective\n- owner or responsible role\n- sequence or milestones\n- dependencies\n- major risks\n- first checkpoint\n- pause or escalation trigger\n- immediate next action\n\nInput:\n{paste chosen direction, plan, or handoff context}",
-      "body": [
-        [
-          "Best use",
-          "after a decision, before handoff or delegation, when execution details are starting to drift"
-        ]
-      ],
+      "body": [],
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/schema.execution-brief/prompt.md"
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.generate-options",
+      "key": "frame.generate-options",
       "aliases": [
-        "snippet.generate-options"
+        "core.generate-options"
       ],
-      "title": "Generate Options",
+      "title": "frame.generate-options",
       "summary": "Use when you need multiple directions before choosing.",
       "tags": [
         "ideation",
@@ -540,13 +384,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.brainstorm-angles",
+      "key": "frame.brainstorm-angles",
       "aliases": [
-        "snippet.brainstorm-angles"
+        "core.brainstorm-angles"
       ],
-      "title": "Brainstorm Angles",
+      "title": "frame.brainstorm-angles",
       "summary": "Use when you want fresh perspectives rather than polished ideas.",
       "tags": [
         "ideation",
@@ -561,13 +405,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "strategy",
       "sourceKind": "Snippet",
-      "key": "core.reframe-the-problem",
+      "key": "strategy.reframe-the-problem",
       "aliases": [
-        "snippet.reframe-the-problem"
+        "core.reframe-the-problem"
       ],
-      "title": "Reframe the Problem",
+      "title": "strategy.reframe-the-problem",
       "summary": "Use when the stated problem may be the wrong problem, or when solutions keep failing.",
       "tags": [
         "problem design",
@@ -583,13 +427,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "strategy",
       "sourceKind": "Snippet",
-      "key": "core.analogical-reasoning",
+      "key": "strategy.analogical-reasoning",
       "aliases": [
-        "snippet.analogical-reasoning"
+        "core.analogical-reasoning"
       ],
-      "title": "Analogical Reasoning",
+      "title": "strategy.analogical-reasoning",
       "summary": "Use when a problem is stuck and a solution from a structurally similar domain might transfer.",
       "tags": [
         "analogical reasoning",
@@ -605,13 +449,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.hypothesis-generation",
+      "key": "frame.hypothesis-generation",
       "aliases": [
-        "snippet.hypothesis-generation"
+        "core.hypothesis-generation"
       ],
-      "title": "Hypothesis Generation",
+      "title": "frame.hypothesis-generation",
       "summary": "Use when you have a question or problem and need to generate competing explanations before committing to an investigation path.",
       "tags": [
         "hypothesis generation",
@@ -627,13 +471,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.clarify-task",
+      "key": "frame.clarify-task",
       "aliases": [
-        "snippet.clarify-task"
+        "core.clarify-task"
       ],
-      "title": "Clarify Task",
+      "title": "frame.clarify-task",
       "summary": "Use when a request is vague or overloaded.",
       "tags": [
         "task framing",
@@ -648,13 +492,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.define-success-metrics",
+      "key": "frame.define-success-metrics",
       "aliases": [
-        "snippet.define-success-metrics"
+        "core.define-success-metrics"
       ],
-      "title": "Define Success Metrics",
+      "title": "frame.define-success-metrics",
       "summary": "Use when a goal, task, or initiative needs clearer measurement criteria before work begins.",
       "tags": [
         "metrics design",
@@ -670,13 +514,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.argument-structure",
+      "key": "frame.argument-structure",
       "aliases": [
-        "snippet.argument-structure"
+        "core.argument-structure"
       ],
-      "title": "Argument Structure",
+      "title": "frame.argument-structure",
       "summary": "Use when you need to understand the logical anatomy of a claim before evaluating or responding to it.",
       "tags": [
         "critical thinking",
@@ -691,13 +535,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.compare-options",
+      "key": "frame.compare-options",
       "aliases": [
-        "snippet.compare-options"
+        "core.compare-options"
       ],
-      "title": "Compare Options",
+      "title": "frame.compare-options",
       "summary": "Use when you already have options and need a structured comparison.",
       "tags": [
         "evaluation",
@@ -712,13 +556,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.choose-under-uncertainty",
+      "key": "frame.choose-under-uncertainty",
       "aliases": [
-        "snippet.choose-under-uncertainty"
+        "core.choose-under-uncertainty"
       ],
-      "title": "Choose Under Uncertainty",
+      "title": "frame.choose-under-uncertainty",
       "summary": "Use when you need a best current choice, not a perfect answer.",
       "tags": [
         "decision theory",
@@ -733,13 +577,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.explore-exploit-decision",
+      "key": "frame.explore-exploit-decision",
       "aliases": [
-        "snippet.explore-exploit-decision"
+        "core.explore-exploit-decision"
       ],
-      "title": "Explore / Exploit Decision",
+      "title": "frame.explore-exploit-decision",
       "summary": "Use when you need to decide whether to keep searching, learning, or generating options versus committing to the best current path.",
       "tags": [
         "decision theory",
@@ -754,13 +598,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.prioritize-opportunities",
+      "key": "frame.prioritize-opportunities",
       "aliases": [
-        "snippet.prioritize-opportunities"
+        "core.prioritize-opportunities"
       ],
-      "title": "Prioritize Opportunities",
+      "title": "frame.prioritize-opportunities",
       "summary": "Use when you have too many plausible projects, bets, or tasks competing for attention.",
       "tags": [
         "prioritization",
@@ -775,13 +619,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.scenario-planning",
+      "key": "frame.scenario-planning",
       "aliases": [
-        "snippet.scenario-planning"
+        "core.scenario-planning"
       ],
-      "title": "Scenario Planning",
+      "title": "frame.scenario-planning",
       "summary": "Use when a decision depends on how the future unfolds and the range of plausible futures is wide.",
       "tags": [
         "strategic thinking",
@@ -796,13 +640,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.trend-analysis",
+      "key": "frame.trend-analysis",
       "aliases": [
-        "snippet.trend-analysis"
+        "core.trend-analysis"
       ],
-      "title": "Trend Analysis",
+      "title": "frame.trend-analysis",
       "summary": "Use when scanning an environment for emerging shifts that could affect a strategy, market, or plan.",
       "tags": [
         "trend analysis",
@@ -818,13 +662,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.second-order-effects",
+      "key": "frame.second-order-effects",
       "aliases": [
-        "snippet.second-order-effects"
+        "core.second-order-effects"
       ],
-      "title": "Second-Order Effects",
+      "title": "frame.second-order-effects",
       "summary": "Use when a decision or action may trigger consequences beyond the obvious first-order outcomes.",
       "tags": [
         "systems thinking",
@@ -839,13 +683,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.design-cheap-test",
+      "key": "frame.design-cheap-test",
       "aliases": [
-        "snippet.design-cheap-test"
+        "core.design-cheap-test"
       ],
-      "title": "Design Cheap Test",
+      "title": "frame.design-cheap-test",
       "summary": "Use when uncertainty is blocking commitment and you need the smallest useful experiment.",
       "tags": [
         "experimentation",
@@ -860,13 +704,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.risk-register",
+      "key": "frame.risk-register",
       "aliases": [
-        "snippet.risk-register"
+        "core.risk-register"
       ],
-      "title": "Risk Register",
+      "title": "frame.risk-register",
       "summary": "Use when you need a structured inventory of risks before committing to a plan or project.",
       "tags": [
         "risk management",
@@ -882,13 +726,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.stress-test-assumptions",
+      "key": "guardrail.stress-test-assumptions",
       "aliases": [
-        "snippet.stress-test-assumptions"
+        "core.stress-test-assumptions"
       ],
-      "title": "Stress Test Assumptions",
+      "title": "guardrail.stress-test-assumptions",
       "summary": "Use when a plan or decision rests on assumptions that have not been pressure-tested.",
       "tags": [
         "risk management",
@@ -903,13 +747,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "schema",
       "sourceKind": "Snippet",
-      "key": "core.plan-next-actions",
+      "key": "schema.plan-next-actions",
       "aliases": [
-        "snippet.plan-next-actions"
+        "core.plan-next-actions"
       ],
-      "title": "Plan Next Actions",
+      "title": "schema.plan-next-actions",
       "summary": "Use when you have a chosen direction and need an executable plan.",
       "tags": [
         "execution",
@@ -924,13 +768,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.process-audit",
+      "key": "frame.process-audit",
       "aliases": [
-        "snippet.process-audit"
+        "core.process-audit"
       ],
-      "title": "Process Audit",
+      "title": "frame.process-audit",
       "summary": "Use when a workflow, process, or routine needs to be examined for inefficiency, gaps, or hidden failure modes.",
       "tags": [
         "process improvement",
@@ -946,13 +790,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "schema",
       "sourceKind": "Snippet",
-      "key": "core.rollout-plan",
+      "key": "schema.rollout-plan",
       "aliases": [
-        "snippet.rollout-plan"
+        "core.rollout-plan"
       ],
-      "title": "Rollout Plan",
+      "title": "schema.rollout-plan",
       "summary": "Use when you have a decision or design and need a concrete, sequenced plan for releasing, deploying, or implementing it.",
       "tags": [
         "planning",
@@ -968,13 +812,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "schema",
       "sourceKind": "Snippet",
-      "key": "core.delegation-brief",
+      "key": "schema.delegation-brief",
       "aliases": [
-        "snippet.delegation-brief"
+        "core.delegation-brief"
       ],
-      "title": "Delegation Brief",
+      "title": "schema.delegation-brief",
       "summary": "Use when handing off a task to ensure the person receiving it has everything they need to succeed without coming back for clarification.",
       "tags": [
         "planning",
@@ -989,13 +833,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.brief-to-draft",
+      "key": "frame.brief-to-draft",
       "aliases": [
-        "snippet.brief-to-draft"
+        "core.brief-to-draft"
       ],
-      "title": "Brief To Draft",
+      "title": "frame.brief-to-draft",
       "summary": "Use when you need a first draft that is structured enough to survive critique, not just a fast blob of text.",
       "tags": [
         "writing",
@@ -1011,13 +855,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.rewrite-for-clarity",
+      "key": "frame.rewrite-for-clarity",
       "aliases": [
-        "snippet.rewrite-for-clarity"
+        "core.rewrite-for-clarity"
       ],
-      "title": "Rewrite For Clarity",
+      "title": "frame.rewrite-for-clarity",
       "summary": "Use when a draft is muddled, bloated, or indirect.",
       "tags": [
         "writing",
@@ -1032,13 +876,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.critique-argument",
+      "key": "frame.critique-argument",
       "aliases": [
-        "snippet.critique-argument"
+        "core.critique-argument"
       ],
-      "title": "Critique Argument",
+      "title": "frame.critique-argument",
       "summary": "Use when you want the weaknesses in a claim, draft, or argument.",
       "tags": [
         "critical thinking",
@@ -1053,13 +897,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.position-draft",
+      "key": "frame.position-draft",
       "aliases": [
-        "snippet.position-draft"
+        "core.position-draft"
       ],
-      "title": "Position Draft",
+      "title": "frame.position-draft",
       "summary": "Use when you need to argue a clear position with evidence and honest counter-acknowledgment.",
       "tags": [
         "argumentation",
@@ -1074,13 +918,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.feedback-request",
+      "key": "frame.feedback-request",
       "aliases": [
-        "snippet.feedback-request"
+        "core.feedback-request"
       ],
-      "title": "Feedback Request",
+      "title": "frame.feedback-request",
       "summary": "Use when you need actionable feedback rather than general impressions.",
       "tags": [
         "feedback design",
@@ -1096,13 +940,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.negotiation-prep",
+      "key": "frame.negotiation-prep",
       "aliases": [
-        "snippet.negotiation-prep"
+        "core.negotiation-prep"
       ],
-      "title": "Negotiation Prep",
+      "title": "frame.negotiation-prep",
       "summary": "Use when preparing for a negotiation, difficult conversation, or situation where conflicting interests need to be reconciled.",
       "tags": [
         "negotiation",
@@ -1118,13 +962,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "schema",
       "sourceKind": "Snippet",
-      "key": "core.communication-brief",
+      "key": "schema.communication-brief",
       "aliases": [
-        "snippet.communication-brief"
+        "core.communication-brief"
       ],
-      "title": "Communication Brief",
+      "title": "schema.communication-brief",
       "summary": "Use when a message, announcement, or change needs a plan for who hears what, when, and how.",
       "tags": [
         "communication planning",
@@ -1140,13 +984,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.alignment-conversation-plan",
+      "key": "frame.alignment-conversation-plan",
       "aliases": [
-        "snippet.alignment-conversation-plan"
+        "core.alignment-conversation-plan"
       ],
-      "title": "Alignment Conversation Plan",
+      "title": "frame.alignment-conversation-plan",
       "summary": "Use when a conversation matters because alignment, commitment, or resistance will shape the outcome.",
       "tags": [
         "communication planning",
@@ -1162,13 +1006,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.summarize-source",
+      "key": "frame.summarize-source",
       "aliases": [
-        "snippet.summarize-source"
+        "core.summarize-source"
       ],
-      "title": "Summarize Source",
+      "title": "frame.summarize-source",
       "summary": "Use when you need a dense source turned into something useful.",
       "tags": [
         "synthesis",
@@ -1183,13 +1027,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.synthesize-sources",
+      "key": "frame.synthesize-sources",
       "aliases": [
-        "snippet.synthesize-sources"
+        "core.synthesize-sources"
       ],
-      "title": "Synthesize Sources",
+      "title": "frame.synthesize-sources",
       "summary": "Use when you have consumed multiple sources and need to integrate them into a coherent, unified view rather than a list of summaries.",
       "tags": [
         "knowledge management",
@@ -1205,13 +1049,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.extract-insights",
+      "key": "frame.extract-insights",
       "aliases": [
-        "snippet.extract-insights"
+        "core.extract-insights"
       ],
-      "title": "Extract Insights",
+      "title": "frame.extract-insights",
       "summary": "Use when notes, transcripts, or documents contain signal buried in noise.",
       "tags": [
         "synthesis",
@@ -1226,13 +1070,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.cause-mapping",
+      "key": "frame.cause-mapping",
       "aliases": [
-        "snippet.cause-mapping"
+        "core.cause-mapping"
       ],
-      "title": "Cause Mapping",
+      "title": "frame.cause-mapping",
       "summary": "Use when you need to understand why an outcome happened, not just what happened.",
       "tags": [
         "root cause analysis",
@@ -1247,13 +1091,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.research-questions",
+      "key": "frame.research-questions",
       "aliases": [
-        "snippet.research-questions"
+        "core.research-questions"
       ],
-      "title": "Research Questions",
+      "title": "frame.research-questions",
       "summary": "Use when you need to map what to investigate next.",
       "tags": [
         "research design",
@@ -1268,13 +1112,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.blind-spot-check",
+      "key": "guardrail.blind-spot-check",
       "aliases": [
-        "snippet.blind-spot-check"
+        "core.blind-spot-check"
       ],
-      "title": "Blind Spot Check",
+      "title": "guardrail.blind-spot-check",
       "summary": "Use when you want to surface what you are probably not thinking about.",
       "tags": [
         "critical thinking",
@@ -1289,13 +1133,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.stakeholder-map",
+      "key": "frame.stakeholder-map",
       "aliases": [
-        "snippet.stakeholder-map"
+        "core.stakeholder-map"
       ],
-      "title": "Stakeholder Map",
+      "title": "frame.stakeholder-map",
       "summary": "Use when buy-in, resistance, or coordination will shape the outcome.",
       "tags": [
         "stakeholder analysis",
@@ -1310,13 +1154,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.triage-the-unknown",
+      "key": "guardrail.triage-the-unknown",
       "aliases": [
-        "snippet.triage-the-unknown"
+        "core.triage-the-unknown"
       ],
-      "title": "Triage The Unknown",
+      "title": "guardrail.triage-the-unknown",
       "summary": "Use when a situation feels confusing because facts, interpretations, and assumptions are getting mixed together.",
       "tags": [
         "diagnostics",
@@ -1332,13 +1176,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "schema",
       "sourceKind": "Snippet",
-      "key": "core.decision-journal-entry",
+      "key": "schema.decision-journal-entry",
       "aliases": [
-        "snippet.decision-journal-entry"
+        "core.decision-journal-entry"
       ],
-      "title": "Decision Journal Entry",
+      "title": "schema.decision-journal-entry",
       "summary": "Use when you want to record a decision well enough to reflect on it later.",
       "tags": [
         "reflection",
@@ -1353,13 +1197,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.weekly-review",
+      "key": "frame.weekly-review",
       "aliases": [
-        "snippet.weekly-review"
+        "core.weekly-review"
       ],
-      "title": "Weekly Review",
+      "title": "frame.weekly-review",
       "summary": "Use when reflecting on a week of work or decisions.",
       "tags": [
         "reflection",
@@ -1374,13 +1218,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.code-review",
+      "key": "frame.code-review",
       "aliases": [
-        "snippet.code-review"
+        "core.code-review"
       ],
-      "title": "Code Review",
+      "title": "frame.code-review",
       "summary": "Use when reviewing a pull request, diff, or piece of code and you want to give structured, actionable feedback.",
       "tags": [
         "software engineering",
@@ -1395,13 +1239,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.bug-reproduction-brief",
+      "key": "frame.bug-reproduction-brief",
       "aliases": [
-        "snippet.bug-reproduction-brief"
+        "core.bug-reproduction-brief"
       ],
-      "title": "Bug Reproduction Brief",
+      "title": "frame.bug-reproduction-brief",
       "summary": "Use when a bug report is vague, inconsistent, or dependent on hidden state and you need a reproducible investigation target.",
       "tags": [
         "software engineering",
@@ -1417,13 +1261,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.log-triage",
+      "key": "frame.log-triage",
       "aliases": [
-        "snippet.log-triage"
+        "core.log-triage"
       ],
-      "title": "Log Triage",
+      "title": "frame.log-triage",
       "summary": "Use when you have logs, traces, or event streams but do not yet know which signals are symptoms, causes, or noise.",
       "tags": [
         "software engineering",
@@ -1439,13 +1283,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.codepath-walkthrough",
+      "key": "frame.codepath-walkthrough",
       "aliases": [
-        "snippet.codepath-walkthrough"
+        "core.codepath-walkthrough"
       ],
-      "title": "Codepath Walkthrough",
+      "title": "frame.codepath-walkthrough",
       "summary": "Use when you need to understand how a behavior actually flows through a codebase before debugging, refactoring, or extending it.",
       "tags": [
         "software engineering",
@@ -1461,13 +1305,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.change-impact-review",
+      "key": "guardrail.change-impact-review",
       "aliases": [
-        "snippet.change-impact-review"
+        "core.change-impact-review"
       ],
-      "title": "Change Impact Review",
+      "title": "guardrail.change-impact-review",
       "summary": "Use when a code change seems local but might have a larger blast radius across contracts, state, or operations.",
       "tags": [
         "software engineering",
@@ -1483,13 +1327,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.migration-plan",
+      "key": "frame.migration-plan",
       "aliases": [
-        "snippet.migration-plan"
+        "core.migration-plan"
       ],
-      "title": "Migration Plan",
+      "title": "frame.migration-plan",
       "summary": "Use when a schema, API, storage model, config shape, or workflow must change without breaking live traffic or corrupting state.",
       "tags": [
         "software engineering",
@@ -1505,13 +1349,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.release-readiness",
+      "key": "guardrail.release-readiness",
       "aliases": [
-        "snippet.release-readiness"
+        "core.release-readiness"
       ],
-      "title": "Release Readiness",
+      "title": "guardrail.release-readiness",
       "summary": "Use when deciding whether a change is actually ready to ship, not just feature-complete.",
       "tags": [
         "software engineering",
@@ -1527,13 +1371,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.refactor-plan",
+      "key": "frame.refactor-plan",
       "aliases": [
-        "snippet.refactor-plan"
+        "core.refactor-plan"
       ],
-      "title": "Refactor Plan",
+      "title": "frame.refactor-plan",
       "summary": "Use when code needs to be improved structurally without changing its behaviour, and you want to plan the work safely before touching anything.",
       "tags": [
         "software engineering",
@@ -1548,13 +1392,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.test-case-design",
+      "key": "frame.test-case-design",
       "aliases": [
-        "snippet.test-case-design"
+        "core.test-case-design"
       ],
-      "title": "Test Case Design",
+      "title": "frame.test-case-design",
       "summary": "Use when you do not need a full test strategy, just a compact set of high-value tests for one behavior, bug, or change.",
       "tags": [
         "software engineering",
@@ -1570,13 +1414,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.test-strategy",
+      "key": "frame.test-strategy",
       "aliases": [
-        "snippet.test-strategy"
+        "core.test-strategy"
       ],
-      "title": "Test Strategy",
+      "title": "frame.test-strategy",
       "summary": "Use when designing or auditing the test coverage for a system, module, or feature.",
       "tags": [
         "software engineering",
@@ -1591,13 +1435,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.requirements-decomposition",
+      "key": "frame.requirements-decomposition",
       "aliases": [
-        "snippet.requirements-decomposition"
+        "core.requirements-decomposition"
       ],
-      "title": "Requirements Decomposition",
+      "title": "frame.requirements-decomposition",
       "summary": "Use when a high-level feature, epic, or user need must be broken into clear, independently shippable requirements before estimation or implementation begins.",
       "tags": [
         "software engineering",
@@ -1612,13 +1456,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.statistical-significance-check",
+      "key": "guardrail.statistical-significance-check",
       "aliases": [
-        "snippet.statistical-significance-check"
+        "core.statistical-significance-check"
       ],
-      "title": "Statistical Significance Check",
+      "title": "guardrail.statistical-significance-check",
       "summary": "Use when interpreting results from an experiment, A/B test, or data analysis to avoid acting on noise.",
       "tags": [
         "statistics",
@@ -1633,13 +1477,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.correlation-vs-causation",
+      "key": "guardrail.correlation-vs-causation",
       "aliases": [
-        "snippet.correlation-vs-causation"
+        "core.correlation-vs-causation"
       ],
-      "title": "Correlation Vs Causation",
+      "title": "guardrail.correlation-vs-causation",
       "summary": "Use when an observed association is being used to justify a causal claim or a policy decision.",
       "tags": [
         "statistics",
@@ -1654,13 +1498,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.prompt-critique",
+      "key": "frame.prompt-critique",
       "aliases": [
-        "snippet.prompt-critique"
+        "core.prompt-critique"
       ],
-      "title": "Prompt Critique",
+      "title": "frame.prompt-critique",
       "summary": "Use when a prompt feels vague, bloated, or unreliable.",
       "tags": [
         "prompt engineering",
@@ -1675,13 +1519,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.prompt-rewrite",
+      "key": "frame.prompt-rewrite",
       "aliases": [
-        "snippet.prompt-rewrite"
+        "core.prompt-rewrite"
       ],
-      "title": "Prompt Rewrite",
+      "title": "frame.prompt-rewrite",
       "summary": "Use when you want to turn a rough prompt into a sharper version quickly.",
       "tags": [
         "prompt engineering",
@@ -1696,13 +1540,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.prompt-compare",
+      "key": "frame.prompt-compare",
       "aliases": [
-        "snippet.prompt-compare"
+        "core.prompt-compare"
       ],
-      "title": "Prompt Compare",
+      "title": "frame.prompt-compare",
       "summary": "Use when you have two or more prompt variants and want to choose the strongest one.",
       "tags": [
         "prompt engineering",
@@ -1717,13 +1561,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.api-design",
+      "key": "frame.api-design",
       "aliases": [
-        "snippet.api-design"
+        "core.api-design"
       ],
-      "title": "API Design",
+      "title": "frame.api-design",
       "summary": "Use when you need to design or review an API surface — REST, GraphQL, RPC, or library interface.",
       "tags": [
         "software engineering",
@@ -1739,13 +1583,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.competitive-analysis",
+      "key": "frame.competitive-analysis",
       "aliases": [
-        "snippet.competitive-analysis"
+        "core.competitive-analysis"
       ],
-      "title": "Competitive Analysis",
+      "title": "frame.competitive-analysis",
       "summary": "Use when you need to map the landscape of competing options, products, organisations, or approaches before making a decision or building a strategy.",
       "tags": [
         "research",
@@ -1761,13 +1605,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.data-quality-check",
+      "key": "guardrail.data-quality-check",
       "aliases": [
-        "snippet.data-quality-check"
+        "core.data-quality-check"
       ],
-      "title": "Data Quality Check",
+      "title": "guardrail.data-quality-check",
       "summary": "Use when you need to assess whether a dataset is fit for a specific analytical purpose.",
       "tags": [
         "statistics",
@@ -1783,13 +1627,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.database-design",
+      "key": "frame.database-design",
       "aliases": [
-        "snippet.database-design"
+        "core.database-design"
       ],
-      "title": "Database Design",
+      "title": "frame.database-design",
       "summary": "Use when you need to design, review, or critique a data schema or database interaction layer.",
       "tags": [
         "software engineering",
@@ -1805,13 +1649,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.dependency-map",
+      "key": "frame.dependency-map",
       "aliases": [
-        "snippet.dependency-map"
+        "core.dependency-map"
       ],
-      "title": "Dependency Map",
+      "title": "frame.dependency-map",
       "summary": "Use when you need to understand sequencing, critical paths, and parallelisation opportunities in a plan.",
       "tags": [
         "planning",
@@ -1827,13 +1671,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "schema",
       "sourceKind": "Snippet",
-      "key": "core.executive-summary",
+      "key": "schema.executive-summary",
       "aliases": [
-        "snippet.executive-summary"
+        "core.executive-summary"
       ],
-      "title": "Executive Summary",
+      "title": "schema.executive-summary",
       "summary": "Use when you need to condense a complex document, analysis, or recommendation into a concise summary for a decision-maker.",
       "tags": [
         "writing",
@@ -1849,13 +1693,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.experiment-design",
+      "key": "frame.experiment-design",
       "aliases": [
-        "snippet.experiment-design"
+        "core.experiment-design"
       ],
-      "title": "Experiment Design",
+      "title": "frame.experiment-design",
       "summary": "Use when you need to design a rigorous experiment or A/B test before running it.",
       "tags": [
         "statistics",
@@ -1871,13 +1715,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.forecast",
+      "key": "frame.forecast",
       "aliases": [
-        "snippet.forecast"
+        "core.forecast"
       ],
-      "title": "Forecast",
+      "title": "frame.forecast",
       "summary": "Use when you need to make a structured probability-based forecast about an uncertain outcome.",
       "tags": [
         "forecasting",
@@ -1893,13 +1737,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "schema",
       "sourceKind": "Snippet",
-      "key": "core.incident-postmortem",
+      "key": "schema.incident-postmortem",
       "aliases": [
-        "snippet.incident-post-mortem"
+        "core.incident-postmortem"
       ],
-      "title": "Incident Post-Mortem",
+      "title": "schema.incident-postmortem",
       "summary": "Use when a system incident or significant failure has occurred and you need a structured, blame-free analysis.",
       "tags": [
         "software engineering",
@@ -1915,13 +1759,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.interpret-regression",
+      "key": "frame.interpret-regression",
       "aliases": [
-        "snippet.interpret-regression"
+        "core.interpret-regression"
       ],
-      "title": "Interpret Regression",
+      "title": "frame.interpret-regression",
       "summary": "Use when you have regression model output and need to reason carefully about what it does and does not tell you.",
       "tags": [
         "statistics",
@@ -1937,13 +1781,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.interview-synthesis",
+      "key": "frame.interview-synthesis",
       "aliases": [
-        "snippet.interview-synthesis"
+        "core.interview-synthesis"
       ],
-      "title": "Interview Synthesis",
+      "title": "frame.interview-synthesis",
       "summary": "Use when you have conducted multiple qualitative interviews or conversations and need to extract patterns, not just quotes.",
       "tags": [
         "research",
@@ -1959,13 +1803,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.metric-design",
+      "key": "frame.metric-design",
       "aliases": [
-        "snippet.metric-design"
+        "core.metric-design"
       ],
-      "title": "Metric Design",
+      "title": "frame.metric-design",
       "summary": "Use when you need to design a measure for an abstract concept — product quality, team health, customer satisfaction, or any outcome that is not directly observable.",
       "tags": [
         "statistics",
@@ -1981,13 +1825,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.milestone-design",
+      "key": "frame.milestone-design",
       "aliases": [
-        "snippet.milestone-design"
+        "core.milestone-design"
       ],
-      "title": "Milestone Design",
+      "title": "frame.milestone-design",
       "summary": "Use when you need to define meaningful checkpoints for a plan or project — ones that test real progress, not just activity.",
       "tags": [
         "planning",
@@ -2003,13 +1847,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.onboarding-audit",
+      "key": "frame.onboarding-audit",
       "aliases": [
-        "snippet.onboarding-audit"
+        "core.onboarding-audit"
       ],
-      "title": "Onboarding Audit",
+      "title": "frame.onboarding-audit",
       "summary": "Use when you need to assess how easy it is to get productive in a codebase, or to design a better onboarding experience.",
       "tags": [
         "software engineering",
@@ -2025,13 +1869,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.performance-analysis",
+      "key": "frame.performance-analysis",
       "aliases": [
-        "snippet.performance-analysis"
+        "core.performance-analysis"
       ],
-      "title": "Performance Analysis",
+      "title": "frame.performance-analysis",
       "summary": "Use when a system is slow, resource-hungry, or failing under load, and you need to reason systematically about the cause before optimising.",
       "tags": [
         "software engineering",
@@ -2047,13 +1891,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "guardrail",
       "sourceKind": "Snippet",
-      "key": "core.persuasion-audit",
+      "key": "guardrail.persuasion-audit",
       "aliases": [
-        "snippet.persuasion-audit"
+        "core.persuasion-audit"
       ],
-      "title": "Persuasion Audit",
+      "title": "guardrail.persuasion-audit",
       "summary": "Use when you need to assess how persuasive a piece of writing is and identify where it loses the reader.",
       "tags": [
         "writing",
@@ -2069,13 +1913,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.prompt-chain-design",
+      "key": "frame.prompt-chain-design",
       "aliases": [
-        "snippet.prompt-chain-design"
+        "core.prompt-chain-design"
       ],
-      "title": "Prompt Chain Design",
+      "title": "frame.prompt-chain-design",
       "summary": "Use when you need to design a multi-step AI workflow for a complex task that a single prompt cannot handle reliably.",
       "tags": [
         "prompt engineering",
@@ -2091,13 +1935,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.prompt-decompose",
+      "key": "frame.prompt-decompose",
       "aliases": [
-        "snippet.prompt-decompose"
+        "core.prompt-decompose"
       ],
-      "title": "Prompt Decompose",
+      "title": "frame.prompt-decompose",
       "summary": "Use when you want to understand why a prompt is not working or how to improve its structure before rewriting it.",
       "tags": [
         "prompt engineering",
@@ -2113,13 +1957,13 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
-      "blockType": "snippet",
+      "blockType": "frame",
       "sourceKind": "Snippet",
-      "key": "core.security-review",
+      "key": "frame.security-review",
       "aliases": [
-        "snippet.security-review"
+        "core.security-review"
       ],
-      "title": "Security Review",
+      "title": "frame.security-review",
       "summary": "Use when you need to identify security vulnerabilities in code, a design, or a technical proposal before shipping.",
       "tags": [
         "security",
@@ -2705,13 +2549,15 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.decision-quality",
-      "aliases": [],
-      "title": "Decision Quality",
+      "aliases": [
+        "rubric.decision-quality"
+      ],
+      "title": "rubric.decision-quality",
       "summary": "Use this checklist after a decision draft.",
       "tags": [
-        "decision theory",
-        "quality assurance",
-        "critical thinking"
+        "rubric",
+        "decision",
+        "quality"
       ],
       "copy": "",
       "body": [
@@ -2729,13 +2575,15 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.argument-quality",
-      "aliases": [],
-      "title": "Argument Quality",
+      "aliases": [
+        "rubric.argument-quality"
+      ],
+      "title": "rubric.argument-quality",
       "summary": "Use this checklist after drafting or critiquing an argument.",
       "tags": [
-        "logic",
-        "argumentation",
-        "critical thinking"
+        "rubric",
+        "argument",
+        "quality"
       ],
       "copy": "",
       "body": [
@@ -2753,12 +2601,13 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.strategy-quality",
-      "aliases": [],
-      "title": "Strategy Quality",
+      "aliases": [
+        "rubric.strategy-quality"
+      ],
+      "title": "rubric.strategy-quality",
       "summary": "Use this checklist after drafting a strategy or strategic recommendation.",
       "tags": [
-        "strategic thinking",
-        "critical thinking",
+        "rubric",
         "quality"
       ],
       "copy": "",
@@ -2777,13 +2626,15 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.plan-quality",
-      "aliases": [],
-      "title": "Plan Quality",
+      "aliases": [
+        "rubric.plan-quality"
+      ],
+      "title": "rubric.plan-quality",
       "summary": "Use this checklist after a plan.",
       "tags": [
-        "planning",
-        "execution readiness",
-        "quality assurance"
+        "rubric",
+        "plan",
+        "quality"
       ],
       "copy": "",
       "body": [
@@ -2801,14 +2652,15 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.research-quality",
-      "aliases": [],
-      "title": "Research Quality",
+      "aliases": [
+        "rubric.research-quality"
+      ],
+      "title": "rubric.research-quality",
       "summary": "Use this checklist after completing an investigation or research pass.",
       "tags": [
-        "research methodology",
-        "epistemic quality",
-        "evidence evaluation",
-        "critical thinking"
+        "rubric",
+        "research",
+        "quality"
       ],
       "copy": "",
       "body": [
@@ -2826,13 +2678,15 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.writing-quality",
-      "aliases": [],
-      "title": "Writing Quality",
+      "aliases": [
+        "rubric.writing-quality"
+      ],
+      "title": "rubric.writing-quality",
       "summary": "Use this checklist after drafting or rewriting.",
       "tags": [
-        "writing craft",
-        "editing",
-        "communication"
+        "rubric",
+        "writing",
+        "quality"
       ],
       "copy": "",
       "body": [
@@ -2850,13 +2704,15 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.reflection-quality",
-      "aliases": [],
-      "title": "Reflection Quality",
+      "aliases": [
+        "rubric.reflection-quality"
+      ],
+      "title": "rubric.reflection-quality",
       "summary": "Use this checklist after a review or retrospective.",
       "tags": [
+        "rubric",
         "reflection",
-        "personal effectiveness",
-        "epistemics"
+        "quality"
       ],
       "copy": "",
       "body": [
@@ -2874,13 +2730,14 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "sourceKind": "Rubric",
       "key": "rubric.prompt-quality",
-      "aliases": [],
-      "title": "Prompt Quality",
+      "aliases": [
+        "rubric.prompt-quality"
+      ],
+      "title": "rubric.prompt-quality",
       "summary": "Use this checklist after drafting or revising a prompt.",
       "tags": [
-        "prompt engineering",
-        "quality assurance",
-        "evaluation"
+        "rubric",
+        "quality"
       ],
       "copy": "",
       "body": [
@@ -2913,7 +2770,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.guardrail.uncertainty`"
+          "`mode.critique` -> `guardrail.uncertainty`"
         ],
         [
           "Expected outcome",
@@ -2940,7 +2797,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.brainstorm-angles`"
+          "`mode.explore` -> `frame.brainstorm-angles`"
         ],
         [
           "Expected outcome",
@@ -2967,7 +2824,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.clarify-task` -> `core.frame.success-criteria`"
+          "`mode.explore` -> `frame.clarify-task` -> `frame.success-criteria`"
         ],
         [
           "Expected outcome",
@@ -2994,7 +2851,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `core.extract-insights` -> `core.plan-next-actions`"
+          "`mode.reflect` -> `frame.extract-insights` -> `schema.plan-next-actions`"
         ],
         [
           "Expected outcome",
@@ -3021,7 +2878,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.argument-structure` -> `lens.confidence-calibration`"
+          "`mode.critique` -> `frame.argument-structure` -> `lens.confidence-calibration`"
         ],
         [
           "Expected outcome",
@@ -3048,7 +2905,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.clarify-task` -> `core.scope.frame`"
+          "`mode.explore` -> `frame.clarify-task` -> `frame.scope`"
         ],
         [
           "Expected outcome",
@@ -3075,7 +2932,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.clarify-task` -> `core.frame.success-criteria`"
+          "`mode.explore` -> `frame.clarify-task` -> `frame.success-criteria`"
         ],
         [
           "Expected outcome",
@@ -3101,7 +2958,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.assumption.audit`"
+          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit`"
         ],
         [
           "Expected outcome",
@@ -3128,7 +2985,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.cause-mapping` -> `lens.incentive-audit`"
+          "`mode.explore` -> `frame.cause-mapping` -> `lens.incentive-audit`"
         ],
         [
           "Expected outcome",
@@ -3155,7 +3012,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.frame.task` -> `strategy.problem_split` -> `core.scope.frame` -> `core.guardrail.uncertainty`"
+          "`mode.explore` -> `frame.task` -> `strategy.problem_split` -> `frame.scope` -> `guardrail.uncertainty`"
         ],
         [
           "Expected outcome",
@@ -3183,7 +3040,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.define-success-metrics` -> `core.design-cheap-test` -> `rubric.plan-quality`"
+          "`mode.decide` -> `frame.success-criteria` -> `frame.define-success-metrics` -> `frame.design-cheap-test` -> `rubric.plan-quality`"
         ],
         [
           "Expected outcome",
@@ -3211,7 +3068,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.reframe-the-problem` -> `core.analogical-reasoning` -> `core.generate-options`"
+          "`mode.explore` -> `strategy.reframe-the-problem` -> `strategy.analogical-reasoning` -> `frame.generate-options`"
         ],
         [
           "Expected outcome",
@@ -3238,7 +3095,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.scenario-planning` -> `core.second-order-effects` -> `core.guardrail.uncertainty`"
+          "`mode.explore` -> `frame.scenario-planning` -> `frame.second-order-effects` -> `guardrail.uncertainty`"
         ],
         [
           "Expected outcome",
@@ -3266,7 +3123,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `lens.ethical-tradeoffs` -> `core.second-order-effects` -> `core.guardrail.disconfirming-evidence`"
+          "`mode.critique` -> `lens.ethical-tradeoffs` -> `frame.second-order-effects` -> `guardrail.disconfirming-evidence`"
         ],
         [
           "Expected outcome",
@@ -3294,7 +3151,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.stakeholder-map` -> `lens.signaling-check` -> `core.communication-brief`"
+          "`mode.decide` -> `frame.stakeholder-map` -> `lens.signaling-check` -> `schema.communication-brief`"
         ],
         [
           "Expected outcome",
@@ -3321,7 +3178,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.explore-exploit-decision` -> `core.guardrail.uncertainty` -> `core.schema.execution-brief`"
+          "`mode.decide` -> `frame.success-criteria` -> `frame.explore-exploit-decision` -> `guardrail.uncertainty` -> `schema.execution-brief`"
         ],
         [
           "Expected outcome",
@@ -3348,7 +3205,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.design-cheap-test` -> `core.schema.execution-brief` -> `core.guardrail.uncertainty`"
+          "`mode.decide` -> `frame.success-criteria` -> `frame.design-cheap-test` -> `schema.execution-brief` -> `guardrail.uncertainty`"
         ],
         [
           "Expected outcome",
@@ -3375,7 +3232,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `strategy.premortem` -> `strategy.red_team` -> `core.assumption.audit` -> `core.stress-test-assumptions`"
+          "`mode.critique` -> `strategy.premortem` -> `strategy.red_team` -> `guardrail.assumption-audit` -> `guardrail.stress-test-assumptions`"
         ],
         [
           "Expected outcome",
@@ -3402,7 +3259,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.prioritize-opportunities` -> `core.schema.execution-brief` -> `core.guardrail.uncertainty`"
+          "`mode.decide` -> `frame.success-criteria` -> `frame.prioritize-opportunities` -> `schema.execution-brief` -> `guardrail.uncertainty`"
         ],
         [
           "Expected outcome",
@@ -3429,7 +3286,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.code-review` -> `core.change-impact-review` -> `lens.invariant-check` -> `lens.interface-contract-review`"
+          "`mode.critique` -> `frame.code-review` -> `guardrail.change-impact-review` -> `lens.invariant-check` -> `lens.interface-contract-review`"
         ],
         [
           "Expected outcome",
@@ -3456,7 +3313,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `core.plan-next-actions`"
+          "`mode.critique` -> `frame.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `schema.plan-next-actions`"
         ],
         [
           "Expected outcome",
@@ -3483,7 +3340,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.hypothesis-generation` -> `lens.debugger-loop` -> `lens.failure-mode-analysis` -> `core.cause-mapping`"
+          "`mode.explore` -> `frame.hypothesis-generation` -> `lens.debugger-loop` -> `lens.failure-mode-analysis` -> `frame.cause-mapping`"
         ],
         [
           "Expected outcome",
@@ -3510,7 +3367,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.statistical-significance-check` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `core.guardrail.disconfirming-evidence`"
+          "`mode.critique` -> `guardrail.statistical-significance-check` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `guardrail.disconfirming-evidence`"
         ],
         [
           "Expected outcome",
@@ -3565,7 +3422,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.summarize-source` -> `core.extract-insights` -> `core.research-questions` -> `core.plan-next-actions`"
+          "`mode.explore` -> `frame.summarize-source` -> `frame.extract-insights` -> `frame.research-questions` -> `schema.plan-next-actions`"
         ],
         [
           "Expected outcome",
@@ -3593,7 +3450,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `core.summarize-source` -> `core.extract-insights` -> `core.second-order-effects` -> `core.research-questions`"
+          "`mode.reflect` -> `frame.summarize-source` -> `frame.extract-insights` -> `frame.second-order-effects` -> `frame.research-questions`"
         ],
         [
           "Expected outcome",
@@ -3621,7 +3478,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `core.cause-mapping` -> `core.extract-insights` -> `core.plan-next-actions` -> `rubric.reflection-quality`"
+          "`mode.reflect` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.plan-next-actions` -> `rubric.reflection-quality`"
         ],
         [
           "Expected outcome",
@@ -3649,7 +3506,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.stakeholder-map` -> `core.negotiation-prep` -> `lens.incentive-audit` -> `lens.signaling-check`"
+          "`mode.decide` -> `frame.stakeholder-map` -> `frame.negotiation-prep` -> `lens.incentive-audit` -> `lens.signaling-check`"
         ],
         [
           "Expected outcome",
@@ -3676,7 +3533,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.brief-to-draft` -> `mode.critique` -> `core.critique-argument` -> `core.rewrite-for-clarity` -> `rubric.writing-quality`"
+          "`frame.brief-to-draft` -> `mode.critique` -> `frame.critique-argument` -> `frame.rewrite-for-clarity` -> `rubric.writing-quality`"
         ],
         [
           "Expected outcome",
@@ -3703,7 +3560,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `core.weekly-review` -> `core.cause-mapping` for key failures -> `core.decision-journal-entry` for any major decision worth revisiting -> `rubric.reflection-quality`"
+          "`mode.reflect` -> `frame.weekly-review` -> `frame.cause-mapping` for key failures -> `schema.decision-journal-entry` for any major decision worth revisiting -> `rubric.reflection-quality`"
         ],
         [
           "Expected outcome",
@@ -3730,7 +3587,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.requirements-decomposition` -> `core.frame.success-criteria` -> `core.test-strategy` -> `lens.failure-mode-analysis` -> `core.release-readiness` -> `core.rollout-plan` -> `rubric.plan-quality`"
+          "`mode.decide` -> `frame.requirements-decomposition` -> `frame.success-criteria` -> `frame.test-strategy` -> `lens.failure-mode-analysis` -> `guardrail.release-readiness` -> `schema.rollout-plan` -> `rubric.plan-quality`"
         ],
         [
           "Expected outcome",
@@ -3757,7 +3614,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.frame.success-criteria` -> `core.compare-options` -> `core.assumption.audit` -> `core.guardrail.disconfirming-evidence` -> `core.schema.decision-memo` -> `rubric.decision-quality`"
+          "`mode.decide` -> `frame.success-criteria` -> `frame.compare-options` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `schema.decision-memo` -> `rubric.decision-quality`"
         ],
         [
           "Expected outcome",
@@ -3784,7 +3641,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.frame.success-criteria` -> `lens.jobs-to-be-done` -> `lens.user-mental-model` -> `lens.constraint-mapping` -> `core.generate-options` -> `core.design-cheap-test` -> `rubric.plan-quality`"
+          "`mode.explore` -> `frame.success-criteria` -> `lens.jobs-to-be-done` -> `lens.user-mental-model` -> `lens.constraint-mapping` -> `frame.generate-options` -> `frame.design-cheap-test` -> `rubric.plan-quality`"
         ],
         [
           "Expected outcome",
@@ -3811,7 +3668,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.hypothesis-generation` -> `core.summarize-source` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `core.synthesize-sources` -> `core.extract-insights` -> `rubric.research-quality`"
+          "`mode.explore` -> `frame.hypothesis-generation` -> `frame.summarize-source` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `frame.synthesize-sources` -> `frame.extract-insights` -> `rubric.research-quality`"
         ],
         [
           "Expected outcome",
@@ -3838,7 +3695,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.stakeholder-map` -> `lens.coordination-plan` -> `lens.signaling-check` -> `core.alignment-conversation-plan` -> `core.schema.execution-brief`"
+          "`mode.explore` -> `frame.stakeholder-map` -> `lens.coordination-plan` -> `lens.signaling-check` -> `frame.alignment-conversation-plan` -> `schema.execution-brief`"
         ],
         [
           "Expected outcome",
@@ -3865,7 +3722,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.clarify-task` -> `core.prompt-critique` -> `core.prompt-rewrite` -> `core.prompt-compare` -> `rubric.prompt-quality`"
+          "`mode.critique` -> `frame.clarify-task` -> `frame.prompt-critique` -> `frame.prompt-rewrite` -> `frame.prompt-compare` -> `rubric.prompt-quality`"
         ],
         [
           "Expected outcome",
@@ -3892,7 +3749,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.generate-options` -> `core.brainstorm-angles` -> `core.frame.success-criteria` -> `mode.decide` -> `core.compare-options` -> `core.choose-under-uncertainty` -> `core.schema.decision-memo`"
+          "`mode.explore` -> `frame.generate-options` -> `frame.brainstorm-angles` -> `frame.success-criteria` -> `mode.decide` -> `frame.compare-options` -> `frame.choose-under-uncertainty` -> `schema.decision-memo`"
         ],
         [
           "Expected outcome",
@@ -3920,7 +3777,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.clarify-task` -> `core.requirements-decomposition` -> `core.prompt-chain-design` -> `core.test-strategy` -> `core.rollout-plan`"
+          "`frame.clarify-task` -> `frame.requirements-decomposition` -> `frame.prompt-chain-design` -> `frame.test-strategy` -> `schema.rollout-plan`"
         ],
         [
           "Expected outcome",
@@ -3933,7 +3790,7 @@ globalThis.SITE_DATA = {
       "section": "Stack",
       "key": "stack.break-a-recurring-incident",
       "title": "Break a Recurring Incident",
-      "family": "",
+      "family": "Software Engineering",
       "summary": "Use when the same class of incident keeps resurfacing and the root problem is likely socio-technical, not just a single buggy line of code.",
       "tags": [
         "software engineering",
@@ -3948,7 +3805,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `core.incident-postmortem` -> `lens.feedback-loops` -> `lens.incentive-audit` -> `core.plan-next-actions`"
+          "`mode.reflect` -> `schema.incident-postmortem` -> `lens.feedback-loops` -> `lens.incentive-audit` -> `schema.plan-next-actions`"
         ],
         [
           "Expected outcome",
@@ -3976,7 +3833,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.clarify-task` -> `lens.jobs-to-be-done` -> `core.prompt-chain-design` -> `core.prompt-decompose` -> `core.prompt-rewrite`"
+          "`frame.clarify-task` -> `lens.jobs-to-be-done` -> `frame.prompt-chain-design` -> `frame.prompt-decompose` -> `frame.prompt-rewrite`"
         ],
         [
           "Expected outcome",
@@ -4004,7 +3861,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.correlation-vs-causation` -> `core.research-questions` -> `lens.base-rate-check` -> `core.experiment-design` -> `core.stress-test-assumptions`"
+          "`guardrail.correlation-vs-causation` -> `frame.research-questions` -> `lens.base-rate-check` -> `frame.experiment-design` -> `guardrail.stress-test-assumptions`"
         ],
         [
           "Expected outcome",
@@ -4032,7 +3889,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.interpret-regression` -> `core.extract-insights` -> `lens.survivorship-bias` -> `core.executive-summary` -> `core.rewrite-for-clarity`"
+          "`frame.interpret-regression` -> `frame.extract-insights` -> `lens.survivorship-bias` -> `schema.executive-summary` -> `frame.rewrite-for-clarity`"
         ],
         [
           "Expected outcome",
@@ -4060,7 +3917,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.triage-the-unknown` -> `core.stress-test-assumptions` -> `core.second-order-effects` -> `core.extract-insights`"
+          "`guardrail.triage-the-unknown` -> `guardrail.stress-test-assumptions` -> `frame.second-order-effects` -> `frame.extract-insights`"
         ],
         [
           "Expected outcome",
@@ -4088,7 +3945,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.blind-spot-check` -> `core.feedback-request` -> `core.critique-argument` -> `core.rewrite-for-clarity`"
+          "`guardrail.blind-spot-check` -> `frame.feedback-request` -> `frame.critique-argument` -> `frame.rewrite-for-clarity`"
         ],
         [
           "Expected outcome",
@@ -4116,7 +3973,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.research-questions` -> `core.metric-design` -> `core.experiment-design` -> `core.data-quality-check` -> `lens.sample-design`"
+          "`frame.research-questions` -> `frame.metric-design` -> `frame.experiment-design` -> `guardrail.data-quality-check` -> `lens.sample-design`"
         ],
         [
           "Expected outcome",
@@ -4144,7 +4001,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.research-questions` -> `core.synthesize-sources` -> `core.argument-structure` -> `core.position-draft` -> `core.critique-argument`"
+          "`frame.research-questions` -> `frame.synthesize-sources` -> `frame.argument-structure` -> `frame.position-draft` -> `frame.critique-argument`"
         ],
         [
           "Expected outcome",
@@ -4172,7 +4029,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.prompt-decompose` -> `core.blind-spot-check` -> `core.prompt-critique` -> `core.extract-insights` -> `core.prompt-compare`"
+          "`frame.prompt-decompose` -> `guardrail.blind-spot-check` -> `frame.prompt-critique` -> `frame.extract-insights` -> `frame.prompt-compare`"
         ],
         [
           "Expected outcome",
@@ -4200,7 +4057,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.synthesize-sources` -> `core.extract-insights` -> `lens.base-rate-check` -> `core.stress-test-assumptions` -> `core.choose-under-uncertainty`"
+          "`frame.synthesize-sources` -> `frame.extract-insights` -> `lens.base-rate-check` -> `guardrail.stress-test-assumptions` -> `frame.choose-under-uncertainty`"
         ],
         [
           "Expected outcome",
@@ -4228,7 +4085,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.clarify-task` -> `core.requirements-decomposition` -> `core.define-success-metrics` -> `core.api-design` -> `lens.failure-mode-analysis` -> `core.test-strategy`"
+          "`frame.clarify-task` -> `frame.requirements-decomposition` -> `frame.define-success-metrics` -> `frame.api-design` -> `lens.failure-mode-analysis` -> `frame.test-strategy`"
         ],
         [
           "Expected outcome",
@@ -4256,7 +4113,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.clarify-task` -> `core.forecast` -> `lens.base-rate-check` -> `core.scenario-planning` -> `core.choose-under-uncertainty`"
+          "`frame.clarify-task` -> `frame.forecast` -> `lens.base-rate-check` -> `frame.scenario-planning` -> `frame.choose-under-uncertainty`"
         ],
         [
           "Expected outcome",
@@ -4284,7 +4141,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.hypothesis-generation` -> `core.experiment-design` -> `core.test-strategy` -> `core.statistical-significance-check` -> `core.extract-insights`"
+          "`frame.hypothesis-generation` -> `frame.experiment-design` -> `frame.test-strategy` -> `guardrail.statistical-significance-check` -> `frame.extract-insights`"
         ],
         [
           "Expected outcome",
@@ -4312,7 +4169,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.triage-the-unknown` -> `core.log-triage` -> `core.cause-mapping` -> `core.incident-postmortem` -> `core.plan-next-actions`"
+          "`guardrail.triage-the-unknown` -> `frame.log-triage` -> `frame.cause-mapping` -> `schema.incident-postmortem` -> `schema.plan-next-actions`"
         ],
         [
           "Expected outcome",
@@ -4340,7 +4197,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.define-success-metrics` -> `core.metric-design` -> `lens.survivorship-bias` -> `core.statistical-significance-check` -> `core.correlation-vs-causation` -> `core.extract-insights`"
+          "`frame.define-success-metrics` -> `frame.metric-design` -> `lens.survivorship-bias` -> `guardrail.statistical-significance-check` -> `guardrail.correlation-vs-causation` -> `frame.extract-insights`"
         ],
         [
           "Expected outcome",
@@ -4368,7 +4225,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.triage-the-unknown` -> `core.codepath-walkthrough` -> `lens.debugger-loop` -> `core.performance-analysis` -> `core.refactor-plan`"
+          "`guardrail.triage-the-unknown` -> `frame.codepath-walkthrough` -> `lens.debugger-loop` -> `frame.performance-analysis` -> `frame.refactor-plan`"
         ],
         [
           "Expected outcome",
@@ -4396,7 +4253,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.dependency-map` -> `core.risk-register` -> `core.prioritize-opportunities` -> `core.compare-options` -> `core.rollout-plan`"
+          "`frame.dependency-map` -> `frame.risk-register` -> `frame.prioritize-opportunities` -> `frame.compare-options` -> `schema.rollout-plan`"
         ],
         [
           "Expected outcome",
@@ -4424,7 +4281,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.blind-spot-check` -> `core.cause-mapping` -> `core.extract-insights` -> `core.decision-journal-entry` -> `core.plan-next-actions`"
+          "`guardrail.blind-spot-check` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.decision-journal-entry` -> `schema.plan-next-actions`"
         ],
         [
           "Expected outcome",
@@ -4452,7 +4309,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.clarify-task` -> `core.prompt-decompose` -> `core.prompt-critique` -> `core.prompt-rewrite` -> `core.prompt-compare`"
+          "`frame.clarify-task` -> `frame.prompt-decompose` -> `frame.prompt-critique` -> `frame.prompt-rewrite` -> `frame.prompt-compare`"
         ],
         [
           "Expected outcome",
@@ -4465,7 +4322,7 @@ globalThis.SITE_DATA = {
       "section": "Stack",
       "key": "stack.read-before-change",
       "title": "Read Before Change",
-      "family": "",
+      "family": "Software Engineering",
       "summary": "Use when you need to modify unfamiliar code and want to understand the safest place to intervene before making edits.",
       "tags": [
         "software engineering",
@@ -4480,7 +4337,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `core.codepath-walkthrough` -> `lens.invariant-check` -> `lens.interface-contract-review` -> `core.change-impact-review` -> `core.test-case-design`"
+          "`mode.explore` -> `frame.codepath-walkthrough` -> `lens.invariant-check` -> `lens.interface-contract-review` -> `guardrail.change-impact-review` -> `frame.test-case-design`"
         ],
         [
           "Expected outcome",
@@ -4508,7 +4365,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.risk-register` -> `core.second-order-effects` -> `core.stress-test-assumptions` -> `core.scenario-planning` -> `core.choose-under-uncertainty`"
+          "`frame.risk-register` -> `frame.second-order-effects` -> `guardrail.stress-test-assumptions` -> `frame.scenario-planning` -> `frame.choose-under-uncertainty`"
         ],
         [
           "Expected outcome",
@@ -4521,7 +4378,7 @@ globalThis.SITE_DATA = {
       "section": "Stack",
       "key": "stack.safe-migration",
       "title": "Safe Migration",
-      "family": "",
+      "family": "Software Engineering",
       "summary": "Use when a schema, API, config, or state model needs to change in production without downtime, corruption, or one-way mistakes.",
       "tags": [
         "software engineering",
@@ -4536,7 +4393,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `core.codepath-walkthrough` -> `core.migration-plan` -> `lens.abstraction-boundary` -> `lens.failure-mode-analysis` -> `core.release-readiness` -> `core.rollout-plan`"
+          "`mode.decide` -> `frame.codepath-walkthrough` -> `frame.migration-plan` -> `lens.abstraction-boundary` -> `lens.failure-mode-analysis` -> `guardrail.release-readiness` -> `schema.rollout-plan`"
         ],
         [
           "Expected outcome",
@@ -4564,7 +4421,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.security-review` -> `lens.failure-mode-analysis` -> `core.risk-register` -> `core.stress-test-assumptions`"
+          "`mode.critique` -> `frame.security-review` -> `lens.failure-mode-analysis` -> `frame.risk-register` -> `guardrail.stress-test-assumptions`"
         ],
         [
           "Expected outcome",
@@ -4592,7 +4449,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.process-audit` -> `lens.complexity-tradeoff` -> `core.risk-register` -> `core.prioritize-opportunities` -> `core.refactor-plan`"
+          "`frame.process-audit` -> `lens.complexity-tradeoff` -> `frame.risk-register` -> `frame.prioritize-opportunities` -> `frame.refactor-plan`"
         ],
         [
           "Expected outcome",
@@ -4605,7 +4462,7 @@ globalThis.SITE_DATA = {
       "section": "Stack",
       "key": "stack.trace-to-fix",
       "title": "Trace To Fix",
-      "family": "",
+      "family": "Software Engineering",
       "summary": "Use when you have logs, traces, or a production symptom and need to move from noisy signals to a high-confidence fix path.",
       "tags": [
         "software engineering",
@@ -4620,7 +4477,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `core.triage-the-unknown` -> `core.log-triage` -> `core.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `core.change-impact-review`"
+          "`mode.critique` -> `guardrail.triage-the-unknown` -> `frame.log-triage` -> `frame.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `guardrail.change-impact-review`"
         ],
         [
           "Expected outcome",
@@ -4648,7 +4505,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`core.clarify-task` -> `core.define-success-metrics` -> `core.dependency-map` -> `core.risk-register` -> `core.executive-summary` -> `core.persuasion-audit`"
+          "`frame.clarify-task` -> `frame.define-success-metrics` -> `frame.dependency-map` -> `frame.risk-register` -> `schema.executive-summary` -> `guardrail.persuasion-audit`"
         ],
         [
           "Expected outcome",

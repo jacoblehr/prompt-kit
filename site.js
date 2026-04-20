@@ -9,14 +9,14 @@ const {
   stacks = []
 } = siteData;
 
-const BLOCK_TYPE_ORDER = ["mode", "strategy", "core", "snippet", "lens", "rubric"];
+const BLOCK_TYPE_ORDER = ["frame", "mode", "strategy", "lens", "guardrail", "schema", "rubric"];
 const BLOCK_TYPE_LABELS = {
+  frame: "Frame",
   mode: "Mode",
   strategy: "Strategy",
-  core: "Core",
-  snippet: "Snippet",
   lens: "Lens",
-  style: "Style",
+  guardrail: "Guardrail",
+  schema: "Schema",
   rubric: "Rubric"
 };
 
@@ -44,12 +44,12 @@ function blockTypeLabel(blockType = "") {
 }
 
 const BLOCK_TYPE_DESCRIPTIONS = {
+  frame: "Task-defining blocks that set the problem, scope, objective, or approach before reasoning begins.",
   mode: "Stance-setting blocks that define how the model should approach the session.",
-  strategy: "Reasoning-mechanic blocks that introduce a specific analytical move.",
-  core: "Compact structural blocks — frames, guardrails, schemas, and output specifications.",
-  snippet: "Full-task prompts for thinking, analysis, writing, planning, engineering, and research.",
+  strategy: "Reasoning-mechanic blocks that introduce a specific analytical method or move.",
   lens: "Perspective blocks that reframe a situation through a discipline, model, or framework.",
-  style: "Tone, verbosity, and formatting blocks.",
+  guardrail: "Validation blocks that prevent common failure modes and reasoning errors.",
+  schema: "Output-shaping blocks that define the structure and format of the response.",
   rubric: "Evaluation blocks for checking whether the result is actually good enough."
 };
 
@@ -95,8 +95,9 @@ const builderState = (() => {
     const legacyMap = {
       Mode: { section: "Block", blockType: "mode", sourceKind: "Mode" },
       Strategy: { section: "Block", blockType: "strategy", sourceKind: "Strategy" },
-      Atom: { section: "Block", blockType: "core", sourceKind: "Prompt Block" },
-      Snippet: { section: "Block", blockType: "core", sourceKind: "Snippet" },
+      Atom: { section: "Block", blockType: "frame", sourceKind: "Prompt Block" },
+      Snippet: { section: "Block", blockType: "frame", sourceKind: "Snippet" },
+      Core: { section: "Block", blockType: "frame", sourceKind: "Prompt Block" },
       Lens: { section: "Block", blockType: "lens", sourceKind: "Lens" },
       Rubric: { section: "Block", blockType: "rubric", sourceKind: "Rubric" }
     };
@@ -260,10 +261,6 @@ const itemRegistry = (() => {
   blocks.forEach((item) => {
     registerRef(map, item.key, item);
     (item.aliases || []).forEach((alias) => registerRef(map, alias, item));
-    if (item.key && item.key.startsWith("core.")) {
-      const suffix = item.key.slice(5);
-      registerRef(map, `core.${suffix.replace(/\./g, "-")}`, item);
-    }
     registerRef(map, `${slugify(item.section)}.${slugify(item.title)}`, item);
   });
   return map;
@@ -957,7 +954,8 @@ function renderFilterChips() {
   });
 }
 
-const SNIPPET_FAMILY_ORDER = [
+const FRAME_FAMILY_ORDER = [
+  "Core",
   "Thinking & Framing",
   "Deciding & Prioritising",
   "Planning & Execution",
@@ -1027,8 +1025,8 @@ function renderGroupedBlocks() {
       `;
       section.appendChild(head);
 
-      if (type === "snippet") {
-        renderSubGroups(section, items, (i) => i.family || "Other", SNIPPET_FAMILY_ORDER);
+      if (type === "frame") {
+        renderSubGroups(section, items, (i) => i.family || "Other", FRAME_FAMILY_ORDER);
       } else if (type === "lens") {
         renderSubGroups(section, items, (i) => i.group || "Other", LENS_GROUP_ORDER);
       } else {
