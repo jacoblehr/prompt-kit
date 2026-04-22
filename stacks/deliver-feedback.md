@@ -32,7 +32,7 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `frame.blind-spot-check`, `frame.critique-argument`
+**Minimum blocks:** `guardrail.blind-spot-check`, `frame.critique-argument`
 
 **Why this order works:** Blind-spot-check comes first because the quality of feedback depends on whether the giver's own biases have been named. Feedback-request then structures exactly what the recipient should focus on. Critique-argument provides the substantive evaluation surface. Rewrite-for-clarity is the final pass — feedback that is accurate but unclear or vague fails at the delivery stage.
 

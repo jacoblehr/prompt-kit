@@ -38,6 +38,6 @@ Domain tags:
 
 **Why this order works:** Prompt-decompose comes first because output quality cannot be evaluated without understanding what was actually asked. Blind-spot-check surfaces the evaluator's biases before assessment begins. Prompt-critique then evaluates the output against the decomposed prompt. Extract-insights separates genuine content from plausible-sounding but unsupported claims. Prompt-compare provides the calibration reference — how would a better prompt have changed the output?
 
-**Common swaps:** Swap `frame.prompt-compare` for `rubric.prompt-quality` when you want a checklist verdict rather than a comparative analysis. Skip `frame.blind-spot-check` for routine low-stakes output evaluation.
+**Common swaps:** Swap `frame.prompt-compare` for `rubric.prompt-quality` when you want a checklist verdict rather than a comparative analysis. Skip `guardrail.blind-spot-check` for routine low-stakes output evaluation.
 
 **Common failure mode:** Evaluating output without first understanding the prompt. Output from a weak prompt will be judged as the model's failure rather than a prompt engineering problem.

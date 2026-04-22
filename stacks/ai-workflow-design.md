@@ -38,6 +38,6 @@ Domain tags:
 
 **Why this order works:** Task clarity comes first because workflow design without a clear job creates elegant machinery for the wrong purpose. Requirements decomposition follows to surface what the workflow must handle independently. Prompt chain design then shapes the step sequence with handoff risks named. Test strategy closes the design phase — it is cheaper to name the highest-risk steps before build than after.
 
-**Common swaps:** Swap `frame.requirements-decomposition` for `strategy.problem-split` when the job is still tangled. Swap `frame.rollout-plan` for `frame.design-cheap-test` if you want a staged pilot rather than a full rollout plan.
+**Common swaps:** Swap `frame.requirements-decomposition` for `strategy.problem-split` when the job is still tangled. Swap `schema.rollout-plan` for `frame.design-cheap-test` if you want a staged pilot rather than a full rollout plan.
 
 **Common failure mode:** Designing the workflow before clarifying the job. Prompt chains built on a fuzzy task tend to fail at the seams, not the steps.

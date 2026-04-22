@@ -40,6 +40,6 @@ Domain tags:
 
 **Why this order works:** Decide mode commits to a migration strategy rather than exploring alternatives mid-migration. Codepath-walkthrough maps all read and write paths before the migration is designed — unexpected consumers cause the most migration failures. Migration-plan selects the strategy explicitly. Abstraction-boundary surfaces boundary leaks and hidden couplings. Failure-mode-analysis reviews partial-deploy and rollback risks. Release-readiness and rollout-plan close with a staged deployment and stop conditions.
 
-**Common swaps:** Swap `lens.abstraction-boundary` for `lens.interface-contract-review` when the migration involves API or protocol changes. Swap `frame.rollout-plan` for `frame.plan-next-actions` for smaller, lower-risk migrations.
+**Common swaps:** Swap `lens.abstraction-boundary` for `lens.interface-contract-review` when the migration involves API or protocol changes. Swap `schema.rollout-plan` for `schema.plan-next-actions` for smaller, lower-risk migrations.
 
 **Common failure mode:** Discovering consumers during the migration. Unmapped consumers cause mid-migration rollbacks that are more disruptive than the migration itself.

@@ -38,6 +38,6 @@ Domain tags:
 
 **Why this order works:** Dependencies before priorities — sequencing decisions that ignore dependencies produce plans that cannot execute in the proposed order. Risk-register adds the downside view: which items carry the most risk if deprioritized? Prioritize-opportunities evaluates against the actual goal. Compare-options provides the head-to-head comparison for the closest calls. Rollout-plan closes with explicit rationale for what was cut or deferred.
 
-**Common swaps:** Swap `frame.compare-options` for `schema.decision-memo` when a documented decision is needed. Swap `frame.rollout-plan` for `schema.execution-brief` for a shorter handoff document.
+**Common swaps:** Swap `frame.compare-options` for `schema.decision-memo` when a documented decision is needed. Swap `schema.rollout-plan` for `schema.execution-brief` for a shorter handoff document.
 
 **Common failure mode:** Prioritizing without mapping dependencies first. A priority list that ignores dependencies produces an execution order that looks logical but cannot actually run.

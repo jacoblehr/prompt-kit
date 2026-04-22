@@ -34,10 +34,10 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `frame.blind-spot-check`, `frame.cause-mapping`, `frame.extract-insights`
+**Minimum blocks:** `guardrail.blind-spot-check`, `frame.cause-mapping`, `frame.extract-insights`
 
 **Why this order works:** Blind-spot-check before cause-mapping prevents the retrospective from rationalizing outcomes through the lens of what was hoped for. Cause-mapping traces root causes rather than surface symptoms. Extract-insights distills the reusable lessons. Decision-journal-entry creates a permanent record of what was decided and why. Plan-next-actions closes with specific changes so the learning transfers.
 
-**Common swaps:** Swap `frame.cause-mapping` for `frame.incident-postmortem` when the project included a significant failure requiring formal documentation. Swap `rubric.reflection-quality` check (implicit) for explicit `rubric.reflection-quality` when the retrospective will be shared with stakeholders.
+**Common swaps:** Swap `frame.cause-mapping` for `schema.incident-postmortem` when the project included a significant failure requiring formal documentation. Swap `rubric.reflection-quality` check (implicit) for explicit `rubric.reflection-quality` when the retrospective will be shared with stakeholders.
 
 **Common failure mode:** Retrospectives that stop at events rather than causes. Describing what happened is not a retrospective — tracing why it happened and what should change is.

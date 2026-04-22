@@ -34,7 +34,7 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `frame.correlation-vs-causation`, `frame.research-questions`, `frame.experiment-design`
+**Minimum blocks:** `guardrail.correlation-vs-causation`, `frame.research-questions`, `frame.experiment-design`
 
 **Why this order works:** Correlation-vs-causation first surfaces the specific confounds and alternative explanations before any research is designed — otherwise you risk designing the wrong study. Research-questions sharpens the causal claim into something testable. Base-rate-check prevents overreaction to a finding that is unsurprising given prior knowledge. Experiment-design follows after the question is precise. Stress-test-assumptions closes by pressure-testing the bridge from experiment to causal conclusion.
 

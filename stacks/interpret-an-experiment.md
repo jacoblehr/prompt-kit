@@ -33,10 +33,10 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `mode.critique`, `frame.statistical-significance-check`, `guardrail.disconfirming-evidence`
+**Minimum blocks:** `mode.critique`, `guardrail.statistical-significance-check`, `guardrail.disconfirming-evidence`
 
 **Why this order works:** Critique mode sets the skeptical stance before any statistical interpretation. Significance-check distinguishes statistical from practical significance. Survivorship-bias surfaces selection effects in the sample. Base-rate-check prevents overreaction to a result that is unsurprising given prior evidence. Disconfirming-evidence guardrail closes by forcing the strongest reason not to act on the result.
 
-**Common swaps:** Swap `lens.survivorship-bias` for `frame.correlation-vs-causation` when the experiment was observational rather than controlled. Swap `guardrail.disconfirming-evidence` for `rubric.research-quality` when a formal quality assessment is needed.
+**Common swaps:** Swap `lens.survivorship-bias` for `guardrail.correlation-vs-causation` when the experiment was observational rather than controlled. Swap `guardrail.disconfirming-evidence` for `rubric.research-quality` when a formal quality assessment is needed.
 
 **Common failure mode:** Acting on statistical significance alone. A result can be statistically significant, practically irrelevant, and based on a biased sample simultaneously.

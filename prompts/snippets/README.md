@@ -2,13 +2,14 @@
 
 These are broader copy-paste prompts for common tasks.
 
-In the simplified taxonomy, they are still `core` blocks. They just happen to be bigger and more task-ready.
+In the surfaced taxonomy, they are still ordinary blocks.
+They just happen to be larger and more task-ready than the compact prompt blocks.
 
 Good pattern:
 
 - pick a mode block first
-- then choose one snippet-style core block
-- add a smaller core block only if the result needs more structure or guardrails
+- then choose one snippet block
+- add a smaller prompt block only if the result needs more structure or guardrails
 
 Core snippet families:
 

@@ -34,10 +34,10 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `frame.triage-the-unknown`, `frame.log-triage`, `frame.cause-mapping`
+**Minimum blocks:** `guardrail.triage-the-unknown`, `frame.log-triage`, `frame.cause-mapping`
 
 **Why this order works:** Triage-the-unknown clears confusion about what is actually happening before investigation begins — it is the fastest path to a shared understanding under pressure. Log-triage then separates symptoms from causes and identifies missing telemetry. Cause-mapping traces the causal chain from symptom to root cause. Incident-postmortem structures the full debrief. Plan-next-actions closes with owners and urgency for follow-through.
 
-**Common swaps:** Swap `frame.cause-mapping` for `frame.hypothesis-generation` when the failure has multiple plausible root causes that need to be distinguished before investigation. Swap `frame.incident-postmortem` for `frame.extract-insights` for a lighter debrief on smaller incidents.
+**Common swaps:** Swap `frame.cause-mapping` for `frame.hypothesis-generation` when the failure has multiple plausible root causes that need to be distinguished before investigation. Swap `schema.incident-postmortem` for `frame.extract-insights` for a lighter debrief on smaller incidents.
 
 **Common failure mode:** Jumping to fix before the failure is understood. The fastest path to a correct fix is a clear reproduction target and a confident root cause, not the first plausible intervention.

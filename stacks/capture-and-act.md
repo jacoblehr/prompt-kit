@@ -28,7 +28,7 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `mode.reflect`, `frame.extract-insights`, `frame.plan-next-actions`
+**Minimum blocks:** `mode.reflect`, `frame.extract-insights`, `schema.plan-next-actions`
 
 **Why this order works:** Reflect mode shifts from passive consumption to active extraction. Extract-insights follows immediately while the signal is fresh. Plan-next-actions closes the session with specific, actionable commitments so insight does not decay into vague intention.
 

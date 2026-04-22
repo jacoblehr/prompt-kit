@@ -32,7 +32,7 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `frame.stakeholder-map`, `frame.communication-brief`
+**Minimum blocks:** `frame.stakeholder-map`, `schema.communication-brief`
 
 **Why this order works:** Stakeholder mapping comes first because different audiences need different messages — a single announcement rarely lands with all of them. Signaling-check surfaces how the message will actually be read, not how it is intended. Communication-brief structures the sequencing and channel plan after the message is calibrated.
 

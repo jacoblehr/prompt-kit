@@ -32,7 +32,7 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `frame.triage-the-unknown`, `frame.stress-test-assumptions`
+**Minimum blocks:** `guardrail.triage-the-unknown`, `guardrail.stress-test-assumptions`
 
 **Why this order works:** Triage-the-unknown reconstructs what was actually knowable at decision time — this prevents hindsight bias from distorting the review. Stress-test-assumptions evaluates the premises that drove the choice. Second-order-effects maps consequences that were visible in principle but missed in practice. Extract-insights closes with lessons that apply to future decisions of a similar shape.
 

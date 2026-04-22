@@ -62,7 +62,7 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `strategy.premortem`
 - `strategy.red_team`
 - `guardrail.assumption-audit`
-- `frame.stress-test-assumptions`
+- `guardrail.stress-test-assumptions`
 
 ### Improving a prompt
 
@@ -97,7 +97,7 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 
 - `mode.reflect`
 - `frame.cause-mapping`
-- `frame.decision-journal-entry`
+- `schema.decision-journal-entry`
 - `frame.weekly-review`
 - `rubric.reflection-quality`
 
@@ -115,12 +115,12 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `frame.codepath-walkthrough`
 - `lens.invariant-check`
 - `lens.interface-contract-review`
-- `frame.change-impact-review`
+- `guardrail.change-impact-review`
 
 ### Debugging from logs
 
 - `mode.critique`
-- `frame.triage-the-unknown`
+- `guardrail.triage-the-unknown`
 - `frame.log-triage`
 - `frame.bug-reproduction-brief`
 - `lens.debugger-loop`

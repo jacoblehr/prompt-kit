@@ -36,10 +36,10 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `mode.critique`, `frame.triage-the-unknown`, `frame.bug-reproduction-brief`
+**Minimum blocks:** `mode.critique`, `guardrail.triage-the-unknown`, `frame.bug-reproduction-brief`
 
 **Why this order works:** Critique mode sets the skeptical stance before any log is read. Triage-the-unknown clears noise and confusion before deeper investigation. Log-triage separates symptoms from causes in the available telemetry. Bug-reproduction-brief converts the most likely hypothesis into a tight reproduction target. Debugger-loop provides the systematic isolation cycle. Interface-contract-review checks boundary failures. Change-impact-review scopes the fix safely.
 
-**Common swaps:** Swap `lens.debugger-loop` for `lens.failure-mode-analysis` when the failure is in an integration boundary rather than internal logic. Swap `frame.change-impact-review` for `frame.release-readiness` when the fix needs formal release gates.
+**Common swaps:** Swap `lens.debugger-loop` for `lens.failure-mode-analysis` when the failure is in an integration boundary rather than internal logic. Swap `guardrail.change-impact-review` for `guardrail.release-readiness` when the fix needs formal release gates.
 
 **Common failure mode:** Jumping to a fix before the failure is reproduced. Fixes without a reliable reproduction target often address symptoms rather than causes.

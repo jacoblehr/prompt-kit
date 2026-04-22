@@ -34,10 +34,10 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `frame.interpret-regression`, `frame.extract-insights`, `frame.executive-summary`
+**Minimum blocks:** `frame.interpret-regression`, `frame.extract-insights`, `schema.executive-summary`
 
 **Why this order works:** Statistical interpretation comes first to prevent narrative from outrunning the evidence. Extract-insights separates the real signal from noise. Survivorship-bias check guards against stories built on the visible data while ignoring what is absent. Executive summary drafts the narrative only after the evidence is accurately understood. Rewrite-for-clarity is the final pass to make the result accessible without losing accuracy.
 
-**Common swaps:** Swap `frame.interpret-regression` for `frame.statistical-significance-check` when the task is evaluating an experiment rather than interpreting a model. Swap `frame.executive-summary` for `frame.brief-to-draft` when the output is a longer document rather than a summary.
+**Common swaps:** Swap `frame.interpret-regression` for `guardrail.statistical-significance-check` when the task is evaluating an experiment rather than interpreting a model. Swap `schema.executive-summary` for `frame.brief-to-draft` when the output is a longer document rather than a summary.
 
 **Common failure mode:** Writing the narrative before interpreting the statistics. The most common error is building a story around a finding without checking whether the finding is statistically or practically significant.

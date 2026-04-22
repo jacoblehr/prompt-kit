@@ -38,6 +38,6 @@ Domain tags:
 
 **Why this order works:** Critique mode sets the defect-finding stance before investigation begins. Bug-reproduction-brief forces a precise failure target before any debugging steps — this is the single biggest lever for debugging efficiency. Debugger-loop then provides the iterative measurement structure. Interface-contract-review and invariant-check cover the categories of bugs most likely to cause the kind of failure being investigated. Plan-next-actions closes with a concrete fix path.
 
-**Common swaps:** Swap `lens.interface-contract-review` for `frame.change-impact-review` when a recent deployment is the suspected cause. Swap `lens.invariant-check` for `lens.failure-mode-analysis` when the failure is in an external integration.
+**Common swaps:** Swap `lens.interface-contract-review` for `guardrail.change-impact-review` when a recent deployment is the suspected cause. Swap `lens.invariant-check` for `lens.failure-mode-analysis` when the failure is in an external integration.
 
 **Common failure mode:** Skipping the reproduction brief and going directly to hypothesis. Without a reliable reproduction target, debugging devolves into random experiments that confirm or rule out nothing systematically.

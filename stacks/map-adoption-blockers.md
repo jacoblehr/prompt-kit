@@ -36,6 +36,6 @@ Domain tags:
 
 **Why this order works:** Explore mode opens the diagnosis before any intervention is considered. Cause-mapping traces the causal chain from the adoption gap back to its roots — surface friction, switching cost, and loop dynamics. Incentive-audit adds the behavioral layer: who benefits from the current arrangement and what would need to change for adoption to be worth switching to?
 
-**Common swaps:** Swap `lens.incentive-audit` for `lens.jobs-to-be-done` when the primary unknown is what job people are hiring their current solution to do. Add `frame.stress-test-assumptions` when existing beliefs about adoption barriers need to be pressure-tested.
+**Common swaps:** Swap `lens.incentive-audit` for `lens.jobs-to-be-done` when the primary unknown is what job people are hiring their current solution to do. Add `guardrail.stress-test-assumptions` when existing beliefs about adoption barriers need to be pressure-tested.
 
 **Common failure mode:** Diagnosing the adoption problem without the incentive layer. Most adoption failures are not usability problems — they are incentive problems that look like usability problems.

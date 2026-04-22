@@ -98,6 +98,39 @@ function extractCodeBlock(md) {
   return match ? match[1].trim() : "";
 }
 
+function extractSectionText(md, heading) {
+  const lines = md.split("\n");
+  const headingRegex = new RegExp(`^#{1,6}\\s+${heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*$`, "i");
+  let start = -1;
+
+  for (let i = 0; i < lines.length; i += 1) {
+    if (headingRegex.test(lines[i].trim())) {
+      start = i + 1;
+      break;
+    }
+  }
+
+  if (start === -1) return "";
+
+  const sectionLines = [];
+  for (let i = start; i < lines.length; i += 1) {
+    const line = lines[i];
+    const trimmed = line.trim();
+    if (/^#{1,6}\s+/.test(trimmed)) break;
+    if (/^---+$/.test(trimmed)) break;
+    sectionLines.push(line);
+  }
+
+  return sectionLines.join("\n").trim();
+}
+
+function firstSentence(text = "") {
+  const trimmed = text.replace(/\s+/g, " ").trim();
+  if (!trimmed) return "";
+  const match = trimmed.match(/^.*?[.!?](?:\s|$)/);
+  return match ? match[0].trim() : trimmed;
+}
+
 function extractSectionItems(md, labelOptions) {
   const labels = new Set((Array.isArray(labelOptions) ? labelOptions : [labelOptions]).map((label) => label.toLowerCase()));
   const lines = md.split("\n");
@@ -135,6 +168,55 @@ function extractSectionItems(md, labelOptions) {
   return items;
 }
 
+function extractHeadingItems(md, heading) {
+  const text = extractSectionText(md, heading);
+  if (!text) return [];
+
+  const items = [];
+  text.split("\n").forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) return;
+    const bullet = trimmed.match(/^[-*]\s+(.*)$/);
+    if (bullet) {
+      items.push(bullet[1].trim());
+      return;
+    }
+    const numbered = trimmed.match(/^\d+\.\s+(.*)$/);
+    if (numbered) {
+      items.push(numbered[1].trim());
+    }
+  });
+
+  return items;
+}
+
+function extractMetadata(md) {
+  const lines = md.split("\n");
+  let start = -1;
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const trimmed = lines[i].trim().toLowerCase();
+    if (trimmed === "## metadata" || trimmed === "metadata:") {
+      start = i + 1;
+      break;
+    }
+  }
+
+  if (start === -1) return {};
+
+  const metadata = {};
+  for (let i = start; i < lines.length; i += 1) {
+    const trimmed = lines[i].trim();
+    if (!trimmed) continue;
+    if (/^---+$/.test(trimmed) || /^#{1,6}\s+/.test(trimmed)) break;
+    const match = trimmed.match(/^-\s+([^:]+):\s*(.*)$/);
+    if (!match) continue;
+    metadata[match[1].trim().toLowerCase()] = match[2].trim();
+  }
+
+  return metadata;
+}
+
 function joinItems(items) {
   return items.join(", ");
 }
@@ -150,8 +232,52 @@ function makeTags(...parts) {
   return unique(words).slice(0, 5);
 }
 
+function parseInlineRefs(text = "") {
+  return [...text.matchAll(/`([^`]+)`/g)].map((match) => match[1].trim());
+}
+
+function inferFormFromSourceKind(sourceKind = "") {
+  switch (sourceKind) {
+    case "Prompt Block": return "compact";
+    case "Snippet": return "full_task";
+    case "Lens": return "concept";
+    case "Rubric": return "rubric";
+    case "Mode": return "mode";
+    case "Strategy": return "strategy";
+    default: return "";
+  }
+}
+
+function bodyFromEntries(entries = []) {
+  return entries.filter(([, value]) => {
+    if (Array.isArray(value)) return value.length > 0;
+    return Boolean(value);
+  }).map(([label, value]) => [label, Array.isArray(value) ? joinItems(value) : value]);
+}
+
+function makeContractFields({
+  purpose = "",
+  useWhen = "",
+  expects = "",
+  adds = "",
+  returns = [],
+  pairsWith = [],
+  avoidWhen = ""
+} = {}) {
+  const contract = {};
+  if (purpose) contract.purpose = purpose;
+  if (useWhen) contract.useWhen = useWhen;
+  if (expects) contract.expects = expects;
+  if (adds) contract.adds = adds;
+  if (returns.length > 0) contract.returns = returns;
+  if (pairsWith.length > 0) contract.pairsWith = pairsWith;
+  if (avoidWhen) contract.avoidWhen = avoidWhen;
+  return contract;
+}
+
 function makeBlock({
-  blockType,
+  canonicalType,
+  blockType = canonicalType,
   key,
   title,
   summary,
@@ -160,14 +286,23 @@ function makeBlock({
   body = [],
   family = "",
   group = "",
+  form = "",
   sourceKind = "",
+  stage = "",
+  strength = "",
+  contract = {},
   aliases = [],
   sourcePath = ""
 }) {
   return {
     section: "Block",
+    canonicalType,
     blockType,
+    form,
     sourceKind,
+    stage,
+    strength,
+    contract,
     key,
     aliases: unique(aliases),
     title,
@@ -193,27 +328,46 @@ function resolvedTags(md, ...fallbackParts) {
 function makeMode(dirName) {
   const relPath = `modes/${dirName}/README.md`;
   const md = read(relPath);
+  const metadata = extractMetadata(md);
   const title = firstHeading(md).replace(/\s+Mode$/, "");
-  const useWhen = extractSectionItems(md, "Use when:");
+  const purpose = extractSectionText(md, "Purpose");
+  const useWhen = extractSectionText(md, "Use when");
+  const expects = extractSectionText(md, "Expects");
+  const adds = extractSectionText(md, "Adds");
+  const returns = extractHeadingItems(md, "Returns");
+  const pairsWith = parseInlineRefs(extractSectionText(md, "Pairs with"));
+  const avoidWhen = extractSectionText(md, "Avoid when");
   const optimizes = extractSectionItems(md, "Optimizes for:");
   const suppresses = extractSectionItems(md, "Suppresses:");
   const exitWhen = extractSectionItems(md, "Exit when:");
+  const canonicalType = metadata.type || "mode";
+  const contract = makeContractFields({ purpose, useWhen, expects, adds, returns, pairsWith, avoidWhen });
 
   return makeBlock({
-    blockType: "mode",
+    canonicalType,
+    form: inferFormFromSourceKind("Mode"),
     sourceKind: "Mode",
     key: title,
     aliases: [`mode.${dirName}`],
     title,
-    summary: ensureSentence(`Use when ${useWhen[0] || title.toLowerCase()}`),
+    summary: ensureSentence(firstSentence(purpose || useWhen || `Use when ${title.toLowerCase()}`)),
     tags: resolvedTags(md, title),
     copy: extractCodeBlock(md),
-    body: [
-      ["Use when", joinItems(useWhen)],
+    stage: metadata.stage || "",
+    strength: metadata.strength || "",
+    contract,
+    body: bodyFromEntries([
+      ["Purpose", contract.purpose],
+      ["Use when", contract.useWhen],
+      ["Expects", contract.expects],
+      ["Adds", contract.adds],
+      ["Returns", contract.returns],
+      ["Pairs with", contract.pairsWith],
+      ["Avoid when", contract.avoidWhen],
       ["Optimizes for", joinItems(optimizes)],
       ["Suppresses", joinItems(suppresses)],
       ["Exit when", joinItems(exitWhen)]
-    ].filter(([, text]) => text),
+    ]),
     sourcePath: relPath
   });
 }
@@ -221,25 +375,44 @@ function makeMode(dirName) {
 function makeStrategy(dirName) {
   const relPath = `strategies/${dirName}/README.md`;
   const md = read(relPath);
+  const metadata = extractMetadata(md);
   const title = firstHeading(md);
-  const useWhen = extractSectionItems(md, "Use when:");
+  const purpose = extractSectionText(md, "Purpose");
+  const useWhen = extractSectionText(md, "Use when");
+  const expects = extractSectionText(md, "Expects");
+  const adds = extractSectionText(md, "Adds");
+  const returns = extractHeadingItems(md, "Returns");
+  const pairsWith = parseInlineRefs(extractSectionText(md, "Pairs with"));
+  const avoidWhen = extractSectionText(md, "Avoid when");
   const prevents = extractSectionItems(md, "Helps prevent:");
   const howToUse = extractSectionItems(md, ["How to use it:", "How to use:"]);
+  const canonicalType = metadata.type || "strategy";
+  const contract = makeContractFields({ purpose, useWhen, expects, adds, returns, pairsWith, avoidWhen });
 
   return makeBlock({
-    blockType: "strategy",
+    canonicalType,
+    form: inferFormFromSourceKind("Strategy"),
     sourceKind: "Strategy",
     key: title,
     aliases: [`strategy.${dirName}`],
     title,
-    summary: ensureSentence(`Use when ${useWhen[0] || title.toLowerCase()}`),
+    summary: ensureSentence(firstSentence(purpose || useWhen || title)),
     tags: resolvedTags(md, title),
     copy: extractCodeBlock(md),
-    body: [
-      ["Use when", joinItems(useWhen)],
+    stage: metadata.stage || "",
+    strength: metadata.strength || "",
+    contract,
+    body: bodyFromEntries([
+      ["Purpose", contract.purpose],
+      ["Use when", contract.useWhen],
+      ["Expects", contract.expects],
+      ["Adds", contract.adds],
+      ["Returns", contract.returns],
+      ["Pairs with", contract.pairsWith],
+      ["Avoid when", contract.avoidWhen],
       ["Helps prevent", joinItems(prevents)],
       ["How to use", joinItems(howToUse)]
-    ].filter(([, text]) => text),
+    ]),
     sourcePath: relPath
   });
 }
@@ -249,13 +422,22 @@ function makePromptBlock(dirName) {
   const promptPath = `prompts/blocks/${dirName}/prompt.md`;
   const readme = read(readmePath);
   const prompt = read(promptPath);
+  const metadata = extractMetadata(readme);
   const title = firstHeading(readme).replace(/\s+Block$/, "");
-  const blockType = title.split(".")[0] || "frame";
-  const bestUse = extractSectionItems(readme, "Best use:");
+  const canonicalType = metadata.type || title.split(".")[0] || "frame";
+  const purpose = extractSectionText(readme, "Purpose");
+  const useWhen = extractSectionText(readme, "Use when");
+  const expects = extractSectionText(readme, "Expects");
+  const adds = extractSectionText(readme, "Adds");
+  const returns = extractHeadingItems(readme, "Returns");
+  const pairsWith = parseInlineRefs(extractSectionText(readme, "Pairs with"));
+  const avoidWhen = extractSectionText(readme, "Avoid when");
   const hyphenAlias = dirName.includes(".") ? dirName.replace(/\./g, "-") : "";
+  const contract = makeContractFields({ purpose, useWhen, expects, adds, returns, pairsWith, avoidWhen });
 
   return makeBlock({
-    blockType,
+    canonicalType,
+    form: inferFormFromSourceKind("Prompt Block"),
     sourceKind: "Prompt Block",
     key: title,
     aliases: [
@@ -263,39 +445,25 @@ function makePromptBlock(dirName) {
       hyphenAlias ? `core.${hyphenAlias}` : ""
     ].filter(Boolean),
     title,
-    family: blockType === "frame" ? "Core" : "",
-    summary: ensureSentence(extractLeadLine(readme)),
+    family: canonicalType === "frame" ? "Prompt Blocks" : "",
+    summary: ensureSentence(firstSentence(purpose || useWhen || title)),
     tags: resolvedTags(readme, title, dirName),
     copy: stripFirstHeading(prompt),
-    body: bestUse.length > 0 ? [["Best use", joinItems(bestUse)]] : [],
+    stage: metadata.stage || "",
+    strength: metadata.strength || "",
+    contract,
+    body: bodyFromEntries([
+      ["Purpose", contract.purpose],
+      ["Use when", contract.useWhen],
+      ["Expects", contract.expects],
+      ["Adds", contract.adds],
+      ["Returns", contract.returns],
+      ["Pairs with", contract.pairsWith],
+      ["Avoid when", contract.avoidWhen]
+    ]),
     sourcePath: promptPath
   });
 }
-
-const SNIPPET_TYPE = {
-  // Guardrail type — prevent common failure modes and reasoning errors
-  "blind-spot-check":              "guardrail",
-  "change-impact-review":          "guardrail",
-  "correlation-vs-causation":      "guardrail",
-  "data-quality-check":            "guardrail",
-  "persuasion-audit":              "guardrail",
-  "release-readiness":             "guardrail",
-  "statistical-significance-check": "guardrail",
-  "stress-test-assumptions":       "guardrail",
-  "triage-the-unknown":            "guardrail",
-  // Schema type — shape output format or structure
-  "communication-brief":           "schema",
-  "decision-journal-entry":        "schema",
-  "delegation-brief":              "schema",
-  "executive-summary":             "schema",
-  "incident-postmortem":           "schema",
-  "plan-next-actions":             "schema",
-  "rollout-plan":                  "schema",
-  // Strategy type — control the reasoning mechanic or method of thought
-  "analogical-reasoning":          "strategy",
-  "reframe-the-problem":           "strategy"
-  // Default: "frame" (define the task, objective, scope, or approach)
-};
 
 const SNIPPET_FAMILY = {
   // Thinking & Framing
@@ -387,21 +555,47 @@ const SNIPPET_FAMILY = {
 function makeSnippetBlock(fileName) {
   const relPath = `prompts/snippets/${fileName}`;
   const md = read(relPath);
+  const metadata = extractMetadata(md);
   const baseName = fileName.replace(/\.md$/, "");
   const family = SNIPPET_FAMILY[baseName] || "";
-  const blockType = SNIPPET_TYPE[baseName] || "frame";
-  const title = `${blockType}.${baseName}`;
+  const canonicalType = metadata.type || "frame";
+  const title = `${canonicalType}.${baseName}`;
+  const useWhen = extractLeadLine(md);
+  const returns = extractSectionItems(extractCodeBlock(md), ["Return:", "Returns:", "Then return:", "Produce:", "Output:", "Outputs:"]);
+  const pairsWith = parseInlineRefs(metadata["pairs with"] || "");
+  const expects = extractCodeBlock(md)
+    ? extractCodeBlock(md)
+      .split("\n")
+      .filter((line) => /\{[^}]+\}/.test(line))
+      .map((line) => line.replace(/\{[^}]+\}/g, "").replace(/^[-*]\s*/, "").replace(/:\s*$/, "").trim())
+      .filter(Boolean)
+    : [];
+  const contract = makeContractFields({
+    useWhen,
+    expects: expects.length > 0 ? joinItems(expects) : "",
+    returns,
+    pairsWith
+  });
 
   return makeBlock({
-    blockType,
+    canonicalType,
+    form: inferFormFromSourceKind("Snippet"),
     sourceKind: "Snippet",
     key: title,
     aliases: [`core.${baseName}`],
     title,
-    summary: ensureSentence(extractLeadLine(md)),
+    summary: ensureSentence(firstSentence(useWhen || title)),
     tags: resolvedTags(md, baseName, family),
     copy: extractCodeBlock(md),
-    body: [],
+    stage: metadata.stage || "",
+    strength: metadata.strength || "",
+    contract,
+    body: bodyFromEntries([
+      ["Use when", contract.useWhen],
+      ["Expects", contract.expects],
+      ["Returns", contract.returns],
+      ["Pairs with", contract.pairsWith]
+    ]),
     family,
     sourcePath: relPath
   });
@@ -410,106 +604,173 @@ function makeSnippetBlock(fileName) {
 function makeLensBlock(group, fileName) {
   const relPath = `prompts/concepts/${group}/${fileName}`;
   const md = read(relPath);
+  const metadata = extractMetadata(md);
   const title = firstHeading(md);
   const titleWithoutPrefix = title.replace(/^[^:]+:\s*/, "");
   const groupLabel = group
     .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
+  const useWhen = extractLeadLine(md);
+  const returns = extractSectionItems(extractCodeBlock(md), ["Return:", "Returns:", "Then return:", "Produce:", "Output:", "Outputs:"]);
+  const pairsWith = parseInlineRefs(metadata["pairs with"] || "");
+  const contract = makeContractFields({
+    useWhen,
+    returns,
+    pairsWith
+  });
 
   return makeBlock({
-    blockType: "lens",
+    canonicalType: metadata.type || "lens",
+    form: inferFormFromSourceKind("Lens"),
     sourceKind: "Lens",
     key: `lens.${slugify(titleWithoutPrefix)}`,
     aliases: [`lens.${slugify(title)}`],
     title: titleWithoutPrefix,
-    summary: ensureSentence(extractLeadLine(md)),
+    summary: ensureSentence(firstSentence(useWhen || titleWithoutPrefix)),
     tags: resolvedTags(md, titleWithoutPrefix, groupLabel, fileName.replace(/\.md$/, "")),
     copy: extractCodeBlock(md),
-    body: [],
+    stage: metadata.stage || "",
+    strength: metadata.strength || "",
+    contract,
+    body: bodyFromEntries([
+      ["Use when", contract.useWhen],
+      ["Returns", contract.returns],
+      ["Pairs with", contract.pairsWith]
+    ]),
     group: groupLabel,
     sourcePath: relPath
   });
 }
 
-const STACK_FAMILY = {
+const STACK_FAMILY_ORDER = [
+  "Thinking & Framing",
+  "Deciding & Prioritising",
+  "Research & Analysis",
+  "Writing & Communication",
+  "Planning & Execution",
+  "Critique & Review",
+  "Prompt Craft",
+  "Developer Workflows",
+  "Reflection & Learning"
+];
+
+const STACK_STAGE_VALUES = ["frame", "explore", "analyze", "decide", "critique", "refine", "conclude"];
+const STACK_OUTPUT_KIND_VALUES = ["clarity", "options", "decision", "plan", "brief", "summary", "critique", "diagnosis", "draft", "retrospective", "prompt"];
+const STACK_EFFORT_VALUES = ["quick", "standard", "deep"];
+const STACK_STAKES_VALUES = ["low", "medium", "high"];
+
+function stackEffortFromCount(count) {
+  if (count <= 3) return "quick";
+  if (count <= 5) return "standard";
+  return "deep";
+}
+
+const STACK_META = {
   // Thinking & Framing
-  "clarify-the-real-job":           "Thinking & Framing",
-  "ethical-review":                 "Thinking & Framing",
-  "fast-ideation":                  "Thinking & Framing",
-  "frame-the-ask":                  "Thinking & Framing",
-  "orient-before-acting":           "Thinking & Framing",
-  "problem-framing":                "Thinking & Framing",
-  "prompt-repair":                  "Thinking & Framing",
-  "quick-sense-check":              "Thinking & Framing",
-  "scenario-futures":               "Thinking & Framing",
-  "unblock-stuck-problem":          "Thinking & Framing",
+  "fast-ideation": { family: "Thinking & Framing", stage: "explore", outputKind: "options", stakes: "low" },
+  "frame-the-ask": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
+  "orient-before-acting": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
+  "clarify-the-real-job": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
+  "problem-framing": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
+  "unblock-stuck-problem": { family: "Thinking & Framing", stage: "explore", outputKind: "options", stakes: "low" },
+  "scenario-futures": { family: "Thinking & Framing", stage: "explore", outputKind: "options", stakes: "medium" },
   // Deciding & Prioritising
-  "de-risk-with-test":              "Deciding & Prioritising",
-  "explore-to-decision":            "Deciding & Prioritising",
-  "explore-vs-exploit":             "Deciding & Prioritising",
-  "full-decision-process":          "Deciding & Prioritising",
-  "prioritize-portfolio":           "Deciding & Prioritising",
+  "explore-vs-exploit": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "de-risk-with-test": { family: "Deciding & Prioritising", stage: "decide", outputKind: "plan", stakes: "medium" },
+  "prioritize-portfolio": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "full-decision-process": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "explore-to-decision": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "medium" },
+  "prioritise-under-constraints": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "risk-informed-decision": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "forecast-and-decide": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "evidence-to-decision": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  // Research & Analysis
+  "map-adoption-blockers": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "medium" },
+  "source-to-brief": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "medium" },
+  "learn-from-content": { family: "Research & Analysis", stage: "conclude", outputKind: "summary", stakes: "medium" },
+  "deep-research-synthesis": { family: "Research & Analysis", stage: "analyze", outputKind: "summary", stakes: "medium" },
+  "causal-inference": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "high" },
+  "data-to-story": { family: "Research & Analysis", stage: "conclude", outputKind: "draft", stakes: "medium" },
+  "design-a-study": { family: "Research & Analysis", stage: "frame", outputKind: "plan", stakes: "medium" },
+  "interpret-an-experiment": { family: "Research & Analysis", stage: "critique", outputKind: "summary", stakes: "medium" },
+  "measure-feature-impact": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "medium" },
+  // Writing & Communication
+  "communicate-a-change": { family: "Writing & Communication", stage: "conclude", outputKind: "brief", stakes: "medium" },
+  "negotiate-a-deal": { family: "Writing & Communication", stage: "decide", outputKind: "brief", stakes: "high" },
+  "write-critique-rewrite": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "medium" },
+  "stakeholder-alignment": { family: "Writing & Communication", stage: "decide", outputKind: "plan", stakes: "medium" },
+  "deliver-feedback": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "low" },
+  "develop-a-position": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "medium" },
+  "write-a-proposal": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "medium" },
   // Planning & Execution
-  "define-and-measure":             "Planning & Execution",
-  "design-for-outcomes":            "Planning & Execution",
-  "map-adoption-blockers":          "Planning & Execution",
-  "pressure-test-plan":             "Planning & Execution",
-  "product-design-sprint":          "Planning & Execution",
-  "ship-a-feature":                 "Planning & Execution",
-  // Research & Synthesis
-  "audit-the-argument":             "Research & Synthesis",
-  "deep-research-synthesis":        "Research & Synthesis",
-  "evidence-to-decision":           "Research & Synthesis",
-  "interpret-an-experiment":        "Research & Synthesis",
-  "learn-from-content":             "Research & Synthesis",
-  "source-to-brief":                "Research & Synthesis",
-  // Writing & Communication
-  "communicate-a-change":           "Writing & Communication",
-  "negotiate-a-deal":               "Writing & Communication",
-  "stakeholder-alignment":          "Writing & Communication",
-  "write-critique-rewrite":         "Writing & Communication",
-  // Review & Reflection
-  "after-action-review":            "Review & Reflection",
-  "capture-and-act":                "Review & Reflection",
-  "decision-review":                "Review & Reflection",
-  "project-retrospective":          "Review & Reflection",
-  "weekly-review":                  "Review & Reflection",
-  // Software Engineering
-  "code-review":                    "Software Engineering",
-  "debug-a-failure":                "Software Engineering",
-  "debug-a-system":                 "Software Engineering",
-  "feature-design":                 "Software Engineering",
-  "hypothesis-driven-development":  "Software Engineering",
-  "incident-response":              "Software Engineering",
-  "performance-investigation":      "Software Engineering",
-  "security-threat-model":          "Software Engineering",
-  "technical-architecture-review":  "Software Engineering",
-  "technical-debt-triage":          "Software Engineering",
-  // Statistics
-  "causal-inference":               "Statistics",
-  "data-to-story":                  "Statistics",
-  "design-a-study":                 "Statistics",
-  "forecast-and-decide":            "Statistics",
-  "measure-feature-impact":         "Statistics",
-  // Writing & Communication
-  "deliver-feedback":               "Writing & Communication",
-  "develop-a-position":             "Writing & Communication",
-  "write-a-proposal":               "Writing & Communication",
-  // Deciding & Prioritising
-  "prioritise-under-constraints":   "Deciding & Prioritising",
-  "risk-informed-decision":         "Deciding & Prioritising",
+  "design-for-outcomes": { family: "Planning & Execution", stage: "frame", outputKind: "plan", stakes: "medium" },
+  "define-and-measure": { family: "Planning & Execution", stage: "frame", outputKind: "plan", stakes: "medium" },
+  "product-design-sprint": { family: "Planning & Execution", stage: "decide", outputKind: "plan", stakes: "medium" },
+  "ship-a-feature": { family: "Planning & Execution", stage: "decide", outputKind: "plan", stakes: "high" },
+  // Critique & Review
+  "quick-sense-check": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "low" },
+  "audit-the-argument": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "medium" },
+  "ethical-review": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "high" },
+  "pressure-test-plan": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "high" },
   // Prompt Craft
-  "ai-workflow-design":             "Prompt Craft",
-  "build-a-system-prompt":          "Prompt Craft",
-  "evaluate-model-output":          "Prompt Craft",
-  "prompt-engineering-sprint":      "Prompt Craft",
-  // Software Engineering (additional)
-  "break-a-recurring-incident":     "Software Engineering",
-  "read-before-change":             "Software Engineering",
-  "safe-migration":                 "Software Engineering",
-  "trace-to-fix":                   "Software Engineering"
+  "prompt-repair": { family: "Prompt Craft", stage: "refine", outputKind: "prompt", stakes: "medium" },
+  "ai-workflow-design": { family: "Prompt Craft", stage: "frame", outputKind: "plan", stakes: "medium" },
+  "build-a-system-prompt": { family: "Prompt Craft", stage: "frame", outputKind: "prompt", stakes: "medium" },
+  "evaluate-model-output": { family: "Prompt Craft", stage: "critique", outputKind: "critique", stakes: "medium" },
+  "prompt-engineering-sprint": { family: "Prompt Craft", stage: "refine", outputKind: "prompt", stakes: "medium" },
+  // Developer Workflows
+  "code-review": { family: "Developer Workflows", stage: "critique", outputKind: "critique", stakes: "high" },
+  "debug-a-failure": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
+  "debug-a-system": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
+  "technical-architecture-review": { family: "Developer Workflows", stage: "critique", outputKind: "critique", stakes: "high" },
+  "break-a-recurring-incident": { family: "Developer Workflows", stage: "conclude", outputKind: "plan", stakes: "high" },
+  "feature-design": { family: "Developer Workflows", stage: "frame", outputKind: "plan", stakes: "high" },
+  "hypothesis-driven-development": { family: "Developer Workflows", stage: "analyze", outputKind: "plan", stakes: "high" },
+  "incident-response": { family: "Developer Workflows", stage: "analyze", outputKind: "plan", stakes: "high" },
+  "performance-investigation": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
+  "read-before-change": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
+  "safe-migration": { family: "Developer Workflows", stage: "decide", outputKind: "plan", stakes: "high" },
+  "security-threat-model": { family: "Developer Workflows", stage: "critique", outputKind: "critique", stakes: "high" },
+  "technical-debt-triage": { family: "Developer Workflows", stage: "decide", outputKind: "decision", stakes: "high" },
+  "trace-to-fix": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
+  // Reflection & Learning
+  "capture-and-act": { family: "Reflection & Learning", stage: "conclude", outputKind: "plan", stakes: "low" },
+  "after-action-review": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "low" },
+  "weekly-review": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "low" },
+  "decision-review": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "medium" },
+  "project-retrospective": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "low" }
 };
+
+function validateStackMeta(baseNames) {
+  const metaNames = Object.keys(STACK_META).sort();
+  const stackNames = [...baseNames].sort();
+  const missing = stackNames.filter((name) => !metaNames.includes(name));
+  const extra = metaNames.filter((name) => !stackNames.includes(name));
+
+  if (missing.length > 0 || extra.length > 0) {
+    throw new Error(`STACK_META mismatch. Missing: ${missing.join(", ") || "none"}. Extra: ${extra.join(", ") || "none"}.`);
+  }
+
+  stackNames.forEach((name) => {
+    const meta = STACK_META[name];
+    if (!meta?.family || !meta?.stage || !meta?.outputKind || !meta?.stakes) {
+      throw new Error(`STACK_META is incomplete for ${name}.`);
+    }
+    if (!STACK_FAMILY_ORDER.includes(meta.family)) {
+      throw new Error(`Invalid stack family "${meta.family}" for ${name}.`);
+    }
+    if (!STACK_STAGE_VALUES.includes(meta.stage)) {
+      throw new Error(`Invalid stack stage "${meta.stage}" for ${name}.`);
+    }
+    if (!STACK_OUTPUT_KIND_VALUES.includes(meta.outputKind)) {
+      throw new Error(`Invalid stack outputKind "${meta.outputKind}" for ${name}.`);
+    }
+    if (!STACK_STAKES_VALUES.includes(meta.stakes)) {
+      throw new Error(`Invalid stack stakes "${meta.stakes}" for ${name}.`);
+    }
+  });
+}
 
 function makeStack(fileName) {
   const relPath = `stacks/${fileName}`;
@@ -519,22 +780,65 @@ function makeStack(fileName) {
   const inputs = extractSectionItems(md, "Useful inputs:");
   const sequence = extractSectionItems(md, ["Suggested blocks:", "Suggested sequence:"]);
   const outputs = extractSectionItems(md, ["Expected outcome:", "Expected output:"]);
+  const minimumBlocksMatch = md.match(/^\*\*Minimum blocks:\*\*\s*(.+)$/m);
+  const whyMatch = md.match(/^\*\*Why this order works:\*\*\s*(.+)$/m);
+  const swapsMatch = md.match(/^\*\*Common swaps:\*\*\s*(.+)$/m);
+  const failureMatch = md.match(/^\*\*Common failure mode:\*\*\s*(.+)$/m);
 
   const baseName = fileName.replace(/\.md$/, "");
-  const family = STACK_FAMILY[baseName] || "";
+  const meta = STACK_META[baseName];
+  if (!meta) {
+    throw new Error(`Missing STACK_META entry for ${baseName}.`);
+  }
+  const family = meta.family;
+  const job = baseName;
+  const stage = meta.stage;
+  const outputKind = meta.outputKind;
+  const effort = stackEffortFromCount(sequence.length);
+  const stakes = meta.stakes;
+  const contract = {
+    job,
+    useWhen,
+    minimumBlocks: parseInlineRefs(minimumBlocksMatch?.[1] || ""),
+    fullSequence: sequence,
+    blockOrderRationale: whyMatch?.[1]?.trim() || "",
+    commonSwaps: swapsMatch?.[1]?.trim() || "",
+    commonFailureMode: failureMatch?.[1]?.trim() || ""
+  };
+  const io = {};
+  if (inputs.length > 0) io.usefulInputs = inputs;
+  if (outputs.length > 0) io.expectedOutputs = outputs;
 
   return {
     section: "Stack",
     key: `stack.${slugify(title)}`,
     title,
     family,
+    job,
+    useWhen,
+    stage,
+    outputKind,
+    effort,
+    stakes,
     summary: ensureSentence(useWhen),
     tags: resolvedTags(md, title, baseName),
-    body: [
-      ["Useful inputs", joinItems(inputs)],
+    contract,
+    io,
+    body: bodyFromEntries([
+      ["Job", contract.job],
+      ["Use when", contract.useWhen],
+      ["Stage", stage],
+      ["Output kind", outputKind],
+      ["Effort", effort],
+      ["Stakes", stakes],
+      ["Useful inputs", inputs],
+      ["Minimum blocks", contract.minimumBlocks],
       ["Suggested blocks", sequence.join(" -> ")],
-      ["Expected outcome", joinItems(outputs)]
-    ].filter(([, text]) => text),
+      ["Why this order works", contract.blockOrderRationale],
+      ["Common swaps", contract.commonSwaps],
+      ["Common failure mode", contract.commonFailureMode],
+      ["Expected outcome", outputs]
+    ]),
     sourcePath: relPath
   };
 }
@@ -542,18 +846,34 @@ function makeStack(fileName) {
 function makeRubric(fileName) {
   const relPath = `rubrics/${fileName}`;
   const md = read(relPath);
+  const metadata = extractMetadata(md);
   const title = firstHeading(md);
+  const useWhen = extractLeadLine(md);
   const questions = extractSectionItems(md, "Questions:");
+  const pairsWith = parseInlineRefs(md.match(/^Pairs with:\s*(.+)$/m)?.[1] || "");
+  const contract = makeContractFields({
+    useWhen,
+    returns: questions,
+    pairsWith
+  });
 
   return makeBlock({
-    blockType: "rubric",
+    canonicalType: metadata.type || "rubric",
+    form: inferFormFromSourceKind("Rubric"),
     sourceKind: "Rubric",
     key: title,
     aliases: [`rubric.${fileName.replace(/\.md$/, "")}`],
     title,
-    summary: ensureSentence(extractLeadLine(md)),
+    summary: ensureSentence(firstSentence(useWhen || title)),
     tags: resolvedTags(md, title, fileName.replace(/\.md$/, "")),
-    body: questions.length > 0 ? [["Questions", joinItems(questions)]] : [],
+    stage: metadata.stage || "",
+    strength: metadata.strength || "",
+    contract,
+    body: bodyFromEntries([
+      ["Use when", contract.useWhen],
+      ["Questions", questions],
+      ["Pairs with", contract.pairsWith]
+    ]),
     sourcePath: relPath
   });
 }
@@ -711,9 +1031,10 @@ const lensBlocks = [
 const rubricBlocks = orderNames(list("rubrics"), rubricOrder)
   .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md")
   .map((fileName) => makeRubric(fileName));
-const stacks = orderNames(list("stacks"), stackOrder)
-  .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md")
-  .map((fileName) => makeStack(fileName));
+const stackFiles = orderNames(list("stacks"), stackOrder)
+  .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md");
+validateStackMeta(stackFiles.map((fileName) => fileName.replace(/\.md$/, "")));
+const stacks = stackFiles.map((fileName) => makeStack(fileName));
 
 const blocks = [
   ...modes,
@@ -729,91 +1050,91 @@ const featuredStacks = [
     title: "Frame an Unknown Problem",
     description: "When you are not sure what you are actually solving. Explores breadth, frames the task, decomposes it, and surfaces uncertainty before any commitment.",
     tags: ["framing", "clarity", "explore"],
-    refs: ["mode.explore", "core.frame.task", "strategy.problem-split", "core.scope.frame", "core.guardrail.uncertainty"]
+    refs: ["mode.explore", "frame.task", "strategy.problem-split", "frame.scope", "guardrail.uncertainty"]
   },
   {
     title: "Make a Risky Decision",
     description: "When real options exist and the stakes matter. Sets criteria, steelmans alternatives, audits assumptions, and captures the final choice.",
     tags: ["decide", "rigor", "high-stakes"],
-    refs: ["mode.decide", "core.frame.success-criteria", "strategy.steelman", "core.assumption.audit", "core.schema.decision-memo"]
+    refs: ["mode.decide", "frame.success-criteria", "strategy.steelman", "guardrail.assumption-audit", "schema.decision-memo"]
   },
   {
     title: "Explore or Exploit",
     description: "When the real question is whether to keep searching or commit now. Forces the tradeoff between additional information and the cost of delay, then turns the answer into an immediate move.",
     tags: ["decision", "exploration", "timing"],
-    refs: ["mode.decide", "core.frame.success-criteria", "core.explore-exploit-decision", "core.guardrail.uncertainty", "core.schema.execution-brief"]
+    refs: ["mode.decide", "frame.success-criteria", "frame.explore-exploit-decision", "guardrail.uncertainty", "schema.execution-brief"]
   },
   {
     title: "Prioritize a Portfolio",
     description: "When several good-looking bets compete for scarce resources. Defines criteria, ranks the field, and turns the winner into an execution brief.",
     tags: ["prioritization", "portfolio", "focus"],
-    refs: ["mode.decide", "core.frame.success-criteria", "core.prioritize-opportunities", "core.schema.execution-brief", "core.guardrail.uncertainty"]
+    refs: ["mode.decide", "frame.success-criteria", "frame.prioritize-opportunities", "schema.execution-brief", "guardrail.uncertainty"]
   },
   {
     title: "De-Risk Before Committing",
     description: "When a direction looks promising but the real blocker is uncertainty. Designs the cheapest credible test and makes the next checkpoint explicit.",
     tags: ["experiment", "de-risk", "execution"],
-    refs: ["mode.decide", "core.frame.success-criteria", "core.design-cheap-test", "core.schema.execution-brief", "core.guardrail.uncertainty"]
+    refs: ["mode.decide", "frame.success-criteria", "frame.design-cheap-test", "schema.execution-brief", "guardrail.uncertainty"]
   },
   {
     title: "Pressure Test a Plan",
     description: "Before committing to execution. Runs adversarial critique, premortem, and stress test to surface the plan's biggest vulnerabilities.",
     tags: ["critique", "risk", "pre-commit"],
-    refs: ["mode.critique", "strategy.premortem", "strategy.red-team", "core.assumption.audit", "core.stress-test-assumptions"]
+    refs: ["mode.critique", "strategy.premortem", "strategy.red-team", "guardrail.assumption-audit", "guardrail.stress-test-assumptions"]
   },
   {
     title: "Debug a Failure",
     description: "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with a reproducible target, checks the boundary, and turns the next move into a concrete debug plan.",
     tags: ["debugging", "incident", "diagnosis"],
-    refs: ["mode.critique", "core.bug-reproduction-brief", "lens.debugger-loop", "lens.interface-contract-review", "lens.invariant-check", "core.plan-next-actions"]
+    refs: ["mode.critique", "frame.bug-reproduction-brief", "lens.debugger-loop", "lens.interface-contract-review", "lens.invariant-check", "schema.plan-next-actions"]
   },
   {
     title: "Write and Sharpen",
     description: "For content that needs to be good, not just done. Turns a brief into a real draft, critiques it rigorously, then rewrites for clarity.",
     tags: ["writing", "critique", "revision"],
-    refs: ["core.brief-to-draft", "mode.critique", "core.critique-argument", "core.rewrite-for-clarity", "rubric.writing-quality"]
+    refs: ["frame.brief-to-draft", "mode.critique", "frame.critique-argument", "frame.rewrite-for-clarity", "rubric.writing-quality"]
   },
   {
     title: "After-Action Review",
     description: "When an outcome exists and the risk is repeating the same mistake. Maps causes, records the decision, and checks that reflection was actually useful.",
     tags: ["reflect", "learning", "retrospective"],
-    refs: ["mode.reflect", "core.cause-mapping", "core.decision-journal-entry", "rubric.reflection-quality"]
+    refs: ["mode.reflect", "frame.cause-mapping", "schema.decision-journal-entry", "rubric.reflection-quality"]
   },
   {
     title: "Improve a Prompt",
     description: "When a prompt is underperforming. Critiques the current version, rewrites it, compares variants, and checks against a quality rubric.",
     tags: ["prompting", "iteration", "repair"],
-    refs: ["mode.critique", "core.prompt-critique", "core.prompt-rewrite", "core.prompt-compare", "rubric.prompt-quality"]
+    refs: ["mode.critique", "frame.prompt-critique", "frame.prompt-rewrite", "frame.prompt-compare", "rubric.prompt-quality"]
   },
   {
     title: "Map Incentives",
     description: "When behavior is not making sense or you are designing for a multi-player situation. Audits incentives, checks signals, and captures the analysis.",
     tags: ["game theory", "incentives", "analysis"],
-    refs: ["mode.explore", "lens.incentive-audit", "lens.signaling-check", "core.schema.decision-memo"]
+    refs: ["mode.explore", "lens.incentive-audit", "lens.signaling-check", "schema.decision-memo"]
   },
   {
     title: "Align Stakeholders",
     description: "When the technical answer is not enough and alignment is the actual bottleneck. Maps stakeholders, checks coordination dynamics, and prepares the next conversation.",
     tags: ["alignment", "stakeholders", "coordination"],
-    refs: ["mode.explore", "core.stakeholder-map", "lens.coordination-plan", "lens.signaling-check", "core.alignment-conversation-plan", "core.schema.execution-brief"]
+    refs: ["mode.explore", "frame.stakeholder-map", "lens.coordination-plan", "lens.signaling-check", "frame.alignment-conversation-plan", "schema.execution-brief"]
   },
   {
     title: "Read Before Changing",
     description: "When a change looks simple but the surrounding codebase is unfamiliar. Maps the active code path, surfaces invariants, and checks blast radius before editing.",
     tags: ["software engineering", "code reading", "change safety"],
-    refs: ["mode.explore", "core.codepath-walkthrough", "lens.invariant-check", "lens.interface-contract-review", "core.change-impact-review"]
+    refs: ["mode.explore", "frame.codepath-walkthrough", "lens.invariant-check", "lens.interface-contract-review", "guardrail.change-impact-review"]
   },
   {
     title: "Turn Sources Into Action",
     description: "When notes, transcripts, or dense source material need to become something decision-useful quickly. Distills the source, extracts what matters, and maps the next investigation or action.",
     tags: ["research", "synthesis", "briefing"],
-    refs: ["mode.explore", "core.summarize-source", "core.extract-insights", "core.research-questions", "core.plan-next-actions"]
+    refs: ["mode.explore", "frame.summarize-source", "frame.extract-insights", "frame.research-questions", "schema.plan-next-actions"]
   },
   {
     title: "Check for Bias",
     description: "When a judgment or decision may be distorted. Reviews cognitive biases, steelmans alternatives, and guardrails against false certainty.",
     tags: ["psychology", "bias", "rigor"],
-    refs: ["mode.critique", "lens.bias-check", "strategy.steelman", "core.guardrail.disconfirming-evidence", "core.guardrail.uncertainty"]
+    refs: ["mode.critique", "lens.bias-check", "strategy.steelman", "guardrail.disconfirming-evidence", "guardrail.uncertainty"]
   }
 ];
 

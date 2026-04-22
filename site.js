@@ -1,3 +1,6 @@
+// @ts-check
+
+/** @type {PromptKitSiteData | undefined} */
 const siteData = window.SITE_DATA || globalThis.SITE_DATA;
 
 if (!siteData) {
@@ -9,6 +12,7 @@ const {
   stacks = []
 } = siteData;
 
+/** @type {PromptKitBlockType[]} */
 const BLOCK_TYPE_ORDER = ["frame", "mode", "strategy", "lens", "guardrail", "schema", "rubric"];
 const BLOCK_TYPE_LABELS = {
   frame: "Frame",
@@ -20,8 +24,67 @@ const BLOCK_TYPE_LABELS = {
   rubric: "Rubric"
 };
 
+const BLOCK_TYPE_RANK = Object.fromEntries(BLOCK_TYPE_ORDER.map((type, index) => [type, index]));
+
+/**
+ * The builder is a structured composition surface rather than a freeform editor.
+ * These sections define the only valid drop zones and drive filtering, picker
+ * options, warnings, and assembly order.
+ */
+const BUILDER_SECTION_ORDER = ["instruction", "context", "reasoning", "harness"];
+const BUILDER_SECTIONS = [
+  {
+    key: "instruction",
+    label: "Instruction",
+    description: "Roles, goals, and task-defining directives.",
+    emptyLabel: "Start with a frame block",
+    emptyPrompt: "Define the job, goal, and boundaries before anything else.",
+    starterRefs: ["frame.task", "frame.success-criteria"],
+    required: true,
+    validBlockTypes: ["frame"]
+  },
+  {
+    key: "context",
+    label: "Context",
+    description: "Constraints, references, domain knowledge, and perspective.",
+    emptyLabel: "Add supporting context if the task needs it",
+    emptyPrompt: "Bring in constraints, requirements, or a lens when they will materially change the answer.",
+    starterRefs: ["frame.requirements-decomposition", "lens.user-mental-model"],
+    required: false,
+    validBlockTypes: ["frame", "lens"]
+  },
+  {
+    key: "reasoning",
+    label: "Reasoning",
+    description: "How the system should think through the job.",
+    emptyLabel: "Choose how the prompt should reason",
+    emptyPrompt: "A mode sets the stance. A strategy adds a deliberate reasoning move.",
+    starterRefs: ["mode.explore", "mode.decide", "strategy.problem-split"],
+    required: false,
+    validBlockTypes: ["mode", "strategy", "lens"]
+  },
+  {
+    key: "harness",
+    label: "Harness",
+    description: "Validation, output contracts, and final quality checks.",
+    emptyLabel: "Add checks when the stakes justify them",
+    emptyPrompt: "Use guardrails, schemas, and rubrics to make the output safer and easier to evaluate.",
+    starterRefs: ["guardrail.uncertainty", "schema.execution-brief", "rubric.prompt-quality"],
+    required: false,
+    validBlockTypes: ["guardrail", "schema", "rubric"]
+  }
+];
+
 function titleCase(text = "") {
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+}
+
+function titleCaseWords(text = "") {
+  return String(text || "")
+    .split(/[-\s]+/g)
+    .filter(Boolean)
+    .map((part) => titleCase(part))
+    .join(" ");
 }
 
 function slugify(text = "") {
@@ -33,6 +96,32 @@ function normalizeRef(ref = "") {
 }
 
 const PLACEHOLDER_RE = /\{[^}\n]{1,80}\}/g;
+
+function extractPlaceholders(text = "") {
+  return [...new Set(String(text || "").match(PLACEHOLDER_RE) || [])];
+}
+
+function normalizeBuilderInputLabel(placeholder = "") {
+  const raw = String(placeholder || "").replace(/^\{|\}$/g, "").trim();
+  if (!raw) return "Input";
+  const cleaned = raw
+    .replace(/^paste\s+/i, "")
+    .replace(/[()]/g, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return titleCaseWords(cleaned) || "Input";
+}
+
+function fillPromptTemplate(text = "", inputValues = {}) {
+  let next = String(text || "");
+  extractPlaceholders(next).forEach((placeholder) => {
+    const value = inputValues?.[placeholder];
+    if (typeof value !== "string" || !value.trim()) return;
+    next = next.split(placeholder).join(value.trim());
+  });
+  return next;
+}
 
 function normalizeSection(item) {
   if (item.section === "Stack") return "stack";
@@ -53,45 +142,379 @@ const BLOCK_TYPE_DESCRIPTIONS = {
   rubric: "Evaluation blocks for checking whether the result is actually good enough."
 };
 
-const STACK_SIZES = [
-  { key: "small",  label: "Small",  range: "1–3 blocks",  test: (n) => n <= 3 },
-  { key: "medium", label: "Medium", range: "4–5 blocks",  test: (n) => n >= 4 && n <= 5 },
-  { key: "large",  label: "Large",  range: "6+ blocks",   test: (n) => n >= 6 }
-];
-
 const STACK_FAMILY_ORDER = [
   "Thinking & Framing",
   "Deciding & Prioritising",
-  "Planning & Execution",
-  "Research & Synthesis",
+  "Research & Analysis",
   "Writing & Communication",
-  "Review & Reflection",
-  "Software Engineering",
-  "Statistics",
-  "Prompt Craft"
+  "Planning & Execution",
+  "Critique & Review",
+  "Prompt Craft",
+  "Developer Workflows",
+  "Reflection & Learning"
 ];
 
-function getStackSizeCategory(count) {
-  return (STACK_SIZES.find((s) => s.test(count)) || STACK_SIZES[0]).key;
-}
+const STACK_STAGE_ORDER = ["frame", "explore", "analyze", "decide", "critique", "refine", "conclude"];
+const STACK_OUTPUT_KIND_ORDER = ["clarity", "options", "decision", "plan", "brief", "summary", "critique", "diagnosis", "draft", "retrospective", "prompt"];
+const STACK_EFFORT_ORDER = ["quick", "standard", "deep"];
+const STACK_STAKES_ORDER = ["low", "medium", "high"];
+
+const STACK_STAGE_LABELS = Object.fromEntries(STACK_STAGE_ORDER.map((value) => [value, titleCase(value)]));
+const STACK_OUTPUT_KIND_LABELS = Object.fromEntries(STACK_OUTPUT_KIND_ORDER.map((value) => [value, titleCaseWords(value)]));
+const STACK_EFFORT_LABELS = {
+  quick: "Quick",
+  standard: "Standard",
+  deep: "Deep"
+};
+const STACK_STAKES_LABELS = {
+  low: "Low",
+  medium: "Medium",
+  high: "High"
+};
+
+const STACK_FILTER_DEFS = [
+  { key: "stackStage", label: "Stage", values: STACK_STAGE_ORDER, labels: STACK_STAGE_LABELS, dataKey: "stackStage", itemKey: "stage" },
+  { key: "stackOutputKind", label: "Output", values: STACK_OUTPUT_KIND_ORDER, labels: STACK_OUTPUT_KIND_LABELS, dataKey: "stackOutputKind", itemKey: "outputKind" },
+  { key: "stackEffort", label: "Effort", values: STACK_EFFORT_ORDER, labels: STACK_EFFORT_LABELS, dataKey: "stackEffort", itemKey: "effort" },
+  { key: "stackStakes", label: "Stakes", values: STACK_STAKES_ORDER, labels: STACK_STAKES_LABELS, dataKey: "stackStakes", itemKey: "stakes" }
+];
 
 function getStackBlockCount(item) {
   const seqEntry = (item.body || []).find(([l]) => l === "Suggested blocks");
   return seqEntry ? (seqEntry[1].match(/`([^`]+)`/g) || []).length : 0;
 }
 
-// ─── Builder state ────────────────────────────────────────────────────────────
-const builderState = (() => {
-  const STORAGE_KEY = "agent-library-builder";
-  let items = [];
+function getStackEffort(item = {}) {
+  if (item.effort) return item.effort;
+  const count = getStackBlockCount(item);
+  if (count <= 3) return "quick";
+  if (count <= 5) return "standard";
+  return "deep";
+}
 
-  function itemKey(item) {
-    return `${item.section}:${item.title}`;
+function humanizeBlockTitle(title = "") {
+  if (!title.includes(".")) return title;
+  return title
+    .split(".")
+    .slice(1)
+    .join(" ")
+    .split(/[-_]/g)
+    .map((part) => titleCase(part))
+    .join(" ");
+}
+
+function getBuilderSection(sectionKey = "") {
+  return BUILDER_SECTIONS.find((section) => section.key === sectionKey) || BUILDER_SECTIONS[0];
+}
+
+function isValidBuilderSection(sectionKey = "", blockType = "") {
+  return getBuilderSection(sectionKey).validBlockTypes.includes(blockType);
+}
+
+function createBuilderUiState() {
+  return {
+    collapsed: Object.fromEntries(BUILDER_SECTION_ORDER.map((sectionKey) => [sectionKey, false])),
+    expandedBlocks: [],
+    pickerSection: "",
+    pickerQuery: "",
+    lastActiveSection: "instruction"
+  };
+}
+
+function createBuilderRuntimeState() {
+  return {
+    lastInput: "",
+    promptInputs: {},
+    lastPrompt: "",
+    lastOutput: "",
+    previousOutput: "",
+    lastSignals: null,
+    lastRunAt: ""
+  };
+}
+
+function createBuilderWorkingState(seed = {}) {
+  return {
+    items: Array.isArray(seed.items) ? seed.items : [],
+    modeKey: typeof seed.modeKey === "string" ? seed.modeKey : "",
+    lensKey: typeof seed.lensKey === "string" ? seed.lensKey : "",
+    ui: {
+      ...createBuilderUiState(),
+      ...(seed.ui || {}),
+      collapsed: {
+        ...createBuilderUiState().collapsed,
+        ...((seed.ui && seed.ui.collapsed) || {})
+      }
+    },
+    runtime: {
+      ...createBuilderRuntimeState(),
+      ...(seed.runtime || {})
+    }
+  };
+}
+
+function cloneBuilderStateValue(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function builderItemKey(item = {}) {
+  return `${item.section}:${item.title}`;
+}
+
+function getExistingBuilderItem(item = {}) {
+  return builderState.items.find((entry) => builderItemKey(entry) === builderItemKey(item)) || null;
+}
+
+function getBuilderSectionItems(items = [], sectionKey = "") {
+  return items.filter((item) => item.builderSection === sectionKey);
+}
+
+function summarizeBuilderSection(items = [], sectionKey = "") {
+  const sectionItems = getBuilderSectionItems(items, sectionKey);
+  if (sectionItems.length === 0) return "No blocks yet";
+  return sectionItems.slice(0, 3).map((item) => humanizeBlockTitle(item.title)).join(", ");
+}
+
+/**
+ * Choose the default section for a block when the user adds it without an
+ * explicit target. Frame and lens blocks can legally live in more than one
+ * section, so we bias toward the most product-readable placement.
+ */
+function defaultBuilderSectionForItem(item, currentItems = []) {
+  const blockType = item?.blockType || "";
+  if (blockType === "guardrail" || blockType === "schema" || blockType === "rubric") return "harness";
+  if (blockType === "mode" || blockType === "strategy") return "reasoning";
+  if (blockType === "lens") return currentItems.some((entry) => entry.builderSection === "context") ? "reasoning" : "context";
+  if (blockType === "frame") {
+    const title = String(item.title || "").toLowerCase();
+    if (!currentItems.some((entry) => entry.builderSection === "instruction")) return "instruction";
+    if (/(task|clarify|scope|success|objective|goal|role|requirements|brief|prompt)/.test(title)) return "instruction";
+    return "context";
+  }
+  return "instruction";
+}
+
+function getBuilderInsertIndex(items = [], sectionKey = "", indexInSection = null) {
+  const sectionsBefore = BUILDER_SECTION_ORDER.slice(0, BUILDER_SECTION_ORDER.indexOf(sectionKey));
+  let absoluteIndex = 0;
+
+  items.forEach((item, index) => {
+    if (sectionsBefore.includes(item.builderSection)) {
+      absoluteIndex = index + 1;
+    }
+  });
+
+  if (indexInSection === null || indexInSection === undefined) {
+    items.forEach((item, index) => {
+      if (item.builderSection === sectionKey) {
+        absoluteIndex = index + 1;
+      }
+    });
+    return absoluteIndex;
   }
 
-  function migrateLegacyItem(item) {
-    if (!item || item.section === "Block") return item;
+  const sectionItems = getBuilderSectionItems(items, sectionKey);
+  if (sectionItems.length === 0) return absoluteIndex;
+  const clampedIndex = Math.max(0, Math.min(indexInSection, sectionItems.length));
+  if (clampedIndex === sectionItems.length) {
+    const lastSectionItem = sectionItems[sectionItems.length - 1];
+    return items.findIndex((item) => builderItemKey(item) === builderItemKey(lastSectionItem)) + 1;
+  }
+  const targetItem = sectionItems[clampedIndex];
+  return items.findIndex((item) => builderItemKey(item) === builderItemKey(targetItem));
+}
 
+function getDiscoveryRole(item = {}) {
+  if (item.section === "Stack") return "";
+  return defaultBuilderSectionForItem(item, []);
+}
+
+function getDiscoveryFamily(item = {}) {
+  const raw = [
+    item.family,
+    item.group,
+    item.job,
+    item.sourceKind
+  ].filter(Boolean).join(" ").toLowerCase();
+
+  if (/developer|software|code|security|performance|debug|api|migration/.test(raw)) return "dev";
+  if (/writing|communication|proposal|story|brief|feedback/.test(raw)) return "writing";
+  if (/decid|prioriti|tradeoff|portfolio|forecast|negotia/.test(raw)) return "decision";
+  if (/research|analysis|study|evidence|statistics|synthesis/.test(raw)) return "research";
+  if (/planning|execution|rollout|measure|deliver|ship/.test(raw)) return "planning";
+  if (/reflect|review|retro|learning/.test(raw)) return "reflection";
+  if (/prompt/.test(raw)) return "prompt";
+  return "thinking";
+}
+
+function getDiscoveryStage(item = {}) {
+  const raw = [item.stage, item.title, item.summary, item.job].filter(Boolean).join(" ").toLowerCase();
+  if (/decide|decision|prioriti|commit|choose/.test(raw)) return "decide";
+  if (/explore|brainstorm|generate|ideat|discover/.test(raw)) return "explore";
+  return "analyze";
+}
+
+function normalizeFilterTag(tag = "") {
+  return slugify(String(tag || ""));
+}
+
+function getItemTagKeys(item = {}) {
+  return (item.tags || []).map((tag) => normalizeFilterTag(tag)).filter(Boolean);
+}
+
+/**
+ * Manual add targets define where a library card can insert or move a block from
+ * the browse pane. This keeps the right pane fast without exposing invalid drops.
+ */
+function getManualAddTargets(item = {}) {
+  const validSections = BUILDER_SECTIONS
+    .filter((section) => section.validBlockTypes.includes(item.blockType))
+    .map((section) => section.key);
+
+  if (item.blockType === "frame") return ["instruction", "context"];
+  if (item.blockType === "lens") return ["context", "reasoning"];
+  return validSections;
+}
+
+function matchesFuzzySearch(haystack = "", query = "") {
+  if (!query) return true;
+  const text = haystack.toLowerCase();
+  const needle = query.toLowerCase().trim();
+  if (!needle) return true;
+  if (text.includes(needle)) return true;
+
+  let pointer = 0;
+  for (const char of text) {
+    if (char === needle[pointer]) pointer += 1;
+    if (pointer >= needle.length) return true;
+  }
+  return false;
+}
+
+// ─── Builder state ────────────────────────────────────────────────────────────
+//
+// The current UI edits a single working composition, but we still persist it
+// inside a one-active-version wrapper for backwards compatibility with older
+// localStorage payloads and exports. That lets us migrate prior builder data
+// without silently dropping user state.
+const builderState = (() => {
+  const STORAGE_KEY = "agent-library-builder";
+  let stackName = "debug-root-cause";
+  let versions = [];
+  let activeVersionId = "";
+
+  function createVersion(label, description, workingState) {
+    const cleanState = createBuilderWorkingState(cloneBuilderStateValue(workingState || createBuilderWorkingState()));
+    return {
+      id: `version-${Math.random().toString(36).slice(2, 10)}`,
+      label,
+      description,
+      savedAt: new Date().toISOString(),
+      savedState: cloneBuilderStateValue(cleanState),
+      workingState: cloneBuilderStateValue(cleanState)
+    };
+  }
+
+  function getActiveVersion() {
+    return versions.find((version) => version.id === activeVersionId) || versions[0];
+  }
+
+  function ensureActiveVersion() {
+    if (versions.length === 0) {
+      const initial = createVersion("v1", "baseline", createBuilderWorkingState());
+      versions = [initial];
+      activeVersionId = initial.id;
+    }
+    if (!getActiveVersion()) {
+      activeVersionId = versions[0].id;
+    }
+  }
+
+  function getWorkingState() {
+    ensureActiveVersion();
+    return getActiveVersion().workingState;
+  }
+
+  function isManagedSelectionBlock(item = {}, managedBy = "") {
+    return item.managedBy === managedBy;
+  }
+
+  function describeVersion(state = createBuilderWorkingState(), versionIndex = 0) {
+    const items = state.items || [];
+    const modeItem = items.find((item) => item.blockType === "mode");
+    const lensItem = items.find((item) => item.blockType === "lens");
+    const harnessItem = items.find((item) => ["guardrail", "rubric"].includes(item.blockType));
+    if (versionIndex === 0 && items.length === 0) return "baseline";
+    if (modeItem) return humanizeBlockTitle(modeItem.title).replace(/^mode\s+/i, "").toLowerCase() || "baseline";
+    if (lensItem) return `+ ${humanizeBlockTitle(lensItem.title).toLowerCase()}`;
+    if (harnessItem) return `+ ${humanizeBlockTitle(harnessItem.title).toLowerCase()}`;
+    return items.length === 0 ? "baseline" : `${items.length} blocks`;
+  }
+
+  function normalizeStoredItem(item = {}, currentItems = []) {
+    if (!item || !item.title) return null;
+    const resolved = item.key ? resolveRef(item.key) : null;
+    const source = resolved || item;
+    const builderSection = isValidBuilderSection(item.builderSection, source.blockType || item.blockType || "")
+      ? item.builderSection
+      : defaultBuilderSectionForItem(source, currentItems);
+    return {
+      section: source.section || item.section || "Block",
+      key: source.key || item.key || "",
+      blockType: source.blockType || item.blockType || "",
+      sourceKind: source.sourceKind || item.sourceKind || "",
+      family: source.family || item.family || "",
+      group: source.group || item.group || "",
+      title: source.title || item.title || "",
+      summary: source.summary || item.summary || "",
+      copy: item.copy || source.copy || bodyCopy(source),
+      contract: source.contract || item.contract || null,
+      useWhen: source.useWhen || item.useWhen || "",
+      builderSection,
+      managedBy: item.managedBy || "",
+      chains: item.chains || {},
+      inputs: item.inputs || {}
+    };
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        version: 4,
+        stackName,
+        activeVersionId,
+        versions
+      }));
+    } catch {}
+  }
+
+  function hydrateVersions(rawVersions = []) {
+    const nextVersions = rawVersions
+      .map((version, versionIndex) => {
+        const savedState = createBuilderWorkingState({
+          ...version.savedState,
+          items: (version.savedState?.items || []).map((item) => normalizeStoredItem(item)).filter(Boolean)
+        });
+        const workingState = createBuilderWorkingState({
+          ...version.workingState,
+          items: (version.workingState?.items || []).map((item) => normalizeStoredItem(item)).filter(Boolean)
+        });
+        return {
+          id: version.id || `version-${Math.random().toString(36).slice(2, 10)}`,
+          label: version.label || `v${versionIndex + 1}`,
+          description: version.description || describeVersion(savedState, versionIndex),
+          savedAt: version.savedAt || new Date().toISOString(),
+          savedState,
+          workingState
+        };
+      })
+      .filter((version) => version.savedState && version.workingState);
+
+    return nextVersions.length > 0 ? nextVersions : [createVersion("v1", "baseline", createBuilderWorkingState())];
+  }
+
+  function migrateLegacyItem(item, currentItems = []) {
+    if (!item) return null;
     const legacyMap = {
       Mode: { section: "Block", blockType: "mode", sourceKind: "Mode" },
       Strategy: { section: "Block", blockType: "strategy", sourceKind: "Strategy" },
@@ -101,149 +524,346 @@ const builderState = (() => {
       Lens: { section: "Block", blockType: "lens", sourceKind: "Lens" },
       Rubric: { section: "Block", blockType: "rubric", sourceKind: "Rubric" }
     };
-
-    if (!legacyMap[item.section]) return item;
-
-    return {
-      ...item,
-      ...legacyMap[item.section],
-      chains: item.chains || {},
-      inputs: item.inputs || {}
-    };
+    const base = legacyMap[item.section] ? { ...item, ...legacyMap[item.section] } : item;
+    const normalized = normalizeStoredItem({
+      ...base,
+      builderSection: defaultBuilderSectionForItem(base, currentItems)
+    }, currentItems);
+    if (normalized) currentItems.push(normalized);
+    return normalized;
   }
 
-  function save() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
+  function updateManagedSelections() {
+    const working = getWorkingState();
+    const managedMode = working.items.find((item) => isManagedSelectionBlock(item, "mode"));
+    const managedLens = working.items.find((item) => isManagedSelectionBlock(item, "lens"));
+    working.modeKey = managedMode?.key || managedMode?.title || "";
+    working.lensKey = managedLens?.key || managedLens?.title || "";
+  }
+
+  function getVersionById(versionId) {
+    return versions.find((version) => version.id === versionId) || null;
+  }
+
+  function isVersionDirty(versionId = activeVersionId) {
+    const version = getVersionById(versionId);
+    if (!version) return false;
+    return JSON.stringify(version.savedState) !== JSON.stringify(version.workingState);
+  }
+
+  function withWorkingItems(mutator) {
+    const working = getWorkingState();
+    mutator(working.items, working);
+    updateManagedSelections();
+    save();
+  }
+
+  function applyManagedSelection(kind, nextKey) {
+    const blockType = kind === "mode" ? "mode" : "lens";
+    const targetSection = kind === "mode" ? "reasoning" : "context";
+    const working = getWorkingState();
+    working.items = working.items.filter((item) => {
+      if (kind === "mode" && item.blockType === "mode") return false;
+      return !(item.blockType === blockType && item.managedBy === kind);
+    });
+    if (!nextKey) {
+      if (kind === "mode") working.modeKey = "";
+      if (kind === "lens") working.lensKey = "";
+      save();
+      return;
+    }
+
+    const resolved = resolveRef(nextKey);
+    if (!resolved || resolved.blockType !== blockType) {
+      save();
+      return;
+    }
+
+    const normalized = normalizeStoredItem({
+      ...resolved,
+      builderSection: targetSection,
+      managedBy: kind
+    }, working.items);
+
+    if (normalized) {
+      const insertAt = getBuilderInsertIndex(working.items, targetSection, 0);
+      working.items.splice(insertAt, 0, normalized);
+      if (kind === "mode") working.modeKey = normalized.key || normalized.title;
+      if (kind === "lens") working.lensKey = normalized.key || normalized.title;
+    }
+    save();
   }
 
   return {
-    get items() { return items; },
+    get items() { return getWorkingState().items; },
+    get taskInput() { return getWorkingState().runtime.lastInput || ""; },
+    get promptInputs() { return getWorkingState().runtime.promptInputs || {}; },
+    get startMode() { return "free"; },
+    get stackName() { return stackName; },
+    get versions() { return versions; },
+    get activeVersionId() { return activeVersionId; },
+    get activeVersion() { return getActiveVersion(); },
+    get modeKey() { return getWorkingState().modeKey || ""; },
+    get lensKey() { return getWorkingState().lensKey || ""; },
     load() {
       try {
-        items = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
-          .map((item) => migrateLegacyItem(item));
-        items.forEach((i) => { if (!i.chains) i.chains = {}; });
-        items.forEach((i) => { if (!i.inputs) i.inputs = {}; });
-        items.forEach((item, idx) => {
-          Object.entries(item.chains).forEach(([ph, source]) => {
-            if (typeof source === "number") {
-              if (source >= 0 && source < idx && items[source]) {
-                item.chains[ph] = itemKey(items[source]);
-              } else {
-                delete item.chains[ph];
-              }
-            } else if (typeof source !== "string") {
-              delete item.chains[ph];
-            }
-          });
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+        if (raw && raw.version >= 4 && Array.isArray(raw.versions)) {
+          stackName = typeof raw.stackName === "string" && raw.stackName.trim() ? raw.stackName : "debug-root-cause";
+          versions = hydrateVersions(raw.versions);
+          activeVersionId = raw.activeVersionId || versions[0].id;
+          ensureActiveVersion();
+          save();
+          return;
+        }
+
+        const legacyItems = [];
+        const storedItems = Array.isArray(raw) ? raw : (Array.isArray(raw?.items) ? raw.items : []);
+        storedItems.forEach((item) => migrateLegacyItem(item, legacyItems));
+        const workingState = createBuilderWorkingState({
+          items: legacyItems.filter(Boolean),
+          runtime: {
+            ...createBuilderRuntimeState(),
+            lastInput: typeof raw?.taskInput === "string" ? raw.taskInput : ""
+          }
         });
+        stackName = "debug-root-cause";
+        versions = [createVersion("v1", describeVersion(workingState, 0), workingState)];
+        activeVersionId = versions[0].id;
+        save();
       } catch {
-        items = [];
+        const initial = createVersion("v1", "baseline", createBuilderWorkingState());
+        stackName = "debug-root-cause";
+        versions = [initial];
+        activeVersionId = initial.id;
+        save();
       }
     },
-    has(item) {
-      return items.some((i) => itemKey(i) === itemKey(item));
+    isDirty(versionId = activeVersionId) {
+      return isVersionDirty(versionId);
     },
-    add(item) {
+    has(item) {
+      return this.items.some((entry) => builderItemKey(entry) === builderItemKey(item));
+    },
+    getSectionItems(sectionKey) {
+      return getBuilderSectionItems(this.items, sectionKey);
+    },
+    add(item, options = {}) {
+      if (!item || !item.title) return false;
       if (this.has(item)) return false;
-      items.push({
-        section: item.section,
-        blockType: item.blockType || "",
-        sourceKind: item.sourceKind || "",
-        family: item.family || "",
-        group: item.group || "",
-        title: item.title,
-        summary: item.summary || "",
-        copy: item.copy || bodyCopy(item),
-        chains: {},
-        inputs: {}
-      });
+      const working = getWorkingState();
+      const nextSection = options.section && isValidBuilderSection(options.section, item.blockType || "")
+        ? options.section
+        : defaultBuilderSectionForItem(item, working.items);
+      const nextItem = normalizeStoredItem({
+        ...item,
+        builderSection: nextSection,
+        managedBy: options.managedBy || ""
+      }, working.items);
+      if (!nextItem) return false;
+      const insertAt = getBuilderInsertIndex(working.items, nextSection);
+      working.items.splice(insertAt, 0, nextItem);
+      if (nextItem.managedBy === "mode") working.modeKey = nextItem.key || nextItem.title;
+      if (nextItem.managedBy === "lens") working.lensKey = nextItem.key || nextItem.title;
+      if (Array.isArray(working.ui.expandedBlocks) && !working.ui.expandedBlocks.includes(builderItemKey(nextItem))) {
+        working.ui.expandedBlocks.push(builderItemKey(nextItem));
+      }
+      working.ui.lastActiveSection = nextSection;
       save();
       return true;
     },
-    remove(k) {
-      items = items.filter((i) => itemKey(i) !== k);
+    setStackName(value) {
+      stackName = (value || "").trim() || "untitled-stack";
       save();
     },
-    move(k, dir) {
-      const idx = items.findIndex((i) => itemKey(i) === k);
-      if (idx < 0) return;
-      const next = idx + dir;
-      if (next < 0 || next >= items.length) return;
-      [items[idx], items[next]] = [items[next], items[idx]];
+    setTaskInput(value) {
+      getWorkingState().runtime.lastInput = value || "";
       save();
+    },
+    setPromptInput(placeholder, value) {
+      const runtime = getWorkingState().runtime;
+      if (!runtime.promptInputs || typeof runtime.promptInputs !== "object") {
+        runtime.promptInputs = {};
+      }
+      if (!placeholder) return;
+      if (value && value.trim()) {
+        runtime.promptInputs[placeholder] = value;
+      } else {
+        delete runtime.promptInputs[placeholder];
+      }
+      save();
+    },
+    setStartMode() {},
+    setModeKey(value) {
+      applyManagedSelection("mode", value);
+    },
+    setLensKey(value) {
+      applyManagedSelection("lens", value);
+    },
+    setPickerState(sectionKey = "", query = "") {
+      const working = getWorkingState();
+      working.ui.pickerSection = sectionKey;
+      working.ui.pickerQuery = query;
+      if (sectionKey) working.ui.lastActiveSection = sectionKey;
+      save();
+    },
+    toggleSection(sectionKey) {
+      const working = getWorkingState();
+      working.ui.collapsed[sectionKey] = !working.ui.collapsed[sectionKey];
+      save();
+    },
+    setBlockExpanded(key, expanded) {
+      const working = getWorkingState();
+      const expandedBlocks = new Set(working.ui.expandedBlocks || []);
+      if (expanded) expandedBlocks.add(key);
+      else expandedBlocks.delete(key);
+      working.ui.expandedBlocks = [...expandedBlocks];
+      save();
+    },
+    updateBlockCopy(key, value) {
+      withWorkingItems((items, working) => {
+        const item = items.find((entry) => builderItemKey(entry) === key);
+        if (!item) return;
+        item.copy = value;
+        working.ui.expandedBlocks = Array.from(new Set([...(working.ui.expandedBlocks || []), key]));
+      });
+    },
+    remove(key) {
+      let removed = null;
+      withWorkingItems((items, working) => {
+        const index = items.findIndex((entry) => builderItemKey(entry) === key);
+        if (index < 0) return;
+        removed = {
+          item: cloneBuilderStateValue(items[index]),
+          section: items[index].builderSection,
+          indexInSection: getBuilderSectionItems(items, items[index].builderSection)
+            .findIndex((entry) => builderItemKey(entry) === key)
+        };
+        items.splice(index, 1);
+        working.ui.expandedBlocks = (working.ui.expandedBlocks || []).filter((entryKey) => entryKey !== key);
+      });
+      return removed;
+    },
+    restoreRemoved(snapshot) {
+      if (!snapshot?.item) return false;
+      const working = getWorkingState();
+      const item = normalizeStoredItem(snapshot.item, working.items);
+      if (!item) return false;
+      const insertAt = getBuilderInsertIndex(working.items, snapshot.section || item.builderSection, snapshot.indexInSection ?? null);
+      item.builderSection = snapshot.section || item.builderSection;
+      working.items.splice(insertAt, 0, item);
+      save();
+      return true;
     },
     clear() {
-      items = [];
+      const working = getWorkingState();
+      working.items = [];
+      working.modeKey = "";
+      working.lensKey = "";
+      working.ui = createBuilderUiState();
+      working.runtime = {
+        ...createBuilderRuntimeState(),
+        lastInput: working.runtime.lastInput || ""
+      };
       save();
+    },
+    move(key, dir) {
+      const item = this.items.find((entry) => builderItemKey(entry) === key);
+      if (!item) return;
+      const sectionItems = this.getSectionItems(item.builderSection);
+      const sectionIndex = sectionItems.findIndex((entry) => builderItemKey(entry) === key);
+      if (sectionIndex < 0) return;
+      this.moveToSection(key, item.builderSection, sectionIndex + dir);
+    },
+    moveToSection(key, sectionKey, indexInSection = null) {
+      const working = getWorkingState();
+      const srcIndex = working.items.findIndex((entry) => builderItemKey(entry) === key);
+      if (srcIndex < 0) return false;
+      const movingItem = working.items[srcIndex];
+      if (!isValidBuilderSection(sectionKey, movingItem.blockType || "")) return false;
+      const [item] = working.items.splice(srcIndex, 1);
+      item.builderSection = sectionKey;
+      const insertAt = getBuilderInsertIndex(working.items, sectionKey, indexInSection);
+      working.items.splice(insertAt, 0, item);
+      working.ui.lastActiveSection = sectionKey;
+      save();
+      return true;
     },
     reorder(srcKey, tgtKey) {
-      const srcIdx = items.findIndex((i) => itemKey(i) === srcKey);
-      const tgtIdx = items.findIndex((i) => itemKey(i) === tgtKey);
-      if (srcIdx < 0 || tgtIdx < 0 || srcIdx === tgtIdx) return;
-      const [moved] = items.splice(srcIdx, 1);
-      items.splice(tgtIdx, 0, moved);
+      const target = this.items.find((entry) => builderItemKey(entry) === tgtKey);
+      if (!target) return false;
+      const sectionItems = this.getSectionItems(target.builderSection);
+      const indexInSection = sectionItems.findIndex((entry) => builderItemKey(entry) === tgtKey);
+      return this.moveToSection(srcKey, target.builderSection, indexInSection);
+    },
+    setChain() {},
+    setInput() {},
+    switchVersion(versionId) {
+      if (!getVersionById(versionId)) return false;
+      activeVersionId = versionId;
+      save();
+      return true;
+    },
+    saveVersion() {
+      const version = getActiveVersion();
+      if (!version) return false;
+      version.savedState = cloneBuilderStateValue(version.workingState);
+      version.savedAt = new Date().toISOString();
+      version.description = describeVersion(version.savedState, versions.indexOf(version));
+      save();
+      return true;
+    },
+    duplicateVersion() {
+      const source = getWorkingState();
+      const nextVersion = createVersion(`v${versions.length + 1}`, describeVersion(source, versions.length), source);
+      versions = [...versions, nextVersion];
+      activeVersionId = nextVersion.id;
+      save();
+      return nextVersion;
+    },
+    setRunResult({ prompt = "", output = "", signals = null }) {
+      const runtime = getWorkingState().runtime;
+      runtime.previousOutput = runtime.lastOutput || "";
+      runtime.lastPrompt = prompt;
+      runtime.lastOutput = output;
+      runtime.lastSignals = signals;
+      runtime.lastRunAt = new Date().toISOString();
       save();
     },
-    setChain(itemKeyValue, ph, srcIdx) {
-      const item = items.find((i) => `${i.section}:${i.title}` === itemKeyValue);
-      if (!item) return;
-      if (!item.chains) item.chains = {};
-      if (!item.inputs) item.inputs = {};
-      if (srcIdx === null || srcIdx === undefined || srcIdx < 0) {
-        delete item.chains[ph];
-      } else {
-        const sourceItem = items[srcIdx];
-        if (!sourceItem) {
-          delete item.chains[ph];
-        } else {
-          item.chains[ph] = itemKey(sourceItem);
-          delete item.inputs[ph];
+    restore(newItems, meta = {}) {
+      const working = createBuilderWorkingState({
+        items: (Array.isArray(newItems) ? newItems : [])
+          .map((item) => normalizeStoredItem(item))
+          .filter(Boolean),
+        runtime: {
+          ...createBuilderRuntimeState(),
+          lastInput: typeof meta.taskInput === "string" ? meta.taskInput : ""
         }
+      });
+      versions = [createVersion("v1", describeVersion(working, 0), working)];
+      activeVersionId = versions[0].id;
+      if (typeof meta.stackName === "string" && meta.stackName.trim()) {
+        stackName = meta.stackName.trim();
       }
       save();
     },
-    setInput(itemKeyValue, ph, value) {
-      const item = items.find((i) => `${i.section}:${i.title}` === itemKeyValue);
-      if (!item) return;
-      if (!item.inputs) item.inputs = {};
-      if (!item.chains) item.chains = {};
-      if (value === "") {
-        delete item.inputs[ph];
-      } else {
-        item.inputs[ph] = value;
-        delete item.chains[ph];
-      }
-      save();
-    },
-    restore(newItems) {
-      items = (Array.isArray(newItems) ? newItems : [])
-        .map((item) => migrateLegacyItem({
-          section: item.section || "Block",
-          blockType: item.blockType || "",
-          sourceKind: item.sourceKind || "",
-          family: item.family || "",
-          group: item.group || "",
-          title: item.title || "",
-          summary: item.summary || "",
-          copy: item.copy || "",
-          chains: item.chains || {},
-          inputs: item.inputs || {}
-        }))
-        .filter((item) => item && item.title);
-      items.forEach((i) => { if (!i.chains) i.chains = {}; });
-      items.forEach((i) => { if (!i.inputs) i.inputs = {}; });
-      save();
-    },
-    assemble() {
-      return items
-        .filter((i) => i.copy && i.copy.trim())
-        .map((i, idx) => formatStackBlock(i, idx, items))
-        .join("\n\n---\n\n");
+    assemble(options = {}) {
+      const resolveInputs = !!options.resolveInputs;
+      const inputValues = resolveInputs ? (options.inputValues || {}) : {};
+      const parts = BUILDER_SECTION_ORDER
+        .map((sectionKey) => {
+          const section = getBuilderSection(sectionKey);
+          const items = this.getSectionItems(sectionKey).filter((item) => item.copy && item.copy.trim());
+          if (items.length === 0) return "";
+          return `## ${section.label}\n\n${items.map((item) => `### ${humanizeBlockTitle(item.title)}\n${resolveInputs ? fillPromptTemplate(item.copy.trim(), inputValues) : item.copy.trim()}`).join("\n\n")}`;
+        })
+        .filter(Boolean);
+      return parts.join("\n\n---\n\n");
     }
   };
 })();
 
+/** @type {{ blocks: number; stacks: number }} */
 const sectionCounts = {
   blocks: blocks.length,
   stacks: stacks.length
@@ -294,7 +914,9 @@ function renderPromptMarkup(text = "") {
 
 function getOntologyPath(item) {
   if (item.section === "Stack") {
-    return ["Stack"];
+    const path = ["Stack"];
+    if (item.family) path.push(item.family);
+    return path;
   }
 
   const path = ["Block", blockTypeLabel(item.blockType)];
@@ -307,74 +929,36 @@ function getOntologyLabel(item) {
   return getOntologyPath(item).join(" / ");
 }
 
-function getChainSourceIndex(source, items = [], beforeIndex = items.length) {
-  if (typeof source === "number") {
-    return source >= 0 && source < beforeIndex ? source : -1;
-  }
-  if (typeof source === "string") {
-    const idx = items.findIndex((item) => `${item.section}:${item.title}` === source);
-    return idx >= 0 && idx < beforeIndex ? idx : -1;
-  }
-  return -1;
-}
-
-function buildChainGlue(item, itemIndex = -1, items = []) {
-  const chains = Object.entries(item.chains || {})
-    .map(([ph, source]) => {
-      const srcIdx = getChainSourceIndex(source, items, itemIndex);
-      if (srcIdx < 0) return null;
-      const srcItem = items[srcIdx];
-      return `- \`${ph}\`: use the relevant output from Step ${srcIdx + 1} (${srcItem.title}).`;
-    })
-    .filter(Boolean);
-
-  if (chains.length === 0) return "";
-
-  return `Input wiring:\n${chains.join("\n")}\n\n`;
-}
-
-function extractPlaceholders(text = "") {
-  return [...new Set(text.match(PLACEHOLDER_RE) || [])];
-}
-
-function applyManualInputs(text = "", item = {}) {
-  return Object.entries(item.inputs || {}).reduce((nextText, [ph, value]) => {
-    if (value === "") return nextText;
-    return nextText.split(ph).join(value);
-  }, text);
-}
-
-function formatStackBlock(item, itemIndex = -1, items = []) {
-  const label = getOntologyLabel(item);
-  const glue = buildChainGlue(item, itemIndex, items);
-  return `## ${item.title}\n_${label}_\n\n${glue}${applyManualInputs(item.copy, item)}`;
-}
-
 function bodyCopy(item) {
   if (item.copy) return item.copy;
   return (item.body || [])
     .map(([label, text]) => `${label}:\n${text.replace(/`([^`]+)`/g, "$1")}`)
     .join("\n\n");
 }
-
-function resolveStackSteps(sequence) {
-  const refs = (sequence.match(/`([^`]+)`/g) || []).map((s) => s.slice(1, -1).trim());
-  return refs.map((ref) => resolveRef(ref)).filter(Boolean);
-}
-
 function escHtml(str = "") {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+/**
+ * @param {PromptKitItem} item
+ */
 function createCard(item) {
-  const template = document.getElementById("card-template");
-  const card = template.content.firstElementChild.cloneNode(true);
+  /** @type {HTMLTemplateElement} */
+  const template = /** @type {HTMLTemplateElement} */ (document.getElementById("card-template"));
+  /** @type {HTMLElement} */
+  const card = /** @type {HTMLElement} */ (template.content.firstElementChild.cloneNode(true));
   const label = getOntologyLabel(item);
   const searchText = [
     item.section,
     item.blockType,
     item.sourceKind,
     item.family,
+    item.job,
+    item.useWhen,
+    item.stage,
+    item.outputKind,
+    item.effort,
+    item.stakes,
     item.group,
     item.title,
     item.summary,
@@ -387,12 +971,24 @@ function createCard(item) {
   card.dataset.path = label.toLowerCase();
   card.dataset.title = item.title.toLowerCase();
   card.dataset.section = normalizeSection(item);
+  card.dataset.itemType = item.section === "Stack" ? "stack" : "block";
+  card.dataset.discoveryRole = getDiscoveryRole(item);
+  card.dataset.familyGroup = getDiscoveryFamily(item);
+  card.dataset.stageGroup = getDiscoveryStage(item);
+  card.dataset.tagKeys = getItemTagKeys(item).join(",");
+  card.dataset.stackFamily = item.family || "";
+  card.dataset.stackStage = item.stage || "";
+  card.dataset.stackOutputKind = item.outputKind || "";
+  card.dataset.stackEffort = item.effort || "";
+  card.dataset.stackStakes = item.stakes || "";
   card.querySelector(".card-meta").textContent = label;
   card.querySelector(".card-meta").dataset.section = item.section;
 
   card.querySelector("h3").textContent = item.title;
   card.querySelector(".card-summary").textContent = item.summary;
+  const cardSubmeta = card.querySelector(".card-submeta");
   const cardDetails = card.querySelector(".card-details");
+  const addChooser = card.querySelector(".card-add-chooser");
   const bodyEl = card.querySelector(".card-body");
   const promptEl = card.querySelector(".prompt");
   const detailsId = `details-${slugify(`${item.section}-${item.title}`)}`;
@@ -405,11 +1001,30 @@ function createCard(item) {
     : [];
 
   if (item.section === "Stack") {
-    card.dataset.stackSize = getStackSizeCategory(stackRefs.length);
+    card.dataset.stackEffort = item.effort || getStackEffort(item);
     const countBadge = document.createElement("span");
     countBadge.className = "stack-size-badge";
     countBadge.textContent = `${stackRefs.length} block${stackRefs.length !== 1 ? "s" : ""}`;
     card.querySelector(".card-meta").appendChild(countBadge);
+
+    if (cardSubmeta) {
+      const metaPills = [
+        item.job ? `Job: ${item.job}` : "",
+        item.stage ? `Stage: ${STACK_STAGE_LABELS[item.stage] || titleCaseWords(item.stage)}` : "",
+        item.outputKind ? `Output: ${STACK_OUTPUT_KIND_LABELS[item.outputKind] || titleCaseWords(item.outputKind)}` : "",
+        (item.effort || getStackEffort(item)) ? `Effort: ${STACK_EFFORT_LABELS[item.effort || getStackEffort(item)] || titleCaseWords(item.effort || getStackEffort(item))}` : "",
+        item.stakes ? `Stakes: ${STACK_STAKES_LABELS[item.stakes] || titleCaseWords(item.stakes)}` : ""
+      ].filter(Boolean);
+
+      if (metaPills.length > 0) {
+        cardSubmeta.hidden = false;
+        cardSubmeta.innerHTML = metaPills.map((text) => `<span class="meta-pill">${escHtml(text)}</span>`).join("");
+      } else {
+        cardSubmeta.hidden = true;
+      }
+    }
+  } else if (cardSubmeta) {
+    cardSubmeta.hidden = true;
   }
 
   if (item.section === "Stack") {
@@ -453,59 +1068,74 @@ function createCard(item) {
 
   if (item.section === "Stack") {
     const steps = stackRefs.map((ref) => resolveRef(ref)).filter(Boolean);
-    addBtn.textContent = "Add blocks";
+    addBtn.textContent = "Load Stack";
     addBtn.removeAttribute("aria-pressed");
+    addBtn.dataset.stackSteps = steps.map((s) => `${s.section}:${s.title}`).join(",");
     addBtn.addEventListener("click", () => {
-      const added = steps.reduce((count, step) => {
-        if (!builderState.has(step)) {
-          builderState.add(step);
-          return count + 1;
-        }
-        return count;
-      }, 0);
+      if ((builderState.items.length > 0 || builderState.isDirty()) && !window.confirm("Replace the current builder with this stack? Unsaved composition changes will be lost.")) {
+        return;
+      }
+      builderState.clear();
+      builderState.setStackName(item.job || slugify(item.title) || "loaded-stack");
+      steps.forEach((step) => builderState.add(step));
       if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
       renderBuilder();
+      addBtn.dataset.stackFlashing = "1";
+      addBtn.textContent = "Loaded";
+      setTimeout(() => {
+        delete addBtn.dataset.stackFlashing;
+        addBtn.textContent = "Load Stack";
+      }, 1500);
       syncAddButtons();
-      addBtn.textContent = added > 0 ? `Added ${added}` : "Up to date";
-      setTimeout(() => { addBtn.textContent = "Add blocks"; }, 1500);
+      if (typeof showBuilderToast === "function") showBuilderToast(`Loaded ${item.title}`);
     });
-    card.querySelector(".copy-btn").remove();
   } else {
     const hasBuilderContent = !!(item.copy || (item.body && item.body.length > 0));
     if (hasBuilderContent) {
       const itemKey = `${item.section}:${item.title}`;
+      card.draggable = true;
+      card.dataset.builderRef = item.key || `${item.blockType}.${slugify(item.title)}`;
       addBtn.dataset.key = itemKey;
       addBtn.addEventListener("click", () => {
-        if (builderState.has(item)) {
-          builderState.remove(itemKey);
+        const existingItem = getExistingBuilderItem(item);
+        const validTargets = getManualAddTargets(item);
+        if (validTargets.length <= 1) {
+          const targetSection = validTargets[0] || defaultBuilderSectionForItem(item);
+          if (existingItem) {
+            builderState.moveToSection(builderItemKey(existingItem), targetSection);
+          } else {
+            builderState.add(item, { section: targetSection });
+          }
+          if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
           renderBuilder();
-        } else {
-          builderState.add(item);
-          if (!document.querySelector(".shell").classList.contains("builder-open")) {
-            openBuilder();
-          }
-          renderBuilder(itemKey);
+          syncAddButtons();
+          return;
         }
-        syncAddButtons();
+        addChooser.hidden = !addChooser.hidden;
       });
-      if (item.copy) {
-        card.querySelector(".copy-btn").addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(item.copy);
-            const btn = card.querySelector(".copy-btn");
-            const original = btn.textContent;
-            btn.textContent = "Copied";
-            setTimeout(() => { btn.textContent = original; }, 1200);
-          } catch {
-            window.alert("Copy failed. Select and copy manually.");
-          }
+      if (addChooser) {
+        const targets = getManualAddTargets(item);
+        addChooser.innerHTML = targets.map((sectionKey) => `
+          <button type="button" class="card-add-target" data-section-target="${escHtml(sectionKey)}">${escHtml(getBuilderSection(sectionKey).label)}</button>
+        `).join("");
+        addChooser.querySelectorAll("[data-section-target]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const targetSection = btn.dataset.sectionTarget || defaultBuilderSectionForItem(item);
+            const existingItem = getExistingBuilderItem(item);
+            if (existingItem) {
+              builderState.moveToSection(builderItemKey(existingItem), targetSection);
+            } else {
+              builderState.add(item, { section: targetSection });
+            }
+            addChooser.hidden = true;
+            if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
+            renderBuilder();
+            syncAddButtons();
+          });
         });
-      } else {
-        card.querySelector(".copy-btn").remove();
       }
     } else {
       addBtn.remove();
-      card.querySelector(".copy-btn").remove();
     }
   }
 
@@ -515,8 +1145,9 @@ function createCard(item) {
     detailsBtn.addEventListener("click", () => {
       const open = card.classList.toggle("expanded");
       cardDetails.hidden = !open;
+      if (addChooser) addChooser.hidden = true;
       detailsBtn.setAttribute("aria-expanded", String(open));
-      detailsBtn.textContent = open ? "Hide" : "Details";
+      detailsBtn.textContent = open ? "Close" : "Preview";
     });
   } else {
     detailsBtn.remove();
@@ -525,385 +1156,110 @@ function createCard(item) {
   return card;
 }
 
-// ─── Builder helpers ──────────────────────────────────────────────────────────
-
-function openBuilder() {
-  document.querySelector(".shell").classList.add("builder-open");
-  document.getElementById("builder-toggle").setAttribute("aria-expanded", "true");
-}
-
-function closeBuilder() {
-  document.querySelector(".shell").classList.remove("builder-open");
-  document.getElementById("builder-toggle").setAttribute("aria-expanded", "false");
-}
-
-function syncAddButtons() {
-  document.querySelectorAll(".add-btn[data-key]").forEach((btn) => {
-    const isAdded = builderState.items.some((i) => `${i.section}:${i.title}` === btn.dataset.key);
-    btn.dataset.added = isAdded ? "true" : "false";
-    btn.textContent = isAdded ? "Added" : "Add";
-    btn.setAttribute("aria-pressed", String(isAdded));
-  });
-}
-
-function getPlaceholderUiState() {
-  const output = document.getElementById("builder-output");
-  const liveItems = builderState.items.filter((i) => i.copy && i.copy.trim());
-  const groups = liveItems
-    .map((item, idx) => {
-      const fields = extractPlaceholders(item.copy || "").map((ph) => {
-        const chainSrcIdx = getChainSourceIndex((item.chains || {})[ph], liveItems, idx);
-        const manualValue = (item.inputs && typeof item.inputs[ph] === "string") ? item.inputs[ph] : "";
-        return {
-          ph,
-          itemKey: `${item.section}:${item.title}`,
-          stepIndex: idx,
-          chainSrcIdx,
-          manualValue
-        };
-      });
-
-      return fields.length > 0
-        ? {
-            stepNum: idx + 1,
-            title: item.title,
-            label: getOntologyLabel(item),
-            fields,
-            liveItems
-          }
-        : null;
-    })
-    .filter(Boolean);
-
-  const knownPlaceholders = new Set(groups.flatMap((group) => group.fields.map((field) => field.ph)));
-  const ungrouped = extractPlaceholders(output ? output.value : "")
-    .filter((ph) => !knownPlaceholders.has(ph))
-    .map((ph) => ({
-      ph,
-      itemKey: "",
-      stepIndex: -1,
-      chainSrcIdx: -1,
-      manualValue: "",
-      liveItems: []
-    }));
-
-  const unresolvedCount = groups.reduce((count, group) => count + group.fields.reduce((groupCount, field) => {
-    const resolved = field.chainSrcIdx >= 0 || field.manualValue !== "";
-    return groupCount + (resolved ? 0 : 1);
-  }, 0), 0) + ungrouped.length;
-
-  const totalCount = groups.reduce((count, group) => count + group.fields.length, 0) + ungrouped.length;
-
-  return {
-    groups,
-    ungrouped,
-    unresolvedCount,
-    totalCount
-  };
-}
-
-let builderDraftDirty = false;
-
-function updateBuilderStateNote() {
-  const note = document.getElementById("builder-state-note");
-  const output = document.getElementById("builder-output");
-  if (!note || !output) return;
-  if (builderDraftDirty) {
-    note.hidden = false;
-    note.textContent = "Draft edited. Rebuild from cards to resync the stack.";
-    output.classList.add("is-dirty");
-  } else {
-    note.hidden = true;
-    note.textContent = "";
-    output.classList.remove("is-dirty");
-  }
-}
-
-function syncBuilderOutput(force = false) {
-  const output = document.getElementById("builder-output");
-  if (!output) return "";
-  const assembled = builderState.assemble();
-  if (force || !builderDraftDirty) {
-    output.value = assembled;
-    builderDraftDirty = false;
-  }
-  updateBuilderStateNote();
-  updateStats();
-  updateVarButton();
-  return assembled;
-}
-
-function renderBuilder(flashKey = null) {
-  const list = document.getElementById("builder-list");
-  const empty = document.getElementById("builder-empty");
-  const footer = document.getElementById("builder-footer");
-  const output = document.getElementById("builder-output");
-  const badge = document.getElementById("builder-badge");
-  const splitHandle = document.querySelector(".builder-section-resize-handle");
-
-  const items = builderState.items;
-  const count = items.length;
-  const footerVisible = !(count === 0 && !(builderDraftDirty || output.value.trim().length > 0));
-
-  badge.textContent = count;
-  badge.hidden = count === 0;
-
-  empty.hidden = count > 0;
-  list.hidden = count === 0;
-  footer.hidden = !footerVisible;
-  if (splitHandle) splitHandle.hidden = !footerVisible;
-
-  list.innerHTML = "";
-  if (items.length > 0) {
-    const header = document.createElement("div");
-    header.className = "bi-list-header";
-    header.innerHTML = `<span class="bi-list-count">${items.length} step${items.length !== 1 ? "s" : ""}</span><button class="bi-clear-btn" type="button">Clear all</button>`;
-    header.querySelector(".bi-clear-btn").addEventListener("click", () => {
-      builderState.clear();
-      builderDraftDirty = false;
-      renderBuilder();
-      syncAddButtons();
-    });
-    list.appendChild(header);
-  }
-
-  items.forEach((item, idx) => {
-    const key = `${item.section}:${item.title}`;
-    const metaLabel = getOntologyLabel(item);
-    const el = document.createElement("div");
-    el.className = "builder-item" + (key === flashKey ? " bi-entering" : "");
-    el.dataset.key = key;
-    el.draggable = true;
-    const preview = item.summary ? `<div class="bi-preview">${escHtml(item.summary)}</div>` : "";
-    const phs = extractPlaceholders(item.copy || "");
-    const chains = item.chains || {};
-    let chainHtml = "";
-
-    if (phs.length > 0 && idx > 0) {
-      const chainRows = phs.map((ph) => {
-        const srcIdx = getChainSourceIndex(chains[ph], items, idx);
-        const options = [
-          `<option value=""${srcIdx < 0 ? " selected" : ""}>manual</option>`,
-          ...items.slice(0, idx).map((prevItem, prevIndex) => {
-            const short = prevItem.title.length > 24 ? prevItem.title.slice(0, 24) + "…" : prevItem.title;
-            return `<option value="${prevIndex}"${srcIdx === prevIndex ? " selected" : ""}>← Step ${prevIndex + 1}: ${escHtml(short)}</option>`;
-          })
-        ].join("");
-        return `<div class="bi-chain-row"><code class="bi-chain-ph">${escHtml(ph)}</code><select class="bi-chain-select" data-ph="${escHtml(ph)}">${options}</select></div>`;
-      }).join("");
-      chainHtml = `<div class="bi-chains">${chainRows}</div>`;
-    }
-
-    el.innerHTML = `
-      <div class="bi-meta">${escHtml(metaLabel)}</div>
-      <div class="bi-title"><span class="bi-step">${idx + 1}</span>${escHtml(item.title)}</div>
-      ${preview}
-      <div class="bi-controls">
-        <button class="bi-btn" data-action="up" title="Move up" aria-label="Move ${escHtml(item.title)} up"${idx === 0 ? " disabled" : ""}>&#8593;</button>
-        <button class="bi-btn" data-action="down" title="Move down" aria-label="Move ${escHtml(item.title)} down"${idx === items.length - 1 ? " disabled" : ""}>&#8595;</button>
-        <button class="bi-btn bi-remove" data-action="remove" title="Remove" aria-label="Remove ${escHtml(item.title)}">&times;</button>
-      </div>
-      ${chainHtml}
-    `;
-    list.appendChild(el);
-  });
-
-  syncBuilderOutput();
-}
-
-function updateStats() {
-  const output = document.getElementById("builder-output");
-  const statsEl = document.getElementById("builder-stats");
-  if (!statsEl) return;
-  const text = output.value;
-  if (!text) {
-    statsEl.hidden = true;
-    return;
-  }
-  statsEl.hidden = false;
-  const chars = text.length;
-  const { unresolvedCount, totalCount } = getPlaceholderUiState();
-  const items = builderState.items.length;
-  const charStr = `${chars.toLocaleString()} chars`;
-  const itemStr = `${items} item${items !== 1 ? "s" : ""}`;
-  const phStr = unresolvedCount > 0
-    ? `<button class="stat-ph-btn" type="button">${unresolvedCount} input${unresolvedCount !== 1 ? "s" : ""} to fill</button>`
-    : totalCount > 0
-      ? '<button class="stat-ph-btn" type="button">Review inputs</button>'
-      : '<span class="stat-ok">Ready to copy</span>';
-  statsEl.innerHTML = `<span>${itemStr}</span><span>${charStr}</span>${phStr}`;
-}
-
-function updateVarButton() {
-  const btn = document.getElementById("fill-placeholders");
-  if (!btn) return;
-  const { unresolvedCount, totalCount } = getPlaceholderUiState();
-  if (totalCount > 0) {
-    btn.hidden = false;
-    btn.textContent = unresolvedCount > 0 ? `Fill in (${unresolvedCount})` : "Review inputs";
-  } else {
-    btn.hidden = true;
-  }
-}
-
-function openVarsModal() {
-  const modal = document.getElementById("vars-modal");
-  const body = document.getElementById("vm-body");
-  const { groups, ungrouped } = getPlaceholderUiState();
-  if (groups.length === 0 && ungrouped.length === 0) return;
-
-  body.innerHTML = "";
-
-  groups.forEach((group) => {
-    const section = document.createElement("div");
-    section.className = "vm-group";
-    section.innerHTML = `<div class="vm-group-header"><span class="vm-step">${group.stepNum}</span><span class="vm-group-title">${escHtml(group.title)}</span><span class="vm-group-label">${escHtml(group.label)}</span></div>`;
-    group.fields.forEach((field, fieldIndex) => {
-      section.appendChild(buildVmField({
-        ...field,
-        fieldIndex,
-        liveItems: group.liveItems
-      }));
-    });
-    body.appendChild(section);
-  });
-
-  if (ungrouped.length > 0) {
-    const section = document.createElement("div");
-    section.className = "vm-group";
-    section.innerHTML = '<div class="vm-group-header"><span class="vm-group-title">Other</span></div>';
-    ungrouped.forEach((field) => {
-      section.appendChild(buildVmField(field));
-    });
-    body.appendChild(section);
-  }
-
-  modal.showModal();
-  const first = body.querySelector(".vm-chain-select, .vm-input");
-  if (first) setTimeout(() => first.focus(), 40);
-}
-
-function buildVmField({ ph, itemKey = "", stepIndex = -1, fieldIndex = 0, chainSrcIdx = -1, manualValue = "", liveItems = [] }) {
-  const item = document.createElement("div");
-  item.className = "vm-field";
-  const canChain = stepIndex > 0 && fieldIndex > 0;
-  const chainOptions = canChain
-    ? [
-        `<option value=""${chainSrcIdx < 0 ? " selected" : ""}>Manual entry</option>`,
-        ...liveItems.slice(0, stepIndex).map((prevItem, prevIndex) => {
-          const selected = chainSrcIdx === prevIndex ? " selected" : "";
-          return `<option value="${prevIndex}"${selected}>← Step ${prevIndex + 1}: ${escHtml(prevItem.title)}</option>`;
-        })
-      ].join("")
-    : "";
-  const chainControl = canChain
-    ? `
-      <label class="vm-chain-row">
-        <span class="vm-chain-label">Source</span>
-        <select class="vm-chain-select" data-item-key="${escHtml(itemKey)}" data-placeholder="${escHtml(ph)}">
-          ${chainOptions}
-        </select>
-      </label>
-    `
-    : "";
-  item.innerHTML = `
-    <div class="vm-field-head"><code class="vm-ph">${escHtml(ph)}</code></div>
-    ${chainControl}
-    <textarea class="vm-input" data-item-key="${escHtml(itemKey)}" data-placeholder="${escHtml(ph)}" spellcheck="false" placeholder="Type or paste your value…"${(canChain && chainSrcIdx >= 0) ? ' disabled' : ''}>${escHtml(manualValue)}</textarea>
-  `;
-
-  if (canChain) {
-    const select = item.querySelector(".vm-chain-select");
-    const textarea = item.querySelector(".vm-input");
-    select.addEventListener("change", () => {
-      const isManual = select.value === "";
-      textarea.disabled = !isManual;
-      if (!isManual) textarea.value = "";
-      if (isManual) setTimeout(() => textarea.focus(), 0);
-    });
-  }
-
-  return item;
-}
-
-function applyVarModal() {
-  const modal = document.getElementById("vars-modal");
-  const output = document.getElementById("builder-output");
-  const manualOverrides = [];
-
-  modal.querySelectorAll(".vm-field").forEach((field) => {
-    const input = field.querySelector(".vm-input");
-    const select = field.querySelector(".vm-chain-select");
-    if (!input) return;
-    const itemKey = input.dataset.itemKey || (select ? select.dataset.itemKey : "");
-    const ph = input.dataset.placeholder;
-    const manualValue = input.disabled ? "" : input.value;
-
-    if (manualValue !== "") {
-      if (itemKey) {
-        builderState.setInput(itemKey, ph, manualValue);
-      } else {
-        manualOverrides.push({ ph, value: manualValue });
-      }
-      return;
-    }
-
-    if (itemKey) {
-      builderState.setInput(itemKey, ph, "");
-    }
-
-    if (select && itemKey) {
-      const srcIdx = select.value === "" ? null : parseInt(select.value, 10);
-      builderState.setChain(itemKey, ph, srcIdx);
-    }
-  });
-
-  builderDraftDirty = false;
-  renderBuilder();
-
-  if (manualOverrides.length > 0) {
-    let text = output.value;
-    manualOverrides.forEach(({ ph, value }) => {
-      text = text.split(ph).join(value);
-    });
-    output.value = text;
-    builderDraftDirty = true;
-    updateBuilderStateNote();
-    updateStats();
-    updateVarButton();
-  }
-
-  modal.close();
-}
-
-const search = document.getElementById("search");
+/** @type {HTMLInputElement} */
+const search = /** @type {HTMLInputElement} */ (document.getElementById("search"));
 const filterCount = document.getElementById("filter-count");
 const filterClear = document.getElementById("filter-clear");
 
 // ─── Filter state & logic ─────────────────────────────────────────────────────
 
+/** @type {{ text: string; itemTypes: string[]; blockRoles: string[]; families: string[]; stages: string[]; tags: string[] }} */
 const filterState = {
   text: "",
-  section: ""
+  itemTypes: [],
+  blockRoles: [],
+  families: [],
+  stages: [],
+  tags: []
 };
 
-const SECTION_CHIPS = [
-  { label: "Stacks", value: "stack" },
-  ...BLOCK_TYPE_ORDER
-    .filter((type) => blocks.some((item) => item.blockType === type))
-    .map((type) => ({ label: blockTypeLabel(type), value: type }))
+const FILTER_GROUPS = [
+  {
+    key: "itemTypes",
+    label: "Type",
+    chips: [
+      { label: "Blocks", value: "block" },
+      { label: "Stacks", value: "stack" }
+    ]
+  },
+  {
+    key: "blockRoles",
+    label: "Block Type",
+    chips: BUILDER_SECTIONS.map((section) => ({ label: section.label, value: section.key }))
+  },
+  {
+    key: "families",
+    label: "Family",
+    chips: [
+      { label: "Thinking", value: "thinking" },
+      { label: "Decision", value: "decision" },
+      { label: "Research", value: "research" },
+      { label: "Writing", value: "writing" },
+      { label: "Planning", value: "planning" },
+      { label: "Dev", value: "dev" },
+      { label: "Reflection", value: "reflection" },
+      { label: "Prompt", value: "prompt" }
+    ]
+  },
+  {
+    key: "stages",
+    label: "Stage",
+    chips: [
+      { label: "Explore", value: "explore" },
+      { label: "Analyze", value: "analyze" },
+      { label: "Decide", value: "decide" }
+    ]
+  },
+  {
+    key: "tags",
+    label: "Tags",
+    chips: []
+  }
 ];
+
+function getAllFilterTags() {
+  const counts = new Map();
+  [...blocks, ...stacks].forEach((item) => {
+    (item.tags || []).forEach((tag) => {
+      if (!tag) return;
+      counts.set(tag, (counts.get(tag) || 0) + 1);
+    });
+  });
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([tag]) => ({ label: tag, value: normalizeFilterTag(tag) }));
+}
+
+function getTopFilterTags(limit = 10) {
+  return getAllFilterTags().slice(0, limit);
+}
 
 function applyFilters() {
   const q = filterState.text.toLowerCase();
-  const section = filterState.section;
+  const hasFilter = !!(
+    q
+    || filterState.itemTypes.length
+    || filterState.blockRoles.length
+    || filterState.families.length
+    || filterState.stages.length
+    || filterState.tags.length
+  );
   let visible = 0;
   const all = document.querySelectorAll(".searchable");
 
   all.forEach((card) => {
     let show = true;
-    if (q && !card.dataset.search.includes(q)) show = false;
-    if (section && card.dataset.section !== section) show = false;
+    if (q && !matchesFuzzySearch(card.dataset.search || "", q)) show = false;
+    if (filterState.itemTypes.length > 0 && !filterState.itemTypes.includes(card.dataset.itemType || "")) show = false;
+    if (filterState.blockRoles.length > 0) {
+      if (card.dataset.itemType !== "block" || !filterState.blockRoles.includes(card.dataset.discoveryRole || "")) show = false;
+    }
+    if (filterState.families.length > 0 && !filterState.families.includes(card.dataset.familyGroup || "")) show = false;
+    if (filterState.stages.length > 0 && !filterState.stages.includes(card.dataset.stageGroup || "")) show = false;
+    if (filterState.tags.length > 0) {
+      const tagKeys = (card.dataset.tagKeys || "").split(",").filter(Boolean);
+      if (!filterState.tags.some((tag) => tagKeys.includes(tag))) show = false;
+    }
     card.classList.toggle("hidden", !show);
     if (show) visible += 1;
   });
@@ -920,83 +1276,102 @@ function applyFilters() {
     groupEl.classList.toggle("hidden", !hasVisibleCard);
   });
 
-  const hasFilter = !!(q || section);
   if (filterCount) {
     filterCount.textContent = `${visible} of ${all.length} shown`;
     filterCount.hidden = !hasFilter;
   }
+  const noResultsEl = document.getElementById("no-results");
+  if (noResultsEl) noResultsEl.hidden = visible > 0 || !hasFilter;
   syncFilterUi();
 }
 
 function syncFilterUi() {
-  const hasFilter = !!(filterState.text || filterState.section);
+  const hasFilter = !!(
+    filterState.text
+    || filterState.itemTypes.length
+    || filterState.blockRoles.length
+    || filterState.families.length
+    || filterState.stages.length
+    || filterState.tags.length
+  );
   if (filterClear) filterClear.hidden = !hasFilter;
-  document.querySelectorAll(".filter-chip[data-section]").forEach((chip) => {
-    chip.classList.toggle("active", chip.dataset.section === filterState.section);
-  });
-}
-
-function renderFilterChips() {
-  const mount = document.getElementById("filter-chips");
-  if (!mount) return;
-  mount.innerHTML = "";
-  SECTION_CHIPS.forEach(({ label, value }) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "filter-chip";
-    btn.dataset.section = value;
-    btn.textContent = label;
-    btn.addEventListener("click", () => {
-      filterState.section = filterState.section === value ? "" : value;
-      applyFilters();
+  FILTER_GROUPS.forEach(({ key }) => {
+    document.querySelectorAll(`.filter-chip[data-group="${key}"]`).forEach((chip) => {
+      chip.classList.toggle("active", filterState[key].includes(chip.dataset.value || ""));
     });
-    mount.appendChild(btn);
+  });
+  renderActiveFilters();
+}
+
+function toggleFilterValue(groupKey, value) {
+  const values = new Set(filterState[groupKey]);
+  if (values.has(value)) values.delete(value);
+  else values.add(value);
+  filterState[groupKey] = [...values];
+  applyFilters();
+}
+
+function renderFilterGroups() {
+  const mount = document.getElementById("filter-groups");
+  if (!mount) return;
+  FILTER_GROUPS.find((group) => group.key === "tags").chips = getTopFilterTags();
+  mount.innerHTML = FILTER_GROUPS.map((group) => {
+    const chips = group.chips.map((chip) => `
+      <button
+        type="button"
+        class="filter-chip"
+        data-group="${escHtml(group.key)}"
+        data-value="${escHtml(chip.value)}"
+      >${escHtml(chip.label)}</button>
+    `).join("");
+    return `
+      <div class="filter-group">
+        <div class="filter-group-label">${escHtml(group.label)}</div>
+        <div class="filter-chips">${chips}</div>
+      </div>
+    `;
+  }).join("");
+
+  mount.querySelectorAll(".filter-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      toggleFilterValue(chip.dataset.group || "", chip.dataset.value || "");
+    });
   });
 }
 
-const FRAME_FAMILY_ORDER = [
-  "Core",
-  "Thinking & Framing",
-  "Deciding & Prioritising",
-  "Planning & Execution",
-  "Writing & Communication",
-  "Research & Synthesis",
-  "Review & Reflection",
-  "Software Engineering",
-  "Statistics",
-  "Prompt Craft"
-];
+function renderActiveFilters() {
+  const mount = document.getElementById("active-filters");
+  if (!mount) return;
+  const active = [];
 
-const LENS_GROUP_ORDER = [
-  "Game Theory",
-  "Psychology",
-  "Computer Science",
-  "Economics",
-  "Systems Thinking",
-  "Statistics",
-  "Philosophy",
-  "Design"
-];
+  FILTER_GROUPS.forEach((group) => {
+    const chips = group.key === "tags" ? getAllFilterTags() : group.chips;
+    const labels = new Map(chips.map((chip) => [chip.value, chip.label]));
+    filterState[group.key].forEach((value) => {
+      active.push({
+        key: group.key,
+        value,
+        label: labels.get(value) || value
+      });
+    });
+  });
 
-function renderSubGroups(container, items, getGroupKey, groupOrder) {
-  const seen = new Set();
-  const ordered = [...groupOrder.filter(g => items.some(i => getGroupKey(i) === g))];
-  items.forEach(i => { const g = getGroupKey(i); if (!seen.has(g)) { seen.add(g); if (!ordered.includes(g)) ordered.push(g); } });
+  mount.hidden = active.length === 0;
+  mount.innerHTML = active.length > 0
+    ? `
+      <div class="active-filters-label">Active:</div>
+      ${active.map((entry) => `
+        <button type="button" class="active-filter-chip" data-group="${escHtml(entry.key)}" data-value="${escHtml(entry.value)}">
+          ${escHtml(entry.label)} <span aria-hidden="true">&times;</span>
+        </button>
+      `).join("")}
+    `
+    : "";
 
-  ordered.forEach((groupName) => {
-    const groupItems = items.filter((i) => getGroupKey(i) === groupName);
-    if (groupItems.length === 0) return;
-    const subGroup = document.createElement("div");
-    subGroup.className = "block-subgroup";
-    const subHead = document.createElement("div");
-    subHead.className = "block-subgroup-head";
-    subHead.innerHTML = `<span class="block-subgroup-label">${escHtml(groupName)}</span><span class="block-subgroup-count">${groupItems.length}</span>`;
-    const subGrid = document.createElement("div");
-    subGrid.className = "card-grid";
-    groupItems.forEach((item) => subGrid.appendChild(createCard(item)));
-    subGroup.appendChild(subHead);
-    subGroup.appendChild(subGrid);
-    container.appendChild(subGroup);
+  mount.querySelectorAll(".active-filter-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      toggleFilterValue(chip.dataset.group || "", chip.dataset.value || "");
+    });
   });
 }
 
@@ -1025,17 +1400,11 @@ function renderGroupedBlocks() {
       `;
       section.appendChild(head);
 
-      if (type === "frame") {
-        renderSubGroups(section, items, (i) => i.family || "Other", FRAME_FAMILY_ORDER);
-      } else if (type === "lens") {
-        renderSubGroups(section, items, (i) => i.group || "Other", LENS_GROUP_ORDER);
-      } else {
-        const grid = document.createElement("div");
-        grid.className = "card-grid";
-        grid.dataset.blockTypeGrid = type;
-        items.forEach((item) => grid.appendChild(createCard(item)));
-        section.appendChild(grid);
-      }
+      const grid = document.createElement("div");
+      grid.className = "card-grid";
+      grid.dataset.blockTypeGrid = type;
+      items.forEach((item) => grid.appendChild(createCard(item)));
+      section.appendChild(grid);
 
       mount.appendChild(section);
     });
@@ -1045,7 +1414,7 @@ function renderCards() {
   const stacksMount = document.getElementById("stacks-grid");
   if (stacksMount) {
     stacksMount.innerHTML = "";
-    const SIZE_ORDER = Object.fromEntries(STACK_SIZES.map(({ key }, i) => [key, i]));
+    const EFFORT_RANK = Object.fromEntries(STACK_EFFORT_ORDER.map((value, index) => [value, index]));
     const seen = new Set();
     const familyOrder = [
       ...STACK_FAMILY_ORDER.filter((f) => stacks.some((s) => s.family === f)),
@@ -1057,9 +1426,9 @@ function renderCards() {
         .sort((a, b) => {
           const ca = getStackBlockCount(a);
           const cb = getStackBlockCount(b);
-          const sa = SIZE_ORDER[getStackSizeCategory(ca)] ?? 99;
-          const sb = SIZE_ORDER[getStackSizeCategory(cb)] ?? 99;
-          return sa !== sb ? sa - sb : ca - cb;
+          const ea = EFFORT_RANK[getStackEffort(a)] ?? 99;
+          const eb = EFFORT_RANK[getStackEffort(b)] ?? 99;
+          return ea !== eb ? ea - eb : ca - cb;
         });
       if (familyItems.length === 0) return;
       const group = document.createElement("div");
@@ -1086,6 +1455,12 @@ search.addEventListener("input", () => {
 
 function setFilter(value) {
   const next = (value || "").trim();
+  const normalizedTag = normalizeFilterTag(next);
+  const knownTag = getAllFilterTags().some((chip) => chip.value === normalizedTag);
+  if (knownTag) {
+    toggleFilterValue("tags", normalizedTag);
+    return;
+  }
   if (filterState.text.toLowerCase() === next.toLowerCase()) {
     filterState.text = "";
   } else {
@@ -1096,10 +1471,38 @@ function setFilter(value) {
   if (!filterState.text) search.blur();
 }
 
+document.addEventListener("click", (event) => {
+  const chooser = event.target.closest(".card-add-chooser");
+  const addButton = event.target.closest(".add-btn");
+  if (chooser || addButton) return;
+  document.querySelectorAll(".card-add-chooser").forEach((element) => {
+    element.hidden = true;
+  });
+});
+
 if (filterClear) {
   filterClear.addEventListener("click", () => {
     filterState.text = "";
-    filterState.section = "";
+    filterState.itemTypes = [];
+    filterState.blockRoles = [];
+    filterState.families = [];
+    filterState.stages = [];
+    filterState.tags = [];
+    search.value = "";
+    applyFilters();
+    search.focus();
+  });
+}
+
+const noResultsClear = document.getElementById("no-results-clear");
+if (noResultsClear) {
+  noResultsClear.addEventListener("click", () => {
+    filterState.text = "";
+    filterState.itemTypes = [];
+    filterState.blockRoles = [];
+    filterState.families = [];
+    filterState.stages = [];
+    filterState.tags = [];
     search.value = "";
     applyFilters();
     search.focus();
@@ -1111,7 +1514,7 @@ function updateNavCounts() {
   if (blocksLink && !blocksLink.querySelector(".nav-count")) {
     const countEl = document.createElement("span");
     countEl.className = "nav-count";
-    countEl.textContent = sectionCounts.blocks;
+    countEl.textContent = String(sectionCounts.blocks);
     blocksLink.appendChild(countEl);
   }
 
@@ -1119,7 +1522,7 @@ function updateNavCounts() {
   if (stacksLink && !stacksLink.querySelector(".nav-count")) {
     const countEl = document.createElement("span");
     countEl.className = "nav-count";
-    countEl.textContent = sectionCounts.stacks;
+    countEl.textContent = String(sectionCounts.stacks);
     stacksLink.appendChild(countEl);
   }
 }
@@ -1128,7 +1531,8 @@ function updateNavCounts() {
 document.addEventListener("keydown", (e) => {
   const active = document.activeElement;
   const inInput = active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA");
-  if (e.key === "/" && !inInput) {
+  const builderOpen = document.querySelector(".shell").classList.contains("builder-open");
+  if (e.key === "/" && !inInput && !builderOpen) {
     e.preventDefault();
     search.focus();
   }
@@ -1144,10 +1548,6 @@ document.addEventListener("keydown", (e) => {
       openBuilder();
     }
   }
-  if ((e.metaKey || e.ctrlKey) && e.key === "Enter" && active === document.getElementById("builder-output")) {
-    e.preventDefault();
-    document.getElementById("copy-assembled").click();
-  }
 });
 
 // Active nav highlight via IntersectionObserver
@@ -1162,305 +1562,6 @@ if ("IntersectionObserver" in window) {
   sectionEls.forEach((section) => obs.observe(section));
 }
 
-// ─── Builder init & events ────────────────────────────────────────────────────
-
-builderState.load();
-renderCards();
-renderBuilder();
-syncAddButtons();
-updateNavCounts();
-renderFilterChips();
-if (builderState.items.length > 0) {
-  openBuilder();
-}
-
-document.getElementById("builder-toggle").addEventListener("click", (e) => {
-  e.preventDefault();
-  if (document.querySelector(".shell").classList.contains("builder-open")) {
-    closeBuilder();
-  } else {
-    openBuilder();
-  }
-});
-
-document.getElementById("builder-close").addEventListener("click", () => {
-  closeBuilder();
-});
-
-document.getElementById("rebuild-builder").addEventListener("click", () => {
-  syncBuilderOutput(true);
-});
-
-const builderList = document.getElementById("builder-list");
-
-builderList.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-action]");
-  if (!btn) return;
-  const itemEl = btn.closest(".builder-item");
-  if (!itemEl) return;
-  const key = itemEl.dataset.key;
-  const action = btn.dataset.action;
-  if (action === "remove") {
-    builderState.remove(key);
-  } else if (action === "up") {
-    builderState.move(key, -1);
-  } else if (action === "down") {
-    builderState.move(key, 1);
-  }
-  renderBuilder();
-  syncAddButtons();
-});
-
-let dragSrcKey = null;
-
-builderList.addEventListener("dragstart", (e) => {
-  const item = e.target.closest(".builder-item");
-  if (!item) return;
-  dragSrcKey = item.dataset.key;
-  e.dataTransfer.effectAllowed = "move";
-  e.dataTransfer.setData("text/plain", dragSrcKey);
-  requestAnimationFrame(() => item.classList.add("dragging"));
-});
-
-builderList.addEventListener("dragend", () => {
-  builderList.querySelectorAll(".builder-item").forEach((el) => {
-    el.classList.remove("dragging", "drag-over");
-  });
-  dragSrcKey = null;
-});
-
-builderList.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = "move";
-  const item = e.target.closest(".builder-item");
-  if (!item || item.dataset.key === dragSrcKey) return;
-  builderList.querySelectorAll(".builder-item.drag-over").forEach((el) => el.classList.remove("drag-over"));
-  item.classList.add("drag-over");
-});
-
-builderList.addEventListener("dragleave", (e) => {
-  const item = e.target.closest(".builder-item");
-  if (item && !item.contains(e.relatedTarget)) {
-    item.classList.remove("drag-over");
-  }
-});
-
-builderList.addEventListener("drop", (e) => {
-  e.preventDefault();
-  const targetItem = e.target.closest(".builder-item");
-  if (!targetItem || !dragSrcKey || targetItem.dataset.key === dragSrcKey) return;
-  builderState.reorder(dragSrcKey, targetItem.dataset.key);
-  renderBuilder();
-  syncAddButtons();
-  dragSrcKey = null;
-});
-
-builderList.addEventListener("change", (e) => {
-  const select = e.target.closest(".bi-chain-select");
-  if (!select) return;
-  const itemEl = select.closest(".builder-item");
-  if (!itemEl) return;
-  const key = itemEl.dataset.key;
-  const ph = select.dataset.ph;
-  const srcIdx = select.value === "" ? null : parseInt(select.value, 10);
-  builderState.setChain(key, ph, srcIdx);
-  syncBuilderOutput();
-});
-
-document.getElementById("copy-assembled").addEventListener("click", async () => {
-  const text = document.getElementById("builder-output").value;
-  if (!text) return;
-  const btn = document.getElementById("copy-assembled");
-  try {
-    await navigator.clipboard.writeText(text);
-    const orig = btn.textContent;
-    btn.textContent = "Copied!";
-    setTimeout(() => { btn.textContent = orig; }, 1400);
-  } catch {
-    window.alert("Copy failed - select and copy from the text area manually.");
-  }
-});
-
-document.getElementById("download-assembled").addEventListener("click", () => {
-  const text = document.getElementById("builder-output").value;
-  if (!text) return;
-  const blob = new Blob([text], { type: "text/markdown" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "stack.md";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-});
-
-// ─── Save / Load JSON ─────────────────────────────────────────────────────────
-
-function saveBuilderAsJson() {
-  const state = {
-    version: 1,
-    saved: new Date().toISOString(),
-    items: builderState.items.map((item) => ({ ...item }))
-  };
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "stack.json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-function loadBuilderFromJson(file) {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const data = JSON.parse(e.target.result);
-      const newItems = Array.isArray(data) ? data : (Array.isArray(data.items) ? data.items : null);
-      if (!newItems) throw new Error("No items array found");
-      builderState.restore(newItems);
-      builderDraftDirty = false;
-      if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
-      renderBuilder();
-      syncAddButtons();
-    } catch {
-      window.alert("Could not load stack. Make sure the file is a valid Prompt Kit JSON export.");
-    }
-  };
-  reader.readAsText(file);
-}
-
-document.getElementById("save-stack-json").addEventListener("click", saveBuilderAsJson);
-
-document.getElementById("load-stack-trigger").addEventListener("click", () => {
-  document.getElementById("load-stack-input").click();
-});
-
-document.getElementById("load-stack-input").addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (file) loadBuilderFromJson(file);
-  e.target.value = "";
-});
-
-document.getElementById("clear-builder").addEventListener("click", () => {
-  if (builderState.items.length === 0) return;
-  builderState.clear();
-  builderDraftDirty = false;
-  renderBuilder();
-  syncAddButtons();
-});
-
-document.getElementById("builder-output").addEventListener("input", () => {
-  const output = document.getElementById("builder-output");
-  builderDraftDirty = output.value !== builderState.assemble();
-  updateBuilderStateNote();
-  updateStats();
-  updateVarButton();
-});
-
-// ─── Variable fill-in modal ───────────────────────────────────────────────────
-
-document.getElementById("fill-placeholders").addEventListener("click", openVarsModal);
-
-document.getElementById("builder-stats").addEventListener("click", (e) => {
-  if (e.target.matches(".stat-ph-btn")) openVarsModal();
-});
-
-document.getElementById("vm-apply").addEventListener("click", applyVarModal);
-document.getElementById("vm-cancel").addEventListener("click", () => {
-  document.getElementById("vars-modal").close();
-});
-document.getElementById("vm-close").addEventListener("click", () => {
-  document.getElementById("vars-modal").close();
-});
-document.getElementById("vars-modal").addEventListener("click", (e) => {
-  if (e.target === e.currentTarget) e.currentTarget.close();
-});
-
-document.getElementById("vm-body").addEventListener("keydown", (e) => {
-  if (e.key !== "Enter" || e.shiftKey || !e.target.matches(".vm-input")) return;
-  const inputs = [...document.querySelectorAll("#vm-body .vm-input")];
-  const idx = inputs.indexOf(e.target);
-  if (idx < inputs.length - 1) {
-    e.preventDefault();
-    inputs[idx + 1].focus();
-  }
-});
-
-// ─── Builder panel resize ─────────────────────────────────────────────────────
-
-const builderResizeHandle = document.querySelector(".builder-resize-handle");
-let isResizingBuilder = false;
-let resizeStartX = 0;
-let resizeStartWidth = 0;
-
-builderResizeHandle.addEventListener("mousedown", (e) => {
-  isResizingBuilder = true;
-  resizeStartX = e.clientX;
-  resizeStartWidth = document.getElementById("builder-panel").offsetWidth;
-  builderResizeHandle.classList.add("dragging");
-  document.body.style.cursor = "col-resize";
-  document.body.style.userSelect = "none";
-  e.preventDefault();
-});
-
-document.addEventListener("mousemove", (e) => {
-  if (!isResizingBuilder) return;
-  const dx = resizeStartX - e.clientX;
-  const newWidth = Math.max(320, Math.min(Math.floor(window.innerWidth * 0.6), resizeStartWidth + dx));
-  document.querySelector(".shell").style.setProperty("--builder-width", `${newWidth}px`);
-});
-
-document.addEventListener("mouseup", () => {
-  if (!isResizingBuilder) return;
-  isResizingBuilder = false;
-  builderResizeHandle.classList.remove("dragging");
-  document.body.style.cursor = "";
-  document.body.style.userSelect = "";
-});
-
-const builderSectionResizeHandle = document.querySelector(".builder-section-resize-handle");
-let isResizingBuilderSections = false;
-let resizeStartY = 0;
-let resizeStartFooterHeight = 0;
-
-builderSectionResizeHandle.addEventListener("mousedown", (e) => {
-  const footer = document.getElementById("builder-footer");
-  if (!footer || footer.hidden) return;
-  isResizingBuilderSections = true;
-  resizeStartY = e.clientY;
-  resizeStartFooterHeight = footer.offsetHeight;
-  builderSectionResizeHandle.classList.add("dragging");
-  document.body.style.cursor = "row-resize";
-  document.body.style.userSelect = "none";
-  e.preventDefault();
-});
-
-document.addEventListener("mousemove", (e) => {
-  if (!isResizingBuilderSections) return;
-  const panel = document.getElementById("builder-panel");
-  const footer = document.getElementById("builder-footer");
-  if (!panel || !footer) return;
-  const handleHeight = builderSectionResizeHandle.offsetHeight || 10;
-  const minFooter = 220;
-  const minScroll = 150;
-  const panelHeight = panel.offsetHeight;
-  const maxFooter = Math.max(minFooter, panelHeight - minScroll - handleHeight);
-  const nextHeight = Math.max(minFooter, Math.min(maxFooter, resizeStartFooterHeight + (resizeStartY - e.clientY)));
-  panel.style.setProperty("--builder-footer-height", `${nextHeight}px`);
-});
-
-document.addEventListener("mouseup", () => {
-  if (!isResizingBuilderSections) return;
-  isResizingBuilderSections = false;
-  builderSectionResizeHandle.classList.remove("dragging");
-  document.body.style.cursor = "";
-  document.body.style.userSelect = "";
-});
-
 // ─── Stack step popovers ──────────────────────────────────────────────────────
 
 const stepPopoverEl = document.getElementById("step-popover");
@@ -1473,17 +1574,35 @@ function showStepPopover(pill) {
   if (!item) return;
   clearTimeout(spHideTimer);
   const label = getOntologyLabel(item);
+  const hasContent = !!(item.copy || (item.body && item.body.length > 0));
+  const inBuilder = builderState.has(item);
   stepPopoverEl.innerHTML = `
     <div class="sp-label">${escHtml(label)}</div>
     <div class="sp-title">${escHtml(item.title)}</div>
     ${item.summary ? `<div class="sp-summary">${escHtml(item.summary)}</div>` : ""}
-    <button class="sp-view-btn" type="button">View block</button>
+    <div class="sp-actions">
+      <button class="sp-view-btn" type="button">View block</button>
+      ${hasContent ? `<button class="sp-add-btn" type="button"${inBuilder ? " disabled" : ""}>${inBuilder ? "In builder" : "Add"}</button>` : ""}
+    </div>
   `;
   stepPopoverEl.hidden = false;
   stepPopoverEl.querySelector(".sp-view-btn").addEventListener("click", () => {
     hideStepPopoverNow();
     scrollToCard(item);
   });
+  const spAddBtn = stepPopoverEl.querySelector(".sp-add-btn");
+  if (spAddBtn) {
+    spAddBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (builderState.has(item)) return;
+      builderState.add(item);
+      if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
+      renderBuilder();
+      syncAddButtons();
+      spAddBtn.textContent = "In builder";
+      spAddBtn.disabled = true;
+    });
+  }
   positionStepPopover(pill);
 }
 
@@ -1530,7 +1649,8 @@ document.addEventListener("mouseover", (e) => {
 
 document.addEventListener("mouseout", (e) => {
   const pill = e.target.closest(".wf-step-pill[data-key]");
-  if (pill && !pill.contains(e.relatedTarget)) hideStepPopover();
+  const related = e.relatedTarget instanceof Element ? e.relatedTarget : null;
+  if (pill && !(related && pill.contains(related))) hideStepPopover();
 });
 
 document.addEventListener("focusin", (e) => {

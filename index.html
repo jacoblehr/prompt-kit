@@ -29,15 +29,18 @@
               <a href="#docs">Docs</a>
             </div>
           </details>
-          <button type="button" class="builder-toggle-btn" id="builder-toggle" aria-expanded="false" aria-label="Toggle stack builder">
-            Stack Builder
-            <span class="builder-badge" id="builder-badge" hidden aria-hidden="true">0</span>
+          <button type="button" class="builder-toggle-btn" id="builder-toggle" aria-expanded="false" aria-label="Toggle prompt builder" title="Toggle Prompt Builder (b)">
+            Prompt Builder
+            <span class="builder-toggle-right">
+              <span class="builder-badge" id="builder-badge" hidden aria-hidden="true">0</span>
+              <kbd class="builder-kbd-hint" aria-hidden="true">b</kbd>
+            </span>
           </button>
         </nav>
 
         <div class="search-wrap">
           <div class="search-label-row">
-            <label for="search">Filter</label>
+            <label for="search">Search</label>
             <div class="search-label-actions">
               <button type="button" class="search-clear-btn" id="filter-clear" hidden aria-label="Clear filter">Clear</button>
               <kbd class="search-hint" title="Press / to focus">/</kbd>
@@ -45,7 +48,8 @@
           </div>
           <input id="search" type="search" placeholder="Search blocks and stacks...">
           <div class="filter-count" id="filter-count" hidden></div>
-          <div class="filter-chips" id="filter-chips"></div>
+          <div class="active-filters" id="active-filters" hidden></div>
+          <div class="filter-groups" id="filter-groups"></div>
         </div>
 
         <div class="sidebar-note">
@@ -60,8 +64,9 @@
               <div class="eyebrow">Composition</div>
               <h2>Stacks</h2>
             </div>
-            <p>Saved combinations of blocks for practical use cases. Stack notes describe an order of use and the output you should expect.</p>
+            <p>Saved combinations of blocks for recurring jobs. Families classify the practical task, while the browser also tracks stage, output, effort, and stakes.</p>
           </div>
+          
           <div class="stacks-groups" id="stacks-grid"></div>
         </section>
 
@@ -75,6 +80,10 @@
           </div>
           <div class="block-groups" id="blocks-groups"></div>
         </section>
+
+        <div class="no-results" id="no-results" hidden>
+          <p>No results match your filter. <button type="button" class="no-results-clear" id="no-results-clear">Clear filter</button></p>
+        </div>
 
         <section id="docs" class="section docs-links">
           <div class="section-head">
@@ -95,47 +104,38 @@
         </section>
       </main>
 
-      <aside class="builder-panel" id="builder-panel" aria-label="Stack Builder">
+      <aside class="builder-panel" id="builder-panel" aria-label="Prompt Builder">
         <div class="builder-resize-handle" aria-hidden="true"></div>
         <div class="builder-header">
-          <div>
-            <div class="eyebrow">Compose</div>
-            <h2 class="builder-heading">Stack Builder</h2>
-          </div>
-          <div class="builder-header-actions">
-            <button type="button" class="builder-load-btn" id="load-stack-trigger">Load JSON</button>
-            <button type="button" class="builder-close-btn" id="builder-close" aria-label="Close builder">Close</button>
+          <div class="builder-header-row">
+            <label class="builder-title-field" for="builder-stack-name">
+              <span class="sr-only">Stack name</span>
+              <input id="builder-stack-name" class="builder-stack-name" type="text" value="debug-root-cause" spellcheck="false" aria-label="Stack name">
+            </label>
+            <div class="builder-header-actions">
+              <button type="button" class="builder-action-btn builder-action-btn--danger" id="builder-clear" hidden>Clear</button>
+              <button type="button" class="builder-close-btn" id="builder-close" aria-label="Close builder">✕</button>
+            </div>
           </div>
         </div>
 
         <div class="builder-scroll">
-          <p class="builder-empty" id="builder-empty">
-            Click <strong>Add</strong> on any block.<br>
-            Reorder items here, then edit the draft or export when ready.
-          </p>
-          <div class="builder-list" id="builder-list" hidden></div>
+          <div class="builder-alerts" id="builder-alerts" hidden></div>
+          <div class="builder-composition" id="builder-composition"></div>
         </div>
 
-        <div class="builder-section-resize-handle" aria-hidden="true"></div>
-
-        <div class="builder-footer" id="builder-footer" hidden>
-          <div class="builder-footer-head">
-            <span class="builder-footer-label">Editable stack</span>
-            <div class="builder-footer-actions">
-              <button type="button" class="builder-clear-btn" id="clear-builder">Reset</button>
-              <button type="button" class="builder-rebuild-btn" id="rebuild-builder">Rebuild</button>
-              <button type="button" class="builder-download-btn" id="download-assembled">Export .md</button>
-              <button type="button" class="builder-save-json-btn" id="save-stack-json">Save JSON</button>
-              <button type="button" class="builder-copy-btn" id="copy-assembled">Copy stack</button>
+        <div class="builder-execution" id="builder-execution">
+          <div class="builder-inputs" id="builder-inputs"></div>
+          <div class="builder-output-panel">
+            <div class="builder-output-head">
+              <span class="builder-output-label">Prompt</span>
+              <span class="builder-token-count" id="builder-token-count"></span>
             </div>
+            <div class="builder-run-output is-placeholder" id="builder-run-output">Add blocks to assemble your prompt.</div>
           </div>
-          <div class="builder-footer-body">
-            <div class="builder-footer-meta">
-              <div class="builder-stats" id="builder-stats" hidden></div>
-              <button type="button" class="builder-fillin-btn" id="fill-placeholders" hidden>Fill in</button>
-            </div>
-            <div class="builder-state-note" id="builder-state-note" hidden></div>
-            <textarea id="builder-output" class="builder-output" spellcheck="false" aria-label="Editable stack output" placeholder="The assembled stack appears here. You can edit it directly, then copy or export it."></textarea>
+          <textarea id="builder-run-input" class="builder-run-input" spellcheck="false" aria-label="Task input — fills prompt placeholders" placeholder="Paste a task to fill {placeholders} in the assembled prompt…"></textarea>
+          <div class="builder-footer-btns">
+            <button type="button" class="builder-action-btn builder-action-btn--primary" id="builder-copy-prompt" disabled>Copy Prompt</button>
           </div>
         </div>
       </aside>
@@ -146,14 +146,15 @@
         <div class="card-top">
           <div class="card-meta"></div>
           <div class="card-actions">
-            <button class="add-btn" type="button" aria-pressed="false">Add</button>
-            <button class="copy-btn" type="button">Copy</button>
-            <button class="details-btn" type="button" aria-expanded="false">Details</button>
+            <button class="details-btn" type="button" aria-expanded="false">Preview</button>
+            <button class="add-btn" type="button" aria-pressed="false">+ Add</button>
           </div>
         </div>
         <h3></h3>
         <p class="card-summary"></p>
+        <div class="card-submeta" hidden></div>
         <div class="tags"></div>
+        <div class="card-add-chooser" hidden></div>
         <div class="card-details" hidden>
           <div class="card-body"></div>
           <pre class="prompt"></pre>
@@ -161,19 +162,7 @@
       </article>
     </template>
 
-    <dialog id="vars-modal" class="vars-modal" aria-labelledby="vm-title">
-      <div class="vm-header">
-        <div>
-          <h3 class="vm-title" id="vm-title">Fill in Variables</h3>
-        </div>
-        <button type="button" class="vm-close" id="vm-close" aria-label="Close dialog">&times;</button>
-      </div>
-      <div class="vm-body" id="vm-body"></div>
-      <div class="vm-footer">
-        <button type="button" class="vm-cancel" id="vm-cancel">Cancel</button>
-        <button type="button" class="vm-apply" id="vm-apply">Apply</button>
-      </div>
-    </dialog>
+    <div class="builder-toast" id="builder-toast" hidden></div>
 
         <div id="step-popover" class="step-popover" hidden></div>
 
@@ -181,5 +170,7 @@
 
     <script src="site-data.js"></script>
     <script src="site.js"></script>
+    <script src="site-builder.js"></script>
+    <script src="site-init.js"></script>
   </body>
 </html>

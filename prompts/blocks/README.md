@@ -19,4 +19,5 @@ These prompt blocks should be:
 - easy to combine with modes and strategies
 - small enough to swap without rewriting a whole recipe
 
-These are `core` blocks in the ontology.
+In the surfaced ontology, these remain ordinary blocks.
+Their role is determined by the asset itself: `frame`, `guardrail`, or `schema`.

@@ -42,6 +42,6 @@ Domain tags:
 
 **Why this order works:** Decide mode commits to the shipping path rather than continuing to explore design options. Requirements-decomposition produces independently testable stories. Success-criteria defines done before implementation begins. Test-strategy covers risk-weighted gaps. Failure-mode-analysis surfaces resilience requirements. Release-readiness makes the ship/no-ship verdict explicit. Rollout-plan stages deployment with go/no-go criteria. Plan-quality rubric is the final gate.
 
-**Common swaps:** Swap `frame.requirements-decomposition` for `frame.clarify-task` when the feature brief is still fuzzy. Swap `frame.rollout-plan` for `frame.plan-next-actions` for internal tooling where staged rollout is unnecessary.
+**Common swaps:** Swap `frame.requirements-decomposition` for `frame.clarify-task` when the feature brief is still fuzzy. Swap `schema.rollout-plan` for `schema.plan-next-actions` for internal tooling where staged rollout is unnecessary.
 
 **Common failure mode:** Beginning implementation before success criteria and test strategy are defined. Features without upfront success criteria are tested retroactively against criteria that were reverse-engineered to match what was built.

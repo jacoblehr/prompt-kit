@@ -36,6 +36,6 @@ Domain tags:
 
 **Why this order works:** Explore mode prevents the brief from being shaped by the first impression of the source. Summarize-source compresses the core argument. Extract-insights identifies what is relevant to the specific decision or question driving the brief. Research-questions surfaces the open questions the source raises but does not answer. Plan-next-actions closes with specific next steps based on the extracted insights.
 
-**Common swaps:** Swap `frame.research-questions` for `frame.synthesize-sources` when multiple sources are being integrated into one brief. Swap `frame.plan-next-actions` for `frame.executive-summary` when the output is a document rather than an action list.
+**Common swaps:** Swap `frame.research-questions` for `frame.synthesize-sources` when multiple sources are being integrated into one brief. Swap `schema.plan-next-actions` for `schema.executive-summary` when the output is a document rather than an action list.
 
 **Common failure mode:** Summarizing without extracting insights tied to the driving question. A summary without extraction produces a compressed version of the source rather than a decision-useful brief.

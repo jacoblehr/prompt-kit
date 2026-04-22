@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "es2022",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "site.js",
+    "site-builder.js",
+    "site-init.js",
+    "types.d.ts"
+  ],
+  "exclude": [
+    "site-data.js"
+  ]
+}

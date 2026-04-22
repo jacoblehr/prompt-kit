@@ -76,12 +76,26 @@ Every stack should answer:
 - **Common swaps** — block alternatives worth knowing
 - **Common failure mode** — what goes wrong when the stack is misused
 
+### Stack metadata
+
+Stacks are classified by recurring job or outcome, not by the techniques inside them.
+
+Every stack may also carry browse metadata:
+
+- `family` — primary browse bucket for the practical task
+- `job` — exact recurring task slug
+- `stage` — dominant phase of work: `frame`, `explore`, `analyze`, `decide`, `critique`, `refine`, `conclude`
+- `outputKind` — likely result shape such as `decision`, `plan`, `brief`, `summary`, or `critique`
+- `effort` — `quick`, `standard`, or `deep`
+- `stakes` — `low`, `medium`, or `high`
+
 ### Practical rules
 
 - A stack should solve a concrete, recurring use case.
 - A stack should combine multiple blocks.
 - A stack should be easy to tweak or cut down.
 - A stack should be named by outcome or job, not by technique.
+- A stack family should answer "what practical task is this helping complete?"
 
 ---
 
@@ -109,7 +123,7 @@ The repo stores source material in several folders. All of them map into the sur
 | `modes/` | `mode` |
 | `strategies/` | `strategy` |
 | `prompts/blocks/` | `frame`, `guardrail`, or `schema` depending on the block |
-| `prompts/snippets/` | `frame`, `strategy`, or `schema` — full-task blocks |
+| `prompts/snippets/` | `frame`, `strategy`, `guardrail`, or `schema` — full-task blocks |
 | `prompts/concepts/` | `lens` |
 | `rubrics/` | `rubric` |
 | `stacks/` | stacks (not blocks) |

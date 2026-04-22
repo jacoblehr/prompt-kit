@@ -33,7 +33,7 @@ Domain tags:
 
 ## Composition notes
 
-**Minimum blocks:** `mode.reflect`, `frame.extract-insights`, `frame.plan-next-actions`
+**Minimum blocks:** `mode.reflect`, `frame.extract-insights`, `schema.plan-next-actions`
 
 **Why this order works:** Reflect first sets the lesson-extraction stance before cause-mapping digs into the why. Extract-insights follows because root causes become actionable only once patterns are visible. Plan-next-actions closes the loop so learning transfers to future work rather than staying as commentary. The rubric is the final gate — it prevents the review from stopping at recap.
 
