@@ -1,0 +1,30 @@
+{
+  "name": "prompt-kit",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-site-data.mjs",
+    "build:watch": "node --watch scripts/build-site-data.mjs",
+    "validate": "node scripts/validate-assets.mjs",
+    "lint": "eslint . --ext .js,.mjs",
+    "lint:fix": "eslint . --ext .js,.mjs --fix",
+    "format": "prettier --write .",
+    "test": "node --test tests/*.test.mjs",
+    "test:coverage": "c8 node --test tests/*.test.mjs",
+    "new:block": "plop block",
+    "new:stack": "plop stack",
+    "verify": "npm run validate && npm run lint && npm run test",
+    "serve": "npx serve . -p 3000",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "plop": "^3.1.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "c8": "^8.0.1",
+    "husky": "^9.1.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
