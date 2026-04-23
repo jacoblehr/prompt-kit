@@ -18,13 +18,16 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "plop": "^3.1.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
     "c8": "^8.0.1",
-    "husky": "^9.1.7"
+    "eslint": "^8.57.0",
+    "husky": "^9.1.7",
+    "plop": "^3.1.0",
+    "prettier": "^3.2.5"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "commander": "^14.0.3"
   }
 }
