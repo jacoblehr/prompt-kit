@@ -1972,7 +1972,8 @@ kbd.search-hint {
 .builder-input-textarea {
   width: 100%;
   min-height: 74px;
-  padding: 11px 12px;
+  min-height: 74px;
+  max-height: 320px;
   border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
   border-radius: 12px;
   background: rgba(10, 11, 13, 0.82);
@@ -1992,12 +1993,20 @@ kbd.search-hint {
 .builder-input-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 14px;
+.builder-inputs-list {
+  display: grid;
+  gap: 12px;
+  padding-top: 4px;
+  max-height: 320px;
+  overflow-y: auto;
 }
 
 .builder-input-meta code {
   padding: 1px 5px;
-  border-radius: 5px;
+.builder-inputs {
+  display: grid;
+  max-height: 320px;
+  overflow-y: auto;
   background: rgba(34, 36, 40, 0.82);
   color: var(--accent);
   font-family: var(--mono);
@@ -2016,6 +2025,23 @@ kbd.search-hint {
   font-weight: 600;
 }
 
+.builder-run-output {
+  min-height: 160px;
+  max-height: 320px;
+  overflow: auto;
+  padding: 13px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--line));
+  border-radius: 14px;
+  background: rgba(10, 11, 13, 0.88);
+  color: var(--ink);
+  white-space: pre-wrap;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  line-height: 1.55;
+  cursor: text;
+  user-select: text;
+  resize: vertical;
+}
 .builder-alert--blocking {
   background: color-mix(in srgb, #c95d4c 18%, var(--panel-2));
   color: #ffc0b3;

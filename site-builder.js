@@ -162,24 +162,25 @@ function renderBuilderInputs() {
   }
 
   mount.hidden = false;
-  mount.innerHTML = definitions.map((definition) => `
-    <label class="builder-input-field">
-      <span class="builder-input-label-row">
-        <span class="builder-input-label">${escHtml(definition.label)}</span>
-        ${definition.usesTaskInput && !definition.manualValue && builderState.taskInput.trim()
-          ? '<span class="builder-input-badge">From task</span>'
-          : ''}
-      </span>
-      <textarea
-        class="builder-input-textarea"
-        data-action="builder-input"
-        data-placeholder-key="${escHtml(definition.placeholder)}"
-        spellcheck="false"
-        rows="2"
-        placeholder="${escHtml(definition.placeholder)}"
-      >${escHtml(definition.manualValue)}</textarea>
-    </label>
-  `).join("");
+  mount.innerHTML = `<div class="builder-inputs-list">` +
+    definitions.map((definition) => `
+      <label class="builder-input-field">
+        <span class="builder-input-label-row">
+          <span class="builder-input-label">${escHtml(definition.label)}</span>
+          ${definition.usesTaskInput && !definition.manualValue && builderState.taskInput.trim()
+            ? '<span class="builder-input-badge">From task</span>'
+            : ''}
+        </span>
+        <textarea
+          class="builder-input-textarea"
+          data-action="builder-input"
+          data-placeholder-key="${escHtml(definition.placeholder)}"
+          spellcheck="false"
+          rows="2"
+          placeholder="${escHtml(definition.placeholder)}"
+        >${escHtml(definition.manualValue)}</textarea>
+      </label>
+    `).join("") + `</div>`;
 }
 
 function renderLivePrompt() {
