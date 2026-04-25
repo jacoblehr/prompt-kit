@@ -47,6 +47,7 @@
             </div>
           </div>
           <input id="search" type="search" placeholder="Search blocks and stacks...">
+          <button type="button" class="sidebar-filter-toggle" id="sidebar-filter-toggle" aria-expanded="false" aria-label="Toggle filters">Filters</button>
           <div class="filter-count" id="filter-count" hidden></div>
           <div class="active-filters" id="active-filters" hidden></div>
           <div class="filter-groups" id="filter-groups"></div>
@@ -151,11 +152,6 @@
             </div>
           </div>
 
-          <label class="builder-task-panel" for="builder-run-input">
-            <span class="builder-task-label">Task</span>
-            <span class="builder-task-copy">Paste the live job once and matching placeholders will inherit from it.</span>
-            <textarea id="builder-run-input" class="builder-run-input" data-max-height="220" spellcheck="false" aria-label="Task input — fills prompt placeholders" placeholder="Paste a task to fill {placeholders} in the assembled prompt…"></textarea>
-          </label>
           <div class="builder-footer-btns">
             <button type="button" class="builder-action-btn builder-action-btn--primary" id="builder-copy-prompt" disabled>Copy Prompt</button>
           </div>

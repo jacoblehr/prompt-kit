@@ -345,9 +345,9 @@ function renderSection(sectionKey, uiState) {
           <span class="pb-section-toggle-main">
             <span class="pb-section-title-row">
               <span class="pb-section-title">${escHtml(section.label)}</span>
+              ${items.length > 0 ? `<span class="pb-section-count">${items.length}</span>` : ""}
               ${stateMarkup}
             </span>
-            <span class="pb-section-count">${items.length > 0 ? items.length : ""}</span>
           </span>
           <span class="pb-section-chevron" aria-hidden="true">${collapsed ? "▸" : "▾"}</span>
         </button>
@@ -544,10 +544,32 @@ function closeCmdPalette() {
   if (overlay) overlay.hidden = true;
 }
 
+/**
+ * Returns a Set of block keys that are "suggested swaps" for the currently
+ * loaded stack — parsed from that stack's `contract.commonSwaps` text.
+ */
+function getLoadedStackSwapKeys() {
+  if (!loadedStackKey) return new Set();
+  const stackItem = stacks.find((s) => s.key === loadedStackKey);
+  if (!stackItem?.contract?.commonSwaps) return new Set();
+  const keys = new Set();
+  const matches = stackItem.contract.commonSwaps.matchAll(/`([a-z][a-z0-9.+-]+)`/g);
+  for (const m of matches) {
+    const resolved = resolveRef(m[1]);
+    if (resolved) keys.add(resolved.key || resolved.title);
+  }
+  return keys;
+}
+
 function getCmdPaletteCandidates(query = "") {
   const q = query.trim().toLowerCase();
+  const validTypes = cmdPaletteSectionHint
+    ? (getBuilderSection(cmdPaletteSectionHint).validBlockTypes || [])
+    : null;
+  const swapKeys = getLoadedStackSwapKeys();
   return blocks
     .filter((item) => {
+      if (validTypes && !validTypes.includes(item.blockType)) return false;
       if (!q) return true;
       const searchText = [
         item.title,
@@ -559,6 +581,9 @@ function getCmdPaletteCandidates(query = "") {
       return matchesFuzzySearch(searchText, q);
     })
     .sort((a, b) => {
+      const aSwap = swapKeys.has(a.key || a.title);
+      const bSwap = swapKeys.has(b.key || b.title);
+      if (aSwap !== bSwap) return aSwap ? -1 : 1;
       if (!q) {
         const rankDiff = (BLOCK_TYPE_RANK[a.blockType] ?? 99) - (BLOCK_TYPE_RANK[b.blockType] ?? 99);
         return rankDiff !== 0 ? rankDiff : a.title.localeCompare(b.title);
@@ -576,9 +601,11 @@ function renderCmdPaletteResults(query = "") {
     list.innerHTML = '<div class="cmd-palette-empty">No matching blocks</div>';
     return;
   }
+  const swapKeys = getLoadedStackSwapKeys();
   list.innerHTML = candidates.map((item, index) => {
     const existingItem = getExistingBuilderItem(item);
     const key = item.key || item.title;
+    const isSwapSuggestion = swapKeys.has(key);
     const sectionForItem = cmdPaletteSectionHint && isValidBuilderSection(cmdPaletteSectionHint, item.blockType)
       ? cmdPaletteSectionHint
       : defaultBuilderSectionForItem(item, builderState.items);
@@ -590,10 +617,16 @@ function renderCmdPaletteResults(query = "") {
     const summaryHtml = item.summary
       ? `<span class="cmd-palette-item-summary">${escHtml(item.summary)}</span>`
       : "";
+    const itemClasses = [
+      "cmd-palette-item",
+      index === cmdPaletteSelected ? "is-selected" : "",
+      isAdded ? "is-added" : "",
+      isSwapSuggestion && !isAdded ? "is-swap-suggestion" : ""
+    ].filter(Boolean).join(" ");
     return `
       <button
         type="button"
-        class="cmd-palette-item${index === cmdPaletteSelected ? " is-selected" : ""}${isAdded ? " is-added" : ""}"
+        class="${itemClasses}"
         role="option"
         data-cmd-ref="${escHtml(key)}"
         data-cmd-section="${escHtml(sectionForItem)}"
@@ -608,7 +641,9 @@ function renderCmdPaletteResults(query = "") {
         </span>
         ${isAdded
           ? '<span class="cmd-palette-item-added-badge">✓</span>'
-          : '<span class="cmd-palette-item-action">Add</span>'
+          : isSwapSuggestion
+            ? '<span class="cmd-palette-item-swap-badge">★ Suggested</span>'
+            : '<span class="cmd-palette-item-action">Add</span>'
         }
       </button>
     `;
@@ -670,11 +705,14 @@ document.getElementById("builder-clear").addEventListener("click", () => {
   if (builderState.items.length === 0) return;
   const snapshotItems = JSON.parse(JSON.stringify(builderState.items));
   const snapshotName = builderState.stackName;
+  const snapshotLoadedStackKey = loadedStackKey;
   builderState.clear();
+  loadedStackKey = "";
   renderBuilder();
   syncAddButtons();
   showBuilderToast("Builder cleared", "Undo", () => {
     builderState.restore(snapshotItems, { stackName: snapshotName });
+    loadedStackKey = snapshotLoadedStackKey;
     renderBuilder();
     syncAddButtons();
   });
@@ -684,7 +722,7 @@ document.getElementById("builder-stack-name").addEventListener("input", (event) 
   builderState.setStackName(event.target.value);
 });
 
-document.getElementById("builder-run-input").addEventListener("input", (event) => {
+document.getElementById("builder-run-input")?.addEventListener("input", (event) => {
   autoSizeBuilderTextarea(event.target);
   builderState.setTaskInput(event.target.value);
   renderBuilderInputs();

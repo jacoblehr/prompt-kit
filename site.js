@@ -755,6 +755,9 @@ const builderState = (() => {
   };
 })();
 
+/** Tracks the key of the last stack loaded into the builder ("" when none). */
+let loadedStackKey = "";
+
 /** @type {{ blocks: number; stacks: number }} */
 const sectionCounts = {
   blocks: blocks.length,
@@ -966,9 +969,11 @@ function createCard(item) {
     addBtn.addEventListener("click", () => {
       const prevItems = builderState.items.map((i) => ({ ...i }));
       const prevStack = builderState.stackName;
+      const prevLoadedStackKey = loadedStackKey;
       builderState.clear();
       builderState.setStackName(item.job || slugify(item.title) || "loaded-stack");
       steps.forEach((step) => builderState.add(step));
+      loadedStackKey = item.key;
       if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
       renderBuilder();
       addBtn.dataset.stackFlashing = "1";
@@ -982,27 +987,12 @@ function createCard(item) {
       if (typeof showBuilderToast === "function") {
         showBuilderToast(`Loaded "${item.title}"`, "Undo", () => {
           builderState.restore(prevItems, { stackName: prevStack });
+          loadedStackKey = prevLoadedStackKey;
           renderBuilder();
           syncAddButtons();
         });
       }
     });
-    const appendBtn = document.createElement("button");
-    appendBtn.type = "button";
-    appendBtn.className = "add-btn";
-    appendBtn.textContent = "+ Append";
-    appendBtn.title = "Add this stack's blocks to the current composition";
-    appendBtn.addEventListener("click", () => {
-      let addedCount = 0;
-      steps.forEach((step) => { if (builderState.add(step)) addedCount++; });
-      if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
-      renderBuilder();
-      syncAddButtons();
-      if (typeof showBuilderToast === "function") {
-        showBuilderToast(`Appended ${addedCount} block${addedCount !== 1 ? "s" : ""} from "${item.title}"`);
-      }
-    });
-    addBtn.insertAdjacentElement("afterend", appendBtn);
   } else {
     const hasBuilderContent = !!(item.copy || (item.body && item.body.length > 0));
     if (hasBuilderContent) {
