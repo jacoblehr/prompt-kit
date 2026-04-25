@@ -127,18 +127,35 @@
         </div>
 
         <div class="builder-execution" id="builder-execution">
-          <div class="builder-inputs" id="builder-inputs"></div>
-          <div class="builder-output-panel">
-            <div class="builder-output-head">
-              <span class="builder-output-label">Prompt</span>
-              <div class="builder-output-actions">
-                <button type="button" class="builder-output-mode-btn" id="builder-output-mode" aria-pressed="false" title="Show section headers (structured view)">Structured</button>
-                <span class="builder-token-count" id="builder-token-count"></span>
+          <div class="builder-execution-resize-handle" id="builder-execution-resize" aria-hidden="true"></div>
+          <div class="builder-execution-panels">
+            <section class="builder-pane builder-pane--inputs" aria-label="Prompt inputs">
+              <div class="builder-pane-head">
+                <span class="builder-pane-label">Inputs</span>
+                <p class="builder-pane-copy">Fill only the variables that are not already implied by the task.</p>
               </div>
+              <div class="builder-pane-body">
+                <div class="builder-inputs" id="builder-inputs"></div>
+              </div>
+            </section>
+
+            <div class="builder-output-panel builder-pane builder-pane--output">
+              <div class="builder-output-head">
+                <span class="builder-output-label">Prompt</span>
+                <div class="builder-output-actions">
+                  <button type="button" class="builder-output-mode-btn" id="builder-output-mode" aria-pressed="false" title="Show section headers (structured view)">Structured</button>
+                  <span class="builder-token-count" id="builder-token-count"></span>
+                </div>
+              </div>
+              <div class="builder-run-output is-placeholder" id="builder-run-output">Add blocks to assemble your prompt.</div>
             </div>
-            <div class="builder-run-output is-placeholder" id="builder-run-output">Add blocks to assemble your prompt.</div>
           </div>
-          <textarea id="builder-run-input" class="builder-run-input" spellcheck="false" aria-label="Task input — fills prompt placeholders" placeholder="Paste a task to fill {placeholders} in the assembled prompt…"></textarea>
+
+          <label class="builder-task-panel" for="builder-run-input">
+            <span class="builder-task-label">Task</span>
+            <span class="builder-task-copy">Paste the live job once and matching placeholders will inherit from it.</span>
+            <textarea id="builder-run-input" class="builder-run-input" data-max-height="220" spellcheck="false" aria-label="Task input — fills prompt placeholders" placeholder="Paste a task to fill {placeholders} in the assembled prompt…"></textarea>
+          </label>
           <div class="builder-footer-btns">
             <button type="button" class="builder-action-btn builder-action-btn--primary" id="builder-copy-prompt" disabled>Copy Prompt</button>
           </div>

@@ -43,6 +43,7 @@ function syncAddButtons() {
 }
 
 const BUILDER_WIDTH_STORAGE_KEY = "prompt-kit-builder-width";
+const BUILDER_EXECUTION_HEIGHT_STORAGE_KEY = "prompt-kit-builder-execution-height";
 let draggedBuilderKey = "";
 let draggedLibraryRef = "";
 let builderToastTimer = 0;
@@ -50,6 +51,9 @@ let builderLastRemoved = null;
 let isResizingBuilder = false;
 let resizeStartX = 0;
 let resizeStartWidth = 0;
+let isResizingBuilderExecution = false;
+let resizeExecutionStartY = 0;
+let resizeExecutionStartHeight = 0;
 let outputMode = "flat";
 let cmdPaletteSectionHint = "";
 let cmdPaletteSelected = 0;
@@ -153,14 +157,17 @@ function renderBuilderAlerts(warnings) {
 function renderBuilderInputs() {
   const mount = document.getElementById("builder-inputs");
   if (!mount) return;
+  const pane = mount.closest(".builder-pane--inputs");
 
   const definitions = getBuilderInputDefinitions();
   if (definitions.length === 0) {
+    if (pane) pane.hidden = true;
     mount.hidden = true;
     mount.innerHTML = "";
     return;
   }
 
+  if (pane) pane.hidden = false;
   mount.hidden = false;
   mount.innerHTML = `<div class="builder-inputs-list">` +
     definitions.map((definition) => `
@@ -174,6 +181,7 @@ function renderBuilderInputs() {
         <textarea
           class="builder-input-textarea"
           data-action="builder-input"
+          data-max-height="220"
           data-placeholder-key="${escHtml(definition.placeholder)}"
           spellcheck="false"
           rows="2"
@@ -314,7 +322,7 @@ function renderBlockCard(item, index, uiState) {
       ${expanded ? `
         <div class="pb-block-expanded">
           <div class="pb-block-expanded-title">${escHtml(humanizeBlockTitle(item.title))}</div>
-          <textarea class="pb-block-textarea" data-action="edit-copy" data-key="${escHtml(key)}" spellcheck="false">${escHtml(item.copy || "")}</textarea>
+          <textarea class="pb-block-textarea" data-action="edit-copy" data-key="${escHtml(key)}" data-max-height="380" spellcheck="false">${escHtml(item.copy || "")}</textarea>
           ${useWhen ? `<div class="pb-block-note"><span>Use when:</span> ${escHtml(useWhen)}</div>` : ""}
           ${adds ? `<div class="pb-block-note"><span>Adds:</span> ${escHtml(adds)}</div>` : ""}
         </div>
@@ -392,11 +400,94 @@ function renderBuilder() {
     runInput.value = runtime.lastInput || "";
   }
 
+  autoSizeBuilderTextareas(document.getElementById("builder-panel") || document.body);
+
   const modeBtn = document.getElementById("builder-output-mode");
   if (modeBtn) {
     modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
     modeBtn.title = outputMode === "flat" ? "Show section headers" : "Hide section headers";
   }
+}
+
+const BUILDER_TEXTAREA_SELECTOR = ".builder-input-textarea, .builder-run-input, .pb-block-textarea";
+
+function autoSizeBuilderTextarea(textarea) {
+  if (!(textarea instanceof HTMLTextAreaElement)) return;
+
+  const maxHeight = Number(textarea.dataset.maxHeight || 0);
+  textarea.style.height = "auto";
+
+  const nextHeight = textarea.scrollHeight;
+  if (maxHeight > 0 && nextHeight > maxHeight) {
+    textarea.style.height = `${maxHeight}px`;
+    textarea.style.overflowY = "auto";
+    return;
+  }
+
+  textarea.style.height = `${Math.max(nextHeight, textarea.clientHeight)}px`;
+  textarea.style.overflowY = "hidden";
+}
+
+function autoSizeBuilderTextareas(root = document) {
+  root.querySelectorAll(BUILDER_TEXTAREA_SELECTOR).forEach((element) => {
+    autoSizeBuilderTextarea(element);
+  });
+}
+
+function getNearestScrollableParent(element) {
+  let current = element.parentElement;
+  while (current) {
+    const style = window.getComputedStyle(current);
+    if ((style.overflowY === "auto" || style.overflowY === "scroll") && current.scrollHeight > current.clientHeight + 1) {
+      return current;
+    }
+    current = current.parentElement;
+  }
+  return null;
+}
+
+function getBuilderExecutionElement() {
+  return document.getElementById("builder-execution");
+}
+
+function getBuilderExecutionHeightBounds() {
+  const minHeight = window.innerWidth <= 980 ? 240 : 300;
+  const maxHeight = Math.max(minHeight, Math.min(Math.floor(window.innerHeight * 0.82), window.innerHeight - 120));
+  return { minHeight, maxHeight };
+}
+
+function applyStoredBuilderExecutionHeight() {
+  const execution = getBuilderExecutionElement();
+  if (!(execution instanceof HTMLElement)) return;
+  const { minHeight, maxHeight } = getBuilderExecutionHeightBounds();
+  const raw = window.localStorage.getItem(BUILDER_EXECUTION_HEIGHT_STORAGE_KEY);
+  const storedHeight = Number(raw || 0);
+  if (!Number.isFinite(storedHeight) || storedHeight <= 0) {
+    execution.style.removeProperty("height");
+    return;
+  }
+  const clampedHeight = Math.max(minHeight, Math.min(maxHeight, storedHeight));
+  execution.style.height = `${clampedHeight}px`;
+}
+
+function handoffBuilderTextareaWheel(event) {
+  const target = event.target;
+  if (!(target instanceof HTMLTextAreaElement)) return;
+  if (!target.matches(BUILDER_TEXTAREA_SELECTOR)) return;
+  if (!event.deltaY) return;
+
+  const canScrollSelf = target.scrollHeight > target.clientHeight + 1;
+  const atTop = target.scrollTop <= 0;
+  const atBottom = target.scrollTop + target.clientHeight >= target.scrollHeight - 1;
+  const shouldTransfer = !canScrollSelf || (event.deltaY < 0 && atTop) || (event.deltaY > 0 && atBottom);
+
+  if (!shouldTransfer) return;
+
+  const scrollParent = getNearestScrollableParent(target);
+  if (!scrollParent) return;
+
+  scrollParent.scrollTop += event.deltaY;
+  event.preventDefault();
 }
 
 function showBuilderToast(message, actionLabel = "", onAction = null) {
@@ -493,6 +584,12 @@ function renderCmdPaletteResults(query = "") {
       : defaultBuilderSectionForItem(item, builderState.items);
     const sectionLabel = getBuilderSection(sectionForItem).label;
     const isAdded = !!existingItem && existingItem.builderSection === sectionForItem;
+    const tagsHtml = (item.tags && item.tags.length)
+      ? item.tags.slice(0, 3).map(t => `<span class="cmd-palette-item-tag">${escHtml(t)}</span>`).join("")
+      : "";
+    const summaryHtml = item.summary
+      ? `<span class="cmd-palette-item-summary">${escHtml(item.summary)}</span>`
+      : "";
     return `
       <button
         type="button"
@@ -506,6 +603,8 @@ function renderCmdPaletteResults(query = "") {
         <span class="cmd-palette-item-body">
           <span class="cmd-palette-item-title">${escHtml(humanizeBlockTitle(item.title))}</span>
           <span class="cmd-palette-item-meta">${escHtml(blockTypeLabel(item.blockType))} · ${escHtml(sectionLabel)}${isAdded ? " · Added" : ""}</span>
+          ${summaryHtml}
+          ${tagsHtml ? `<span class="cmd-palette-item-tags">${tagsHtml}</span>` : ""}
         </span>
         ${isAdded
           ? '<span class="cmd-palette-item-added-badge">✓</span>'
@@ -586,6 +685,7 @@ document.getElementById("builder-stack-name").addEventListener("input", (event) 
 });
 
 document.getElementById("builder-run-input").addEventListener("input", (event) => {
+  autoSizeBuilderTextarea(event.target);
   builderState.setTaskInput(event.target.value);
   renderBuilderInputs();
   debouncedRenderLivePrompt();
@@ -607,6 +707,7 @@ document.getElementById("builder-inputs").addEventListener("input", (event) => {
   const target = event.target;
   if (!(target instanceof HTMLTextAreaElement)) return;
   if (target.dataset.action !== "builder-input") return;
+  autoSizeBuilderTextarea(target);
   builderState.setPromptInput(target.dataset.placeholderKey || "", target.value || "");
   debouncedRenderLivePrompt();
 });
@@ -701,10 +802,13 @@ document.getElementById("builder-composition").addEventListener("input", (event)
   }
 
   if (target.matches(".pb-block-textarea")) {
+    autoSizeBuilderTextarea(target);
     builderState.updateBlockCopy(target.dataset.key || "", target.value || "");
     debouncedRenderLivePrompt();
   }
 });
+
+document.getElementById("builder-panel")?.addEventListener("wheel", handoffBuilderTextareaWheel, { passive: false });
 
 document.addEventListener("dragstart", (event) => {
   const builderBlock = event.target.closest(".pb-block");
@@ -880,6 +984,7 @@ function applyStoredBuilderWidth() {
 }
 
 const builderResizeHandle = document.querySelector(".builder-resize-handle");
+const builderExecutionResizeHandle = document.getElementById("builder-execution-resize");
 
 if (builderResizeHandle) {
   builderResizeHandle.addEventListener("mousedown", (event) => {
@@ -901,13 +1006,44 @@ if (builderResizeHandle) {
   });
 }
 
+if (builderExecutionResizeHandle) {
+  builderExecutionResizeHandle.addEventListener("mousedown", (event) => {
+    const execution = getBuilderExecutionElement();
+    if (!(execution instanceof HTMLElement)) return;
+    isResizingBuilderExecution = true;
+    resizeExecutionStartY = event.clientY;
+    resizeExecutionStartHeight = execution.offsetHeight;
+    builderExecutionResizeHandle.classList.add("dragging");
+    document.body.style.cursor = "row-resize";
+    document.body.style.userSelect = "none";
+    event.preventDefault();
+  });
+
+  builderExecutionResizeHandle.addEventListener("dblclick", () => {
+    const execution = getBuilderExecutionElement();
+    if (!(execution instanceof HTMLElement)) return;
+    execution.style.removeProperty("height");
+    window.localStorage.removeItem(BUILDER_EXECUTION_HEIGHT_STORAGE_KEY);
+  });
+}
+
 document.addEventListener("mousemove", (event) => {
-  if (!isResizingBuilder) return;
-  const dx = resizeStartX - event.clientX;
-  const minWidth = 420;
-  const maxWidth = Math.max(minWidth, Math.min(Math.floor(window.innerWidth * 0.62), window.innerWidth - 380));
-  const nextWidth = Math.max(minWidth, Math.min(maxWidth, resizeStartWidth + dx));
-  document.querySelector(".shell").style.setProperty("--builder-width", `${nextWidth}px`);
+  if (isResizingBuilder) {
+    const dx = resizeStartX - event.clientX;
+    const minWidth = 420;
+    const maxWidth = Math.max(minWidth, Math.min(Math.floor(window.innerWidth * 0.62), window.innerWidth - 380));
+    const nextWidth = Math.max(minWidth, Math.min(maxWidth, resizeStartWidth + dx));
+    document.querySelector(".shell").style.setProperty("--builder-width", `${nextWidth}px`);
+  }
+
+  if (isResizingBuilderExecution) {
+    const execution = getBuilderExecutionElement();
+    if (!(execution instanceof HTMLElement)) return;
+    const { minHeight, maxHeight } = getBuilderExecutionHeightBounds();
+    const dy = resizeExecutionStartY - event.clientY;
+    const nextHeight = Math.max(minHeight, Math.min(maxHeight, resizeExecutionStartHeight + dy));
+    execution.style.height = `${nextHeight}px`;
+  }
 });
 
 document.addEventListener("mouseup", () => {
@@ -921,11 +1057,24 @@ document.addEventListener("mouseup", () => {
   window.localStorage.setItem(BUILDER_WIDTH_STORAGE_KEY, String(panel.offsetWidth));
 });
 
+document.addEventListener("mouseup", () => {
+  if (!isResizingBuilderExecution) return;
+  const execution = getBuilderExecutionElement();
+  if (execution instanceof HTMLElement) {
+    window.localStorage.setItem(BUILDER_EXECUTION_HEIGHT_STORAGE_KEY, String(execution.offsetHeight));
+  }
+  isResizingBuilderExecution = false;
+  builderExecutionResizeHandle?.classList.remove("dragging");
+  document.body.style.cursor = "";
+  document.body.style.userSelect = "";
+});
+
 applyStoredBuilderWidth();
+applyStoredBuilderExecutionHeight();
 
 window.addEventListener("resize", () => {
-  if (window.innerWidth <= 980) return;
-  applyStoredBuilderWidth();
+  if (window.innerWidth > 980) applyStoredBuilderWidth();
+  applyStoredBuilderExecutionHeight();
 });
 
 // ─── Output mode toggle ───────────────────────────────────────────────────────
