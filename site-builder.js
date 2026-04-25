@@ -183,6 +183,10 @@ function renderBuilderInputs() {
     `).join("") + `</div>`;
 }
 
+function renderPromptPreview(prompt) {
+  return escHtml(prompt).replace(/\{[^}\n]{1,80}\}/g, (match) => `<span class="var-token">${match}</span>`);
+}
+
 function renderLivePrompt() {
   const inputValues = getEffectiveBuilderPromptInputs();
   let prompt;
@@ -202,7 +206,7 @@ function renderLivePrompt() {
 
   if (output) {
     if (prompt) {
-      output.textContent = prompt;
+      output.innerHTML = renderPromptPreview(prompt);
       output.classList.remove("is-placeholder");
     } else {
       output.textContent = "Add blocks to assemble your prompt.";
@@ -390,9 +394,8 @@ function renderBuilder() {
 
   const modeBtn = document.getElementById("builder-output-mode");
   if (modeBtn) {
-    modeBtn.textContent = outputMode === "flat" ? "Structured" : "Flat";
     modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
-    modeBtn.title = outputMode === "flat" ? "Show section headers (structured view)" : "Hide section headers (flat view)";
+    modeBtn.title = outputMode === "flat" ? "Show section headers" : "Hide section headers";
   }
 }
 
@@ -414,7 +417,7 @@ function showBuilderToast(message, actionLabel = "", onAction = null) {
   }
   builderToastTimer = window.setTimeout(() => {
     toast.hidden = true;
-  }, 4200);
+  }, 10000);
 }
 
 function openPicker(sectionKey) {
@@ -566,11 +569,16 @@ document.getElementById("builder-close").addEventListener("click", () => {
 
 document.getElementById("builder-clear").addEventListener("click", () => {
   if (builderState.items.length === 0) return;
-  if (!window.confirm("Clear all blocks from the builder?")) return;
+  const snapshotItems = JSON.parse(JSON.stringify(builderState.items));
+  const snapshotName = builderState.stackName;
   builderState.clear();
   renderBuilder();
   syncAddButtons();
-  showBuilderToast("Builder cleared");
+  showBuilderToast("Builder cleared", "Undo", () => {
+    builderState.restore(snapshotItems, { stackName: snapshotName });
+    renderBuilder();
+    syncAddButtons();
+  });
 });
 
 document.getElementById("builder-stack-name").addEventListener("input", (event) => {
@@ -927,9 +935,8 @@ document.getElementById("builder-output-mode")?.addEventListener("click", () => 
   renderLivePrompt();
   const modeBtn = document.getElementById("builder-output-mode");
   if (modeBtn) {
-    modeBtn.textContent = outputMode === "flat" ? "Structured" : "Flat";
     modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
-    modeBtn.title = outputMode === "flat" ? "Show section headers (structured view)" : "Hide section headers (flat view)";
+    modeBtn.title = outputMode === "flat" ? "Show section headers" : "Hide section headers";
   }
 });
 
@@ -983,4 +990,36 @@ document.getElementById("cmd-palette-input")?.addEventListener("keydown", (event
     closeCmdPalette();
     return;
   }
+});
+
+// ─── Load composition from file ──────────────────────────────────────────────
+
+document.getElementById("builder-load")?.addEventListener("click", () => {
+  document.getElementById("load-stack-input")?.click();
+});
+
+document.getElementById("load-stack-input")?.addEventListener("change", (event) => {
+  const input = event.target instanceof HTMLInputElement ? event.target : null;
+  const file = input?.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(typeof e.target?.result === "string" ? e.target.result : "null");
+      const items = Array.isArray(data?.items) ? data.items : Array.isArray(data) ? data : [];
+      const meta = {
+        stackName: typeof data?.stackName === "string" ? data.stackName : file.name.replace(/\.json$/, ""),
+        taskInput: typeof data?.taskInput === "string" ? data.taskInput : ""
+      };
+      builderState.restore(items, meta);
+      renderBuilder();
+      syncAddButtons();
+      openBuilder();
+      showBuilderToast(`Loaded \"${meta.stackName}\"`);
+    } catch {
+      showBuilderToast("Could not load file — invalid or unsupported format");
+    }
+    if (input) input.value = "";
+  };
+  reader.readAsText(file);
 });
