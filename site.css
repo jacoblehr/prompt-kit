@@ -408,7 +408,7 @@ kbd.search-hint {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 14px;
   align-items: start;
 }
@@ -760,6 +760,10 @@ kbd.search-hint {
     background: rgba(15, 16, 18, 0.97);
     backdrop-filter: blur(20px);
     padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .brand,
@@ -774,6 +778,24 @@ kbd.search-hint {
     align-items: center;
     gap: 8px;
     margin-bottom: 0;
+    flex: 1 1 0%;
+    min-width: 0;
+  }
+
+  /* Builder toggle becomes a compact pill in the sticky bar */
+  .builder-toggle-btn {
+    width: auto;
+    flex-shrink: 0;
+    padding: 9px 14px;
+    font-size: 0.82rem;
+    border-color: var(--line);
+    background: var(--panel-2);
+    border-radius: 999px;
+    justify-content: center;
+  }
+
+  .builder-kbd-hint {
+    display: none;
   }
 
   .search-label-row {
@@ -836,6 +858,75 @@ kbd.search-hint {
 
   .block-type-head {
     display: grid;
+  }
+
+  /* ─── Touch targets ─── */
+
+  .nav a,
+  .add-btn,
+  .details-btn,
+  .sidebar-filter-toggle,
+  .builder-toggle-btn,
+  .filter-chip {
+    min-height: 44px;
+  }
+
+  .sidebar .search-wrap input[type="search"],
+  .filter-chip {
+    min-height: 44px;
+  }
+}
+
+/* ─── Small phone breakpoint (≤ 480px) ─────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .main {
+    padding: 16px 14px;
+  }
+
+  .section {
+    margin-top: 32px;
+  }
+
+  .section-head h2 {
+    font-size: 1.5rem;
+  }
+
+  .hero h2 {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .docs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-panels {
+    gap: 12px;
+  }
+
+  .builder-execution {
+    height: var(--builder-execution-height, min(52vh, 420px));
+  }
+
+  /* Keep the sticky bar a single row on very small screens */
+  .sidebar {
+    flex-wrap: nowrap;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .builder-toggle-btn {
+    padding: 8px 10px;
+    font-size: 0.76rem;
+  }
+
+  .builder-toggle-right {
+    display: none;
   }
 }
 
@@ -994,6 +1085,7 @@ kbd.search-hint {
   position: fixed;
   z-index: 300;
   width: 240px;
+  max-width: min(240px, calc(100vw - 24px));
   padding: 10px 13px;
   border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
   border-radius: 10px;
