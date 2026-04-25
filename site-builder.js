@@ -50,6 +50,10 @@ let builderLastRemoved = null;
 let isResizingBuilder = false;
 let resizeStartX = 0;
 let resizeStartWidth = 0;
+let outputMode = "flat";
+let cmdPaletteSectionHint = "";
+let cmdPaletteSelected = 0;
+let livePromptDebounceTimer = 0;
 
 /**
  * Builder warnings model the minimum viable prompt stack. Some are blocking and
@@ -179,7 +183,18 @@ function renderBuilderInputs() {
 }
 
 function renderLivePrompt() {
-  const prompt = builderState.assemble({ resolveInputs: true, inputValues: getEffectiveBuilderPromptInputs() });
+  const inputValues = getEffectiveBuilderPromptInputs();
+  let prompt;
+  if (outputMode === "flat") {
+    const parts = BUILDER_SECTION_ORDER.flatMap((sectionKey) =>
+      builderState.getSectionItems(sectionKey)
+        .filter((item) => item.copy && item.copy.trim())
+        .map((item) => fillPromptTemplate(item.copy.trim(), inputValues))
+    );
+    prompt = parts.join("\n\n");
+  } else {
+    prompt = builderState.assemble({ resolveInputs: true, inputValues });
+  }
   const output = document.getElementById("builder-run-output");
   const tokenCount = document.getElementById("builder-token-count");
   const copyButton = document.getElementById("builder-copy-prompt");
@@ -272,17 +287,23 @@ function renderBlockCard(item, index, uiState) {
   const expanded = (uiState.expandedBlocks || []).includes(key);
   const useWhen = item.contract?.useWhen || item.useWhen || item.summary || "";
   const adds = item.contract?.adds || item.contract?.purpose || "";
-  const managed = item.managedBy ? `<span class="pb-block-managed">${escHtml(item.managedBy === "mode" ? "Mode" : "Lens")} link</span>` : "";
+  const managed = item.managedBy ? ` · <span class="pb-block-managed">${escHtml(item.managedBy === "mode" ? "Mode" : "Lens")} link</span>` : "";
+  const placeholders = extractPlaceholders(item.copy || "");
+  const varChips = placeholders.length > 0
+    ? `<div class="pb-block-vars">${placeholders.map((p) => `<span class="pb-block-var-chip">${escHtml(p)}</span>`).join("")}</div>`
+    : "";
 
   return `
-    <article class="pb-block${expanded ? " is-expanded" : ""}" data-key="${escHtml(key)}" draggable="true">
+    <article class="pb-block${expanded ? " is-expanded" : ""}" data-key="${escHtml(key)}" data-block-type="${escHtml(item.blockType)}" draggable="true">
       <div class="pb-block-compact">
         <button type="button" class="pb-block-drag" aria-label="Drag ${escHtml(item.title)}">⠿</button>
-        <button type="button" class="pb-block-summary" data-action="toggle-block" data-key="${escHtml(key)}" aria-expanded="${expanded ? "true" : "false"}">
-          <span class="pb-block-title">${escHtml(humanizeBlockTitle(item.title))}</span>
-          <span class="pb-block-meta">${escHtml(blockTypeLabel(item.blockType))}</span>
-          ${managed}
-        </button>
+        <div class="pb-block-main">
+          <button type="button" class="pb-block-summary" data-action="toggle-block" data-key="${escHtml(key)}" aria-expanded="${expanded ? "true" : "false"}">
+            <span class="pb-block-title">${escHtml(humanizeBlockTitle(item.title))}</span>
+            <span class="pb-block-meta">${escHtml(blockTypeLabel(item.blockType))}${managed}</span>
+          </button>
+          ${varChips}
+        </div>
         <button type="button" class="pb-block-remove" data-action="remove-block" data-key="${escHtml(key)}" aria-label="Remove ${escHtml(item.title)}">&times;</button>
       </div>
       ${expanded ? `
@@ -328,9 +349,8 @@ function renderSection(sectionKey, uiState) {
             }
           </div>
           <div class="pb-section-actions">
-            <button type="button" class="pb-add-block" data-action="open-picker" data-section="${escHtml(sectionKey)}">+ Add block</button>
+            <button type="button" class="pb-add-block" data-action="open-cmd-palette" data-section="${escHtml(sectionKey)}">+ Add block</button>
           </div>
-          ${renderPicker(sectionKey, uiState)}
         </div>
       `}
     </section>
@@ -340,7 +360,7 @@ function renderSection(sectionKey, uiState) {
 function renderComposition() {
   const mount = document.getElementById("builder-composition");
   if (!mount) return;
-  const uiState = builderState.activeVersion.workingState.ui;
+  const uiState = builderState.ui;
   mount.innerHTML = BUILDER_SECTION_ORDER.map((sectionKey) => renderSection(sectionKey, uiState)).join("");
 
   const activePicker = mount.querySelector(".pb-picker-search");
@@ -361,10 +381,17 @@ function renderBuilder() {
     badge.hidden = builderState.items.length === 0;
   }
 
-  const runtime = builderState.activeVersion.workingState.runtime;
+  const runtime = builderState.runtime;
   const runInput = document.getElementById("builder-run-input");
   if (runInput && runInput.value !== runtime.lastInput) {
     runInput.value = runtime.lastInput || "";
+  }
+
+  const modeBtn = document.getElementById("builder-output-mode");
+  if (modeBtn) {
+    modeBtn.textContent = outputMode === "flat" ? "Structured" : "Flat";
+    modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
+    modeBtn.title = outputMode === "flat" ? "Show section headers (structured view)" : "Hide section headers (flat view)";
   }
 }
 
@@ -390,14 +417,122 @@ function showBuilderToast(message, actionLabel = "", onAction = null) {
 }
 
 function openPicker(sectionKey) {
-  builderState.setPickerState(sectionKey, "");
-  renderBuilder();
+  openCmdPalette(sectionKey);
 }
 
 function openPickerFromShortcut() {
-  const uiState = builderState.activeVersion.workingState.ui;
-  const preferred = uiState.lastActiveSection || BUILDER_SECTION_ORDER.find((sectionKey) => builderState.getSectionItems(sectionKey).length === 0) || "instruction";
-  openPicker(preferred);
+  openCmdPalette();
+}
+
+function openCmdPalette(sectionHint = "") {
+  cmdPaletteSectionHint = sectionHint;
+  cmdPaletteSelected = 0;
+  const overlay = document.getElementById("cmd-palette");
+  const input = document.getElementById("cmd-palette-input");
+  const hint = document.getElementById("cmd-palette-hint");
+  if (!overlay) return;
+  overlay.hidden = false;
+  if (input) {
+    input.value = "";
+    input.focus();
+  }
+  if (hint) {
+    const section = sectionHint ? getBuilderSection(sectionHint) : null;
+    hint.textContent = section ? `Adding to ${section.label}` : "Adding to best-fit section";
+    hint.hidden = false;
+  }
+  renderCmdPaletteResults("");
+}
+
+function closeCmdPalette() {
+  const overlay = document.getElementById("cmd-palette");
+  if (overlay) overlay.hidden = true;
+}
+
+function getCmdPaletteCandidates(query = "") {
+  const q = query.trim().toLowerCase();
+  return blocks
+    .filter((item) => {
+      if (!q) return true;
+      const searchText = [
+        item.title,
+        item.summary,
+        item.group,
+        item.family,
+        ...(item.tags || [])
+      ].join(" ").toLowerCase();
+      return matchesFuzzySearch(searchText, q);
+    })
+    .sort((a, b) => {
+      if (!q) {
+        const rankDiff = (BLOCK_TYPE_RANK[a.blockType] ?? 99) - (BLOCK_TYPE_RANK[b.blockType] ?? 99);
+        return rankDiff !== 0 ? rankDiff : a.title.localeCompare(b.title);
+      }
+      return a.title.localeCompare(b.title);
+    })
+    .slice(0, 12);
+}
+
+function renderCmdPaletteResults(query = "") {
+  const list = document.getElementById("cmd-palette-list");
+  if (!list) return;
+  const candidates = getCmdPaletteCandidates(query);
+  if (candidates.length === 0) {
+    list.innerHTML = '<div class="cmd-palette-empty">No matching blocks</div>';
+    return;
+  }
+  list.innerHTML = candidates.map((item, index) => {
+    const existingItem = getExistingBuilderItem(item);
+    const key = item.key || item.title;
+    const sectionForItem = cmdPaletteSectionHint && isValidBuilderSection(cmdPaletteSectionHint, item.blockType)
+      ? cmdPaletteSectionHint
+      : defaultBuilderSectionForItem(item, builderState.items);
+    const sectionLabel = getBuilderSection(sectionForItem).label;
+    const isAdded = !!existingItem && existingItem.builderSection === sectionForItem;
+    return `
+      <button
+        type="button"
+        class="cmd-palette-item${index === cmdPaletteSelected ? " is-selected" : ""}${isAdded ? " is-added" : ""}"
+        role="option"
+        data-cmd-ref="${escHtml(key)}"
+        data-cmd-section="${escHtml(sectionForItem)}"
+        data-cmd-index="${index}"
+      >
+        <span class="cmd-palette-item-accent" data-block-type="${escHtml(item.blockType)}"></span>
+        <span class="cmd-palette-item-body">
+          <span class="cmd-palette-item-title">${escHtml(humanizeBlockTitle(item.title))}</span>
+          <span class="cmd-palette-item-meta">${escHtml(blockTypeLabel(item.blockType))} · ${escHtml(sectionLabel)}${isAdded ? " · Added" : ""}</span>
+        </span>
+        ${isAdded
+          ? '<span class="cmd-palette-item-added-badge">✓</span>'
+          : '<span class="cmd-palette-item-action">Add</span>'
+        }
+      </button>
+    `;
+  }).join("");
+}
+
+function addBlockFromCmdPalette(ref, sectionKey) {
+  const item = resolveRef(ref);
+  if (!item) return;
+  const resolvedSection = sectionKey && isValidBuilderSection(sectionKey, item.blockType)
+    ? sectionKey
+    : defaultBuilderSectionForItem(item, builderState.items);
+  const existingItem = getExistingBuilderItem(item);
+  if (existingItem) {
+    builderState.moveToSection(builderItemKey(existingItem), resolvedSection);
+  } else {
+    builderState.add(item, { section: resolvedSection });
+  }
+  renderBuilder();
+  syncAddButtons();
+  const inputEl = document.getElementById("cmd-palette-input");
+  renderCmdPaletteResults(inputEl ? inputEl.value : "");
+}
+
+function debouncedRenderLivePrompt() {
+  clearTimeout(livePromptDebounceTimer);
+  livePromptDebounceTimer = window.setTimeout(renderLivePrompt, 150);
 }
 
 function browseAll(sectionKey) {
@@ -444,7 +579,7 @@ document.getElementById("builder-stack-name").addEventListener("input", (event) 
 document.getElementById("builder-run-input").addEventListener("input", (event) => {
   builderState.setTaskInput(event.target.value);
   renderBuilderInputs();
-  renderLivePrompt();
+  debouncedRenderLivePrompt();
 });
 
 document.getElementById("builder-copy-prompt").addEventListener("click", async () => {
@@ -464,7 +599,7 @@ document.getElementById("builder-inputs").addEventListener("input", (event) => {
   if (!(target instanceof HTMLTextAreaElement)) return;
   if (target.dataset.action !== "builder-input") return;
   builderState.setPromptInput(target.dataset.placeholderKey || "", target.value || "");
-  renderLivePrompt();
+  debouncedRenderLivePrompt();
 });
 
 document.getElementById("builder-composition").addEventListener("click", (event) => {
@@ -480,8 +615,8 @@ document.getElementById("builder-composition").addEventListener("click", (event)
     return;
   }
 
-  if (action === "open-picker") {
-    openPicker(sectionKey);
+  if (action === "open-picker" || action === "open-cmd-palette") {
+    openCmdPalette(sectionKey);
     return;
   }
 
@@ -528,7 +663,7 @@ document.getElementById("builder-composition").addEventListener("click", (event)
   }
 
   if (action === "toggle-block") {
-    const expanded = !(builderState.activeVersion.workingState.ui.expandedBlocks || []).includes(key);
+    const expanded = !(builderState.ui.expandedBlocks || []).includes(key);
     builderState.setBlockExpanded(key, expanded);
     renderBuilder();
     return;
@@ -558,7 +693,7 @@ document.getElementById("builder-composition").addEventListener("input", (event)
 
   if (target.matches(".pb-block-textarea")) {
     builderState.updateBlockCopy(target.dataset.key || "", target.value || "");
-    renderLivePrompt();
+    debouncedRenderLivePrompt();
   }
 });
 
@@ -654,14 +789,69 @@ document.getElementById("builder-composition").addEventListener("drop", (event) 
 
 document.addEventListener("keydown", (event) => {
   const builderOpen = document.querySelector(".shell").classList.contains("builder-open");
-  if (!builderOpen) return;
-
   const active = document.activeElement;
   const inField = active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.tagName === "SELECT");
 
+  // Cmd/Ctrl+K — open command palette (always available)
+  if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+    event.preventDefault();
+    openCmdPalette();
+    return;
+  }
+
+  // Cmd/Ctrl+Enter — copy assembled prompt
+  if ((event.metaKey || event.ctrlKey) && event.key === "Enter" && builderOpen) {
+    const copyBtn = document.getElementById("builder-copy-prompt");
+    if (copyBtn && !copyBtn.disabled) {
+      event.preventDefault();
+      copyBtn.click();
+      return;
+    }
+  }
+
+  if (!builderOpen) return;
+
+  // "/" — open command palette when not in a text field
   if (event.key === "/" && !inField) {
     event.preventDefault();
-    openPickerFromShortcut();
+    openCmdPalette();
+    return;
+  }
+
+  // Block-focused keyboard shortcuts
+  const focusedBlock = active ? active.closest(".pb-block") : null;
+  const inBlockTextarea = active && active.tagName === "TEXTAREA" && active.closest(".pb-block");
+
+  if (focusedBlock && !inBlockTextarea) {
+    const key = focusedBlock.dataset.key;
+    if (key) {
+      if ((event.key === "Delete" || event.key === "Backspace") && !inField) {
+        event.preventDefault();
+        builderLastRemoved = builderState.remove(key);
+        renderBuilder();
+        syncAddButtons();
+        showBuilderToast("Block removed", "Undo", () => {
+          if (!builderLastRemoved) return;
+          builderState.restoreRemoved(builderLastRemoved);
+          builderLastRemoved = null;
+          renderBuilder();
+          syncAddButtons();
+        });
+        return;
+      }
+      if (event.altKey && event.key === "ArrowUp" && !inField) {
+        event.preventDefault();
+        builderState.move(key, -1);
+        renderBuilder();
+        return;
+      }
+      if (event.altKey && event.key === "ArrowDown" && !inField) {
+        event.preventDefault();
+        builderState.move(key, 1);
+        renderBuilder();
+        return;
+      }
+    }
   }
 });
 
@@ -727,4 +917,69 @@ applyStoredBuilderWidth();
 window.addEventListener("resize", () => {
   if (window.innerWidth <= 980) return;
   applyStoredBuilderWidth();
+});
+
+// ─── Output mode toggle ───────────────────────────────────────────────────────
+
+document.getElementById("builder-output-mode")?.addEventListener("click", () => {
+  outputMode = outputMode === "flat" ? "structured" : "flat";
+  renderLivePrompt();
+  const modeBtn = document.getElementById("builder-output-mode");
+  if (modeBtn) {
+    modeBtn.textContent = outputMode === "flat" ? "Structured" : "Flat";
+    modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
+    modeBtn.title = outputMode === "flat" ? "Show section headers (structured view)" : "Hide section headers (flat view)";
+  }
+});
+
+// ─── Command palette ──────────────────────────────────────────────────────────
+
+document.getElementById("cmd-palette")?.addEventListener("click", (event) => {
+  if (event.target.closest(".cmd-palette-backdrop")) {
+    closeCmdPalette();
+    return;
+  }
+  const itemEl = event.target.closest(".cmd-palette-item");
+  if (itemEl) {
+    addBlockFromCmdPalette(itemEl.dataset.cmdRef || "", itemEl.dataset.cmdSection || "");
+  }
+});
+
+document.getElementById("cmd-palette-input")?.addEventListener("input", (event) => {
+  cmdPaletteSelected = 0;
+  renderCmdPaletteResults(event.target.value || "");
+});
+
+document.getElementById("cmd-palette-input")?.addEventListener("keydown", (event) => {
+  const list = document.getElementById("cmd-palette-list");
+  const items = list ? list.querySelectorAll(".cmd-palette-item") : [];
+
+  if (event.key === "ArrowDown") {
+    event.preventDefault();
+    if (items.length === 0) return;
+    items[cmdPaletteSelected]?.classList.remove("is-selected");
+    cmdPaletteSelected = Math.min(cmdPaletteSelected + 1, items.length - 1);
+    items[cmdPaletteSelected]?.classList.add("is-selected");
+    items[cmdPaletteSelected]?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+  if (event.key === "ArrowUp") {
+    event.preventDefault();
+    if (items.length === 0) return;
+    items[cmdPaletteSelected]?.classList.remove("is-selected");
+    cmdPaletteSelected = Math.max(cmdPaletteSelected - 1, 0);
+    items[cmdPaletteSelected]?.classList.add("is-selected");
+    items[cmdPaletteSelected]?.scrollIntoView({ block: "nearest" });
+    return;
+  }
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const selected = items[cmdPaletteSelected];
+    if (selected) addBlockFromCmdPalette(selected.dataset.cmdRef || "", selected.dataset.cmdSection || "");
+    return;
+  }
+  if (event.key === "Escape") {
+    closeCmdPalette();
+    return;
+  }
 });

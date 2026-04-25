@@ -65,7 +65,7 @@ const BUILDER_SECTIONS = [
   },
   {
     key: "harness",
-    label: "Harness",
+    label: "Checks",
     description: "Validation, output contracts, and final quality checks.",
     emptyLabel: "Add checks when the stakes justify them",
     emptyPrompt: "Use guardrails, schemas, and rubrics to make the output safer and easier to evaluate.",
@@ -224,12 +224,7 @@ function createBuilderUiState() {
 function createBuilderRuntimeState() {
   return {
     lastInput: "",
-    promptInputs: {},
-    lastPrompt: "",
-    lastOutput: "",
-    previousOutput: "",
-    lastSignals: null,
-    lastRunAt: ""
+    promptInputs: {}
   };
 }
 
@@ -399,56 +394,15 @@ function matchesFuzzySearch(haystack = "", query = "") {
 // without silently dropping user state.
 const builderState = (() => {
   const STORAGE_KEY = "agent-library-builder";
-  let stackName = "debug-root-cause";
-  let versions = [];
-  let activeVersionId = "";
-
-  function createVersion(label, description, workingState) {
-    const cleanState = createBuilderWorkingState(cloneBuilderStateValue(workingState || createBuilderWorkingState()));
-    return {
-      id: `version-${Math.random().toString(36).slice(2, 10)}`,
-      label,
-      description,
-      savedAt: new Date().toISOString(),
-      savedState: cloneBuilderStateValue(cleanState),
-      workingState: cloneBuilderStateValue(cleanState)
-    };
-  }
-
-  function getActiveVersion() {
-    return versions.find((version) => version.id === activeVersionId) || versions[0];
-  }
-
-  function ensureActiveVersion() {
-    if (versions.length === 0) {
-      const initial = createVersion("v1", "baseline", createBuilderWorkingState());
-      versions = [initial];
-      activeVersionId = initial.id;
-    }
-    if (!getActiveVersion()) {
-      activeVersionId = versions[0].id;
-    }
-  }
+  let stackName = "untitled-stack";
+  let workingState = createBuilderWorkingState();
 
   function getWorkingState() {
-    ensureActiveVersion();
-    return getActiveVersion().workingState;
+    return workingState;
   }
 
   function isManagedSelectionBlock(item = {}, managedBy = "") {
     return item.managedBy === managedBy;
-  }
-
-  function describeVersion(state = createBuilderWorkingState(), versionIndex = 0) {
-    const items = state.items || [];
-    const modeItem = items.find((item) => item.blockType === "mode");
-    const lensItem = items.find((item) => item.blockType === "lens");
-    const harnessItem = items.find((item) => ["guardrail", "rubric"].includes(item.blockType));
-    if (versionIndex === 0 && items.length === 0) return "baseline";
-    if (modeItem) return humanizeBlockTitle(modeItem.title).replace(/^mode\s+/i, "").toLowerCase() || "baseline";
-    if (lensItem) return `+ ${humanizeBlockTitle(lensItem.title).toLowerCase()}`;
-    if (harnessItem) return `+ ${humanizeBlockTitle(harnessItem.title).toLowerCase()}`;
-    return items.length === 0 ? "baseline" : `${items.length} blocks`;
   }
 
   function normalizeStoredItem(item = {}, currentItems = []) {
@@ -480,37 +434,11 @@ const builderState = (() => {
   function save() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        version: 4,
+        version: 5,
         stackName,
-        activeVersionId,
-        versions
+        ...cloneBuilderStateValue(workingState)
       }));
     } catch {}
-  }
-
-  function hydrateVersions(rawVersions = []) {
-    const nextVersions = rawVersions
-      .map((version, versionIndex) => {
-        const savedState = createBuilderWorkingState({
-          ...version.savedState,
-          items: (version.savedState?.items || []).map((item) => normalizeStoredItem(item)).filter(Boolean)
-        });
-        const workingState = createBuilderWorkingState({
-          ...version.workingState,
-          items: (version.workingState?.items || []).map((item) => normalizeStoredItem(item)).filter(Boolean)
-        });
-        return {
-          id: version.id || `version-${Math.random().toString(36).slice(2, 10)}`,
-          label: version.label || `v${versionIndex + 1}`,
-          description: version.description || describeVersion(savedState, versionIndex),
-          savedAt: version.savedAt || new Date().toISOString(),
-          savedState,
-          workingState
-        };
-      })
-      .filter((version) => version.savedState && version.workingState);
-
-    return nextVersions.length > 0 ? nextVersions : [createVersion("v1", "baseline", createBuilderWorkingState())];
   }
 
   function migrateLegacyItem(item, currentItems = []) {
@@ -539,16 +467,6 @@ const builderState = (() => {
     const managedLens = working.items.find((item) => isManagedSelectionBlock(item, "lens"));
     working.modeKey = managedMode?.key || managedMode?.title || "";
     working.lensKey = managedLens?.key || managedLens?.title || "";
-  }
-
-  function getVersionById(versionId) {
-    return versions.find((version) => version.id === versionId) || null;
-  }
-
-  function isVersionDirty(versionId = activeVersionId) {
-    const version = getVersionById(versionId);
-    if (!version) return false;
-    return JSON.stringify(version.savedState) !== JSON.stringify(version.workingState);
   }
 
   function withWorkingItems(mutator) {
@@ -600,47 +518,55 @@ const builderState = (() => {
     get promptInputs() { return getWorkingState().runtime.promptInputs || {}; },
     get startMode() { return "free"; },
     get stackName() { return stackName; },
-    get versions() { return versions; },
-    get activeVersionId() { return activeVersionId; },
-    get activeVersion() { return getActiveVersion(); },
+    get ui() { return getWorkingState().ui; },
+    get runtime() { return getWorkingState().runtime; },
     get modeKey() { return getWorkingState().modeKey || ""; },
     get lensKey() { return getWorkingState().lensKey || ""; },
     load() {
       try {
         const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-        if (raw && raw.version >= 4 && Array.isArray(raw.versions)) {
-          stackName = typeof raw.stackName === "string" && raw.stackName.trim() ? raw.stackName : "debug-root-cause";
-          versions = hydrateVersions(raw.versions);
-          activeVersionId = raw.activeVersionId || versions[0].id;
-          ensureActiveVersion();
+
+        if (raw && raw.version === 5) {
+          stackName = typeof raw.stackName === "string" && raw.stackName.trim() ? raw.stackName : "untitled-stack";
+          workingState = createBuilderWorkingState({
+            ...raw,
+            items: (raw.items || []).map((item) => normalizeStoredItem(item)).filter(Boolean)
+          });
           save();
           return;
         }
 
+        // Migrate from v4 (versions array format)
+        if (raw && raw.version >= 4 && Array.isArray(raw.versions)) {
+          stackName = typeof raw.stackName === "string" && raw.stackName.trim() ? raw.stackName : "untitled-stack";
+          const activeV = raw.versions.find((v) => v.id === raw.activeVersionId) || raw.versions[0];
+          const ws = activeV?.workingState || {};
+          workingState = createBuilderWorkingState({
+            ...ws,
+            items: (ws.items || []).map((item) => normalizeStoredItem(item)).filter(Boolean)
+          });
+          save();
+          return;
+        }
+
+        // Migrate legacy (pre-v4)
         const legacyItems = [];
         const storedItems = Array.isArray(raw) ? raw : (Array.isArray(raw?.items) ? raw.items : []);
         storedItems.forEach((item) => migrateLegacyItem(item, legacyItems));
-        const workingState = createBuilderWorkingState({
+        stackName = "untitled-stack";
+        workingState = createBuilderWorkingState({
           items: legacyItems.filter(Boolean),
           runtime: {
             ...createBuilderRuntimeState(),
             lastInput: typeof raw?.taskInput === "string" ? raw.taskInput : ""
           }
         });
-        stackName = "debug-root-cause";
-        versions = [createVersion("v1", describeVersion(workingState, 0), workingState)];
-        activeVersionId = versions[0].id;
         save();
       } catch {
-        const initial = createVersion("v1", "baseline", createBuilderWorkingState());
-        stackName = "debug-root-cause";
-        versions = [initial];
-        activeVersionId = initial.id;
+        stackName = "untitled-stack";
+        workingState = createBuilderWorkingState();
         save();
       }
-    },
-    isDirty(versionId = activeVersionId) {
-      return isVersionDirty(versionId);
     },
     has(item) {
       return this.items.some((entry) => builderItemKey(entry) === builderItemKey(item));
@@ -798,40 +724,8 @@ const builderState = (() => {
     },
     setChain() {},
     setInput() {},
-    switchVersion(versionId) {
-      if (!getVersionById(versionId)) return false;
-      activeVersionId = versionId;
-      save();
-      return true;
-    },
-    saveVersion() {
-      const version = getActiveVersion();
-      if (!version) return false;
-      version.savedState = cloneBuilderStateValue(version.workingState);
-      version.savedAt = new Date().toISOString();
-      version.description = describeVersion(version.savedState, versions.indexOf(version));
-      save();
-      return true;
-    },
-    duplicateVersion() {
-      const source = getWorkingState();
-      const nextVersion = createVersion(`v${versions.length + 1}`, describeVersion(source, versions.length), source);
-      versions = [...versions, nextVersion];
-      activeVersionId = nextVersion.id;
-      save();
-      return nextVersion;
-    },
-    setRunResult({ prompt = "", output = "", signals = null }) {
-      const runtime = getWorkingState().runtime;
-      runtime.previousOutput = runtime.lastOutput || "";
-      runtime.lastPrompt = prompt;
-      runtime.lastOutput = output;
-      runtime.lastSignals = signals;
-      runtime.lastRunAt = new Date().toISOString();
-      save();
-    },
     restore(newItems, meta = {}) {
-      const working = createBuilderWorkingState({
+      workingState = createBuilderWorkingState({
         items: (Array.isArray(newItems) ? newItems : [])
           .map((item) => normalizeStoredItem(item))
           .filter(Boolean),
@@ -840,8 +734,6 @@ const builderState = (() => {
           lastInput: typeof meta.taskInput === "string" ? meta.taskInput : ""
         }
       });
-      versions = [createVersion("v1", describeVersion(working, 0), working)];
-      activeVersionId = versions[0].id;
       if (typeof meta.stackName === "string" && meta.stackName.trim()) {
         stackName = meta.stackName.trim();
       }
@@ -1072,9 +964,8 @@ function createCard(item) {
     addBtn.removeAttribute("aria-pressed");
     addBtn.dataset.stackSteps = steps.map((s) => `${s.section}:${s.title}`).join(",");
     addBtn.addEventListener("click", () => {
-      if ((builderState.items.length > 0 || builderState.isDirty()) && !window.confirm("Replace the current builder with this stack? Unsaved composition changes will be lost.")) {
-        return;
-      }
+      const prevItems = builderState.items.map((i) => ({ ...i }));
+      const prevStack = builderState.stackName;
       builderState.clear();
       builderState.setStackName(item.job || slugify(item.title) || "loaded-stack");
       steps.forEach((step) => builderState.add(step));
@@ -1085,10 +976,33 @@ function createCard(item) {
       setTimeout(() => {
         delete addBtn.dataset.stackFlashing;
         addBtn.textContent = "Load Stack";
+        syncAddButtons();
       }, 1500);
       syncAddButtons();
-      if (typeof showBuilderToast === "function") showBuilderToast(`Loaded ${item.title}`);
+      if (typeof showBuilderToast === "function") {
+        showBuilderToast(`Loaded "${item.title}"`, "Undo", () => {
+          builderState.restore(prevItems, { stackName: prevStack });
+          renderBuilder();
+          syncAddButtons();
+        });
+      }
     });
+    const appendBtn = document.createElement("button");
+    appendBtn.type = "button";
+    appendBtn.className = "add-btn";
+    appendBtn.textContent = "+ Append";
+    appendBtn.title = "Add this stack's blocks to the current composition";
+    appendBtn.addEventListener("click", () => {
+      let addedCount = 0;
+      steps.forEach((step) => { if (builderState.add(step)) addedCount++; });
+      if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
+      renderBuilder();
+      syncAddButtons();
+      if (typeof showBuilderToast === "function") {
+        showBuilderToast(`Appended ${addedCount} block${addedCount !== 1 ? "s" : ""} from "${item.title}"`);
+      }
+    });
+    addBtn.insertAdjacentElement("afterend", appendBtn);
   } else {
     const hasBuilderContent = !!(item.copy || (item.body && item.body.length > 0));
     if (hasBuilderContent) {

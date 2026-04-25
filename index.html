@@ -113,6 +113,7 @@
               <input id="builder-stack-name" class="builder-stack-name" type="text" value="debug-root-cause" spellcheck="false" aria-label="Stack name">
             </label>
             <div class="builder-header-actions">
+              <span class="builder-autosave" id="builder-autosave" aria-hidden="true">✓ Saved</span>
               <button type="button" class="builder-action-btn builder-action-btn--danger" id="builder-clear" hidden>Clear</button>
               <button type="button" class="builder-close-btn" id="builder-close" aria-label="Close builder">✕</button>
             </div>
@@ -129,7 +130,10 @@
           <div class="builder-output-panel">
             <div class="builder-output-head">
               <span class="builder-output-label">Prompt</span>
-              <span class="builder-token-count" id="builder-token-count"></span>
+              <div class="builder-output-actions">
+                <button type="button" class="builder-output-mode-btn" id="builder-output-mode" aria-pressed="false" title="Show section headers (structured view)">Structured</button>
+                <span class="builder-token-count" id="builder-token-count"></span>
+              </div>
             </div>
             <div class="builder-run-output is-placeholder" id="builder-run-output">Add blocks to assemble your prompt.</div>
           </div>
@@ -167,6 +171,18 @@
         <div id="step-popover" class="step-popover" hidden></div>
 
     <input type="file" id="load-stack-input" accept=".json" hidden aria-hidden="true">
+
+    <div id="cmd-palette" class="cmd-palette" hidden role="dialog" aria-modal="true" aria-label="Add block">
+      <div class="cmd-palette-backdrop"></div>
+      <div class="cmd-palette-dialog">
+        <input id="cmd-palette-input" type="search" class="cmd-palette-input" placeholder="Search blocks…" autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-controls="cmd-palette-list">
+        <div class="cmd-palette-section-hint" id="cmd-palette-hint" hidden></div>
+        <div class="cmd-palette-list" id="cmd-palette-list" role="listbox" aria-label="Block results"></div>
+        <div class="cmd-palette-footer">
+          <span class="cmd-palette-kbd-hint"><kbd>↑</kbd><kbd>↓</kbd> navigate · <kbd>Enter</kbd> add · <kbd>Esc</kbd> close</span>
+        </div>
+      </div>
+    </div>
 
     <script src="site-data.js"></script>
     <script src="site.js"></script>
