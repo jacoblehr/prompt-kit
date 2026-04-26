@@ -29,6 +29,11 @@ Domain tags:
 
 ---
 
+Avoid when:
+Statistical rigor is required (e.g., regulated decisions, product launches at scale). Use `frame.experiment-design` when the test needs formal hypothesis testing rather than the minimum credible signal.
+
+---
+
 Metadata:
 - type: frame
 - stage: decide

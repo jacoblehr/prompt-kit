@@ -326,7 +326,7 @@ function resolvedTags(md, ...fallbackParts) {
 }
 
 function makeMode(dirName) {
-  const relPath = `modes/${dirName}/README.md`;
+  const relPath = `prompts/blocks/mode.${dirName}/README.md`;
   const md = read(relPath);
   const metadata = extractMetadata(md);
   const title = firstHeading(md).replace(/\s+Mode$/, "");
@@ -373,7 +373,7 @@ function makeMode(dirName) {
 }
 
 function makeStrategy(dirName) {
-  const relPath = `strategies/${dirName}/README.md`;
+  const relPath = `prompts/blocks/strategy.${dirName}/README.md`;
   const md = read(relPath);
   const metadata = extractMetadata(md);
   const title = firstHeading(md);
@@ -843,8 +843,8 @@ function makeStack(fileName) {
   };
 }
 
-function makeRubric(fileName) {
-  const relPath = `rubrics/${fileName}`;
+function makeRubric(baseName) {
+  const relPath = `prompts/blocks/rubric.${baseName}/README.md`;
   const md = read(relPath);
   const metadata = extractMetadata(md);
   const title = firstHeading(md);
@@ -857,15 +857,18 @@ function makeRubric(fileName) {
     pairsWith
   });
 
+  const copy = [title, "", useWhen ? useWhen + "\n" : "", ...questions.map((q) => `- ${q}`)].join("\n").trim();
+
   return makeBlock({
     canonicalType: metadata.type || "rubric",
     form: inferFormFromSourceKind("Rubric"),
     sourceKind: "Rubric",
     key: title,
-    aliases: [`rubric.${fileName.replace(/\.md$/, "")}`],
+    aliases: [`rubric.${baseName}`],
     title,
     summary: ensureSentence(firstSentence(useWhen || title)),
-    tags: resolvedTags(md, title, fileName.replace(/\.md$/, "")),
+    tags: resolvedTags(md, title, baseName),
+    copy,
     stage: metadata.stage || "",
     strength: metadata.strength || "",
     contract,
@@ -1012,9 +1015,10 @@ const rubricOrder = [
   "prompt-quality.md"
 ];
 
-const modes = orderNames(listDirs("modes"), modeOrder).map((dirName) => makeMode(dirName));
-const strategies = orderNames(listDirs("strategies"), strategyOrder).map((dirName) => makeStrategy(dirName));
-const promptBlocks = orderNames(listDirs("prompts/blocks"), promptBlockOrder).map((dirName) => makePromptBlock(dirName));
+const allBlockDirs = listDirs("prompts/blocks");
+const modes = orderNames(allBlockDirs.filter(d => d.startsWith("mode.")).map(d => d.slice(5)), modeOrder).map((dirName) => makeMode(dirName));
+const strategies = orderNames(allBlockDirs.filter(d => d.startsWith("strategy.")).map(d => d.slice(9)), strategyOrder).map((dirName) => makeStrategy(dirName));
+const promptBlocks = orderNames(allBlockDirs.filter(d => !d.startsWith("mode.") && !d.startsWith("strategy.") && !d.startsWith("rubric.")), promptBlockOrder).map((dirName) => makePromptBlock(dirName));
 const snippetBlocks = orderNames(list("prompts/snippets"), snippetOrder)
   .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md")
   .map((fileName) => makeSnippetBlock(fileName));
@@ -1028,9 +1032,8 @@ const lensBlocks = [
   ...list("prompts/concepts/statistics").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("statistics", fileName)),
   ...list("prompts/concepts/design").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("design", fileName))
 ];
-const rubricBlocks = orderNames(list("rubrics"), rubricOrder)
-  .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md")
-  .map((fileName) => makeRubric(fileName));
+const rubricBlocks = orderNames(allBlockDirs.filter(d => d.startsWith("rubric.")).map(d => d.slice(7)), rubricOrder.map(f => f.replace(".md", "")))
+  .map((baseName) => makeRubric(baseName));
 const stackFiles = orderNames(list("stacks"), stackOrder)
   .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md");
 validateStackMeta(stackFiles.map((fileName) => fileName.replace(/\.md$/, "")));

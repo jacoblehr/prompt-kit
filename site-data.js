@@ -62,7 +62,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "modes/explore/README.md"
+      "sourcePath": "prompts/blocks/mode.explore/README.md"
     },
     {
       "section": "Block",
@@ -125,7 +125,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "modes/decide/README.md"
+      "sourcePath": "prompts/blocks/mode.decide/README.md"
     },
     {
       "section": "Block",
@@ -189,7 +189,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "modes/critique/README.md"
+      "sourcePath": "prompts/blocks/mode.critique/README.md"
     },
     {
       "section": "Block",
@@ -252,7 +252,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "modes/reflect/README.md"
+      "sourcePath": "prompts/blocks/mode.reflect/README.md"
     },
     {
       "section": "Block",
@@ -324,7 +324,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "strategies/problem-split/README.md"
+      "sourcePath": "prompts/blocks/strategy.problem-split/README.md"
     },
     {
       "section": "Block",
@@ -397,7 +397,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "strategies/premortem/README.md"
+      "sourcePath": "prompts/blocks/strategy.premortem/README.md"
     },
     {
       "section": "Block",
@@ -469,7 +469,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "strategies/steelman/README.md"
+      "sourcePath": "prompts/blocks/strategy.steelman/README.md"
     },
     {
       "section": "Block",
@@ -541,7 +541,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "strategies/inversion/README.md"
+      "sourcePath": "prompts/blocks/strategy.inversion/README.md"
     },
     {
       "section": "Block",
@@ -612,7 +612,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "strategies/red-team/README.md"
+      "sourcePath": "prompts/blocks/strategy.red-team/README.md"
     },
     {
       "section": "Block",
@@ -6219,7 +6219,7 @@ globalThis.SITE_DATA = {
         "decision",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.decision-quality\n\nUse this checklist after a decision draft.\n\n- Is the actual choice explicit?\n- Are the criteria visible?\n- Are tradeoffs named rather than hidden?\n- Is uncertainty acknowledged?\n- Is there a concrete next action?\n- Would future-you understand why this decision was made?",
       "body": [
         [
           "Use when",
@@ -6236,7 +6236,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/decision-quality.md"
+      "sourcePath": "prompts/blocks/rubric.decision-quality/README.md"
     },
     {
       "section": "Block",
@@ -6273,7 +6273,7 @@ globalThis.SITE_DATA = {
         "argument",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.argument-quality\n\nUse this checklist after drafting or critiquing an argument.\n\n- Is the core claim stated in one sentence?\n- Is the evidence proportionate to the strength of the claim?\n- Are the key premises visible?\n- Is the strongest objection acknowledged and addressed?\n- Does the conclusion actually follow from the argument?\n- Is anything being asserted that should be proven?",
       "body": [
         [
           "Use when",
@@ -6290,7 +6290,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/argument-quality.md"
+      "sourcePath": "prompts/blocks/rubric.argument-quality/README.md"
     },
     {
       "section": "Block",
@@ -6327,7 +6327,7 @@ globalThis.SITE_DATA = {
         "rubric",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.strategy-quality\n\nUse this checklist after drafting a strategy or strategic recommendation.\n\n- Is the actual strategic choice explicit — what we will do and what we will not do?\n- Are the assumptions underlying the strategy named and testable?\n- Does the strategy address the key uncertainties, or does it assume them away?\n- Is there a clear theory of how inputs lead to the desired outcome?\n- Are the trade-offs acknowledged rather than buried?\n- Is the strategy differentiated enough to matter, or is it generic enough to apply to anyone?\n- Is there a clear signal that would tell us the strategy is working or failing?",
       "body": [
         [
           "Use when",
@@ -6344,7 +6344,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/strategy-quality.md"
+      "sourcePath": "prompts/blocks/rubric.strategy-quality/README.md"
     },
     {
       "section": "Block",
@@ -6381,7 +6381,7 @@ globalThis.SITE_DATA = {
         "plan",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.plan-quality\n\nUse this checklist after a plan.\n\n- Are the steps ordered clearly?\n- Are dependencies visible?\n- Are likely blockers named?\n- Is the first action concrete enough to do now?\n- Does the plan avoid unnecessary complexity?\n- Is there a check point after early execution?",
       "body": [
         [
           "Use when",
@@ -6398,7 +6398,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/plan-quality.md"
+      "sourcePath": "prompts/blocks/rubric.plan-quality/README.md"
     },
     {
       "section": "Block",
@@ -6437,7 +6437,7 @@ globalThis.SITE_DATA = {
         "research",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.research-quality\n\nUse this checklist after completing an investigation or research pass.\n\n- Is the question being answered actually the question that matters for the decision?\n- Are the sources capable of answering this question, or is there a gap?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are the strongest counter-arguments represented fairly?\n- Are the conclusions limited to what the evidence actually supports?\n- Is the confidence level on each key claim explicit?\n- Would a skeptical expert with opposing priors find this research intellectually honest?",
       "body": [
         [
           "Use when",
@@ -6454,7 +6454,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/research-quality.md"
+      "sourcePath": "prompts/blocks/rubric.research-quality/README.md"
     },
     {
       "section": "Block",
@@ -6491,7 +6491,7 @@ globalThis.SITE_DATA = {
         "writing",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.writing-quality\n\nUse this checklist after drafting or rewriting.\n\n- Is the main point clear early?\n- Is anything redundant?\n- Are claims stronger than the evidence supports?\n- Is the structure easy to follow?\n- Does each paragraph earn its place?\n- Is the next action or takeaway obvious?",
       "body": [
         [
           "Use when",
@@ -6508,7 +6508,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/writing-quality.md"
+      "sourcePath": "prompts/blocks/rubric.writing-quality/README.md"
     },
     {
       "section": "Block",
@@ -6545,7 +6545,7 @@ globalThis.SITE_DATA = {
         "reflection",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.reflection-quality\n\nUse this checklist after a review or retrospective.\n\n- Did this go beyond recap?\n- Is there at least one reusable lesson?\n- Is there at least one concrete change to make?\n- Did it identify what actually caused the outcome?\n- Did it avoid blame theater?\n- Will this make a future decision or workflow better?",
       "body": [
         [
           "Use when",
@@ -6562,7 +6562,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/reflection-quality.md"
+      "sourcePath": "prompts/blocks/rubric.reflection-quality/README.md"
     },
     {
       "section": "Block",
@@ -6599,7 +6599,7 @@ globalThis.SITE_DATA = {
         "rubric",
         "quality"
       ],
-      "copy": "",
+      "copy": "rubric.prompt-quality\n\nUse this checklist after drafting or revising a prompt.\n\n- Is the task specific?\n- Is the output shape explicit?\n- Are constraints and non-goals visible?\n- Is the model likely to misread the request?\n- Is there enough context to solve it without guessing?\n- Would a cleaner version of this prompt be easier to use?",
       "body": [
         [
           "Use when",
@@ -6616,7 +6616,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "rubrics/prompt-quality.md"
+      "sourcePath": "prompts/blocks/rubric.prompt-quality/README.md"
     }
   ],
   "stacks": [

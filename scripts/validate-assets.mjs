@@ -50,12 +50,21 @@ async function validateBlocks(dir, errors, warnings) {
     try {
       const content = await readFile(readmeFile, 'utf-8')
 
-      // Check required sections
-      const required = ['## Purpose', '## Use when', '## Expects', '## Adds']
-      for (const section of required) {
-        if (!content.includes(section)) {
-          errors.push(`Block "${item.name}" missing required section: ${section}`)
+      // Prompt blocks (frame., guardrail., schema., assumption.) require full contract sections
+      const PROMPT_BLOCK_PREFIXES = ['frame.', 'guardrail.', 'schema.', 'assumption.']
+      const isPromptBlock = PROMPT_BLOCK_PREFIXES.some((p) => item.name.startsWith(p))
+      if (isPromptBlock) {
+        const required = ['## Purpose', '## Use when', '## Expects', '## Adds']
+        for (const section of required) {
+          if (!content.includes(section)) {
+            errors.push(`Block "${item.name}" missing required section: ${section}`)
+          }
         }
+      }
+
+      // Rubrics require a Questions section
+      if (item.name.startsWith('rubric.') && !content.includes('Questions:')) {
+        errors.push(`Rubric "${item.name}" missing required section: Questions`)
       }
 
       // Check metadata
@@ -81,11 +90,8 @@ async function validateStacks(dir, errors, warnings) {
     if (!content.includes('## Composition notes')) {
       warnings.push(`Stack "${file}" missing composition notes`)
     }
-    if (!content.includes('## Minimum blocks')) {
+    if (!content.includes('**Minimum blocks:**')) {
       warnings.push(`Stack "${file}" missing minimum blocks`)
-    }
-    if (!content.includes('## Full sequence')) {
-      warnings.push(`Stack "${file}" missing full sequence`)
     }
   }
 }

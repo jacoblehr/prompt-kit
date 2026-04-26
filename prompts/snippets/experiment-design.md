@@ -29,8 +29,13 @@ Domain tags:
 
 ---
 
+Avoid when:
+The question can be answered with existing data or a simpler test. Use `frame.design-cheap-test` when the goal is the minimum credible test rather than a fully specified experiment.
+
+---
+
 Metadata:
 - type: frame
 - stage: analyze
 - strength: heavy
-- pairs with: `frame.hypothesis-generation`, `frame.statistical-significance-check`, `frame.research-questions`
+- pairs with: `frame.hypothesis-generation`, `guardrail.statistical-significance-check`, `frame.research-questions`

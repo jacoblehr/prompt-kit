@@ -120,12 +120,12 @@ The repo stores source material in several folders. All of them map into the sur
 
 | Folder | Block type |
 |--------|-----------|
-| `modes/` | `mode` |
-| `strategies/` | `strategy` |
-| `prompts/blocks/` | `frame`, `guardrail`, or `schema` depending on the block |
+| `prompts/blocks/mode.*` | `mode` |
+| `prompts/blocks/strategy.*` | `strategy` |
+| `prompts/blocks/rubric.*` | `rubric` |
+| `prompts/blocks/frame.*`, `guardrail.*`, `schema.*`, `assumption.*` | `frame`, `guardrail`, `schema`, or `assumption` |
 | `prompts/snippets/` | `frame`, `strategy`, `guardrail`, or `schema` — full-task blocks |
 | `prompts/concepts/` | `lens` |
-| `rubrics/` | `rubric` |
 | `stacks/` | stacks (not blocks) |
 
 Snippet families, lens groups, and similar distinctions are browsing metadata, not top-level ontology layers.

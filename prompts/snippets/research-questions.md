@@ -25,6 +25,11 @@ Domain tags:
 
 ---
 
+Avoid when:
+The research direction is already well-defined and the bottleneck is execution rather than question formation. Adding more questions when the list is already long creates exploration drag.
+
+---
+
 Metadata:
 - type: frame
 - stage: explore

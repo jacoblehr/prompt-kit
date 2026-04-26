@@ -23,6 +23,11 @@ Domain tags:
 
 ---
 
+Avoid when:
+The outcome is still unfolding and causal chains cannot yet be traced. Use `guardrail.uncertainty` to surface what is unknown before mapping causes prematurely.
+
+---
+
 Metadata:
 - type: frame
 - stage: analyze

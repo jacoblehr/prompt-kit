@@ -25,6 +25,11 @@ Domain tags:
 
 ---
 
+Avoid when:
+The material is already structured with clear takeaways, or the purpose is to summarize rather than extract actionable signal. Use `frame.summarize-source` when faithful summary is the goal.
+
+---
+
 Metadata:
 - type: frame
 - stage: conclude

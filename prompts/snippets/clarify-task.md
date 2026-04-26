@@ -23,6 +23,11 @@ Domain tags:
 
 ---
 
+Avoid when:
+The task is already tightly specified with clear scope and output. Clarification on a well-defined task adds overhead rather than precision.
+
+---
+
 Metadata:
 - type: frame
 - stage: frame

@@ -27,6 +27,11 @@ Domain tags:
 
 ---
 
+Avoid when:
+The decision is reversible and low-stakes, where the cost of mapping second-order effects exceeds the cost of being wrong. Use for consequential or hard-to-reverse decisions.
+
+---
+
 Metadata:
 - type: frame
 - stage: analyze

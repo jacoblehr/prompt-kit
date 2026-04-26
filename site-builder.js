@@ -226,6 +226,81 @@ function renderLivePrompt() {
     tokenCount.textContent = tokens > 0 ? `~${tokens.toLocaleString()} tokens` : "";
   }
   if (copyButton) copyButton.disabled = !prompt;
+  renderPromptAnalysis(analyzePrompt(prompt || ""));
+}
+
+// ─── Prompt linter + pattern detection ───────────────────────────────────────
+//
+// Purely assistive — no scoring, no enforcement, no rewriting.
+// The linter surfaces common issues; the pattern strip shows what is present.
+
+const LINTER_VAGUE = /\b(improve|vague|enhance|optimize|better|good|things like|etc\.|something like|sort of|kind of|more effective|more useful)\b/gi;
+const LINTER_OUTPUT = /\b(return|output|format|respond with|give me a list|in json|in markdown|as a table|as bullets?|as numbered|structure your)\b/i;
+const LINTER_ROLE = /\b(act as|you are (?:a|an)|as (?:a|an) (?:senior|expert|experienced)|your role is|imagine you are|you're (?:a|an))\b/i;
+const LINTER_TASK = /\b(analyze|summarize|write|create|identify|find|explain|evaluate|review|generate|compare|describe|list|draft|assess|outline)\b/i;
+const LINTER_CONSTRAINT = /\b(don'?t|do not|never|always|must|limit to?|avoid(?!ance)|only (?!if)|without|no more than|keep it|restrict|exclude|at most)\b/i;
+const LINTER_EXAMPLE = /\b(for example|e\.g\.|such as|example:|for instance|here is an example|sample:)\b/i;
+
+function analyzePrompt(text) {
+  if (!text || !text.trim()) return { hints: [], patterns: [] };
+
+  const hints = [];
+  const wordCount = text.trim().split(/\s+/).length;
+
+  // Vague language — require 2+ hits to reduce noise on legitimate uses
+  const vagueHits = text.match(LINTER_VAGUE) || [];
+  if (vagueHits.length >= 2) {
+    hints.push({ type: "vague", text: "Vague language detected — be specific about what you want." });
+  }
+
+  // Missing output format
+  if (!LINTER_OUTPUT.test(text)) {
+    hints.push({ type: "format", text: "No output format specified — say what you want returned." });
+  }
+
+  // Very long prompt
+  if (wordCount > 700) {
+    hints.push({ type: "length", text: `Long prompt (~${wordCount} words) — cut anything redundant.` });
+  }
+
+  // Repetition: 2-grams appearing 3+ times
+  const tokens = text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
+  const grams = new Map();
+  for (let i = 0; i < tokens.length - 1; i++) {
+    const gram = `${tokens[i]} ${tokens[i + 1]}`;
+    if (gram.length >= 7) grams.set(gram, (grams.get(gram) || 0) + 1);
+  }
+  if ([...grams.values()].some((c) => c >= 3)) {
+    hints.push({ type: "repetition", text: "Repeated phrases found — check for redundancy." });
+  }
+
+  // Pattern annotations (non-enforcing — shows what is present, not what is missing)
+  const patterns = [];
+  if (LINTER_ROLE.test(text)) patterns.push("Role");
+  if (LINTER_TASK.test(text)) patterns.push("Task");
+  if (LINTER_CONSTRAINT.test(text)) patterns.push("Constraints");
+  if (LINTER_OUTPUT.test(text)) patterns.push("Output format");
+  if (LINTER_EXAMPLE.test(text)) patterns.push("Examples");
+
+  return { hints: hints.slice(0, 3), patterns };
+}
+
+function renderPromptAnalysis(analysis) {
+  const mount = document.getElementById("prompt-analysis");
+  if (!mount) return;
+  const { hints = [], patterns = [] } = analysis;
+  if (hints.length === 0 && patterns.length === 0) {
+    mount.hidden = true;
+    return;
+  }
+  mount.hidden = false;
+  const patternsHtml = patterns.length > 0
+    ? `<div class="prompt-patterns"><span class="prompt-patterns-label">Detected</span>${patterns.map((p) => `<span class="prompt-pattern-pill">${escHtml(p)}</span>`).join("")}</div>`
+    : "";
+  const hintsHtml = hints.length > 0
+    ? `<ul class="prompt-hints">${hints.map((h) => `<li class="prompt-hint prompt-hint--${escHtml(h.type)}">${escHtml(h.text)}</li>`).join("")}</ul>`
+    : "";
+  mount.innerHTML = patternsHtml + hintsHtml;
 }
 
 function renderHeaderControls() {
@@ -374,7 +449,38 @@ function renderComposition() {
   const mount = document.getElementById("builder-composition");
   if (!mount) return;
   const uiState = builderState.ui;
-  mount.innerHTML = BUILDER_SECTION_ORDER.map((sectionKey) => renderSection(sectionKey, uiState)).join("");
+
+  // Show a quick-start panel when the builder is empty — faster than the per-section empty states
+  if (builderState.items.length === 0) {
+    const QUICK_START_BLOCKS = [
+      { ref: "frame.task", label: "Define a task" },
+      { ref: "frame.clarify-task", label: "Clarify first" },
+      { ref: "mode.explore", label: "Explore a topic" },
+      { ref: "mode.decide", label: "Make a decision" },
+      { ref: "guardrail.uncertainty", label: "Handle uncertainty" },
+      { ref: "schema.execution-brief", label: "Structure the output" }
+    ];
+    const chips = QUICK_START_BLOCKS
+      .map(({ ref, label }) => {
+        const item = resolveRef(ref);
+        if (!item) return "";
+        const section = defaultBuilderSectionForItem(item, []);
+        return `<button type="button" class="qs-chip" data-action="pick-starter" data-section="${escHtml(section)}" data-ref="${escHtml(item.key || item.title)}">${escHtml(label)}</button>`;
+      })
+      .filter(Boolean)
+      .join("");
+
+    mount.innerHTML = `
+      <div class="builder-quick-start">
+        <div class="builder-qs-label">Quick start</div>
+        <div class="builder-qs-chips">${chips}</div>
+        <button type="button" class="builder-qs-browse" data-action="open-cmd-palette">Browse all blocks&hellip;</button>
+      </div>
+      ${BUILDER_SECTION_ORDER.map((sectionKey) => renderSection(sectionKey, uiState)).join("")}
+    `;
+  } else {
+    mount.innerHTML = BUILDER_SECTION_ORDER.map((sectionKey) => renderSection(sectionKey, uiState)).join("");
+  }
 
   const activePicker = mount.querySelector(".pb-picker-search");
   if (activePicker) activePicker.focus();
@@ -407,6 +513,8 @@ function renderBuilder() {
     modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
     modeBtn.title = outputMode === "flat" ? "Show section headers" : "Hide section headers";
   }
+
+  if (typeof renderRecentItems === "function") renderRecentItems();
 }
 
 const BUILDER_TEXTAREA_SELECTOR = ".builder-input-textarea, .builder-run-input, .pb-block-textarea";
@@ -1202,7 +1310,7 @@ document.getElementById("load-stack-input")?.addEventListener("change", (event) 
       renderBuilder();
       syncAddButtons();
       openBuilder();
-      showBuilderToast(`Loaded \"${meta.stackName}\"`);
+      showBuilderToast(`Loaded "${meta.stackName}"`);
     } catch {
       showBuilderToast("Could not load file — invalid or unsupported format");
     }

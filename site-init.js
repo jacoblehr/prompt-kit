@@ -8,6 +8,7 @@ syncAddButtons();
 updateNavCounts();
 renderFilterGroups();
 applyFilters();
+renderRecentItems();
 
 if (builderState.items.length > 0) {
   openBuilder();

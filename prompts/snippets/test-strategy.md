@@ -34,4 +34,4 @@ Metadata:
 - type: frame
 - stage: critique
 - strength: medium
-- pairs with: `mode.critique`, `frame.requirements-decomposition`, `frame.release-readiness`
+- pairs with: `mode.critique`, `frame.requirements-decomposition`, `guardrail.release-readiness`

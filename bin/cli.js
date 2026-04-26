@@ -15,8 +15,10 @@ program
   .description('CLI for Prompt Kit - Manage blocks and stacks')
   .version('1.0.0')
 
-program
-  .command('list blocks')
+const listCmd = program.command('list').description('List blocks or stacks')
+
+listCmd
+  .command('blocks')
   .description('List all prompt blocks')
   .action(async () => {
     const blocksDir = path.join(rootDir, 'prompts/blocks')
@@ -50,8 +52,8 @@ program
     })
   })
 
-program
-  .command('list stacks')
+listCmd
+  .command('stacks')
   .description('List all stacks')
   .action(async () => {
     const stacksDir = path.join(rootDir, 'stacks')

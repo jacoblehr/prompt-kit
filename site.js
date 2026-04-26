@@ -386,6 +386,30 @@ function matchesFuzzySearch(haystack = "", query = "") {
   return false;
 }
 
+// ─── Recent items ─────────────────────────────────────────────────────────────
+//
+// Track the last 6 blocks added to the builder. Stored in localStorage.
+// Displayed in the sidebar as quick-add shortcuts.
+
+const RECENT_ITEMS_KEY = "prompt-kit-recents";
+
+function getRecentItemKeys() {
+  try {
+    return JSON.parse(localStorage.getItem(RECENT_ITEMS_KEY) || "[]").filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+function pushRecentItemKey(key) {
+  if (!key) return;
+  try {
+    const keys = getRecentItemKeys().filter((k) => k !== key);
+    keys.unshift(key);
+    localStorage.setItem(RECENT_ITEMS_KEY, JSON.stringify(keys.slice(0, 6)));
+  } catch {}
+}
+
 // ─── Builder state ────────────────────────────────────────────────────────────
 //
 // The current UI edits a single working composition, but we still persist it
@@ -596,6 +620,7 @@ const builderState = (() => {
       }
       working.ui.lastActiveSection = nextSection;
       save();
+      if (nextItem.key) pushRecentItemKey(nextItem.key);
       return true;
     },
     setStackName(value) {
@@ -832,6 +857,40 @@ function bodyCopy(item) {
 }
 function escHtml(str = "") {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// ─── Recent items panel ───────────────────────────────────────────────────────
+//
+// Renders the sidebar recents section. Called from renderBuilder() so it stays
+// in sync after every state change. renderBuilder is defined in site-builder.js
+// but by call time all functions will be available.
+
+function renderRecentItems() {
+  const section = document.getElementById("sidebar-recents");
+  const mount = document.getElementById("recent-items");
+  if (!section || !mount) return;
+  const keys = getRecentItemKeys();
+  const items = keys.map((k) => resolveRef(k)).filter(Boolean);
+  section.hidden = items.length === 0;
+  if (items.length === 0) return;
+  mount.innerHTML = items.map((item) => `
+    <button type="button" class="recent-item-btn" data-ref="${escHtml(item.key || item.title)}" title="${escHtml(item.summary || item.title)}">
+      <span class="recent-item-type" data-block-type="${escHtml(item.blockType)}">${escHtml(blockTypeLabel(item.blockType))}</span>
+      <span class="recent-item-name">${escHtml(humanizeBlockTitle(item.title))}</span>
+    </button>
+  `).join("");
+  mount.querySelectorAll(".recent-item-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = resolveRef(btn.dataset.ref || "");
+      if (!item) return;
+      if (!builderState.has(item)) {
+        builderState.add(item);
+        renderBuilder();
+        syncAddButtons();
+      }
+      if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
+    });
+  });
 }
 
 /**

@@ -41,4 +41,4 @@ Metadata:
 - type: schema
 - stage: conclude
 - strength: medium
-- pairs with: `mode.decide`, `frame.release-readiness`, `frame.migration-plan`
+- pairs with: `mode.decide`, `guardrail.release-readiness`, `frame.migration-plan`

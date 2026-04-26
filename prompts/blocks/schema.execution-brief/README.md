@@ -14,12 +14,13 @@ A structured output format that separates objective, scope, key steps, success c
 
 ## Returns
 - objective
-- scope
-- key steps
-- success criteria
-- risks
-- owner / responsible party
-- next action
+- owner or responsible role
+- sequence or milestones
+- dependencies
+- major risks
+- first checkpoint
+- pause or escalation trigger
+- immediate next action
 
 ## Pairs with
 `mode.decide`, `schema.decision-memo`, `frame.success-criteria`
