@@ -12,6 +12,12 @@ Look for:
 - the question I should be asking but am not
 - evidence I might be filtering out because it is inconvenient
 
+Return:
+- blind spots identified
+- most consequential blind spot
+- the question I should be asking but am not
+- what a skeptical outside observer would probably say
+
 Context:
 {paste context}
 ```

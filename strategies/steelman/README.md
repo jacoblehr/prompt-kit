@@ -49,8 +49,8 @@ The position is not yet formed enough to steelman — you need a concrete positi
 
 ```text
 Apply the STEELMAN strategy.
-Argue the strongest version of the position I am considering challenging.
-Make the case as well as its best proponent would.
+Before any critique, argue the strongest version of the position as its best proponent would.
+Work through the evidence and reasoning that support it most compellingly.
 Then identify what would actually be required to defeat that strongest version.
 ```
 

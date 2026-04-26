@@ -16,7 +16,7 @@ A directive to prioritize defect detection over completeness, suppress politenes
 Prioritized weaknesses, blind spots, and highest-leverage revision targets rather than balanced summaries.
 
 ## Pairs with
-`strategy.premortem`, `strategy.red_team`, `strategy.steelman`, `guardrail.disconfirming-evidence`, `rubric.*`
+`strategy.premortem`, `strategy.red-team`, `strategy.steelman`, `guardrail.disconfirming-evidence`, `rubric.*`
 
 ## Avoid when
 No artifact exists yet — critique requires something to critique. Use `mode.explore` first if the thing to critique has not been created.
@@ -51,6 +51,7 @@ No artifact exists yet — critique requires something to critique. Use `mode.ex
 
 ```text
 Enter CRITIQUE mode.
+Work through the artifact systematically — examine each claim, assumption, and dependency in turn.
 Inspect the current artifact for weaknesses, blind spots, and likely failure points.
 Prioritize the highest-leverage findings and give concrete revision advice.
 Do not soften the critique with filler praise.

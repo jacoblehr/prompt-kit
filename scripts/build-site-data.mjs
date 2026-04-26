@@ -879,14 +879,14 @@ function makeRubric(fileName) {
 }
 
 const modeOrder = ["explore", "decide", "critique", "reflect"];
-const strategyOrder = ["problem_split", "premortem", "steelman", "inversion", "red_team"];
+const strategyOrder = ["problem-split", "premortem", "steelman", "inversion", "red-team"];
 const promptBlockOrder = [
   "frame.task",
   "frame.success-criteria",
   "guardrail.uncertainty",
   "guardrail.disconfirming-evidence",
   "assumption.audit",
-  "scope.frame",
+  "frame.scope",
   "schema.decision-memo",
   "schema.execution-brief"
 ];

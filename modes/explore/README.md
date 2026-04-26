@@ -53,6 +53,7 @@ A clear decision with defined options already exists — in that case use `mode.
 
 ```text
 Enter EXPLORE mode.
+Think step by step before committing to any single direction.
 Generate multiple plausible directions instead of converging too early.
 Surface unknowns and contrasting options.
 Do not choose yet unless I explicitly ask you to.

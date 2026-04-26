@@ -11,6 +11,11 @@ Requirements:
 - include at least one practical angle
 - include at least one high-upside angle
 
+Return for each angle:
+- angle
+- why it is non-obvious
+- potential upside if pursued
+
 Topic:
 {paste topic}
 ```

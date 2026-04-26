@@ -19,7 +19,7 @@ An adversarial check: the strongest real opposing evidence or argument, a test o
 - whether the conclusion still stands and why
 
 ## Pairs with
-`mode.critique`, `strategy.steelman`, `strategy.red_team`, `guardrail.assumption-audit`
+`mode.critique`, `strategy.steelman`, `strategy.red-team`, `guardrail.assumption-audit`
 
 ## Avoid when
 The task is exploratory with no fixed conclusion yet — this guardrail targets an existing preferred answer.
