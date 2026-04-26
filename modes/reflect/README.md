@@ -51,6 +51,7 @@ The outcome is too recent to evaluate clearly, or when no comparison between exp
 
 ```text
 Enter REFLECT mode.
+Work through the outcome carefully before drawing lessons.
 Compare what was expected with what actually happened.
 Extract reusable lessons and identify what should change in my prompts, stacks, or decisions next time.
 Do not stop at recap.

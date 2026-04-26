@@ -19,7 +19,7 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 ### Underframed problem
 
 - `mode.explore`
-- `strategy.problem_split`
+- `strategy.problem-split`
 - `frame.task`
 - `frame.scope`
 - `guardrail.uncertainty`
@@ -60,7 +60,7 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 
 - `mode.critique`
 - `strategy.premortem`
-- `strategy.red_team`
+- `strategy.red-team`
 - `guardrail.assumption-audit`
 - `guardrail.stress-test-assumptions`
 

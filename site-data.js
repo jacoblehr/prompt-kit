@@ -33,7 +33,7 @@ globalThis.SITE_DATA = {
         "divergent thinking",
         "problem setup"
       ],
-      "copy": "Enter EXPLORE mode.\nGenerate multiple plausible directions instead of converging too early.\nSurface unknowns and contrasting options.\nDo not choose yet unless I explicitly ask you to.",
+      "copy": "Enter EXPLORE mode.\nThink step by step before committing to any single direction.\nGenerate multiple plausible directions instead of converging too early.\nSurface unknowns and contrasting options.\nDo not choose yet unless I explicitly ask you to.",
       "body": [
         [
           "Purpose",
@@ -96,7 +96,7 @@ globalThis.SITE_DATA = {
         "convergent thinking",
         "commitment"
       ],
-      "copy": "Enter DECIDE mode.\nCompare the available options against explicit criteria.\nChoose the best current option, state tradeoffs, and name the next action.\nDo not expand the option set unless it is clearly too weak to decide from.",
+      "copy": "Enter DECIDE mode.\nThink through the options systematically before reaching a verdict.\nCompare the available options against explicit criteria.\nChoose the best current option, state tradeoffs, and name the next action.\nDo not expand the option set unless it is clearly too weak to decide from.",
       "body": [
         [
           "Purpose",
@@ -142,7 +142,7 @@ globalThis.SITE_DATA = {
         "adds": "A directive to prioritize defect detection over completeness, suppress politeness, and give concrete revision advice.",
         "pairsWith": [
           "strategy.premortem",
-          "strategy.red_team",
+          "strategy.red-team",
           "strategy.steelman",
           "guardrail.disconfirming-evidence",
           "rubric.*"
@@ -160,7 +160,7 @@ globalThis.SITE_DATA = {
         "quality improvement",
         "adversarial thinking"
       ],
-      "copy": "Enter CRITIQUE mode.\nInspect the current artifact for weaknesses, blind spots, and likely failure points.\nPrioritize the highest-leverage findings and give concrete revision advice.\nDo not soften the critique with filler praise.",
+      "copy": "Enter CRITIQUE mode.\nWork through the artifact systematically — examine each claim, assumption, and dependency in turn.\nInspect the current artifact for weaknesses, blind spots, and likely failure points.\nPrioritize the highest-leverage findings and give concrete revision advice.\nDo not soften the critique with filler praise.",
       "body": [
         [
           "Purpose",
@@ -180,7 +180,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "strategy.premortem, strategy.red_team, strategy.steelman, guardrail.disconfirming-evidence, rubric.*"
+          "strategy.premortem, strategy.red-team, strategy.steelman, guardrail.disconfirming-evidence, rubric.*"
         ],
         [
           "Avoid when",
@@ -223,7 +223,7 @@ globalThis.SITE_DATA = {
         "retrospective",
         "learning"
       ],
-      "copy": "Enter REFLECT mode.\nCompare what was expected with what actually happened.\nExtract reusable lessons and identify what should change in my prompts, stacks, or decisions next time.\nDo not stop at recap.",
+      "copy": "Enter REFLECT mode.\nWork through the outcome carefully before drawing lessons.\nCompare what was expected with what actually happened.\nExtract reusable lessons and identify what should change in my prompts, stacks, or decisions next time.\nDo not stop at recap.",
       "body": [
         [
           "Purpose",
@@ -282,7 +282,7 @@ globalThis.SITE_DATA = {
       },
       "key": "strategy.problem-split",
       "aliases": [
-        "strategy.problem_split"
+        "strategy.problem-split"
       ],
       "title": "strategy.problem-split",
       "summary": "Decompose a vague or overloaded task into distinct subproblems so the right one can be addressed first.",
@@ -291,7 +291,7 @@ globalThis.SITE_DATA = {
         "problem structure",
         "systems thinking"
       ],
-      "copy": "Apply the PROBLEM SPLIT strategy.\nBreak this into distinct subproblems, surface open questions, and suggest the best order of attack.\nKeep the decomposition practical rather than exhaustive.",
+      "copy": "Apply the PROBLEM SPLIT strategy.\nBefore attempting a solution, work through the problem structure first.\nBreak this into distinct subproblems, surface open questions, and suggest the best order of attack.\nKeep the decomposition practical rather than exhaustive.",
       "body": [
         [
           "Purpose",
@@ -324,7 +324,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "strategies/problem_split/README.md"
+      "sourcePath": "strategies/problem-split/README.md"
     },
     {
       "section": "Block",
@@ -347,7 +347,7 @@ globalThis.SITE_DATA = {
         ],
         "pairsWith": [
           "mode.critique",
-          "strategy.red_team",
+          "strategy.red-team",
           "guardrail.assumption-audit",
           "guardrail.uncertainty"
         ],
@@ -364,7 +364,7 @@ globalThis.SITE_DATA = {
         "risk identification",
         "prospective hindsight"
       ],
-      "copy": "Apply the PREMORTEM strategy.\nAssume this plan failed. List the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.",
+      "copy": "Apply the PREMORTEM strategy.\nImagine the plan has already failed — it is one year from now and things went wrong.\nWork backward: list the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.",
       "body": [
         [
           "Purpose",
@@ -388,7 +388,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.critique, strategy.red_team, guardrail.assumption-audit, guardrail.uncertainty"
+          "mode.critique, strategy.red-team, guardrail.assumption-audit, guardrail.uncertainty"
         ],
         [
           "Avoid when",
@@ -436,7 +436,7 @@ globalThis.SITE_DATA = {
         "argumentation",
         "adversarial thinking"
       ],
-      "copy": "Apply the STEELMAN strategy.\nArgue the strongest version of the position I am considering challenging.\nMake the case as well as its best proponent would.\nThen identify what would actually be required to defeat that strongest version.",
+      "copy": "Apply the STEELMAN strategy.\nBefore any critique, argue the strongest version of the position as its best proponent would.\nWork through the evidence and reasoning that support it most compellingly.\nThen identify what would actually be required to defeat that strongest version.",
       "body": [
         [
           "Purpose",
@@ -492,7 +492,7 @@ globalThis.SITE_DATA = {
         "pairsWith": [
           "mode.critique",
           "strategy.premortem",
-          "strategy.red_team",
+          "strategy.red-team",
           "guardrail.assumption-audit"
         ],
         "avoidWhen": "The task is still exploratory — inversion targets a specific plan or direction that can be inverted."
@@ -508,7 +508,7 @@ globalThis.SITE_DATA = {
         "risk mapping",
         "failure analysis"
       ],
-      "copy": "Apply the INVERSION strategy.\nDefine clearly what a bad outcome looks like for this situation.\nList the most plausible paths to that bad outcome.\nThen flip: what conditions would prevent each path?",
+      "copy": "Apply the INVERSION strategy.\nStart by defining clearly what a bad outcome looks like — be specific.\nThen work backward: list the most plausible paths to that bad outcome, and for each path, identify the conditions that would prevent it.\nTreat those conditions as design constraints or mitigations.",
       "body": [
         [
           "Purpose",
@@ -532,7 +532,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.critique, strategy.premortem, strategy.red_team, guardrail.assumption-audit"
+          "mode.critique, strategy.premortem, strategy.red-team, guardrail.assumption-audit"
         ],
         [
           "Avoid when",
@@ -570,7 +570,7 @@ globalThis.SITE_DATA = {
       },
       "key": "strategy.red-team",
       "aliases": [
-        "strategy.red_team"
+        "strategy.red-team"
       ],
       "title": "strategy.red-team",
       "summary": "Apply a fully adversarial frame to a plan — the goal is to defeat it, not improve it.",
@@ -579,7 +579,7 @@ globalThis.SITE_DATA = {
         "critical thinking",
         "stress testing"
       ],
-      "copy": "Apply the RED TEAM strategy.\nArgue against this plan as a hostile critic whose goal is to defeat it.\nPrioritize arguments that are both credible and hard to dismiss.\nDo not soften the critique or suggest fixes until the attack is complete.",
+      "copy": "Apply the RED TEAM strategy.\nShift to a fully adversarial frame — your goal is to defeat this plan, not improve it.\nWork through the plan point by point and identify the most credible, damaging attacks.\nPrioritize arguments that are both credible and hard to dismiss.\nDo not soften the critique or suggest fixes until the attack is complete.",
       "body": [
         [
           "Purpose",
@@ -612,7 +612,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "strategies/red_team/README.md"
+      "sourcePath": "strategies/red-team/README.md"
     },
     {
       "section": "Block",
@@ -861,7 +861,7 @@ globalThis.SITE_DATA = {
         "pairsWith": [
           "mode.critique",
           "strategy.steelman",
-          "strategy.red_team",
+          "strategy.red-team",
           "guardrail.assumption-audit"
         ],
         "avoidWhen": "The task is exploratory with no fixed conclusion yet — this guardrail targets an existing preferred answer."
@@ -902,7 +902,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.critique, strategy.steelman, strategy.red_team, guardrail.assumption-audit"
+          "mode.critique, strategy.steelman, strategy.red-team, guardrail.assumption-audit"
         ],
         [
           "Avoid when",
@@ -1018,8 +1018,8 @@ globalThis.SITE_DATA = {
       },
       "key": "frame.scope",
       "aliases": [
-        "core.scope.frame",
-        "core.scope-frame"
+        "core.frame.scope",
+        "core.frame-scope"
       ],
       "title": "frame.scope",
       "summary": "Define explicit boundaries for a task or project to prevent drift and hidden expansion.",
@@ -1060,7 +1060,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "Prompt Blocks",
       "group": "",
-      "sourcePath": "prompts/blocks/scope.frame/prompt.md"
+      "sourcePath": "prompts/blocks/frame.scope/prompt.md"
     },
     {
       "section": "Block",
@@ -1292,7 +1292,7 @@ globalThis.SITE_DATA = {
         "creative thinking",
         "reframing"
       ],
-      "copy": "Brainstorm unexpected but plausible angles on this.\n\nRequirements:\n- avoid obvious first-pass ideas\n- include at least one contrarian angle\n- include at least one practical angle\n- include at least one high-upside angle\n\nTopic:\n{paste topic}",
+      "copy": "Brainstorm unexpected but plausible angles on this.\n\nRequirements:\n- avoid obvious first-pass ideas\n- include at least one contrarian angle\n- include at least one practical angle\n- include at least one high-upside angle\n\nReturn for each angle:\n- angle\n- why it is non-obvious\n- potential upside if pursued\n\nTopic:\n{paste topic}",
       "body": [
         [
           "Use when",
@@ -2864,6 +2864,12 @@ globalThis.SITE_DATA = {
       "strength": "light",
       "contract": {
         "useWhen": "Use when you want to surface what you are probably not thinking about.",
+        "returns": [
+          "blind spots identified",
+          "most consequential blind spot",
+          "the question I should be asking but am not",
+          "what a skeptical outside observer would probably say"
+        ],
         "pairsWith": [
           "mode.critique",
           "guardrail.disconfirming-evidence",
@@ -2881,11 +2887,15 @@ globalThis.SITE_DATA = {
         "reflection",
         "epistemics"
       ],
-      "copy": "Surface the blind spots I am probably missing here.\n\nLook for:\n- perspectives of stakeholders I may be underweighting\n- common failure categories that apply to this type of problem\n- hidden incentives or dynamics I may be ignoring\n- the question I should be asking but am not\n- evidence I might be filtering out because it is inconvenient\n\nContext:\n{paste context}",
+      "copy": "Surface the blind spots I am probably missing here.\n\nLook for:\n- perspectives of stakeholders I may be underweighting\n- common failure categories that apply to this type of problem\n- hidden incentives or dynamics I may be ignoring\n- the question I should be asking but am not\n- evidence I might be filtering out because it is inconvenient\n\nReturn:\n- blind spots identified\n- most consequential blind spot\n- the question I should be asking but am not\n- what a skeptical outside observer would probably say\n\nContext:\n{paste context}",
       "body": [
         [
           "Use when",
           "Use when you want to surface what you are probably not thinking about."
+        ],
+        [
+          "Returns",
+          "blind spots identified, most consequential blind spot, the question I should be asking but am not, what a skeptical outside observer would probably say"
         ],
         [
           "Pairs with",
@@ -6570,6 +6580,7 @@ globalThis.SITE_DATA = {
           "Are constraints and non-goals visible?",
           "Is the model likely to misread the request?",
           "Is there enough context to solve it without guessing?",
+          "Does the prompt invite explicit reasoning, or does it only ask for a final answer?",
           "Would a cleaner version of this prompt be easier to use?"
         ],
         "pairsWith": [
@@ -6596,7 +6607,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Questions",
-          "Is the task specific?, Is the output shape explicit?, Are constraints and non-goals visible?, Is the model likely to misread the request?, Is there enough context to solve it without guessing?, Would a cleaner version of this prompt be easier to use?"
+          "Is the task specific?, Is the output shape explicit?, Are constraints and non-goals visible?, Is the model likely to misread the request?, Is there enough context to solve it without guessing?, Does the prompt invite explicit reasoning, or does it only ask for a final answer?, Would a cleaner version of this prompt be easier to use?"
         ],
         [
           "Pairs with",
@@ -7139,7 +7150,7 @@ globalThis.SITE_DATA = {
           "`frame.scope`"
         ],
         "blockOrderRationale": "Explore mode prevents the 'do first, understand later' trap. Clarify-task separates the stated request from the actual task. Scope-frame closes with explicit in/out-of-scope boundaries so the work that begins is the right work.",
-        "commonSwaps": "Swap `frame.scope.frame` for `frame.frame.task` when the primary uncertainty is about the task itself rather than its boundaries. Add `guardrail.uncertainty` when significant unknowns should be named before action begins.",
+        "commonSwaps": "Swap `frame.scope` for `frame.task` when the primary uncertainty is about the task itself rather than its boundaries. Add `guardrail.uncertainty` when significant unknowns should be named before action begins.",
         "commonFailureMode": "Skipping orientation when the task feels familiar. Tasks that feel familiar are the ones most likely to hide important framing differences."
       },
       "io": {
@@ -7198,7 +7209,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Common swaps",
-          "Swap `frame.scope.frame` for `frame.frame.task` when the primary uncertainty is about the task itself rather than its boundaries. Add `guardrail.uncertainty` when significant unknowns should be named before action begins."
+          "Swap `frame.scope` for `frame.task` when the primary uncertainty is about the task itself rather than its boundaries. Add `guardrail.uncertainty` when significant unknowns should be named before action begins."
         ],
         [
           "Common failure mode",
@@ -7544,12 +7555,12 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`mode.explore`",
           "`frame.task`",
-          "`strategy.problem_split`",
+          "`strategy.problem-split`",
           "`frame.scope`",
           "`guardrail.uncertainty`"
         ],
         "blockOrderRationale": "Explore mode opens the problem space before any structure is imposed. Frame.task separates the stated ask from the underlying objective. Problem-split decomposes the tangled task into distinct subproblems. Scope-frame defines the boundaries. Uncertainty guardrail closes by surfacing what is not yet known so the next step is aimed at the right thing.",
-        "commonSwaps": "Swap `strategy.problem_split` for `frame.second-order-effects` when the task is about consequences rather than decomposition. Swap `guardrail.uncertainty` for `frame.research-questions` when open questions need to be pursued rather than just named.",
+        "commonSwaps": "Swap `strategy.problem-split` for `frame.second-order-effects` when the task is about consequences rather than decomposition. Swap `guardrail.uncertainty` for `frame.research-questions` when open questions need to be pursued rather than just named.",
         "commonFailureMode": "Jumping from the stated request directly to a solution frame. The problem frame and the solution frame are not the same. Working on the wrong frame produces a well-executed answer to the wrong question."
       },
       "io": {
@@ -7600,7 +7611,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `strategy.problem_split` -> `frame.scope` -> `guardrail.uncertainty`"
+          "`mode.explore` -> `frame.task` -> `strategy.problem-split` -> `frame.scope` -> `guardrail.uncertainty`"
         ],
         [
           "Why this order works",
@@ -7608,7 +7619,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Common swaps",
-          "Swap `strategy.problem_split` for `frame.second-order-effects` when the task is about consequences rather than decomposition. Swap `guardrail.uncertainty` for `frame.research-questions` when open questions need to be pursued rather than just named."
+          "Swap `strategy.problem-split` for `frame.second-order-effects` when the task is about consequences rather than decomposition. Swap `guardrail.uncertainty` for `frame.research-questions` when open questions need to be pursued rather than just named."
         ],
         [
           "Common failure mode",
@@ -8378,12 +8389,12 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`mode.critique`",
           "`strategy.premortem`",
-          "`strategy.red_team`",
+          "`strategy.red-team`",
           "`guardrail.assumption-audit`",
           "`guardrail.stress-test-assumptions`"
         ],
         "blockOrderRationale": "Critique mode sets the adversarial stance before any structured attack begins. Premortem generates the most plausible failure causes by assuming failure has already happened. Red-team argues against the plan as a hostile opponent. Assumption-audit surfaces the hidden premises. Stress-test-assumptions closes by testing the premises that would most damage the plan if false.",
-        "commonSwaps": "Swap `strategy.red_team` for `strategy.inversion` when the goal is finding structural failure modes rather than credible attacks. Swap `guardrail.assumption-audit` for `guardrail.disconfirming-evidence` when the plan is built around a preferred conclusion.",
+        "commonSwaps": "Swap `strategy.red-team` for `strategy.inversion` when the goal is finding structural failure modes rather than credible attacks. Swap `guardrail.assumption-audit` for `guardrail.disconfirming-evidence` when the plan is built around a preferred conclusion.",
         "commonFailureMode": "Running a premortem without setting a critical stance first. Without `mode.critique`, premortem exercises tend to generate a list of risks rather than a genuine adversarial challenge."
       },
       "io": {
@@ -8434,7 +8445,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `strategy.premortem` -> `strategy.red_team` -> `guardrail.assumption-audit` -> `guardrail.stress-test-assumptions`"
+          "`mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.stress-test-assumptions`"
         ],
         [
           "Why this order works",
@@ -8442,7 +8453,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Common swaps",
-          "Swap `strategy.red_team` for `strategy.inversion` when the goal is finding structural failure modes rather than credible attacks. Swap `guardrail.assumption-audit` for `guardrail.disconfirming-evidence` when the plan is built around a preferred conclusion."
+          "Swap `strategy.red-team` for `strategy.inversion` when the goal is finding structural failure modes rather than credible attacks. Swap `guardrail.assumption-audit` for `guardrail.disconfirming-evidence` when the plan is built around a preferred conclusion."
         ],
         [
           "Common failure mode",
@@ -9868,7 +9879,7 @@ globalThis.SITE_DATA = {
           "`rubric.decision-quality`"
         ],
         "blockOrderRationale": "Decide mode first locks in the convergent stance. Success-criteria before options prevents the criteria from being reverse-engineered to favor the preferred option. Compare-options evaluates against shared criteria. Assumption-audit surfaces the implicit bets behind the leading option. Disconfirming-evidence guardrail forces the strongest counter-argument an honest hearing. Decision-memo captures the reasoning. The rubric is the final quality gate before committing.",
-        "commonSwaps": "Swap `guardrail.disconfirming-evidence` for `strategy.red_team` when the decision needs an adversarial challenge rather than a structured counter-argument. Skip `frame.assumption-audit` for lower-stakes decisions where speed matters more than rigor.",
+        "commonSwaps": "Swap `guardrail.disconfirming-evidence` for `strategy.red-team` when the decision needs an adversarial challenge rather than a structured counter-argument. Skip `frame.assumption-audit` for lower-stakes decisions where speed matters more than rigor.",
         "commonFailureMode": "Setting success criteria after options are evaluated. Post-hoc criteria tend to match the preferred option rather than the actual goal, turning comparison into rationalization."
       },
       "io": {
@@ -9929,7 +9940,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Common swaps",
-          "Swap `guardrail.disconfirming-evidence` for `strategy.red_team` when the decision needs an adversarial challenge rather than a structured counter-argument. Skip `frame.assumption-audit` for lower-stakes decisions where speed matters more than rigor."
+          "Swap `guardrail.disconfirming-evidence` for `strategy.red-team` when the decision needs an adversarial challenge rather than a structured counter-argument. Skip `frame.assumption-audit` for lower-stakes decisions where speed matters more than rigor."
         ],
         [
           "Common failure mode",
@@ -12976,7 +12987,7 @@ globalThis.SITE_DATA = {
           "`guardrail.stress-test-assumptions`"
         ],
         "blockOrderRationale": "Critique mode sets the adversarial stance before the threat surface is mapped. Security-review maps the attack surface systematically. Failure-mode-analysis examines each trust boundary for exploitable failure modes. Risk-register ranks threats by severity and exploitability. Stress-test-assumptions closes by surfacing the security assumptions that are trusted but not verified.",
-        "commonSwaps": "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when the security model depends heavily on correct boundary enforcement. Add `strategy.red_team` when an adversarial challenge from a hostile-actor perspective is needed rather than a structured review.",
+        "commonSwaps": "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when the security model depends heavily on correct boundary enforcement. Add `strategy.red-team` when an adversarial challenge from a hostile-actor perspective is needed rather than a structured review.",
         "commonFailureMode": "Threat modeling from first principles on every feature. The most common security failures come from documented threat categories that were not applied — OWASP and similar taxonomies exist for this reason."
       },
       "io": {
@@ -13036,7 +13047,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Common swaps",
-          "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when the security model depends heavily on correct boundary enforcement. Add `strategy.red_team` when an adversarial challenge from a hostile-actor perspective is needed rather than a structured review."
+          "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when the security model depends heavily on correct boundary enforcement. Add `strategy.red-team` when an adversarial challenge from a hostile-actor perspective is needed rather than a structured review."
         ],
         [
           "Common failure mode",

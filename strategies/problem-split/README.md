@@ -50,6 +50,7 @@ The problem is already well-scoped and decomposition would add no new clarity â€
 
 ```text
 Apply the PROBLEM SPLIT strategy.
+Before attempting a solution, work through the problem structure first.
 Break this into distinct subproblems, surface open questions, and suggest the best order of attack.
 Keep the decomposition practical rather than exhaustive.
 ```

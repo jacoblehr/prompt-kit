@@ -19,7 +19,7 @@ A forward-looking failure analysis: assume failure, enumerate the most plausible
 - suggested mitigations
 
 ## Pairs with
-`mode.critique`, `strategy.red_team`, `guardrail.assumption-audit`, `guardrail.uncertainty`
+`mode.critique`, `strategy.red-team`, `guardrail.assumption-audit`, `guardrail.uncertainty`
 
 ## Avoid when
 The plan is still being explored — premortem requires a concrete plan to fail. Use `mode.explore` first if the plan is not formed yet.
@@ -50,7 +50,8 @@ The plan is still being explored — premortem requires a concrete plan to fail.
 
 ```text
 Apply the PREMORTEM strategy.
-Assume this plan failed. List the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.
+Imagine the plan has already failed — it is one year from now and things went wrong.
+Work backward: list the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.
 ```
 
 Domain tags:

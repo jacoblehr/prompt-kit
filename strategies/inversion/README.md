@@ -18,7 +18,7 @@ A backward-looking failure analysis: what a bad outcome looks like, the most pla
 - conditions that would prevent each path (treated as constraints or mitigations)
 
 ## Pairs with
-`mode.critique`, `strategy.premortem`, `strategy.red_team`, `guardrail.assumption-audit`
+`mode.critique`, `strategy.premortem`, `strategy.red-team`, `guardrail.assumption-audit`
 
 ## Avoid when
 The task is still exploratory — inversion targets a specific plan or direction that can be inverted.
@@ -49,9 +49,9 @@ The task is still exploratory — inversion targets a specific plan or direction
 
 ```text
 Apply the INVERSION strategy.
-Define clearly what a bad outcome looks like for this situation.
-List the most plausible paths to that bad outcome.
-Then flip: what conditions would prevent each path?
+Start by defining clearly what a bad outcome looks like — be specific.
+Then work backward: list the most plausible paths to that bad outcome, and for each path, identify the conditions that would prevent it.
+Treat those conditions as design constraints or mitigations.
 ```
 
 Domain tags:
