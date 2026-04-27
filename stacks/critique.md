@@ -9,3 +9,9 @@ Blocks:
 4. `rubric.argument-quality`
 
 Expected output: Prioritized defects with concrete revision advice and strongest opposing case considered.
+
+## Composition notes
+
+`mode.critique` establishes the adversarial lens upfront. `guardrail.assumption-audit` finds what the artifact depends on being true. `guardrail.disconfirming-evidence` requires finding the strongest objection before flagging defects. `rubric.argument-quality` applies a consistent evaluation standard across all findings.
+
+**Minimum blocks:** `mode.critique` + `rubric.argument-quality`

@@ -10,3 +10,9 @@ Blocks:
 5. `guardrail.disconfirming-evidence`
 
 Expected output: Prioritized risk inventory with mitigations that materially improve the plan before execution.
+
+## Composition notes
+
+`mode.critique` opens adversarial evaluation of the plan. `strategy.premortem` simulates failure to surface failure modes before they happen. `strategy.red-team` generates active attacks against the plan. `guardrail.assumption-audit` exposes structural dependencies. `guardrail.disconfirming-evidence` prevents the review landing on what you already believe.
+
+**Minimum blocks:** `mode.critique` + `strategy.premortem` + `guardrail.assumption-audit`

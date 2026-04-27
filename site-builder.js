@@ -270,7 +270,7 @@ function analyzePrompt(text) {
     const gram = `${tokens[i]} ${tokens[i + 1]}`;
     if (gram.length >= 7) grams.set(gram, (grams.get(gram) || 0) + 1);
   }
-  if ([...grams.values()].some((c) => c >= 3)) {
+  if ([...grams.values()].some((c) => c >= 4)) {
     hints.push({ type: "repetition", text: "Repeated phrases found — check for redundancy." });
   }
 

@@ -18,5 +18,5 @@ Return for each:
 - impact if false
 - what would falsify it
 
-Input:
+Plan, decision, or argument:
 {paste plan, decision, argument, or recommendation}

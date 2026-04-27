@@ -7,7 +7,7 @@ Rules:
 2. Apply fixes in order of highest leverage first. Only make changes tied to a specific criterion gap.
 3. After applying fixes, check: do all criteria pass? If yes, stop — return the final output immediately.
 4. If gaps remain and iterations allow, repeat from rule 1.
-5. After {iteration_limit} iterations, stop regardless of remaining gaps.
+5. After the allowed rounds, stop regardless of remaining gaps.
 
 Constraints:
 - Return the final output only. Do not show per-iteration reasoning unless explicitly requested.
@@ -16,10 +16,10 @@ Constraints:
 
 Output:
 - final refined output
-- iteration count: N of {iteration_limit}
+- rounds: N of {iteration_limit}
 - stopping reason: `criteria_met` | `limit_reached`
 
-iteration_limit: {iteration_limit}
+rounds: {iteration_limit}
 criteria: {criteria}
 
 Output to refine:

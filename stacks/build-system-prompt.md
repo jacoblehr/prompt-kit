@@ -10,3 +10,9 @@ Blocks:
 5. `schema.execution-brief`
 
 Expected output: System prompt with clear task, constraints, output format, and guardrails; ready to test.
+
+## Composition notes
+
+`frame.task` defines the agent's job before writing any instructions. `frame.success-criteria` makes the prompt target testable. `mode.critique` reviews the draft against that target. `rubric.writing-quality` ensures the prompt is clear, tight, and unambiguous. `schema.execution-brief` formats the final deliverable.
+
+**Minimum blocks:** `frame.task` + `frame.success-criteria`

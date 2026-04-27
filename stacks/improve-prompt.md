@@ -9,3 +9,9 @@ Blocks:
 4. `rubric.writing-quality`
 
 Expected output: Rewritten prompt with task, output shape, constraints, and non-goals all explicit.
+
+## Composition notes
+
+`frame.task` defines what a successful rewrite looks like. `mode.critique` identifies structural weaknesses in the original. `guardrail.uncertainty` flags where the prompt fails to specify enough for the model to succeed. `rubric.writing-quality` validates the rewrite for clarity and constraint coverage.
+
+**Minimum blocks:** `mode.critique` + `rubric.writing-quality`

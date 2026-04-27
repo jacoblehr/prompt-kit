@@ -10,3 +10,9 @@ Blocks:
 5. `schema.plan-next-actions`
 
 Expected output: Root cause identified, post-mortem written, corrective actions assigned with owners and urgency.
+
+## Composition notes
+
+`mode.explore` prevents tunnel-vision diagnosis during active incidents. `frame.cause-mapping` traces the failure chain systematically. `mode.decide` closes to a containment action before the full analysis is complete. `schema.incident-postmortem` documents the timeline and root cause. `schema.plan-next-actions` produces assignable corrective work.
+
+**Minimum blocks:** `frame.cause-mapping` + `schema.incident-postmortem`

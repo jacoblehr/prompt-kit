@@ -51,8 +51,8 @@ argues as a hostile opponent whose goal is to make the plan fail. The adversaria
 
 ```text
 Apply the RED TEAM strategy.
-Shift to a fully adversarial frame — your goal is to defeat this plan, not improve it.
-Work through the plan point by point and identify the most credible, damaging attacks.
+Shift to a fully adversarial frame — your goal is to defeat this plan, not to fix it.
+Work through it point by point and identify the most credible, damaging attacks.
 Prioritize arguments that are both credible and hard to dismiss.
 Do not soften the critique or suggest fixes until the attack is complete.
 ```

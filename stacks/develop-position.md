@@ -10,3 +10,9 @@ Blocks:
 5. `rubric.argument-quality`
 
 Expected output: Position with visible premises, evidence proportionate to claim strength, and strongest objection addressed.
+
+## Composition notes
+
+`mode.explore` opens the full argument space before committing to a position. `frame.task` anchors the specific claim being developed. `strategy.steelman` stress-tests the position against the strongest objections before finalizing. `frame.extract-insights` surfaces the most defensible evidence threads. `rubric.argument-quality` validates the finished position.
+
+**Minimum blocks:** `frame.task` + `strategy.steelman` + `rubric.argument-quality`

@@ -20,5 +20,5 @@ Return:
 - pause or escalation trigger
 - immediate next action
 
-Input:
+Direction or plan:
 {paste chosen direction, plan, or handoff context}

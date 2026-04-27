@@ -1,6 +1,6 @@
 # Prompt
 
-Define explicit success criteria for this task, decision, or plan.
+Define explicit success criteria for the work below.
 
 Requirements:
 
@@ -16,5 +16,5 @@ Return:
 - failure conditions
 - tradeoffs to watch
 
-Input:
-{paste target task, decision, or plan}
+Objective:
+{task, objective, or proposal}

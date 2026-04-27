@@ -9,3 +9,9 @@ Blocks:
 4. `guardrail.bounded-recursion`
 
 Expected output: Numbered solution tree with each node either solved or decomposed further; final synthesis at the root.
+
+## Composition notes
+
+`frame.task` roots the decomposition before any splitting occurs. `recurse.decompose` splits the problem until leaves are solvable in a single step. `recurse.evaluate` validates each node before accepting its solution. `guardrail.bounded-recursion` prevents infinite regress.
+
+**Minimum blocks:** `frame.task` + `recurse.decompose`

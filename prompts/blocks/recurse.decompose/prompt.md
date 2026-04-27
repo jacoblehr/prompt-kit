@@ -5,8 +5,8 @@ Apply RECURSIVE DECOMPOSITION.
 Rules:
 1. Inspect the problem. If it is directly solvable in one step, solve it and stop — do not decompose.
 2. Otherwise, break it into at most {max_subproblems} distinct subproblems.
-3. For each subproblem, repeat rule 1. Stop recursing when the subproblem is directly solvable or depth {max_depth} is reached.
-4. At depth {max_depth}, solve each remaining subproblem directly — even if imperfect.
+3. For each subproblem, repeat rule 1. Stop recursing when directly solvable or the depth limit is reached.
+4. When the limit is reached, solve each remaining subproblem directly — even if imperfect.
 5. After all branches are resolved, synthesize the leaf answers into a single final answer.
 
 Constraints:
@@ -20,8 +20,8 @@ Output format:
 - Each node: `[subproblem statement] → [direct answer | decomposed further]`
 - End with a `## Synthesis` section that assembles the leaf answers.
 
-max_depth: {max_depth}
-max_subproblems: {max_subproblems}
+depth limit: {max_depth}
+subproblem limit: {max_subproblems}
 
 Problem:
 {paste problem or task}

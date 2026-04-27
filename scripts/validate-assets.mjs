@@ -82,6 +82,7 @@ async function validateStacks(dir, errors, warnings) {
 
   for (const file of items) {
     if (!file.endsWith('.md')) continue
+    if (file === 'README.md') continue
 
     const filePath = path.join(dir, file)
     const content = await readFile(filePath, 'utf-8')

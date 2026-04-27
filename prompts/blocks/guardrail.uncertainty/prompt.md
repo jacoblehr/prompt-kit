@@ -19,5 +19,5 @@ Return:
 - what to verify next
 - what would most change the conclusion
 
-Input:
+Analysis or draft:
 {paste current analysis, recommendation, or draft}

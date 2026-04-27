@@ -9,3 +9,9 @@ Blocks:
 4. `schema.plan-next-actions`
 
 Expected output: Reinforcing loop exposed, structural prevention identified, and action plan focused on breaking the loop not cleaning up the latest failure.
+
+## Composition notes
+
+`mode.reflect` holds space for structural analysis before blame. `frame.cause-mapping` traces the reinforcing loop driving recurrence. `strategy.inversion` asks what you would do to guarantee it recurs — this surfaces structural causes. `schema.plan-next-actions` converts the finding into concrete prevention steps.
+
+**Minimum blocks:** `frame.cause-mapping` + `schema.plan-next-actions`

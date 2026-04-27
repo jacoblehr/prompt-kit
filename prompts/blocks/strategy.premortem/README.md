@@ -51,7 +51,7 @@ The plan is still being explored — premortem requires a concrete plan to fail.
 ```text
 Apply the PREMORTEM strategy.
 Imagine the plan has already failed — it is one year from now and things went wrong.
-Work backward: list the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially improve the plan before execution.
+Work backward: list the most plausible reasons why, prioritize the biggest risks, and suggest mitigations that would materially strengthen it before execution.
 ```
 
 Domain tags:

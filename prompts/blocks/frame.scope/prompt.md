@@ -17,5 +17,5 @@ Return:
 - what has been deliberately excluded and why
 - re-entry trigger for excluded work
 
-Input:
+Task or project:
 {paste task, project, or request}

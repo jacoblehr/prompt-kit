@@ -20,5 +20,5 @@ Return:
 - decision or action this frame is meant to support
 - recommended next reasoning step
 
-Input:
+Task or situation:
 {paste raw request or situation}
