@@ -131,10 +131,7 @@ function getBuilderInputDefinitions() {
     definition.effectiveValue = definition.manualValue.trim() || (definition.usesTaskInput ? (builderState.taskInput || "").trim() : "");
   });
 
-  return definitions.sort((a, b) => {
-    if (a.usesTaskInput !== b.usesTaskInput) return a.usesTaskInput ? -1 : 1;
-    return a.label.localeCompare(b.label);
-  });
+  return definitions;
 }
 
 function getEffectiveBuilderPromptInputs() {
