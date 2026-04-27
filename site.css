@@ -2548,8 +2548,9 @@ kbd.search-hint {
     grid-template-columns: 1fr;
   }
 
-  .builder-execution-head,
-  .builder-header-actions {
+  /* builder-header-actions intentionally excluded: it must remain a flex row on
+     mobile so Close / Load / Clear stay side-by-side in the full-screen panel. */
+  .builder-execution-head {
     flex-direction: column;
     align-items: stretch;
   }
@@ -2558,6 +2559,91 @@ kbd.search-hint {
     left: 16px;
     right: 16px;
     bottom: 16px;
+  }
+
+  /* Allow scroll area to fill the remaining height in the full-screen builder */
+  .shell.builder-open .builder-scroll {
+    flex: 1 1 auto;
+    max-height: none;
+  }
+
+  /* ─── Header ─── */
+  .builder-header-row {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+
+  .builder-stack-name {
+    font-size: 1.2rem;
+  }
+
+  .builder-header-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .builder-close-btn {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ─── Execution resize handle is not usable on touch ─── */
+  .builder-execution-resize-handle {
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  /* ─── Stacked pane height distribution ─── */
+  .builder-execution-panels {
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .builder-execution-panels:has(.builder-pane--inputs[hidden]) {
+    grid-template-rows: 1fr;
+  }
+
+  .builder-pane {
+    min-height: 130px;
+  }
+
+  /* ─── Copy Prompt button: full-width with safe-area support ─── */
+  .builder-footer-btns {
+    justify-content: stretch;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .builder-footer-btns .builder-action-btn--primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ─── Output mode toggle: better touch target ─── */
+  .builder-output-mode-btn {
+    min-height: 36px;
+    padding: 6px 12px;
+  }
+}
+
+/* ─── Small-phone overrides for the prompt builder (≤ 480px) ─────────────── */
+
+@media (max-width: 480px) {
+  .builder-stack-name {
+    font-size: 1.05rem;
+  }
+
+  .builder-header {
+    padding: 10px 14px;
+  }
+
+  .builder-execution {
+    min-height: 300px;
+    height: var(--builder-execution-height, min(50vh, 440px));
   }
 }
 
