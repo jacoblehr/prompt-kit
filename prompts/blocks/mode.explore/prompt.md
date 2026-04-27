@@ -10,5 +10,5 @@ Return:
 - key unknowns that affect which direction is best
 - contrasting options worth noting
 
-Problem, question, or situation to explore:
-{paste problem, question, or situation}
+---
+context: [problem, question, or situation]

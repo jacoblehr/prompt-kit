@@ -19,8 +19,7 @@ Return:
 - rounds: N of {iteration_limit}
 - stopping reason: `criteria_met` | `limit_reached`
 
-rounds: {iteration_limit}
-criteria: {criteria}
-
-Output to refine:
-{paste initial output}
+---
+iterations: [max rounds]
+criteria: [evaluation criteria]
+artifact: [output to refine]

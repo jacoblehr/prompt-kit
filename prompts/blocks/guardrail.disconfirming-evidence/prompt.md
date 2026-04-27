@@ -14,5 +14,5 @@ Return:
 - what would be true if the conclusion were wrong
 - whether it still stands and why
 
-Conclusion:
-{paste conclusion, recommendation, or preferred option}
+---
+artifact: [conclusion, recommendation, or preferred option]

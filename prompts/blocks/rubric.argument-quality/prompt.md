@@ -15,5 +15,5 @@ Return:
 - overall verdict: sound / needs revision
 - highest-leverage fix if revision is needed
 
-Argument to evaluate:
-{paste argument or position}
+---
+artifact: [argument or position]

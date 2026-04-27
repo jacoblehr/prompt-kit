@@ -16,5 +16,5 @@ Return:
 - failure conditions
 - tradeoffs to watch
 
-Objective:
-{task, objective, or proposal}
+---
+context: [task, objective, or proposal]

@@ -9,8 +9,6 @@ For each insight:
 - supporting evidence
 - possible action or implication
 
-My purpose:
-{paste purpose or decision this should inform}
-
-Material:
-{paste material}
+---
+context: [material to extract from]
+purpose: [decision or goal this should inform]

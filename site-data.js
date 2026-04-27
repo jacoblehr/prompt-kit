@@ -497,78 +497,6 @@ globalThis.SITE_DATA = {
       "form": "strategy",
       "sourceKind": "Strategy",
       "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "purpose": "Find constraints and failure modes that forward-planning misses by defining the worst outcome first and working backward.",
-        "useWhen": "A plan needs stress-testing before commitment, you want to find failure modes that optimism may be obscuring, or you suspect forward-planning is missing structural risks.",
-        "expects": "A plan, decision, goal, or situation to invert.",
-        "adds": "A backward-looking failure analysis: what a bad outcome looks like, the most plausible paths to it, and what conditions would prevent each path.",
-        "returns": [
-          "worst realistic outcome definition",
-          "most plausible paths to that outcome",
-          "conditions that would prevent each path (treated as constraints or mitigations)"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "strategy.premortem",
-          "strategy.red-team",
-          "guardrail.assumption-audit"
-        ],
-        "avoidWhen": "The task is still exploratory — inversion targets a specific plan or direction that can be inverted."
-      },
-      "key": "strategy.inversion",
-      "aliases": [
-        "strategy.inversion"
-      ],
-      "title": "strategy.inversion",
-      "summary": "Find constraints and failure modes that forward-planning misses by defining the worst outcome first and working backward.",
-      "tags": [
-        "inversion thinking",
-        "risk mapping",
-        "failure analysis"
-      ],
-      "copy": "Apply the INVERSION strategy.\nStart by defining clearly what a bad outcome looks like — be specific.\nThen work backward: list the most plausible paths to that bad outcome, and for each path, identify the conditions that would prevent it.\nTreat those conditions as design constraints or mitigations.",
-      "body": [
-        [
-          "Purpose",
-          "Find constraints and failure modes that forward-planning misses by defining the worst outcome first and working backward."
-        ],
-        [
-          "Use when",
-          "A plan needs stress-testing before commitment, you want to find failure modes that optimism may be obscuring, or you suspect forward-planning is missing structural risks."
-        ],
-        [
-          "Expects",
-          "A plan, decision, goal, or situation to invert."
-        ],
-        [
-          "Adds",
-          "A backward-looking failure analysis: what a bad outcome looks like, the most plausible paths to it, and what conditions would prevent each path."
-        ],
-        [
-          "Returns",
-          "worst realistic outcome definition, most plausible paths to that outcome, conditions that would prevent each path (treated as constraints or mitigations)"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, strategy.premortem, strategy.red-team, guardrail.assumption-audit"
-        ],
-        [
-          "Avoid when",
-          "The task is still exploratory — inversion targets a specific plan or direction that can be inverted."
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/strategy.inversion/README.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "strategy",
-      "blockType": "strategy",
-      "form": "strategy",
-      "sourceKind": "Strategy",
-      "stage": "critique",
       "strength": "heavy",
       "contract": {
         "purpose": "Apply a fully adversarial frame to a plan — the goal is to defeat it, not improve it.",
@@ -674,7 +602,7 @@ globalThis.SITE_DATA = {
         "frame",
         "task"
       ],
-      "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- state when the objective is inferred rather than explicit\n- keep constraints literal\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- stated ask\n- likely objective\n- constraints\n- knowns\n- unknowns\n- decision or action this frame is meant to support\n- recommended next reasoning step\n\nTask or situation:\n{paste raw request or situation}",
+      "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- state when the objective is inferred rather than explicit\n- keep constraints literal\n- draw the scope boundary explicitly — name what is out of scope and why\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- stated ask\n- likely objective\n- in scope\n- out of scope\n- scope boundary to hold\n- constraints\n- knowns\n- unknowns\n- decision or action this frame is meant to support\n- recommended next reasoning step\n\n---\ncontext: [raw request, task, or situation]",
       "body": [
         [
           "Purpose",
@@ -748,7 +676,7 @@ globalThis.SITE_DATA = {
         "success",
         "criteria"
       ],
-      "copy": "Define explicit success criteria for the work below.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\nObjective:\n{task, objective, or proposal}",
+      "copy": "Define explicit success criteria for the work below.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\n---\ncontext: [task, objective, or proposal]",
       "body": [
         [
           "Purpose",
@@ -823,7 +751,7 @@ globalThis.SITE_DATA = {
         "guardrail",
         "uncertainty"
       ],
-      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- distinguish \"I don't know\" (absent evidence) from \"evidence is mixed\" (conflicting evidence)\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\nAnalysis or draft:\n{paste current analysis, recommendation, or draft}",
+      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- distinguish \"I don't know\" (absent evidence) from \"evidence is mixed\" (conflicting evidence)\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\n---\nartifact: [current analysis, recommendation, or draft]",
       "body": [
         [
           "Purpose",
@@ -897,7 +825,7 @@ globalThis.SITE_DATA = {
         "disconfirming",
         "evidence"
       ],
-      "copy": "Force a check against disconfirming evidence for this conclusion or recommendation.\n\nRequirements:\n\n- seek the strongest real opposing case, not a manufactured weak one\n- update if the opposing evidence materially changes the conclusion\n\nReturn:\n\n- conclusion under review\n- strongest opposing evidence or argument\n- what would be true if the conclusion were wrong\n- whether it still stands and why\n\nConclusion:\n{paste conclusion, recommendation, or preferred option}",
+      "copy": "Force a check against disconfirming evidence for this conclusion or recommendation.\n\nRequirements:\n\n- seek the strongest real opposing case, not a manufactured weak one\n- update if the opposing evidence materially changes the conclusion\n\nReturn:\n\n- conclusion under review\n- strongest opposing evidence or argument\n- what would be true if the conclusion were wrong\n- whether it still stands and why\n\n---\nartifact: [conclusion, recommendation, or preferred option]",
       "body": [
         [
           "Purpose",
@@ -931,79 +859,6 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/guardrail.disconfirming-evidence/prompt.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "compact",
-      "sourceKind": "Prompt Block",
-      "stage": "frame",
-      "strength": "light",
-      "contract": {
-        "purpose": "Define explicit boundaries for a task or project to prevent drift and hidden expansion.",
-        "useWhen": "The task is sprawling, underspecified, or at risk of scope creep. Use before work begins or when scope drift is already happening.",
-        "expects": "A task, project, or request description.",
-        "adds": "A clear in-scope/out-of-scope boundary, the one most important line to hold, and a trigger for when excluded work should re-enter.",
-        "returns": [
-          "what is in scope",
-          "what is out of scope",
-          "most important boundary to hold",
-          "what has been deliberately excluded and why",
-          "re-entry trigger for excluded work"
-        ],
-        "pairsWith": [
-          "frame.task",
-          "frame.success-criteria",
-          "guardrail.uncertainty"
-        ],
-        "avoidWhen": "The task is small and self-contained enough that a scope definition would be overhead without benefit."
-      },
-      "key": "frame.scope",
-      "aliases": [
-        "core.frame.scope",
-        "core.frame-scope"
-      ],
-      "title": "frame.scope",
-      "summary": "Define explicit boundaries for a task or project to prevent drift and hidden expansion.",
-      "tags": [
-        "frame",
-        "scope"
-      ],
-      "copy": "Define the scope of this task or project explicitly.\n\nRequirements:\n\n- distinguish boundaries from preferences\n- name the one boundary that matters most\n- explain what is being excluded if that exclusion prevents drift\n- note what new information would justify expanding scope later\n\nReturn:\n\n- what is in scope\n- what is out of scope\n- most important boundary to hold\n- what has been deliberately excluded and why\n- re-entry trigger for excluded work\n\nTask or project:\n{paste task, project, or request}",
-      "body": [
-        [
-          "Purpose",
-          "Define explicit boundaries for a task or project to prevent drift and hidden expansion."
-        ],
-        [
-          "Use when",
-          "The task is sprawling, underspecified, or at risk of scope creep. Use before work begins or when scope drift is already happening."
-        ],
-        [
-          "Expects",
-          "A task, project, or request description."
-        ],
-        [
-          "Adds",
-          "A clear in-scope/out-of-scope boundary, the one most important line to hold, and a trigger for when excluded work should re-enter."
-        ],
-        [
-          "Returns",
-          "what is in scope, what is out of scope, most important boundary to hold, what has been deliberately excluded and why, re-entry trigger for excluded work"
-        ],
-        [
-          "Pairs with",
-          "frame.task, frame.success-criteria, guardrail.uncertainty"
-        ],
-        [
-          "Avoid when",
-          "The task is small and self-contained enough that a scope definition would be overhead without benefit."
-        ]
-      ],
-      "family": "Prompt Blocks",
-      "group": "",
-      "sourcePath": "prompts/blocks/frame.scope/prompt.md"
     },
     {
       "section": "Block",
@@ -1045,7 +900,7 @@ globalThis.SITE_DATA = {
         "decision",
         "memo"
       ],
-      "copy": "Render this chosen direction or decision as a structured memo.\n\nRequirements:\n\n- make the actual choice explicit\n- keep rationale concise and decision-relevant\n- include only the risks and tradeoffs that matter to execution\n\nReturn:\n\n- decision\n- rationale\n- tradeoffs\n- risks\n- confidence\n- next action\n\nDecision context:\n{paste chosen option or decision context}",
+      "copy": "Render this chosen direction or decision as a structured memo.\n\nRequirements:\n\n- make the actual choice explicit\n- keep rationale concise and decision-relevant\n- include only the risks and tradeoffs that matter to execution\n\nReturn:\n\n- decision\n- rationale\n- tradeoffs\n- risks\n- confidence\n- next action\n\n---\ncontext: [chosen option or decision context]",
       "body": [
         [
           "Purpose",
@@ -1121,7 +976,7 @@ globalThis.SITE_DATA = {
         "execution",
         "brief"
       ],
-      "copy": "Render this chosen direction, plan, or handoff as a structured execution brief.\n\nRequirements:\n\n- make ownership and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n- include the condition that would justify pausing or escalating\n\nReturn:\n\n- objective\n- owner or responsible role\n- sequence or milestones\n- dependencies\n- major risks\n- first checkpoint\n- pause or escalation trigger\n- immediate next action\n\nDirection or plan:\n{paste chosen direction, plan, or handoff context}",
+      "copy": "Render this chosen direction, plan, or analysis as a structured execution brief.\n\nRequirements:\n\n- make objective and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n- include the condition that would justify pausing or escalating\n- owner and escalation trigger are optional for solo or internal work\n\nReturn:\n\n- objective\n- owner or responsible role (if applicable)\n- ordered steps or milestones\n- dependencies\n- likely blockers\n- major risks\n- first checkpoint\n- pause or escalation trigger (if applicable)\n- immediate next action\n\n---\ncontext: [chosen direction, plan, or analysis to brief out]",
       "body": [
         [
           "Purpose",
@@ -1196,7 +1051,7 @@ globalThis.SITE_DATA = {
         "cause",
         "mapping"
       ],
-      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- underlying cause\n\nProblem or outcome:\n{paste problem or outcome}",
+      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- underlying cause\n\n---\ncontext: [problem or outcome to trace]",
       "body": [
         [
           "Purpose",
@@ -1270,7 +1125,7 @@ globalThis.SITE_DATA = {
         "extract",
         "insights"
       ],
-      "copy": "Extract the highest-value insights from this material.\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\nMy purpose:\n{paste purpose or decision this should inform}\n\nMaterial:\n{paste material}",
+      "copy": "Extract the highest-value insights from this material.\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\n---\ncontext: [material to extract from]\npurpose: [decision or goal this should inform]",
       "body": [
         [
           "Purpose",
@@ -1346,7 +1201,7 @@ globalThis.SITE_DATA = {
         "assumption",
         "audit"
       ],
-      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\nPlan, decision, or argument:\n{paste plan, decision, argument, or recommendation}",
+      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\n---\nartifact: [plan, decision, argument, or recommendation]",
       "body": [
         [
           "Purpose",
@@ -1418,7 +1273,7 @@ globalThis.SITE_DATA = {
         "bounded",
         "recursion"
       ],
-      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached? → STOP.\n2. Iteration limit reached? → STOP.\n3. Stop condition met? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\nrecursion depth: {max_depth}\ncycles: {max_iterations}\nstop condition: {stop_condition}",
+      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached? → STOP.\n2. Iteration limit reached? → STOP.\n3. Stop condition met? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\n---\ndepth: [max depth]\niterations: [max iterations]\nstop_condition: [condition to stop on]",
       "body": [
         [
           "Purpose",
@@ -1491,7 +1346,7 @@ globalThis.SITE_DATA = {
         "branch",
         "prune"
       ],
-      "copy": "Apply BRANCH + PRUNE.\n\nRules:\n1. Generate exactly {branch_count} distinct approaches. Each must differ in a meaningful way — different method, assumption, or framing. Rewording the same approach is not a distinct branch.\n2. For each branch: provide a short label, a 2–3 sentence rationale, and a one-line assessment against the selection criterion.\n3. Select the strongest branch. State the verdict explicitly in one sentence.\n4. Prune all other branches. For each pruned branch, briefly explain why it was eliminated.\n5. Continue only on the selected branch. Do not reference or merge pruned branches downstream.\n\nConstraints:\n- Exactly {branch_count} branches. No more, no fewer.\n- Pruning is mandatory. You must end this block with exactly one active branch.\n- Branches must be genuinely distinct, not paraphrases.\n\nReturn:\n\n**Branch A: [label]**\nRationale: ...\nAssessment: ...\n\n**Branch B: [label]**\nRationale: ...\nAssessment: ...\n\n**Selected: Branch [X]** — [one sentence verdict]\n**Pruned:** Branch [Y] — [reason] | Branch [Z] — [reason]\n\n**Continuing on: Branch [X]**\n\nbranches: {branch_count}\nselection_criterion: {selection_criterion}\n\nProblem or task:\n{paste problem or task}",
+      "copy": "Apply BRANCH + PRUNE.\n\nRules:\n1. Generate exactly {branch_count} distinct approaches. Each must differ in a meaningful way — different method, assumption, or framing. Rewording the same approach is not a distinct branch.\n2. For each branch: provide a short label, a 2–3 sentence rationale, and a one-line assessment against the selection criterion.\n3. Select the strongest branch. State the verdict explicitly in one sentence.\n4. Prune all other branches. For each pruned branch, briefly explain why it was eliminated.\n5. Continue only on the selected branch. Do not reference or merge pruned branches downstream.\n\nConstraints:\n- Exactly {branch_count} branches. No more, no fewer.\n- Pruning is mandatory. You must end this block with exactly one active branch.\n- Branches must be genuinely distinct, not paraphrases.\n\nReturn:\n\n**Branch A: [label]**\nRationale: ...\nAssessment: ...\n\n**Branch B: [label]**\nRationale: ...\nAssessment: ...\n\n**Selected: Branch [X]** — [one sentence verdict]\n**Pruned:** Branch [Y] — [reason] | Branch [Z] — [reason]\n\n**Continuing on: Branch [X]**\n\n---\nbranches: [number of branches to generate]\ncriterion: [selection criterion]\ncontext: [problem or task]",
       "body": [
         [
           "Purpose",
@@ -1564,7 +1419,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "decompose"
       ],
-      "copy": "Apply RECURSIVE DECOMPOSITION.\n\nRules:\n1. Inspect the problem. If it is directly solvable in one step, solve it and stop — do not decompose.\n2. Otherwise, break it into at most {max_subproblems} distinct subproblems.\n3. For each subproblem, repeat rule 1. Stop recursing when directly solvable or the depth limit is reached.\n4. When the limit is reached, solve each remaining subproblem directly — even if imperfect.\n5. After all branches are resolved, synthesize the leaf answers into a single final answer.\n\nConstraints:\n- Never generate more than {max_subproblems} subproblems at any one level.\n- Each subproblem must be strictly smaller in scope than its parent.\n- Do not merge subproblems at the same level — keep them independent.\n- Synthesis happens exactly once, at the end.\n\nReturn:\n- Use a numbered tree: 1, 1.1, 1.2, 1.1.1, etc.\n- Each node: `[subproblem statement] → [direct answer | decomposed further]`\n- End with a `## Synthesis` section that assembles the leaf answers.\n\ndepth limit: {max_depth}\nsubproblem limit: {max_subproblems}\n\nProblem:\n{paste problem or task}",
+      "copy": "Apply RECURSIVE DECOMPOSITION.\n\nRules:\n1. Inspect the problem. If it is directly solvable in one step, solve it and stop — do not decompose.\n2. Otherwise, break it into at most {max_subproblems} distinct subproblems.\n3. For each subproblem, repeat rule 1. Stop recursing when directly solvable or the depth limit is reached.\n4. When the limit is reached, solve each remaining subproblem directly — even if imperfect.\n5. After all branches are resolved, synthesize the leaf answers into a single final answer.\n\nConstraints:\n- Never generate more than {max_subproblems} subproblems at any one level.\n- Each subproblem must be strictly smaller in scope than its parent.\n- Do not merge subproblems at the same level — keep them independent.\n- Synthesis happens exactly once, at the end.\n\nReturn:\n- Use a numbered tree: 1, 1.1, 1.2, 1.1.1, etc.\n- Each node: `[subproblem statement] → [direct answer | decomposed further]`\n- End with a `## Synthesis` section that assembles the leaf answers.\n\n---\ndepth: [max recursion depth]\nsubproblems: [max per level]\ncontext: [problem or task]",
       "body": [
         [
           "Purpose",
@@ -1638,7 +1493,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "evaluate"
       ],
-      "copy": "Apply EVALUATION.\n\nRules:\n1. For each criterion, assess the candidate output: `pass` | `partial` | `fail`.\n2. For every `partial` or `fail`: state the specific gap, the risk it introduces, and the single highest-leverage fix.\n3. Do not suppress failing verdicts. Do not add praise unrelated to the criteria.\n4. Derive the overall verdict from the table: `accept` if all criteria pass | `refine` if only minor gaps remain | `reject` if any criterion fails critically.\n\nReturn:\n\n| Criterion | Verdict | Gap / Risk | Highest-leverage fix |\n|-----------|---------|------------|----------------------|\n| ...       | ...     | ...        | ...                  |\n\nOverall verdict: [accept | refine | reject]\nRationale: [one sentence]\n\ncriteria: {criteria}\n\nCandidate output:\n{paste candidate output}",
+      "copy": "Apply EVALUATION.\n\nRules:\n1. For each criterion, assess the candidate output: `pass` | `partial` | `fail`.\n2. For every `partial` or `fail`: state the specific gap, the risk it introduces, and the single highest-leverage fix.\n3. Do not suppress failing verdicts. Do not add praise unrelated to the criteria.\n4. Derive the overall verdict from the table: `accept` if all criteria pass | `refine` if only minor gaps remain | `reject` if any criterion fails critically.\n\nReturn:\n\n| Criterion | Verdict | Gap / Risk | Highest-leverage fix |\n|-----------|---------|------------|----------------------|\n| ...       | ...     | ...        | ...                  |\n\nOverall verdict: [accept | refine | reject]\nRationale: [one sentence]\n\n---\ncriteria: [evaluation criteria]\nartifact: [candidate output]",
       "body": [
         [
           "Purpose",
@@ -1710,7 +1565,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "refine"
       ],
-      "copy": "Apply ITERATIVE REFINEMENT.\n\nRules:\n1. Evaluate the current output against each criterion. Identify every gap.\n2. Apply fixes in order of highest leverage first. Only make changes tied to a specific criterion gap.\n3. After applying fixes, check: do all criteria pass? If yes, stop — return the final output immediately.\n4. If gaps remain and iterations allow, repeat from rule 1.\n5. After the allowed rounds, stop regardless of remaining gaps.\n\nConstraints:\n- Return the final output only. Do not show per-iteration reasoning unless explicitly requested.\n- Each iteration must address at least one concrete gap. If no gaps are found, stop early.\n- Do not make changes that are not tied to a failing criterion.\n\nReturn:\n- final refined output\n- rounds: N of {iteration_limit}\n- stopping reason: `criteria_met` | `limit_reached`\n\nrounds: {iteration_limit}\ncriteria: {criteria}\n\nOutput to refine:\n{paste initial output}",
+      "copy": "Apply ITERATIVE REFINEMENT.\n\nRules:\n1. Evaluate the current output against each criterion. Identify every gap.\n2. Apply fixes in order of highest leverage first. Only make changes tied to a specific criterion gap.\n3. After applying fixes, check: do all criteria pass? If yes, stop — return the final output immediately.\n4. If gaps remain and iterations allow, repeat from rule 1.\n5. After the allowed rounds, stop regardless of remaining gaps.\n\nConstraints:\n- Return the final output only. Do not show per-iteration reasoning unless explicitly requested.\n- Each iteration must address at least one concrete gap. If no gaps are found, stop early.\n- Do not make changes that are not tied to a failing criterion.\n\nReturn:\n- final refined output\n- rounds: N of {iteration_limit}\n- stopping reason: `criteria_met` | `limit_reached`\n\n---\niterations: [max rounds]\ncriteria: [evaluation criteria]\nartifact: [output to refine]",
       "body": [
         [
           "Purpose",
@@ -1784,7 +1639,7 @@ globalThis.SITE_DATA = {
         "incident",
         "postmortem"
       ],
-      "copy": "Facilitate a structured post-mortem for this incident.\n\nIncident summary: {incident_summary}\nImpact: {impact}\nDuration: {duration}\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure",
+      "copy": "Facilitate a structured post-mortem for this incident.\n\n---\ncontext: [incident summary]\nimpact: [affected systems, users, or data]\nduration: [start to resolution time]\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure",
       "body": [
         [
           "Purpose",
@@ -1818,82 +1673,6 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/schema.incident-postmortem/prompt.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "compact",
-      "sourceKind": "Prompt Block",
-      "stage": "conclude",
-      "strength": "light",
-      "contract": {
-        "purpose": "Render a prioritized, executable action plan from a chosen direction or set of findings.",
-        "useWhen": "After deciding or concluding, when the main risk is leaving the session without a concrete next step.",
-        "expects": "A chosen direction, decision, or set of findings to translate into actions.",
-        "adds": "Ordered steps with blockers, dependencies, and a concrete first action named.",
-        "returns": [
-          "goal",
-          "ordered steps",
-          "dependencies",
-          "likely blockers",
-          "first concrete action",
-          "first checkpoint"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "mode.reflect",
-          "frame.extract-insights",
-          "schema.execution-brief"
-        ],
-        "avoidWhen": "No direction has been chosen yet — this schema executes, it does not decide."
-      },
-      "key": "schema.plan-next-actions",
-      "aliases": [
-        "core.schema.plan-next-actions",
-        "core.schema-plan-next-actions"
-      ],
-      "title": "schema.plan-next-actions",
-      "summary": "Render a prioritized, executable action plan from a chosen direction or set of findings.",
-      "tags": [
-        "plan",
-        "next",
-        "actions"
-      ],
-      "copy": "Turn this chosen direction or analysis into a practical next-step plan.\n\nRequirements:\n- order steps by dependency, not preference\n- name likely blockers before they become surprises\n- keep the first action concrete enough to do immediately\n\nReturn:\n- goal\n- ordered steps\n- dependencies\n- likely blockers\n- first concrete action\n- first checkpoint\n\nContext:\n{paste context, chosen direction, or findings}",
-      "body": [
-        [
-          "Purpose",
-          "Render a prioritized, executable action plan from a chosen direction or set of findings."
-        ],
-        [
-          "Use when",
-          "After deciding or concluding, when the main risk is leaving the session without a concrete next step."
-        ],
-        [
-          "Expects",
-          "A chosen direction, decision, or set of findings to translate into actions."
-        ],
-        [
-          "Adds",
-          "Ordered steps with blockers, dependencies, and a concrete first action named."
-        ],
-        [
-          "Returns",
-          "goal, ordered steps, dependencies, likely blockers, first concrete action, first checkpoint"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, mode.reflect, frame.extract-insights, schema.execution-brief"
-        ],
-        [
-          "Avoid when",
-          "No direction has been chosen yet — this schema executes, it does not decide."
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/schema.plan-next-actions/prompt.md"
     },
     {
       "section": "Block",
@@ -2132,7 +1911,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "stage": "frame",
       "outputKind": "clarity",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "low",
       "summary": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "tags": [
@@ -2150,7 +1929,6 @@ globalThis.SITE_DATA = {
           "`mode.explore`",
           "`frame.task`",
           "`strategy.problem-split`",
-          "`frame.scope`",
           "`frame.success-criteria`",
           "`guardrail.uncertainty`"
         ],
@@ -2178,7 +1956,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
@@ -2190,7 +1968,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `strategy.problem-split` -> `frame.scope` -> `frame.success-criteria` -> `guardrail.uncertainty`"
+          "`mode.explore` -> `frame.task` -> `strategy.problem-split` -> `frame.success-criteria` -> `guardrail.uncertainty`"
         ]
       ],
       "sourcePath": "stacks/frame-problem.md"
@@ -2559,7 +2337,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Decide under material risk or uncertain futures where failure would be costly.",
       "stage": "decide",
       "outputKind": "decision",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "high",
       "summary": "Decide under material risk or uncertain futures where failure would be costly.",
       "tags": [
@@ -2571,13 +2349,12 @@ globalThis.SITE_DATA = {
         "useWhen": "Decide under material risk or uncertain futures where failure would be costly.",
         "minimumBlocks": [
           "frame.task",
-          "strategy.inversion",
+          "strategy.premortem",
           "guardrail.assumption-audit"
         ],
         "fullSequence": [
           "`frame.task`",
           "`frame.cause-mapping`",
-          "`strategy.inversion`",
           "`strategy.premortem`",
           "`guardrail.assumption-audit`",
           "`schema.decision-memo`"
@@ -2606,7 +2383,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
@@ -2614,155 +2391,14 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, strategy.inversion, guardrail.assumption-audit"
+          "frame.task, strategy.premortem, guardrail.assumption-audit"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.cause-mapping` -> `strategy.inversion` -> `strategy.premortem` -> `guardrail.assumption-audit` -> `schema.decision-memo`"
+          "`frame.task` -> `frame.cause-mapping` -> `strategy.premortem` -> `guardrail.assumption-audit` -> `schema.decision-memo`"
         ]
       ],
       "sourcePath": "stacks/risk-decision.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.explore-vs-exploit",
-      "title": "explore-vs-exploit",
-      "family": "Deciding & Prioritising",
-      "job": "explore-vs-exploit",
-      "useWhen": "Decide whether to keep searching for a better option or commit to the current one.",
-      "stage": "decide",
-      "outputKind": "decision",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Decide whether to keep searching for a better option or commit to the current one.",
-      "tags": [
-        "explore",
-        "exploit"
-      ],
-      "contract": {
-        "job": "explore-vs-exploit",
-        "useWhen": "Decide whether to keep searching for a better option or commit to the current one.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.success-criteria",
-          "guardrail.uncertainty"
-        ],
-        "fullSequence": [
-          "`mode.decide`",
-          "`frame.success-criteria`",
-          "`guardrail.uncertainty`",
-          "`guardrail.disconfirming-evidence`",
-          "`schema.execution-brief`"
-        ],
-        "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": ""
-      },
-      "io": {},
-      "body": [
-        [
-          "Job",
-          "explore-vs-exploit"
-        ],
-        [
-          "Use when",
-          "Decide whether to keep searching for a better option or commit to the current one."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "decision"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.success-criteria, guardrail.uncertainty"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `guardrail.uncertainty` -> `guardrail.disconfirming-evidence` -> `schema.execution-brief`"
-        ]
-      ],
-      "sourcePath": "stacks/explore-vs-exploit.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.prioritize",
-      "title": "prioritize",
-      "family": "Deciding & Prioritising",
-      "job": "prioritize",
-      "useWhen": "Rank options under real constraints and commit to a sequenced execution order.",
-      "stage": "decide",
-      "outputKind": "decision",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Rank options under real constraints and commit to a sequenced execution order.",
-      "tags": [
-        "prioritize"
-      ],
-      "contract": {
-        "job": "prioritize",
-        "useWhen": "Rank options under real constraints and commit to a sequenced execution order.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.success-criteria"
-        ],
-        "fullSequence": [
-          "`mode.decide`",
-          "`frame.success-criteria`",
-          "`guardrail.assumption-audit`",
-          "`schema.execution-brief`"
-        ],
-        "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": ""
-      },
-      "io": {},
-      "body": [
-        [
-          "Job",
-          "prioritize"
-        ],
-        [
-          "Use when",
-          "Rank options under real constraints and commit to a sequenced execution order."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "decision"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.success-criteria"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
-        ]
-      ],
-      "sourcePath": "stacks/prioritize.md"
     },
     {
       "section": "Stack",
@@ -2909,75 +2545,6 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
-      "key": "stack.data-to-story",
-      "title": "data-to-story",
-      "family": "Research & Analysis",
-      "job": "data-to-story",
-      "useWhen": "Translate statistics or findings into a decision-useful narrative for a non-technical audience.",
-      "stage": "conclude",
-      "outputKind": "draft",
-      "effort": "quick",
-      "stakes": "medium",
-      "summary": "Translate statistics or findings into a decision-useful narrative for a non-technical audience.",
-      "tags": [
-        "data",
-        "story"
-      ],
-      "contract": {
-        "job": "data-to-story",
-        "useWhen": "Translate statistics or findings into a decision-useful narrative for a non-technical audience.",
-        "minimumBlocks": [
-          "frame.extract-insights",
-          "guardrail.uncertainty"
-        ],
-        "fullSequence": [
-          "`frame.extract-insights`",
-          "`guardrail.uncertainty`",
-          "`rubric.writing-quality`"
-        ],
-        "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": ""
-      },
-      "io": {},
-      "body": [
-        [
-          "Job",
-          "data-to-story"
-        ],
-        [
-          "Use when",
-          "Translate statistics or findings into a decision-useful narrative for a non-technical audience."
-        ],
-        [
-          "Stage",
-          "conclude"
-        ],
-        [
-          "Output kind",
-          "draft"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Minimum blocks",
-          "frame.extract-insights, guardrail.uncertainty"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.extract-insights` -> `guardrail.uncertainty` -> `rubric.writing-quality`"
-        ]
-      ],
-      "sourcePath": "stacks/data-to-story.md"
-    },
-    {
-      "section": "Stack",
       "key": "stack.align-stakeholders",
       "title": "align-stakeholders",
       "family": "Writing & Communication",
@@ -3047,75 +2614,6 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/align-stakeholders.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.deliver-feedback",
-      "title": "deliver-feedback",
-      "family": "Writing & Communication",
-      "job": "deliver-feedback",
-      "useWhen": "Give honest, actionable feedback without diluting the signal.",
-      "stage": "refine",
-      "outputKind": "draft",
-      "effort": "quick",
-      "stakes": "low",
-      "summary": "Give honest, actionable feedback without diluting the signal.",
-      "tags": [
-        "deliver",
-        "feedback"
-      ],
-      "contract": {
-        "job": "deliver-feedback",
-        "useWhen": "Give honest, actionable feedback without diluting the signal.",
-        "minimumBlocks": [
-          "mode.critique",
-          "rubric.writing-quality"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`guardrail.disconfirming-evidence`",
-          "`rubric.writing-quality`"
-        ],
-        "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": ""
-      },
-      "io": {},
-      "body": [
-        [
-          "Job",
-          "deliver-feedback"
-        ],
-        [
-          "Use when",
-          "Give honest, actionable feedback without diluting the signal."
-        ],
-        [
-          "Stage",
-          "refine"
-        ],
-        [
-          "Output kind",
-          "draft"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, rubric.writing-quality"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `rubric.writing-quality`"
-        ]
-      ],
-      "sourcePath": "stacks/deliver-feedback.md"
     },
     {
       "section": "Stack",
@@ -3216,7 +2714,7 @@ globalThis.SITE_DATA = {
           "`frame.task`",
           "`strategy.steelman`",
           "`mode.decide`",
-          "`schema.plan-next-actions`"
+          "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -3254,7 +2752,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `strategy.steelman` -> `mode.decide` -> `schema.plan-next-actions`"
+          "`mode.explore` -> `frame.task` -> `strategy.steelman` -> `mode.decide` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/negotiate.md"
@@ -3493,12 +2991,12 @@ globalThis.SITE_DATA = {
         "useWhen": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
         "minimumBlocks": [
           "mode.critique",
-          "strategy.inversion"
+          "strategy.premortem"
         ],
         "fullSequence": [
           "`mode.critique`",
           "`guardrail.disconfirming-evidence`",
-          "`strategy.inversion`",
+          "`strategy.premortem`",
           "`rubric.argument-quality`"
         ],
         "blockOrderRationale": "",
@@ -3533,11 +3031,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, strategy.inversion"
+          "mode.critique, strategy.premortem"
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.inversion` -> `rubric.argument-quality`"
+          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.premortem` -> `rubric.argument-quality`"
         ]
       ],
       "sourcePath": "stacks/ethical-review.md"
@@ -3781,7 +3279,7 @@ globalThis.SITE_DATA = {
           "`frame.task`",
           "`mode.critique`",
           "`frame.cause-mapping`",
-          "`schema.plan-next-actions`"
+          "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -3819,7 +3317,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `mode.critique` -> `frame.cause-mapping` -> `schema.plan-next-actions`"
+          "`mode.explore` -> `frame.task` -> `mode.critique` -> `frame.cause-mapping` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/debug.md"
@@ -3845,13 +3343,13 @@ globalThis.SITE_DATA = {
         "useWhen": "Review code for correctness, contracts, and blast radius before approving it.",
         "minimumBlocks": [
           "mode.critique",
-          "schema.plan-next-actions"
+          "schema.execution-brief"
         ],
         "fullSequence": [
           "`mode.explore`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
-          "`schema.plan-next-actions`"
+          "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -3885,11 +3383,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, schema.plan-next-actions"
+          "mode.critique, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.plan-next-actions`"
+          "`mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/review-code.md"
@@ -3966,77 +3464,6 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
-      "key": "stack.tech-debt-triage",
-      "title": "tech-debt-triage",
-      "family": "Developer Workflows",
-      "job": "tech-debt-triage",
-      "useWhen": "Prioritize technical debt by risk and leverage so the right debt gets paid first.",
-      "stage": "decide",
-      "outputKind": "decision",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Prioritize technical debt by risk and leverage so the right debt gets paid first.",
-      "tags": [
-        "tech",
-        "debt",
-        "triage"
-      ],
-      "contract": {
-        "job": "tech-debt-triage",
-        "useWhen": "Prioritize technical debt by risk and leverage so the right debt gets paid first.",
-        "minimumBlocks": [
-          "mode.critique",
-          "mode.decide"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`guardrail.assumption-audit`",
-          "`mode.decide`",
-          "`schema.execution-brief`"
-        ],
-        "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": ""
-      },
-      "io": {},
-      "body": [
-        [
-          "Job",
-          "tech-debt-triage"
-        ],
-        [
-          "Use when",
-          "Prioritize technical debt by risk and leverage so the right debt gets paid first."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "decision"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, mode.decide"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
-        ]
-      ],
-      "sourcePath": "stacks/tech-debt-triage.md"
-    },
-    {
-      "section": "Stack",
       "key": "stack.incident-response",
       "title": "incident-response",
       "family": "Developer Workflows",
@@ -4063,7 +3490,7 @@ globalThis.SITE_DATA = {
           "`frame.cause-mapping`",
           "`mode.decide`",
           "`schema.incident-postmortem`",
-          "`schema.plan-next-actions`"
+          "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4101,7 +3528,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.cause-mapping` -> `mode.decide` -> `schema.incident-postmortem` -> `schema.plan-next-actions`"
+          "`mode.explore` -> `frame.cause-mapping` -> `mode.decide` -> `schema.incident-postmortem` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/incident-response.md"
@@ -4128,13 +3555,13 @@ globalThis.SITE_DATA = {
         "useWhen": "Break a socio-technical loop that keeps recreating the same class of incident.",
         "minimumBlocks": [
           "frame.cause-mapping",
-          "schema.plan-next-actions"
+          "schema.execution-brief"
         ],
         "fullSequence": [
           "`mode.reflect`",
           "`frame.cause-mapping`",
-          "`strategy.inversion`",
-          "`schema.plan-next-actions`"
+          "`strategy.premortem`",
+          "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4168,11 +3595,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.cause-mapping, schema.plan-next-actions"
+          "frame.cause-mapping, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `frame.cause-mapping` -> `strategy.inversion` -> `schema.plan-next-actions`"
+          "`mode.reflect` -> `frame.cause-mapping` -> `strategy.premortem` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/break-recurring-incident.md"
@@ -4198,13 +3625,13 @@ globalThis.SITE_DATA = {
         "useWhen": "Isolate a performance bottleneck and prescribe the highest-leverage fix.",
         "minimumBlocks": [
           "frame.cause-mapping",
-          "schema.plan-next-actions"
+          "schema.execution-brief"
         ],
         "fullSequence": [
           "`mode.explore`",
           "`frame.cause-mapping`",
           "`mode.critique`",
-          "`schema.plan-next-actions`"
+          "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4238,11 +3665,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.cause-mapping, schema.plan-next-actions"
+          "frame.cause-mapping, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.cause-mapping` -> `mode.critique` -> `schema.plan-next-actions`"
+          "`mode.explore` -> `frame.cause-mapping` -> `mode.critique` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/performance-fix.md"
@@ -4348,7 +3775,7 @@ globalThis.SITE_DATA = {
           "`mode.critique`",
           "`guardrail.assumption-audit`",
           "`strategy.red-team`",
-          "`schema.plan-next-actions`"
+          "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4386,80 +3813,10 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.plan-next-actions`"
+          "`mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/security-threat-model.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.reflect-act",
-      "title": "reflect-act",
-      "family": "Reflection & Learning",
-      "job": "reflect-act",
-      "useWhen": "Extract reusable lessons from any outcome and assign concrete follow-on actions.",
-      "stage": "conclude",
-      "outputKind": "retrospective",
-      "effort": "standard",
-      "stakes": "low",
-      "summary": "Extract reusable lessons from any outcome and assign concrete follow-on actions.",
-      "tags": [
-        "reflect",
-        "act"
-      ],
-      "contract": {
-        "job": "reflect-act",
-        "useWhen": "Extract reusable lessons from any outcome and assign concrete follow-on actions.",
-        "minimumBlocks": [
-          "frame.cause-mapping",
-          "frame.extract-insights"
-        ],
-        "fullSequence": [
-          "`mode.reflect`",
-          "`frame.cause-mapping`",
-          "`frame.extract-insights`",
-          "`schema.plan-next-actions`"
-        ],
-        "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": ""
-      },
-      "io": {},
-      "body": [
-        [
-          "Job",
-          "reflect-act"
-        ],
-        [
-          "Use when",
-          "Extract reusable lessons from any outcome and assign concrete follow-on actions."
-        ],
-        [
-          "Stage",
-          "conclude"
-        ],
-        [
-          "Output kind",
-          "retrospective"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Minimum blocks",
-          "frame.cause-mapping, frame.extract-insights"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.reflect` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.plan-next-actions`"
-        ]
-      ],
-      "sourcePath": "stacks/reflect-act.md"
     }
   ],
   "featuredStacks": [
@@ -4475,7 +3832,6 @@ globalThis.SITE_DATA = {
         "mode.explore",
         "frame.task",
         "strategy.problem-split",
-        "frame.scope",
         "guardrail.uncertainty"
       ]
     },
@@ -4555,7 +3911,7 @@ globalThis.SITE_DATA = {
         "frame.task",
         "mode.critique",
         "frame.cause-mapping",
-        "schema.plan-next-actions"
+        "schema.execution-brief"
       ]
     },
     {
@@ -4570,7 +3926,7 @@ globalThis.SITE_DATA = {
         "mode.reflect",
         "frame.cause-mapping",
         "frame.extract-insights",
-        "schema.plan-next-actions"
+        "schema.execution-brief"
       ]
     },
     {

@@ -16,6 +16,7 @@ Return:
 
 Do not proceed past any stopping condition under any circumstances.
 
-recursion depth: {max_depth}
-cycles: {max_iterations}
-stop condition: {stop_condition}
+---
+depth: [max depth]
+iterations: [max iterations]
+stop_condition: [condition to stop on]

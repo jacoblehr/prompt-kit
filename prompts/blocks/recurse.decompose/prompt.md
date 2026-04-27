@@ -20,8 +20,7 @@ Return:
 - Each node: `[subproblem statement] → [direct answer | decomposed further]`
 - End with a `## Synthesis` section that assembles the leaf answers.
 
-depth limit: {max_depth}
-subproblem limit: {max_subproblems}
-
-Problem:
-{paste problem or task}
+---
+depth: [max recursion depth]
+subproblems: [max per level]
+context: [problem or task]

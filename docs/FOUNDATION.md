@@ -56,3 +56,7 @@ Typical flow:
 - generic prompts any LLM handles without guidance (email replies, basic learning prompts)
 - snippets that substantially overlap with existing compact prompt blocks
 - prompt helpers that were redundant with the main browse set
+- `frame.scope` — merged into `frame.task` (scope boundary is part of task framing)
+- `schema.plan-next-actions` — merged into `schema.execution-brief` (strict subset of richer block)
+- `strategy.inversion` — deleted (premortem is the same strategy with stronger framing)
+- Six thin stacks: `deliver-feedback`, `explore-vs-exploit`, `reflect-act`, `prioritize`, `data-to-story`, `tech-debt-triage` — each was a 2–4 block subset of an existing stack or trivially assembled from minimum blocks

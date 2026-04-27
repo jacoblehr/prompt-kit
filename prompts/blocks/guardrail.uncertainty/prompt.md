@@ -19,5 +19,5 @@ Return:
 - what to verify next
 - what would most change the conclusion
 
-Analysis or draft:
-{paste current analysis, recommendation, or draft}
+---
+artifact: [current analysis, recommendation, or draft]

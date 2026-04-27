@@ -12,5 +12,5 @@ Return:
 - key tradeoff
 - next action
 
-Options and criteria:
-{paste options and any explicit criteria}
+---
+context: [options and any explicit criteria]

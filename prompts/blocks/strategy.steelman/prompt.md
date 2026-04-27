@@ -10,5 +10,5 @@ Return:
 - key supporting evidence and reasoning
 - what would genuinely be required to defeat it
 
-Position to steelman:
-{paste position, argument, or alternative being considered for challenge}
+---
+context: [position, argument, or alternative being considered for challenge]

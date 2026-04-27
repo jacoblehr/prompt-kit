@@ -17,5 +17,5 @@ Return:
 - confidence
 - next action
 
-Decision context:
-{paste chosen option or decision context}
+---
+context: [chosen option or decision context]

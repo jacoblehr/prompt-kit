@@ -10,5 +10,5 @@ Return:
 - most plausible paths to that outcome (ranked by likelihood)
 - prevention condition for each path
 
-Plan, goal, or situation to invert:
-{paste plan, goal, or situation}
+---
+context: [plan, goal, or situation]

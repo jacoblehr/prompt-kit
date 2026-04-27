@@ -29,8 +29,7 @@ Assessment: ...
 
 **Continuing on: Branch [X]**
 
-branches: {branch_count}
-selection_criterion: {selection_criterion}
-
-Problem or task:
-{paste problem or task}
+---
+branches: [number of branches to generate]
+criterion: [selection criterion]
+context: [problem or task]

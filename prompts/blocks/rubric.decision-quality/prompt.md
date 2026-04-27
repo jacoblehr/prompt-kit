@@ -15,5 +15,5 @@ Return:
 - overall verdict: ready / needs revision
 - highest-leverage fix if revision is needed
 
-Decision to evaluate:
-{paste decision draft or memo}
+---
+artifact: [decision draft or memo]

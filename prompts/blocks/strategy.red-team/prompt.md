@@ -10,5 +10,5 @@ Return:
 - why each attack is hard to dismiss
 - which attacks require a real response before proceeding
 
-Plan or proposal to red-team:
-{paste plan or proposal}
+---
+artifact: [plan or proposal]

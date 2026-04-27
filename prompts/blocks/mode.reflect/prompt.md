@@ -11,5 +11,5 @@ Return:
 - reusable lesson
 - concrete adjustment for next time
 
-Outcome to reflect on:
-{paste outcome, event, or completed task — include expected vs actual if possible}
+---
+context: [outcome, event, or completed task — include expected vs actual if known]

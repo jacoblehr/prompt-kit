@@ -15,5 +15,5 @@ Return:
 - earliest plausible intervention point
 - underlying cause
 
-Problem or outcome:
-{paste problem or outcome}
+---
+context: [problem or outcome to trace]

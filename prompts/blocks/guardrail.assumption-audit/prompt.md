@@ -19,5 +19,5 @@ For each assumption:
 - impact if false
 - what would falsify it
 
-Plan, decision, or argument:
-{paste plan, decision, argument, or recommendation}
+---
+artifact: [plan, decision, argument, or recommendation]

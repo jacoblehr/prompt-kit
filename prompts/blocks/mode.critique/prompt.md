@@ -10,5 +10,5 @@ Return:
 - concrete revision advice per finding
 - overall verdict: sound / needs revision
 
-Artifact to critique:
-{paste plan, draft, decision, proposal, or argument}
+---
+artifact: [plan, draft, decision, proposal, or argument]

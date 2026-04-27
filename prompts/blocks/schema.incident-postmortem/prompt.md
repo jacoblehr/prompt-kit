@@ -2,9 +2,10 @@
 
 Facilitate a structured post-mortem for this incident.
 
-Incident summary: {incident_summary}
-Impact: {impact}
-Duration: {duration}
+---
+context: [incident summary]
+impact: [affected systems, users, or data]
+duration: [start to resolution time]
 
 Work through:
 1. Timeline — key events: detection, escalation, diagnosis, resolution

@@ -17,7 +17,6 @@ Return:
 Overall verdict: [accept | refine | reject]
 Rationale: [one sentence]
 
-criteria: {criteria}
-
-Candidate output:
-{paste candidate output}
+---
+criteria: [evaluation criteria]
+artifact: [candidate output]

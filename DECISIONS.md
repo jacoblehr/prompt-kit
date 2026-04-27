@@ -2,7 +2,76 @@
 
 Changes made during the composability and modularity review of prompts and stacks.
 Ordered by impact: High first, then Medium.
-Date: 2026-04-27
+Date: 2026-04-28
+
+---
+
+## Composability and simplification audit — 2026-04-28
+
+Ruthless audit pass: redundant blocks merged, thin stacks deleted, inputs standardized, I/O contract defined.
+
+---
+
+### frame.scope — merged into frame.task
+
+**Asset:** `prompts/blocks/frame.scope/` (deleted)
+**Issue:** `frame.scope` was a near-complete overlap with `frame.task`. Both constrain the problem. Keeping both required users to run two sequential frame blocks that returned redundant fields with different names.
+**Change:** Added `in scope`, `out of scope`, and `scope boundary to hold` to `frame.task`'s Return section. Added "draw the scope boundary explicitly" to its requirements. Deleted `prompts/blocks/frame.scope/` directory. Updated `frame-problem.md` stack (removed step 4, renumbered, updated notes to credit scope work to `frame.task`).
+**Impact:** High
+
+---
+
+### schema.plan-next-actions — merged into schema.execution-brief
+
+**Asset:** `prompts/blocks/schema.plan-next-actions/` (deleted)
+**Issue:** `schema.execution-brief` already returned every field in `schema.plan-next-actions` (goal/objective, ordered steps/milestones, dependencies, blockers, first action, first checkpoint) plus more (owner, escalation trigger). Having both forced users to choose between two schema blocks with no meaningful distinction. All downstream stacks that used `schema.plan-next-actions` were using a subset of what `schema.execution-brief` already provides.
+**Change:** Updated `schema.execution-brief` to mark `owner` and `pause/escalation trigger` as optional for solo/internal work, making it cover both the lightweight and full cases. Deleted `prompts/blocks/schema.plan-next-actions/`. Updated 7 stacks: `debug`, `incident-response`, `negotiate`, `performance-fix`, `review-code`, `security-threat-model`, `break-recurring-incident`.
+**Impact:** High
+
+---
+
+### strategy.inversion — deleted (premortem is strictly stronger)
+
+**Asset:** `prompts/blocks/strategy.inversion/` (deleted)
+**Issue:** `strategy.inversion` (define bad outcome → paths to it → prevention conditions) is functionally identical to `strategy.premortem` (assume failure → causes → mitigations) but weaker: inversion leaves failure as a hypothesis; premortem treats it as committed fact. The committed-fact framing forces specific causal chains rather than generic risk lists, making premortem the correct choice in all cases where inversion would have been used.
+**Change:** Deleted `prompts/blocks/strategy.inversion/`. Updated 3 stacks: `ethical-review` (inversion → premortem), `break-recurring-incident` (inversion → premortem), `risk-decision` (removed inversion; premortem was already block 4).
+**Impact:** High
+
+---
+
+### All block inputs — standardized to context: / artifact:
+
+**Assets:** All `prompts/blocks/*/prompt.md` files
+**Issue:** Each block used a custom input label (`{paste X}` with different names per block — "Plan, decision, or argument:", "Artifact to critique:", "Outcome to reflect on:", etc.). This made chaining blocks manual and ambiguous; users had to re-read each block to know what to paste where.
+**Change:** Standardized to two input labels across all blocks:
+- `context:` — situation, problem, material, or direction being worked on (frame, mode, strategy, schema blocks)
+- `artifact:` — produced output being evaluated, critiqued, or refined (guardrail, rubric, recurse.evaluate, recurse.refine, mode.critique blocks)
+Recurse blocks retain explicit control fields (`depth:`, `branches:`, `iterations:`) alongside `context:` or `artifact:`.
+**Impact:** High
+
+---
+
+### I/O contract standard — added to COMPOSITION.md
+
+**Asset:** `docs/COMPOSITION.md`
+**Issue:** No formal I/O contract existed. Users could not tell from block documentation which output fields from block A fed which input field of block B. Chaining was ad hoc.
+**Change:** Added "I/O Contract Standard" section to `COMPOSITION.md` defining: (1) when to use `context:` vs `artifact:`, (2) explicit chaining patterns from explore → frame → strategy → guardrail → decide → output → eval phases, (3) standard chaining example with field-level handoff syntax, (4) chaining rules.
+**Impact:** High
+
+---
+
+### Thin stacks — deleted (6 stacks)
+
+**Stacks deleted:** `deliver-feedback.md`, `explore-vs-exploit.md`, `reflect-act.md`, `prioritize.md`, `data-to-story.md`, `tech-debt-triage.md`
+**Issue:** These stacks were thin wrappers containing 2–4 blocks, most of which were already available in a richer stack or as a 2-block minimum composition:
+- `deliver-feedback` = `critique` minus 1 block. No distinct job.
+- `explore-vs-exploit` = `mode.decide` + `frame.success-criteria` + `guardrail.uncertainty`. No named stack needed.
+- `reflect-act` = `mode.reflect` + `frame.cause-mapping` + `frame.extract-insights` + `schema.plan-next-actions`. Near-identical to `break-recurring-incident`.
+- `prioritize` = `mode.decide` + `frame.success-criteria` + `guardrail.assumption-audit`. Direct subset of `decide`.
+- `data-to-story` = `frame.extract-insights` + `guardrail.uncertainty` + `rubric.writing-quality`. Three blocks, trivially assembled.
+- `tech-debt-triage` = `mode.critique` + `guardrail.assumption-audit` + `mode.decide`. Subset of `critique`.
+**Change:** Deleted all six stack files. Updated `build-site-data.mjs` `STACK_META`, `stackOrder`, `STACK_FAMILY_ORDER`, and `featuredStacks`.
+**Impact:** Medium
 
 ---
 

@@ -15,5 +15,5 @@ Return:
 - overall verdict: ready / needs revision
 - highest-leverage fix if revision is needed
 
-Writing to evaluate:
-{paste draft}
+---
+artifact: [draft]

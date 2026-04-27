@@ -9,5 +9,5 @@ Return:
 - open questions per subproblem
 - recommended order of attack
 
-Problem or situation to decompose:
-{paste problem or situation}
+---
+context: [problem or situation]

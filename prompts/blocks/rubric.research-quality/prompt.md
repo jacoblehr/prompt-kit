@@ -16,5 +16,5 @@ Return:
 - overall verdict: ready / needs revision
 - highest-leverage fix if revision is needed
 
-Research to evaluate:
-{paste research summary or findings}
+---
+artifact: [research summary or findings]

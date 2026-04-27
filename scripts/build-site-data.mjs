@@ -651,8 +651,7 @@ const STACK_FAMILY_ORDER = [
   "Planning & Execution",
   "Critique & Review",
   "Prompt Craft",
-  "Developer Workflows",
-  "Reflection & Learning"
+  "Developer Workflows"
 ];
 
 const STACK_STAGE_VALUES = ["frame", "explore", "analyze", "decide", "critique", "refine", "conclude"];
@@ -676,15 +675,11 @@ const STACK_META = {
   "decide":           { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision",   stakes: "high" },
   "review-decision":  { family: "Deciding & Prioritising", stage: "conclude", outputKind: "retrospective", stakes: "medium" },
   "risk-decision":    { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision",   stakes: "high" },
-  "explore-vs-exploit": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
-  "prioritize":       { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision",   stakes: "high" },
   // Research & Analysis
   "research":         { family: "Research & Analysis", stage: "analyze",  outputKind: "summary",      stakes: "medium" },
   "hypothesis-test":  { family: "Research & Analysis", stage: "analyze",  outputKind: "brief",        stakes: "high" },
-  "data-to-story":    { family: "Research & Analysis", stage: "conclude", outputKind: "draft",        stakes: "medium" },
   // Writing & Communication
   "align-stakeholders": { family: "Writing & Communication", stage: "decide",  outputKind: "plan",   stakes: "medium" },
-  "deliver-feedback": { family: "Writing & Communication", stage: "refine",  outputKind: "draft",     stakes: "low" },
   "develop-position": { family: "Writing & Communication", stage: "refine",  outputKind: "draft",     stakes: "medium" },
   "negotiate":        { family: "Writing & Communication", stage: "decide",  outputKind: "brief",     stakes: "high" },
   // Planning & Execution
@@ -701,14 +696,11 @@ const STACK_META = {
   "debug":                    { family: "Developer Workflows", stage: "analyze",  outputKind: "diagnosis", stakes: "high" },
   "review-code":              { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
   "architecture-review":      { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
-  "tech-debt-triage":         { family: "Developer Workflows", stage: "decide",   outputKind: "decision",  stakes: "high" },
   "incident-response":        { family: "Developer Workflows", stage: "analyze",  outputKind: "plan",      stakes: "high" },
   "break-recurring-incident": { family: "Developer Workflows", stage: "conclude", outputKind: "plan",      stakes: "high" },
   "performance-fix":          { family: "Developer Workflows", stage: "analyze",  outputKind: "diagnosis", stakes: "high" },
   "safe-migration":           { family: "Developer Workflows", stage: "decide",   outputKind: "plan",      stakes: "high" },
   "security-threat-model":    { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
-  // Reflection & Learning
-  "reflect-act": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective",    stakes: "low" },
 };
 
 function validateStackMeta(baseNames) {
@@ -851,14 +843,13 @@ function makeRubric(baseName) {
 }
 
 const modeOrder = ["explore", "decide", "critique", "reflect"];
-const strategyOrder = ["problem-split", "premortem", "steelman", "inversion", "red-team"];
+const strategyOrder = ["problem-split", "premortem", "steelman", "red-team"];
 const promptBlockOrder = [
   "frame.task",
   "frame.success-criteria",
   "guardrail.uncertainty",
   "guardrail.disconfirming-evidence",
   "assumption.audit",
-  "frame.scope",
   "schema.decision-memo",
   "schema.execution-brief"
 ];
@@ -941,15 +932,15 @@ const stackOrder = [
   "decide.md",
   "review-decision.md",
   "risk-decision.md",
-  "explore-vs-exploit.md",
-  "prioritize.md",
+  // "explore-vs-exploit.md" — deleted (thin wrapper on decide)
+  // "prioritize.md" — deleted (subset of decide)
   // Research & Analysis
   "research.md",
   "hypothesis-test.md",
-  "data-to-story.md",
+  // "data-to-story.md" — deleted (thin 3-block)
   // Writing & Communication
   "align-stakeholders.md",
-  "deliver-feedback.md",
+  // "deliver-feedback.md" — deleted (subset of critique)
   "develop-position.md",
   "negotiate.md",
   // Planning & Execution
@@ -966,14 +957,12 @@ const stackOrder = [
   "debug.md",
   "review-code.md",
   "architecture-review.md",
-  "tech-debt-triage.md",
+  // "tech-debt-triage.md" — deleted (subset of critique)
   "incident-response.md",
   "break-recurring-incident.md",
   "performance-fix.md",
   "safe-migration.md",
   "security-threat-model.md",
-  // Reflection & Learning
-  "reflect-act.md",
 ];
 const rubricOrder = [
   "decision-quality",
@@ -1010,7 +999,7 @@ const featuredStacks = [
     title: "Frame an Unknown Problem",
     description: "When you are not sure what you are actually solving. Explores breadth, frames the task, decomposes it, and surfaces uncertainty before any commitment.",
     tags: ["framing", "clarity", "explore"],
-    refs: ["mode.explore", "frame.task", "strategy.problem-split", "frame.scope", "guardrail.uncertainty"]
+    refs: ["mode.explore", "frame.task", "strategy.problem-split", "guardrail.uncertainty"]
   },
   {
     title: "Make a Risky Decision",
@@ -1040,13 +1029,13 @@ const featuredStacks = [
     title: "Debug a Failure",
     description: "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with task framing, critiques likely causes, maps causal chain, and turns the next move into a concrete plan.",
     tags: ["debugging", "incident", "diagnosis"],
-    refs: ["mode.explore", "frame.task", "mode.critique", "frame.cause-mapping", "schema.plan-next-actions"]
+    refs: ["mode.explore", "frame.task", "mode.critique", "frame.cause-mapping", "schema.execution-brief"]
   },
   {
     title: "After-Action Review",
     description: "When an outcome exists and the risk is repeating the same mistake. Maps causes, extracts reusable lessons, and assigns follow-on actions.",
     tags: ["reflect", "learning", "retrospective"],
-    refs: ["mode.reflect", "frame.cause-mapping", "frame.extract-insights", "schema.plan-next-actions"]
+    refs: ["mode.reflect", "frame.cause-mapping", "frame.extract-insights", "schema.execution-brief"]
   },
   {
     title: "Improve a Prompt",

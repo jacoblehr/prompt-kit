@@ -9,5 +9,5 @@ Return:
 - highest-leverage risks
 - suggested mitigation for each high-priority risk
 
-Plan or proposal to premortem:
-{paste plan or proposal}
+---
+context: [plan or proposal]

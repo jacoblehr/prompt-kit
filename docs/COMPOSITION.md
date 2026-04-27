@@ -133,3 +133,74 @@ Not sure which blocks to reach for?
 | Consistent output format        | add a `schema` block     |
 | Recurring workflow              | find a matching `stack`  |
 | Evaluate the output             | add a `rubric` block     |
+
+---
+
+## I/O Contract Standard
+
+Every block has two input labels:
+
+| Label | Use for |
+|-------|---------|
+| `context:` | Situation, problem, material, or chosen direction being worked on |
+| `artifact:` | Produced output being evaluated, critiqued, refined, or structured |
+
+**When to use `context:`:** frame blocks, mode blocks, strategy blocks, schema blocks — when you are describing the thing you are reasoning about.
+
+**When to use `artifact:`:** guardrail blocks, rubric blocks, recurse.evaluate, recurse.refine, recurse.branch-prune, mode.critique — when you are handing over something already produced for review, testing, or refinement.
+
+Recurse blocks with control parameters (`depth:`, `branches:`, `iterations:`) take those as explicit fields alongside `context:` or `artifact:`.
+
+### Chaining patterns
+
+Outputs are named sections. Feed them forward by pasting the relevant section into the next block's input.
+
+```
+EXPLORE PHASE
+  context: → mode.explore
+  output:  plausible directions, key unknowns
+
+FRAME PHASE
+  context: → frame.task
+  output:  stated ask, objective, scope boundary, constraints, unknowns
+
+STRATEGY PHASE
+  context: [frame output] → strategy.premortem | strategy.steelman | strategy.problem-split | recurse.decompose
+  output:  failure causes | strongest position | subproblems | solution tree
+
+GUARDRAIL PHASE
+  artifact: [reasoning or decision so far] → guardrail.assumption-audit | guardrail.disconfirming-evidence | guardrail.uncertainty
+  output:   exposed assumptions | opposing evidence | calibrated uncertainty
+
+DECIDE PHASE
+  context: [options + criteria + guardrail results] → mode.decide
+  output:  chosen option, rationale, tradeoff, next action
+
+OUTPUT PHASE
+  context: [decided direction] → schema.decision-memo | schema.execution-brief | schema.incident-postmortem
+  output:  structured document
+
+EVAL PHASE
+  artifact: [produced output] → rubric.argument-quality | rubric.decision-quality | rubric.plan-quality | rubric.research-quality | rubric.writing-quality
+  output:   verdict (ready / needs revision) + highest-leverage fix
+```
+
+### Standard chaining example
+
+```
+frame.task           context: "We need to migrate our auth service before Q3."
+  ↓ (paste: stated ask, objective, scope boundary, constraints)
+strategy.premortem   context: [frame.task output]
+  ↓ (paste: failure causes)
+guardrail.assumption-audit  artifact: [premortem output]
+  ↓ (paste: exposed assumptions)
+mode.decide          context: [options + assumption audit]
+  ↓ (paste: chosen option + rationale)
+schema.execution-brief  context: [mode.decide output]
+```
+
+### Rules
+
+- One `context:` or `artifact:` per block. Do not paste everything into it — paste the specific prior output section that is relevant.
+- If the next block takes `artifact:`, hand over the prior block's **output section**, not the input you gave it.
+- named fields like `criteria:`, `depth:`, `branches:` come before `context:` / `artifact:` in the input block.
