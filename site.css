@@ -2548,6 +2548,8 @@ kbd.search-hint {
     grid-template-columns: 1fr;
   }
 
+  /* builder-header-actions intentionally excluded: it must remain a flex row on
+     mobile so Close / Load / Clear stay side-by-side in the full-screen panel. */
   .builder-execution-head {
     flex-direction: column;
     align-items: stretch;
