@@ -850,13 +850,13 @@ globalThis.SITE_DATA = {
       "contract": {
         "purpose": "Counter confirmation bias by forcing an active search for the strongest case against the current conclusion.",
         "useWhen": "A conclusion feels too smooth or a recommendation feels too aligned with what was hoped for. Use before a high-stakes decision, after a persuasive draft, or when the reasoning path looks suspiciously clean.",
-        "expects": "A current conclusion, recommendation, or preferred option.",
+        "expects": "A conclusion, recommendation, or preferred option.",
         "adds": "An adversarial check: the strongest real opposing evidence or argument, a test of what would be true if the conclusion were wrong, and an honest verdict on whether the conclusion survives.",
         "returns": [
-          "current conclusion",
+          "conclusion under review",
           "strongest opposing evidence or argument",
           "what would be true if the conclusion were wrong",
-          "whether the conclusion still stands and why"
+          "whether it still stands and why"
         ],
         "pairsWith": [
           "mode.critique",
@@ -890,7 +890,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Expects",
-          "A current conclusion, recommendation, or preferred option."
+          "A conclusion, recommendation, or preferred option."
         ],
         [
           "Adds",
@@ -898,7 +898,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Returns",
-          "current conclusion, strongest opposing evidence or argument, what would be true if the conclusion were wrong, whether the conclusion still stands and why"
+          "conclusion under review, strongest opposing evidence or argument, what would be true if the conclusion were wrong, whether it still stands and why"
         ],
         [
           "Pairs with",
@@ -1377,7 +1377,7 @@ globalThis.SITE_DATA = {
         "adds": "A directive to check all stopping conditions before every recursive or iterative step, and to halt with an explicit stopping reason when any condition is met.",
         "returns": [
           "current depth or iteration at stopping point",
-          "stopping_reason: `condition_met` | `max_depth_reached` | `max_iterations_reached`",
+          "stopping reason: `criteria met` | `depth exceeded` | `iterations exceeded`",
           "final state at stopping point"
         ],
         "pairsWith": [
@@ -1419,7 +1419,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Returns",
-          "current depth or iteration at stopping point, stopping_reason: `condition_met` | `max_depth_reached` | `max_iterations_reached`, final state at stopping point"
+          "current depth or iteration at stopping point, stopping reason: `criteria met` | `depth exceeded` | `iterations exceeded`, final state at stopping point"
         ],
         [
           "Pairs with",
@@ -1669,7 +1669,7 @@ globalThis.SITE_DATA = {
         "adds": "A directive to critique against criteria each round, apply only fixes tied to specific gaps, and stop when criteria are met or the limit is reached.",
         "returns": [
           "final refined output only (no intermediate reasoning unless requested)",
-          "iteration count: N of {iteration_limit}",
+          "rounds: N of {iteration_limit}",
           "stopping reason: `criteria_met` | `limit_reached`"
         ],
         "pairsWith": [
@@ -1711,7 +1711,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Returns",
-          "final refined output only (no intermediate reasoning unless requested), iteration count: N of {iteration_limit}, stopping reason: `criteria_met` | `limit_reached`"
+          "final refined output only (no intermediate reasoning unless requested), rounds: N of {iteration_limit}, stopping reason: `criteria_met` | `limit_reached`"
         ],
         [
           "Pairs with",
