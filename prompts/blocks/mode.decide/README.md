@@ -13,7 +13,10 @@ A set of options and, ideally, explicit criteria. Works best after `mode.explore
 A directive to compare options against criteria, commit to a choice, name tradeoffs, and specify the next action.
 
 ## Returns
-A committed choice with rationale, named tradeoffs, and a concrete next step rather than further expansion.
+- chosen option
+- rationale
+- key tradeoff
+- next action
 
 ## Pairs with
 `frame.success-criteria`, `frame.compare-options`, `schema.decision-memo`, `rubric.decision-quality`

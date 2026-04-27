@@ -77,6 +77,12 @@ globalThis.SITE_DATA = {
         "useWhen": "Real options already exist, criteria can be stated, and the main risk is drifting instead of choosing.",
         "expects": "A set of options and, ideally, explicit criteria. Works best after `mode.explore` has generated a shortlist.",
         "adds": "A directive to compare options against criteria, commit to a choice, name tradeoffs, and specify the next action.",
+        "returns": [
+          "chosen option",
+          "rationale",
+          "key tradeoff",
+          "next action"
+        ],
         "pairsWith": [
           "frame.success-criteria",
           "frame.compare-options",
@@ -115,6 +121,10 @@ globalThis.SITE_DATA = {
           "A directive to compare options against criteria, commit to a choice, name tradeoffs, and specify the next action."
         ],
         [
+          "Returns",
+          "chosen option, rationale, key tradeoff, next action"
+        ],
+        [
           "Pairs with",
           "frame.success-criteria, frame.compare-options, schema.decision-memo, rubric.decision-quality"
         ],
@@ -140,6 +150,11 @@ globalThis.SITE_DATA = {
         "useWhen": "A draft, plan, or decision already exists, missing flaws would be costly, or you want revision guidance rather than reassurance.",
         "expects": "An existing artifact — a plan, proposal, draft, decision, or argument — to critique.",
         "adds": "A directive to prioritize defect detection over completeness, suppress politeness, and give concrete revision advice.",
+        "returns": [
+          "findings ranked by leverage (highest first)",
+          "concrete revision advice per finding",
+          "overall verdict: sound / needs revision"
+        ],
         "pairsWith": [
           "strategy.premortem",
           "strategy.red-team",
@@ -177,6 +192,10 @@ globalThis.SITE_DATA = {
         [
           "Adds",
           "A directive to prioritize defect detection over completeness, suppress politeness, and give concrete revision advice."
+        ],
+        [
+          "Returns",
+          "findings ranked by leverage (highest first), concrete revision advice per finding, overall verdict: sound / needs revision"
         ],
         [
           "Pairs with",
@@ -1177,7 +1196,7 @@ globalThis.SITE_DATA = {
         "cause",
         "mapping"
       ],
-      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nProblem or outcome:\n{paste problem or outcome}",
+      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- underlying cause\n\nProblem or outcome:\n{paste problem or outcome}",
       "body": [
         [
           "Purpose",
@@ -2460,6 +2479,7 @@ globalThis.SITE_DATA = {
           "`guardrail.disconfirming-evidence`",
           "`guardrail.assumption-audit`",
           "`mode.decide`",
+          "`rubric.decision-quality`",
           "`schema.decision-memo`"
         ],
         "blockOrderRationale": "",
@@ -2498,7 +2518,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.success-criteria` -> `guardrail.disconfirming-evidence` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.decision-memo`"
+          "`mode.explore` -> `frame.success-criteria` -> `guardrail.disconfirming-evidence` -> `guardrail.assumption-audit` -> `mode.decide` -> `rubric.decision-quality` -> `schema.decision-memo`"
         ]
       ],
       "sourcePath": "stacks/decide.md"
@@ -3311,6 +3331,7 @@ globalThis.SITE_DATA = {
           "`frame.task`",
           "`frame.success-criteria`",
           "`guardrail.assumption-audit`",
+          "`rubric.plan-quality`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
@@ -3349,7 +3370,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
+          "`frame.task` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `rubric.plan-quality` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/feature-design.md"
@@ -3363,7 +3384,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Move a feature from defined to shipped with quality gates at each step.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "deep",
       "stakes": "high",
       "summary": "Move a feature from defined to shipped with quality gates at each step.",
       "tags": [
@@ -3383,6 +3404,7 @@ globalThis.SITE_DATA = {
           "`frame.success-criteria`",
           "`guardrail.assumption-audit`",
           "`strategy.premortem`",
+          "`rubric.plan-quality`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
@@ -3409,7 +3431,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
@@ -3421,7 +3443,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.execution-brief`"
+          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/ship-feature.md"
@@ -4279,7 +4301,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "deep",
       "stakes": "high",
       "summary": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "tags": [
@@ -4299,6 +4321,7 @@ globalThis.SITE_DATA = {
           "`frame.task`",
           "`guardrail.assumption-audit`",
           "`strategy.premortem`",
+          "`rubric.plan-quality`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
@@ -4325,7 +4348,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
@@ -4337,7 +4360,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.execution-brief`"
+          "`mode.explore` -> `frame.task` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/safe-migration.md"

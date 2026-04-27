@@ -13,7 +13,9 @@ An existing artifact — a plan, proposal, draft, decision, or argument — to c
 A directive to prioritize defect detection over completeness, suppress politeness, and give concrete revision advice.
 
 ## Returns
-Prioritized weaknesses, blind spots, and highest-leverage revision targets rather than balanced summaries.
+- findings ranked by leverage (highest first)
+- concrete revision advice per finding
+- overall verdict: sound / needs revision
 
 ## Pairs with
 `strategy.premortem`, `strategy.red-team`, `strategy.steelman`, `guardrail.disconfirming-evidence`, `rubric.*`

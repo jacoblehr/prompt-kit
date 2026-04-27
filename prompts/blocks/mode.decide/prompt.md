@@ -6,5 +6,11 @@ Show the key tradeoff explicitly.
 Name the next action.
 Do not expand the option set unless it is clearly too weak to decide from.
 
+Return:
+- chosen option
+- rationale
+- key tradeoff
+- next action
+
 Options and criteria:
 {paste options and any explicit criteria}

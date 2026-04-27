@@ -9,5 +9,11 @@ Requirements:
 - mark the earliest point where intervention was plausible
 - name the most likely root cause
 
+Return:
+- visible symptom
+- causal chain (at least 3 levels, branching where applicable)
+- earliest plausible intervention point
+- underlying cause
+
 Problem or outcome:
 {paste problem or outcome}
