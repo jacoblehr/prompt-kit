@@ -405,6 +405,7 @@ function renderBlockCard(item, index, uiState) {
 
 function renderSection(sectionKey, uiState) {
   const section = getBuilderSection(sectionKey);
+  const stepNumber = BUILDER_SECTION_ORDER.indexOf(sectionKey) + 1;
   const items = builderState.getSectionItems(sectionKey);
   const collapsed = !!uiState.collapsed?.[sectionKey];
   const summary = summarizeBuilderSection(builderState.items, sectionKey);
@@ -416,6 +417,7 @@ function renderSection(sectionKey, uiState) {
         <button type="button" class="pb-section-toggle" data-action="toggle-section" data-section="${escHtml(sectionKey)}" aria-expanded="${collapsed ? "false" : "true"}">
           <span class="pb-section-toggle-main">
             <span class="pb-section-title-row">
+              <span class="pb-section-step" aria-hidden="true">${stepNumber}</span>
               <span class="pb-section-title">${escHtml(section.label)}</span>
               ${items.length > 0 ? `<span class="pb-section-count">${items.length}</span>` : ""}
               ${stateMarkup}
