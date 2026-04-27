@@ -11,9 +11,9 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Is there a concrete next action?
 - Would future-you understand why this decision was made?
 
-Then give:
+Return:
 - overall verdict: ready / needs revision
-- the single highest-leverage fix if revision is needed
+- highest-leverage fix if revision is needed
 
 Decision to evaluate:
 {paste decision draft or memo}

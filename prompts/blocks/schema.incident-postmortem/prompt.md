@@ -15,3 +15,10 @@ Work through:
 6. Prevention — at least one structural change that reduces this class of incident
 
 Avoid blame. Focus on system conditions.
+
+Return:
+- timeline: detection, escalation, diagnosis, resolution
+- systemic cause and contributing factors
+- what went well
+- action items with owners and urgency
+- one structural prevention measure

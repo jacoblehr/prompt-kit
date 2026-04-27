@@ -1,6 +1,16 @@
 # rubric.plan-quality
 
-Use this checklist after a plan.
+## Purpose
+Confirm that a plan is concrete, sequenced, and executable before committing to it.
+
+## Use when
+After a plan is drafted, before execution begins or before writing the execution brief.
+
+## Expects
+A plan or proposed sequence of steps.
+
+## Adds
+Per-criterion judgments that surface ordering problems, implicit dependencies, and vague first actions.
 
 Questions:
 
@@ -9,13 +19,22 @@ Questions:
 - Are likely blockers named?
 - Is the first action concrete enough to do now?
 - Does the plan avoid unnecessary complexity?
-- Is there a check point after early execution?
+- Is there a checkpoint after early execution?
 
-Pairs with: `mode.decide`, `frame.plan-next-actions`, `strategy.premortem`
+## Returns
+- per criterion: yes / partial / no, with one-sentence evidence
+- overall verdict: ready / needs revision
+- highest-leverage fix if revision is needed
+
+## Pairs with
+`mode.decide`, `strategy.premortem`, `schema.execution-brief`
+
+## Avoid when
+The plan has not been drafted yet — plan first, then evaluate.
 
 ---
 
-Metadata:
+## Metadata
 - type: rubric
 - stage: refine
 - strength: light

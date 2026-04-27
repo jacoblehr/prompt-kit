@@ -14,7 +14,7 @@ Constraints:
 - Each iteration must address at least one concrete gap. If no gaps are found, stop early.
 - Do not make changes that are not tied to a failing criterion.
 
-Output:
+Return:
 - final refined output
 - rounds: N of {iteration_limit}
 - stopping reason: `criteria_met` | `limit_reached`

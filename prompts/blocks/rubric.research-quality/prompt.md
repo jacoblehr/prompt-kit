@@ -12,9 +12,9 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Is the confidence level on each key claim explicit?
 - Would a skeptical expert with opposing priors find this research intellectually honest?
 
-Then give:
+Return:
 - overall verdict: ready / needs revision
-- the single highest-leverage fix if revision is needed
+- highest-leverage fix if revision is needed
 
 Research to evaluate:
 {paste research summary or findings}

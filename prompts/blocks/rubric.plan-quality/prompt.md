@@ -11,9 +11,9 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Does the plan avoid unnecessary complexity?
 - Is there a checkpoint after early execution?
 
-Then give:
+Return:
 - overall verdict: ready / needs revision
-- the single highest-leverage fix if revision is needed
+- highest-leverage fix if revision is needed
 
 Plan to evaluate:
 {paste plan}

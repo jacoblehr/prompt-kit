@@ -1,6 +1,16 @@
 # rubric.writing-quality
 
-Use this checklist after drafting or rewriting.
+## Purpose
+Check whether a written piece is clear, tight, and ready to send.
+
+## Use when
+After drafting or rewriting, before sharing, publishing, or sending.
+
+## Expects
+A draft of any written output.
+
+## Adds
+Per-criterion judgments that surface redundancy, unsupported claims, and buried takeaways.
 
 Questions:
 
@@ -11,11 +21,20 @@ Questions:
 - Does each paragraph earn its place?
 - Is the next action or takeaway obvious?
 
-Pairs with: `mode.critique`, `frame.rewrite-for-clarity`, `frame.critique-argument`
+## Returns
+- per criterion: yes / partial / no, with one-sentence evidence
+- overall verdict: ready / needs revision
+- highest-leverage fix if revision is needed
+
+## Pairs with
+`mode.critique`, `guardrail.uncertainty`
+
+## Avoid when
+No draft exists yet — write the draft first, then evaluate.
 
 ---
 
-Metadata:
+## Metadata
 - type: rubric
 - stage: refine
 - strength: light

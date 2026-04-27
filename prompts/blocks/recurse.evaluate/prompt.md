@@ -8,7 +8,7 @@ Rules:
 3. Do not suppress failing verdicts. Do not add praise unrelated to the criteria.
 4. Derive the overall verdict from the table: `accept` if all criteria pass | `refine` if only minor gaps remain | `reject` if any criterion fails critically.
 
-Output format:
+Return:
 
 | Criterion | Verdict | Gap / Risk | Highest-leverage fix |
 |-----------|---------|------------|----------------------|

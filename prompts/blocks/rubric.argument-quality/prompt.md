@@ -11,9 +11,9 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Does the conclusion actually follow from the argument?
 - Is anything being asserted that should be proven?
 
-Then give:
+Return:
 - overall verdict: sound / needs revision
-- the single highest-leverage fix if revision is needed
+- highest-leverage fix if revision is needed
 
 Argument to evaluate:
 {paste argument or position}

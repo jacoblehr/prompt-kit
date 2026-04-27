@@ -1,6 +1,16 @@
 # rubric.research-quality
 
-Use this checklist after completing an investigation or research pass.
+## Purpose
+Validate that a research pass is rigorous enough to inform a decision or support a position.
+
+## Use when
+After completing an investigation, before using findings to decide or write.
+
+## Expects
+A research summary or set of findings.
+
+## Adds
+Per-criterion judgments that flag source gaps, unsupported conclusions, and missing disconfirmation.
 
 Questions:
 
@@ -12,11 +22,20 @@ Questions:
 - Is the confidence level on each key claim explicit?
 - Would a skeptical expert with opposing priors find this research intellectually honest?
 
-Pairs with: `mode.critique`, `guardrail.uncertainty`, `lens.survivorship-bias`, `lens.base-rate-check`
+## Returns
+- per criterion: yes / partial / no, with one-sentence evidence
+- overall verdict: ready / needs revision
+- highest-leverage fix if revision is needed
+
+## Pairs with
+`mode.critique`, `guardrail.uncertainty`, `guardrail.disconfirming-evidence`
+
+## Avoid when
+The research is not yet complete — finish the investigation first.
 
 ---
 
-Metadata:
+## Metadata
 - type: rubric
 - stage: analyze
 - strength: medium

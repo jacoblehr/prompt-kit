@@ -9,7 +9,8 @@ Requirements:
 - note whether each assumption is explicit or merely implied
 - do not invent evidence that is not present
 
-Return for each:
+Return:
+For each assumption:
 
 - assumption
 - explicit or implied

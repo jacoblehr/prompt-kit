@@ -9,7 +9,7 @@ Before every recursive or iterative step, check ALL of the following conditions 
 3. Stop condition met? → STOP.
 4. Only if all three checks pass → proceed with the next step.
 
-On stopping, always output:
+Return:
 - current depth or iteration: N
 - stopping reason: criteria met | depth exceeded | iterations exceeded
 - final state at stopping point

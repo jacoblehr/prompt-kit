@@ -2,7 +2,8 @@
 
 Extract the highest-value insights from this material.
 
-Return for each insight:
+Return:
+For each insight:
 - key insight
 - why it matters
 - supporting evidence

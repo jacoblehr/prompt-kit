@@ -1270,7 +1270,7 @@ globalThis.SITE_DATA = {
         "extract",
         "insights"
       ],
-      "copy": "Extract the highest-value insights from this material.\n\nReturn for each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\nMy purpose:\n{paste purpose or decision this should inform}\n\nMaterial:\n{paste material}",
+      "copy": "Extract the highest-value insights from this material.\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\nMy purpose:\n{paste purpose or decision this should inform}\n\nMaterial:\n{paste material}",
       "body": [
         [
           "Purpose",
@@ -1346,7 +1346,7 @@ globalThis.SITE_DATA = {
         "assumption",
         "audit"
       ],
-      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn for each:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\nPlan, decision, or argument:\n{paste plan, decision, argument, or recommendation}",
+      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\nPlan, decision, or argument:\n{paste plan, decision, argument, or recommendation}",
       "body": [
         [
           "Purpose",
@@ -1418,7 +1418,7 @@ globalThis.SITE_DATA = {
         "bounded",
         "recursion"
       ],
-      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached? → STOP.\n2. Iteration limit reached? → STOP.\n3. Stop condition met? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nOn stopping, always output:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\nrecursion depth: {max_depth}\ncycles: {max_iterations}\nstop condition: {stop_condition}",
+      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached? → STOP.\n2. Iteration limit reached? → STOP.\n3. Stop condition met? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\nrecursion depth: {max_depth}\ncycles: {max_iterations}\nstop condition: {stop_condition}",
       "body": [
         [
           "Purpose",
@@ -1491,7 +1491,7 @@ globalThis.SITE_DATA = {
         "branch",
         "prune"
       ],
-      "copy": "Apply BRANCH + PRUNE.\n\nRules:\n1. Generate exactly {branch_count} distinct approaches. Each must differ in a meaningful way — different method, assumption, or framing. Rewording the same approach is not a distinct branch.\n2. For each branch: provide a short label, a 2–3 sentence rationale, and a one-line assessment against the selection criterion.\n3. Select the strongest branch. State the verdict explicitly in one sentence.\n4. Prune all other branches. For each pruned branch, briefly explain why it was eliminated.\n5. Continue only on the selected branch. Do not reference or merge pruned branches downstream.\n\nConstraints:\n- Exactly {branch_count} branches. No more, no fewer.\n- Pruning is mandatory. You must end this block with exactly one active branch.\n- Branches must be genuinely distinct, not paraphrases.\n\nOutput format:\n\n**Branch A: [label]**\nRationale: ...\nAssessment: ...\n\n**Branch B: [label]**\nRationale: ...\nAssessment: ...\n\n**Selected: Branch [X]** — [one sentence verdict]\n**Pruned:** Branch [Y] — [reason] | Branch [Z] — [reason]\n\n**Continuing on: Branch [X]**\n\nbranches: {branch_count}\nselection_criterion: {selection_criterion}\n\nProblem or task:\n{paste problem or task}",
+      "copy": "Apply BRANCH + PRUNE.\n\nRules:\n1. Generate exactly {branch_count} distinct approaches. Each must differ in a meaningful way — different method, assumption, or framing. Rewording the same approach is not a distinct branch.\n2. For each branch: provide a short label, a 2–3 sentence rationale, and a one-line assessment against the selection criterion.\n3. Select the strongest branch. State the verdict explicitly in one sentence.\n4. Prune all other branches. For each pruned branch, briefly explain why it was eliminated.\n5. Continue only on the selected branch. Do not reference or merge pruned branches downstream.\n\nConstraints:\n- Exactly {branch_count} branches. No more, no fewer.\n- Pruning is mandatory. You must end this block with exactly one active branch.\n- Branches must be genuinely distinct, not paraphrases.\n\nReturn:\n\n**Branch A: [label]**\nRationale: ...\nAssessment: ...\n\n**Branch B: [label]**\nRationale: ...\nAssessment: ...\n\n**Selected: Branch [X]** — [one sentence verdict]\n**Pruned:** Branch [Y] — [reason] | Branch [Z] — [reason]\n\n**Continuing on: Branch [X]**\n\nbranches: {branch_count}\nselection_criterion: {selection_criterion}\n\nProblem or task:\n{paste problem or task}",
       "body": [
         [
           "Purpose",
@@ -1564,7 +1564,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "decompose"
       ],
-      "copy": "Apply RECURSIVE DECOMPOSITION.\n\nRules:\n1. Inspect the problem. If it is directly solvable in one step, solve it and stop — do not decompose.\n2. Otherwise, break it into at most {max_subproblems} distinct subproblems.\n3. For each subproblem, repeat rule 1. Stop recursing when directly solvable or the depth limit is reached.\n4. When the limit is reached, solve each remaining subproblem directly — even if imperfect.\n5. After all branches are resolved, synthesize the leaf answers into a single final answer.\n\nConstraints:\n- Never generate more than {max_subproblems} subproblems at any one level.\n- Each subproblem must be strictly smaller in scope than its parent.\n- Do not merge subproblems at the same level — keep them independent.\n- Synthesis happens exactly once, at the end.\n\nOutput format:\n- Use a numbered tree: 1, 1.1, 1.2, 1.1.1, etc.\n- Each node: `[subproblem statement] → [direct answer | decomposed further]`\n- End with a `## Synthesis` section that assembles the leaf answers.\n\ndepth limit: {max_depth}\nsubproblem limit: {max_subproblems}\n\nProblem:\n{paste problem or task}",
+      "copy": "Apply RECURSIVE DECOMPOSITION.\n\nRules:\n1. Inspect the problem. If it is directly solvable in one step, solve it and stop — do not decompose.\n2. Otherwise, break it into at most {max_subproblems} distinct subproblems.\n3. For each subproblem, repeat rule 1. Stop recursing when directly solvable or the depth limit is reached.\n4. When the limit is reached, solve each remaining subproblem directly — even if imperfect.\n5. After all branches are resolved, synthesize the leaf answers into a single final answer.\n\nConstraints:\n- Never generate more than {max_subproblems} subproblems at any one level.\n- Each subproblem must be strictly smaller in scope than its parent.\n- Do not merge subproblems at the same level — keep them independent.\n- Synthesis happens exactly once, at the end.\n\nReturn:\n- Use a numbered tree: 1, 1.1, 1.2, 1.1.1, etc.\n- Each node: `[subproblem statement] → [direct answer | decomposed further]`\n- End with a `## Synthesis` section that assembles the leaf answers.\n\ndepth limit: {max_depth}\nsubproblem limit: {max_subproblems}\n\nProblem:\n{paste problem or task}",
       "body": [
         [
           "Purpose",
@@ -1638,7 +1638,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "evaluate"
       ],
-      "copy": "Apply EVALUATION.\n\nRules:\n1. For each criterion, assess the candidate output: `pass` | `partial` | `fail`.\n2. For every `partial` or `fail`: state the specific gap, the risk it introduces, and the single highest-leverage fix.\n3. Do not suppress failing verdicts. Do not add praise unrelated to the criteria.\n4. Derive the overall verdict from the table: `accept` if all criteria pass | `refine` if only minor gaps remain | `reject` if any criterion fails critically.\n\nOutput format:\n\n| Criterion | Verdict | Gap / Risk | Highest-leverage fix |\n|-----------|---------|------------|----------------------|\n| ...       | ...     | ...        | ...                  |\n\nOverall verdict: [accept | refine | reject]\nRationale: [one sentence]\n\ncriteria: {criteria}\n\nCandidate output:\n{paste candidate output}",
+      "copy": "Apply EVALUATION.\n\nRules:\n1. For each criterion, assess the candidate output: `pass` | `partial` | `fail`.\n2. For every `partial` or `fail`: state the specific gap, the risk it introduces, and the single highest-leverage fix.\n3. Do not suppress failing verdicts. Do not add praise unrelated to the criteria.\n4. Derive the overall verdict from the table: `accept` if all criteria pass | `refine` if only minor gaps remain | `reject` if any criterion fails critically.\n\nReturn:\n\n| Criterion | Verdict | Gap / Risk | Highest-leverage fix |\n|-----------|---------|------------|----------------------|\n| ...       | ...     | ...        | ...                  |\n\nOverall verdict: [accept | refine | reject]\nRationale: [one sentence]\n\ncriteria: {criteria}\n\nCandidate output:\n{paste candidate output}",
       "body": [
         [
           "Purpose",
@@ -1710,7 +1710,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "refine"
       ],
-      "copy": "Apply ITERATIVE REFINEMENT.\n\nRules:\n1. Evaluate the current output against each criterion. Identify every gap.\n2. Apply fixes in order of highest leverage first. Only make changes tied to a specific criterion gap.\n3. After applying fixes, check: do all criteria pass? If yes, stop — return the final output immediately.\n4. If gaps remain and iterations allow, repeat from rule 1.\n5. After the allowed rounds, stop regardless of remaining gaps.\n\nConstraints:\n- Return the final output only. Do not show per-iteration reasoning unless explicitly requested.\n- Each iteration must address at least one concrete gap. If no gaps are found, stop early.\n- Do not make changes that are not tied to a failing criterion.\n\nOutput:\n- final refined output\n- rounds: N of {iteration_limit}\n- stopping reason: `criteria_met` | `limit_reached`\n\nrounds: {iteration_limit}\ncriteria: {criteria}\n\nOutput to refine:\n{paste initial output}",
+      "copy": "Apply ITERATIVE REFINEMENT.\n\nRules:\n1. Evaluate the current output against each criterion. Identify every gap.\n2. Apply fixes in order of highest leverage first. Only make changes tied to a specific criterion gap.\n3. After applying fixes, check: do all criteria pass? If yes, stop — return the final output immediately.\n4. If gaps remain and iterations allow, repeat from rule 1.\n5. After the allowed rounds, stop regardless of remaining gaps.\n\nConstraints:\n- Return the final output only. Do not show per-iteration reasoning unless explicitly requested.\n- Each iteration must address at least one concrete gap. If no gaps are found, stop early.\n- Do not make changes that are not tied to a failing criterion.\n\nReturn:\n- final refined output\n- rounds: N of {iteration_limit}\n- stopping reason: `criteria_met` | `limit_reached`\n\nrounds: {iteration_limit}\ncriteria: {criteria}\n\nOutput to refine:\n{paste initial output}",
       "body": [
         [
           "Purpose",
@@ -1784,7 +1784,7 @@ globalThis.SITE_DATA = {
         "incident",
         "postmortem"
       ],
-      "copy": "Facilitate a structured post-mortem for this incident.\n\nIncident summary: {incident_summary}\nImpact: {impact}\nDuration: {duration}\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.",
+      "copy": "Facilitate a structured post-mortem for this incident.\n\nIncident summary: {incident_summary}\nImpact: {impact}\nDuration: {duration}\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure",
       "body": [
         [
           "Purpose",
@@ -1904,7 +1904,7 @@ globalThis.SITE_DATA = {
       "stage": "decide",
       "strength": "light",
       "contract": {
-        "useWhen": "Use this checklist after a decision draft.",
+        "useWhen": "## Purpose",
         "returns": [
           "Is the actual choice explicit?",
           "Are the criteria visible?",
@@ -1912,11 +1912,6 @@ globalThis.SITE_DATA = {
           "Is uncertainty acknowledged?",
           "Is there a concrete next action?",
           "Would future-you understand why this decision was made?"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "schema.decision-memo",
-          "frame.success-criteria"
         ]
       },
       "key": "rubric.decision-quality",
@@ -1924,25 +1919,21 @@ globalThis.SITE_DATA = {
         "rubric.decision-quality"
       ],
       "title": "rubric.decision-quality",
-      "summary": "Use this checklist after a decision draft.",
+      "summary": "## Purpose.",
       "tags": [
         "rubric",
         "decision",
         "quality"
       ],
-      "copy": "rubric.decision-quality\n\nUse this checklist after a decision draft.\n\n- Is the actual choice explicit?\n- Are the criteria visible?\n- Are tradeoffs named rather than hidden?\n- Is uncertainty acknowledged?\n- Is there a concrete next action?\n- Would future-you understand why this decision was made?",
+      "copy": "rubric.decision-quality\n\n## Purpose\n\n- Is the actual choice explicit?\n- Are the criteria visible?\n- Are tradeoffs named rather than hidden?\n- Is uncertainty acknowledged?\n- Is there a concrete next action?\n- Would future-you understand why this decision was made?",
       "body": [
         [
           "Use when",
-          "Use this checklist after a decision draft."
+          "## Purpose"
         ],
         [
           "Questions",
           "Is the actual choice explicit?, Are the criteria visible?, Are tradeoffs named rather than hidden?, Is uncertainty acknowledged?, Is there a concrete next action?, Would future-you understand why this decision was made?"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, schema.decision-memo, frame.success-criteria"
         ]
       ],
       "family": "",
@@ -1958,7 +1949,7 @@ globalThis.SITE_DATA = {
       "stage": "critique",
       "strength": "medium",
       "contract": {
-        "useWhen": "Use this checklist after drafting or critiquing an argument.",
+        "useWhen": "## Purpose",
         "returns": [
           "Is the core claim stated in one sentence?",
           "Is the evidence proportionate to the strength of the claim?",
@@ -1966,11 +1957,6 @@ globalThis.SITE_DATA = {
           "Is the strongest objection acknowledged and addressed?",
           "Does the conclusion actually follow from the argument?",
           "Is anything being asserted that should be proven?"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "strategy.steelman",
-          "frame.critique-argument"
         ]
       },
       "key": "rubric.argument-quality",
@@ -1978,25 +1964,21 @@ globalThis.SITE_DATA = {
         "rubric.argument-quality"
       ],
       "title": "rubric.argument-quality",
-      "summary": "Use this checklist after drafting or critiquing an argument.",
+      "summary": "## Purpose.",
       "tags": [
         "rubric",
         "argument",
         "quality"
       ],
-      "copy": "rubric.argument-quality\n\nUse this checklist after drafting or critiquing an argument.\n\n- Is the core claim stated in one sentence?\n- Is the evidence proportionate to the strength of the claim?\n- Are the key premises visible?\n- Is the strongest objection acknowledged and addressed?\n- Does the conclusion actually follow from the argument?\n- Is anything being asserted that should be proven?",
+      "copy": "rubric.argument-quality\n\n## Purpose\n\n- Is the core claim stated in one sentence?\n- Is the evidence proportionate to the strength of the claim?\n- Are the key premises visible?\n- Is the strongest objection acknowledged and addressed?\n- Does the conclusion actually follow from the argument?\n- Is anything being asserted that should be proven?",
       "body": [
         [
           "Use when",
-          "Use this checklist after drafting or critiquing an argument."
+          "## Purpose"
         ],
         [
           "Questions",
           "Is the core claim stated in one sentence?, Is the evidence proportionate to the strength of the claim?, Are the key premises visible?, Is the strongest objection acknowledged and addressed?, Does the conclusion actually follow from the argument?, Is anything being asserted that should be proven?"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, strategy.steelman, frame.critique-argument"
         ]
       ],
       "family": "",
@@ -2012,19 +1994,14 @@ globalThis.SITE_DATA = {
       "stage": "refine",
       "strength": "light",
       "contract": {
-        "useWhen": "Use this checklist after a plan.",
+        "useWhen": "## Purpose",
         "returns": [
           "Are the steps ordered clearly?",
           "Are dependencies visible?",
           "Are likely blockers named?",
           "Is the first action concrete enough to do now?",
           "Does the plan avoid unnecessary complexity?",
-          "Is there a check point after early execution?"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.plan-next-actions",
-          "strategy.premortem"
+          "Is there a checkpoint after early execution?"
         ]
       },
       "key": "rubric.plan-quality",
@@ -2032,25 +2009,21 @@ globalThis.SITE_DATA = {
         "rubric.plan-quality"
       ],
       "title": "rubric.plan-quality",
-      "summary": "Use this checklist after a plan.",
+      "summary": "## Purpose.",
       "tags": [
         "rubric",
         "plan",
         "quality"
       ],
-      "copy": "rubric.plan-quality\n\nUse this checklist after a plan.\n\n- Are the steps ordered clearly?\n- Are dependencies visible?\n- Are likely blockers named?\n- Is the first action concrete enough to do now?\n- Does the plan avoid unnecessary complexity?\n- Is there a check point after early execution?",
+      "copy": "rubric.plan-quality\n\n## Purpose\n\n- Are the steps ordered clearly?\n- Are dependencies visible?\n- Are likely blockers named?\n- Is the first action concrete enough to do now?\n- Does the plan avoid unnecessary complexity?\n- Is there a checkpoint after early execution?",
       "body": [
         [
           "Use when",
-          "Use this checklist after a plan."
+          "## Purpose"
         ],
         [
           "Questions",
-          "Are the steps ordered clearly?, Are dependencies visible?, Are likely blockers named?, Is the first action concrete enough to do now?, Does the plan avoid unnecessary complexity?, Is there a check point after early execution?"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.plan-next-actions, strategy.premortem"
+          "Are the steps ordered clearly?, Are dependencies visible?, Are likely blockers named?, Is the first action concrete enough to do now?, Does the plan avoid unnecessary complexity?, Is there a checkpoint after early execution?"
         ]
       ],
       "family": "",
@@ -2066,7 +2039,7 @@ globalThis.SITE_DATA = {
       "stage": "analyze",
       "strength": "medium",
       "contract": {
-        "useWhen": "Use this checklist after completing an investigation or research pass.",
+        "useWhen": "## Purpose",
         "returns": [
           "Is the question being answered actually the question that matters for the decision?",
           "Are the sources capable of answering this question, or is there a gap?",
@@ -2075,12 +2048,6 @@ globalThis.SITE_DATA = {
           "Are the conclusions limited to what the evidence actually supports?",
           "Is the confidence level on each key claim explicit?",
           "Would a skeptical expert with opposing priors find this research intellectually honest?"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.uncertainty",
-          "lens.survivorship-bias",
-          "lens.base-rate-check"
         ]
       },
       "key": "rubric.research-quality",
@@ -2088,25 +2055,21 @@ globalThis.SITE_DATA = {
         "rubric.research-quality"
       ],
       "title": "rubric.research-quality",
-      "summary": "Use this checklist after completing an investigation or research pass.",
+      "summary": "## Purpose.",
       "tags": [
         "rubric",
         "research",
         "quality"
       ],
-      "copy": "rubric.research-quality\n\nUse this checklist after completing an investigation or research pass.\n\n- Is the question being answered actually the question that matters for the decision?\n- Are the sources capable of answering this question, or is there a gap?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are the strongest counter-arguments represented fairly?\n- Are the conclusions limited to what the evidence actually supports?\n- Is the confidence level on each key claim explicit?\n- Would a skeptical expert with opposing priors find this research intellectually honest?",
+      "copy": "rubric.research-quality\n\n## Purpose\n\n- Is the question being answered actually the question that matters for the decision?\n- Are the sources capable of answering this question, or is there a gap?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are the strongest counter-arguments represented fairly?\n- Are the conclusions limited to what the evidence actually supports?\n- Is the confidence level on each key claim explicit?\n- Would a skeptical expert with opposing priors find this research intellectually honest?",
       "body": [
         [
           "Use when",
-          "Use this checklist after completing an investigation or research pass."
+          "## Purpose"
         ],
         [
           "Questions",
           "Is the question being answered actually the question that matters for the decision?, Are the sources capable of answering this question, or is there a gap?, Has disconfirming evidence been actively sought, not just noted when encountered?, Are the strongest counter-arguments represented fairly?, Are the conclusions limited to what the evidence actually supports?, Is the confidence level on each key claim explicit?, Would a skeptical expert with opposing priors find this research intellectually honest?"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.uncertainty, lens.survivorship-bias, lens.base-rate-check"
         ]
       ],
       "family": "",
@@ -2122,7 +2085,7 @@ globalThis.SITE_DATA = {
       "stage": "refine",
       "strength": "light",
       "contract": {
-        "useWhen": "Use this checklist after drafting or rewriting.",
+        "useWhen": "## Purpose",
         "returns": [
           "Is the main point clear early?",
           "Is anything redundant?",
@@ -2130,11 +2093,6 @@ globalThis.SITE_DATA = {
           "Is the structure easy to follow?",
           "Does each paragraph earn its place?",
           "Is the next action or takeaway obvious?"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.rewrite-for-clarity",
-          "frame.critique-argument"
         ]
       },
       "key": "rubric.writing-quality",
@@ -2142,25 +2100,21 @@ globalThis.SITE_DATA = {
         "rubric.writing-quality"
       ],
       "title": "rubric.writing-quality",
-      "summary": "Use this checklist after drafting or rewriting.",
+      "summary": "## Purpose.",
       "tags": [
         "rubric",
         "writing",
         "quality"
       ],
-      "copy": "rubric.writing-quality\n\nUse this checklist after drafting or rewriting.\n\n- Is the main point clear early?\n- Is anything redundant?\n- Are claims stronger than the evidence supports?\n- Is the structure easy to follow?\n- Does each paragraph earn its place?\n- Is the next action or takeaway obvious?",
+      "copy": "rubric.writing-quality\n\n## Purpose\n\n- Is the main point clear early?\n- Is anything redundant?\n- Are claims stronger than the evidence supports?\n- Is the structure easy to follow?\n- Does each paragraph earn its place?\n- Is the next action or takeaway obvious?",
       "body": [
         [
           "Use when",
-          "Use this checklist after drafting or rewriting."
+          "## Purpose"
         ],
         [
           "Questions",
           "Is the main point clear early?, Is anything redundant?, Are claims stronger than the evidence supports?, Is the structure easy to follow?, Does each paragraph earn its place?, Is the next action or takeaway obvious?"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.rewrite-for-clarity, frame.critique-argument"
         ]
       ],
       "family": "",
@@ -2178,7 +2132,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "stage": "frame",
       "outputKind": "clarity",
-      "effort": "standard",
+      "effort": "deep",
       "stakes": "low",
       "summary": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "tags": [
@@ -2195,6 +2149,7 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`mode.explore`",
           "`frame.task`",
+          "`strategy.problem-split`",
           "`frame.scope`",
           "`frame.success-criteria`",
           "`guardrail.uncertainty`"
@@ -2223,7 +2178,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
@@ -2235,7 +2190,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `frame.scope` -> `frame.success-criteria` -> `guardrail.uncertainty`"
+          "`mode.explore` -> `frame.task` -> `strategy.problem-split` -> `frame.scope` -> `frame.success-criteria` -> `guardrail.uncertainty`"
         ]
       ],
       "sourcePath": "stacks/frame-problem.md"

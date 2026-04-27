@@ -11,9 +11,9 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Does each paragraph earn its place?
 - Is the next action or takeaway obvious?
 
-Then give:
+Return:
 - overall verdict: ready / needs revision
-- the single highest-leverage fix if revision is needed
+- highest-leverage fix if revision is needed
 
 Writing to evaluate:
 {paste draft}

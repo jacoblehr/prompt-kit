@@ -15,7 +15,7 @@ Constraints:
 - Do not merge subproblems at the same level — keep them independent.
 - Synthesis happens exactly once, at the end.
 
-Output format:
+Return:
 - Use a numbered tree: 1, 1.1, 1.2, 1.1.1, etc.
 - Each node: `[subproblem statement] → [direct answer | decomposed further]`
 - End with a `## Synthesis` section that assembles the leaf answers.

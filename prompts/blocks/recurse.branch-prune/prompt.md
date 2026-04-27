@@ -14,7 +14,7 @@ Constraints:
 - Pruning is mandatory. You must end this block with exactly one active branch.
 - Branches must be genuinely distinct, not paraphrases.
 
-Output format:
+Return:
 
 **Branch A: [label]**
 Rationale: ...
