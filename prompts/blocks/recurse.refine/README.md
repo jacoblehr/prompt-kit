@@ -16,7 +16,7 @@ A directive to critique against criteria each round, apply only fixes tied to sp
 
 ## Returns
 - final refined output only (no intermediate reasoning unless requested)
-- iteration count: N of {iteration_limit}
+- rounds: N of {iteration_limit}
 - stopping reason: `criteria_met` | `limit_reached`
 
 ## Pairs with

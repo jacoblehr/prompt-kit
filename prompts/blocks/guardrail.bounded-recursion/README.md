@@ -16,7 +16,7 @@ A directive to check all stopping conditions before every recursive or iterative
 
 ## Returns
 - current depth or iteration at stopping point
-- stopping_reason: `condition_met` | `max_depth_reached` | `max_iterations_reached`
+- stopping reason: `criteria met` | `depth exceeded` | `iterations exceeded`
 - final state at stopping point
 
 ## Pairs with
@@ -36,7 +36,7 @@ Used alone without a recursive block — this is a guardrail, not a standalone r
 
 ## Guarantees
 - no recursive step proceeds without checking all three stopping conditions first
-- stopping reason is always explicit and machine-readable
+- stopping reason is always explicit
 - the stopping check is a pre-condition, not a post-condition
 
 ## Anti-patterns
