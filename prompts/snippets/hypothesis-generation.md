@@ -5,6 +5,8 @@ Use when you have a question or problem and need to generate competing explanati
 ```text
 Generate a set of competing hypotheses to explain or address this.
 
+Before generating, identify the category of problem (causal, descriptive, predictive, or normative) — this drives what makes a hypothesis falsifiable.
+
 Requirements:
 - produce at least 4–6 distinct hypotheses, not variations of the same idea
 - span different levels of explanation (proximate, structural, behavioural)

@@ -5,12 +5,16 @@ Use when you need a systematic way to localize a bug or failure.
 ```text
 Debug this systematically.
 
-Return:
+Before listing steps, identify:
+- bug category (logic error / state corruption / integration failure / race condition / configuration / other)
+- the smallest scope that could contain the failure
+
+Then return:
 - reproduction steps
 - observations
-- hypotheses
-- experiments
-- localization
+- hypotheses (ranked by prior probability)
+- experiments (one per hypothesis — the cheapest test that would rule it in or out)
+- localization (the narrowest failing unit)
 - fix
 - regression test
 

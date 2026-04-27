@@ -11,10 +11,11 @@ Requirements:
 - remove ambiguity and redundancy
 - add only the minimum useful constraints
 - keep it short unless detail clearly improves results
+- fix structural problems, not just style — if the task definition is weak, rewrite it
 
 Return:
 - revised prompt
-- short note on what changed and why
+- short note on what changed and why (structural change vs style change)
 
 Desired task or output:
 {paste the job this prompt should do}

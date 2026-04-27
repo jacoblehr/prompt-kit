@@ -6,6 +6,123 @@ Date: 2026-04-27
 
 ---
 
+## Prompt quality review — 2026-04-27
+
+Changes made during the prompt quality and research-grounded improvement pass.
+Ordered by impact: High first, then Medium.
+
+---
+
+### build-a-system-prompt.md — missing frame.prompt-compare in block list
+
+**Asset:** `stacks/build-a-system-prompt.md`
+**Issue:** Composition notes stated "The revised prompt is always compared to the original so regressions are visible" but `frame.prompt-compare` was absent from the Suggested blocks list. The notes described a step that was not available to the user.
+**Change:** Added `frame.prompt-compare` as block 6 in the Suggested blocks list.
+**Research basis:** Self-consistency (Wang et al. 2023) — comparing multiple prompt versions surfaces regressions that single-pass revision misses; the block list must include every step the composition notes claim happens.
+**Impact:** High
+
+---
+
+### build-a-system-prompt.md — dead block reference
+
+**Asset:** `stacks/build-a-system-prompt.md`
+**Issue:** Common swaps referenced `frame.frame.task` — a block ID that does not exist. Correct ID is `frame.task`.
+**Change:** Updated `frame.frame.task` to `frame.task`.
+**Research basis:** Structured separability — dead references silently break the composition chain.
+**Impact:** High
+
+---
+
+### prompt-repair.md — dead block reference
+
+**Asset:** `stacks/prompt-repair.md`
+**Issue:** Common swaps referenced `frame.frame.task` — same dead ID.
+**Change:** Updated `frame.frame.task` to `frame.task`.
+**Research basis:** Structured separability — same rationale as build-a-system-prompt.md.
+**Impact:** High
+
+---
+
+### rubric.* — missing prompt.md (all 8 rubric blocks)
+
+**Assets:** `prompts/blocks/rubric.argument-quality/prompt.md`, `rubric.decision-quality/prompt.md`, `rubric.plan-quality/prompt.md`, `rubric.prompt-quality/prompt.md`, `rubric.reflection-quality/prompt.md`, `rubric.research-quality/prompt.md`, `rubric.strategy-quality/prompt.md`, `rubric.writing-quality/prompt.md` (all created)
+**Issue:** Understandable in isolation violated. All rubric blocks were used as terminal quality gates in stacks (e.g. `rubric.prompt-quality` appears in `prompt-repair` and `prompt-engineering-sprint`) but had no standalone prompt.md. Users had to locate and transcribe the checklist from the README manually, breaking the uniform block pattern established for mode and strategy blocks.
+**Change:** Created prompt.md for all 8 rubric blocks. Each prompts the model to evaluate the artifact against the checklist with a per-criterion yes/partial/no verdict, then produce an overall verdict and the single highest-leverage fix.
+**Research basis:** Chain-of-Draft (Xu et al. 2024) — concise per-criterion verdicts rather than open-ended critique reduce token cost while maintaining evaluation quality. Negative prompting / guardrails — the verdict structure ("ready / needs revision") provides an explicit exit condition consistent with mode block Exit when clauses.
+**Impact:** High
+
+---
+
+### debugger-loop.md — missing step-back directive
+
+**Asset:** `prompts/concepts/computer-science/debugger-loop.md`
+**Issue:** The prompt jumped directly to listing reproduction steps, hypotheses, and experiments without first identifying the bug category or minimum containing scope. Debugging without category identification produces undifferentiated hypothesis lists where null hypotheses (logic error, race condition, configuration) are treated equally regardless of evidence.
+**Change:** Added a step-back directive: identify bug category and minimum containing scope before listing investigation steps. Also added ranked-by-prior-probability qualifier to hypotheses, and cheapest-test qualifier to experiments.
+**Research basis:** Step-back prompting (Zheng et al., Google DeepMind 2023) — asking the model to identify high-level principles or categories before tackling specifics improves systematic reasoning by 3–10% on STEM tasks. The same forcing function applies here: category identification before hypothesis listing constrains the search space.
+**Impact:** Medium
+
+---
+
+### mode.decide/prompt.md — decision-first ordering
+
+**Asset:** `prompts/blocks/mode.decide/prompt.md`
+**Issue:** The original prompt asked the model to "compare options then choose" — a presentation-then-conclusion ordering. Research on AI decision quality shows that open comparison before commitment produces verbose justification of the winning option rather than honest comparison, because the model anticipates the conclusion while still "comparing."
+**Change:** Restructured to decision-first ordering: state best option first, then justify. Added explicit instruction to show key tradeoff.
+**Research basis:** Chain-of-Draft (Xu et al. 2024) — decision-first with minimal reasoning steps produces sharper, less post-hoc-rationalized outputs than compare-then-conclude framing. Cognitive bias literature (Kahneman 2011) — conclusion-first reduces motivated reasoning in the justification pass.
+**Impact:** Medium
+
+---
+
+### guardrail.uncertainty/prompt.md — absent/mixed evidence distinction
+
+**Asset:** `prompts/blocks/guardrail.uncertainty/prompt.md`
+**Issue:** The prompt asked to "distinguish assumptions from unknowns" but conflated two epistemically distinct states: "I don't know" (evidence absent) and "evidence is mixed" (evidence conflicting). Models routinely treat these as the same uncertainty class, producing misleadingly uniform confidence levels.
+**Change:** Added explicit requirement to distinguish "absent evidence" from "conflicting evidence" as a separate uncertainty category.
+**Research basis:** Metacognitive prompting (Yang et al. 2023) — explicit epistemic category labelling forces the model to assess the source of its uncertainty rather than just reporting a confidence level. This distinction is standard in scientific epistemology (Knightian uncertainty vs. risk).
+**Impact:** Medium
+
+---
+
+### compare-options.md — implicit criteria handling
+
+**Asset:** `prompts/snippets/compare-options.md`
+**Issue:** The "criteria fit" column in the decision table was undefined when no explicit criteria were provided. The model would silently invent criteria, making the comparison unauditable.
+**Change:** Added instruction: if explicit criteria are provided, score against them; if not, name the implicit criterion being used for each column.
+**Research basis:** Declarative decomposition (DSPy-style) — every inference the model makes should be visible in the output; implicit criteria masquerading as objective scoring is a hidden assumption. Making criteria explicit surfaces them for challenge.
+**Impact:** Medium
+
+---
+
+### strategy.premortem/prompt.md — strengthen failure-as-fact framing
+
+**Asset:** `prompts/blocks/strategy.premortem/prompt.md`
+**Issue:** "Assume this plan failed" is a conditional that leaves the model room to hedge ("well, it might fail if..."). Premortem's psychological mechanism depends on treating failure as a known fact, not a hypothesis, to unlock specific causal chains rather than generic risk lists.
+**Change:** Rewrote the framing: "It is one year from now. This plan failed. That is the starting fact — do not treat it as a hypothesis."
+**Research basis:** Step-back prompting (Zheng et al. 2023) — the premortem move is literally a step-back: reason about the failure class before analyzing the specific plan. Klein (2007) original premortem research shows that the past-tense "it has already failed" framing produces significantly more specific and critical failure narratives than the conditional framing.
+**Impact:** Medium
+
+---
+
+### hypothesis-generation.md — problem category step-back
+
+**Asset:** `prompts/snippets/hypothesis-generation.md`
+**Issue:** Hypothesis generation without first identifying problem category (causal, descriptive, predictive, normative) produces a generic list. The type of problem determines what makes a hypothesis falsifiable and what evidence would confirm or disconfirm it.
+**Change:** Added step-back directive: identify problem category before generating hypotheses.
+**Research basis:** Step-back prompting (Zheng et al. 2023) — principle/category identification before specific analysis. Popper's falsifiability criterion — the problem category determines the testability structure of valid hypotheses.
+**Impact:** Medium
+
+---
+
+### prompt-rewrite.md — structural vs style change distinction
+
+**Asset:** `prompts/snippets/prompt-rewrite.md`
+**Issue:** The most common prompt rewriting failure is changing style (tone, phrasing) while leaving structural problems intact. The original prompt's note "what changed and why" did not require the model to categorize the type of change, allowing cosmetic rewrites to pass as substantive ones.
+**Change:** Added requirement: fix structural problems, not just style. Required the return note to classify the change as "structural" or "style."
+**Research basis:** Negative prompting / guardrails — explicit suppression of surface-level rewrites. Anthropic prompt engineering guidance (2024) identifies "polishing the wrong prompt" as the most common single-pass improvement failure.
+**Impact:** Medium
+
+---
+
 ## guardrail.assumption-audit — folder rename
 
 **Asset:** `prompts/blocks/assumption.audit/` → `prompts/blocks/guardrail.assumption-audit/`

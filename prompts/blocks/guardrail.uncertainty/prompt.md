@@ -6,6 +6,7 @@ Requirements:
 
 - separate facts from interpretation
 - distinguish assumptions from unknowns
+- distinguish "I don't know" (absent evidence) from "evidence is mixed" (conflicting evidence)
 - express confidence in plain language
 - name the single update that would most change the answer
 

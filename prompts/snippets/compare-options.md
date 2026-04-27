@@ -5,9 +5,12 @@ Use when you already have options and need a structured comparison.
 ```text
 Compare these options in a compact decision table.
 
+If explicit criteria are provided, score each option against them.
+If no criteria are provided, name the implicit criterion you are using for each column.
+
 Return columns:
 - option
-- criteria fit
+- criteria fit (state the criterion used)
 - strengths
 - weaknesses
 - best use case
@@ -18,7 +21,7 @@ Context:
 {paste context}
 
 Criteria:
-{paste criteria}
+{paste criteria, or leave blank}
 
 Options:
 {paste options}

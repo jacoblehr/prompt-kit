@@ -15,6 +15,7 @@ Suggested blocks:
 3. `frame.prompt-chain-design`
 4. `frame.prompt-decompose`
 5. `frame.prompt-rewrite`
+6. `frame.prompt-compare`
 
 Expected outcome:
 
@@ -38,6 +39,6 @@ Domain tags:
 
 **Why this order works:** Task clarity first — a system prompt without a clear job produces inconsistent, overfitted behaviour. Jobs-to-be-done maps the real hiring context: what will someone use this assistant to accomplish and in what situations? Prompt-chain design follows for multi-step tasks. Prompt-decompose takes any draft apart to expose structural weaknesses before rewriting. The revised prompt is always compared to the original so regressions are visible.
 
-**Common swaps:** Swap `frame.prompt-chain-design` for `frame.prompt-critique` if there is already a draft and the job is iterating rather than designing from scratch. Swap `lens.jobs-to-be-done` for `frame.frame.task` for simpler, single-job assistants.
+**Common swaps:** Swap `frame.prompt-chain-design` for `frame.prompt-critique` if there is already a draft and the job is iterating rather than designing from scratch. Swap `lens.jobs-to-be-done` for `frame.task` for simpler, single-job assistants.
 
 **Common failure mode:** Designing the prompt before the job is clear. System prompts designed around a fuzzy task become catch-all prompts that handle nothing well.
