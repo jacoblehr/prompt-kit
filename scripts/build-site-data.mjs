@@ -668,78 +668,47 @@ function stackEffortFromCount(count) {
 
 const STACK_META = {
   // Thinking & Framing
-  "fast-ideation": { family: "Thinking & Framing", stage: "explore", outputKind: "options", stakes: "low" },
-  "frame-the-ask": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
-  "orient-before-acting": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
-  "clarify-the-real-job": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
-  "problem-framing": { family: "Thinking & Framing", stage: "frame", outputKind: "clarity", stakes: "low" },
-  "unblock-stuck-problem": { family: "Thinking & Framing", stage: "explore", outputKind: "options", stakes: "low" },
-  "scenario-futures": { family: "Thinking & Framing", stage: "explore", outputKind: "options", stakes: "medium" },
+  "frame-problem":    { family: "Thinking & Framing", stage: "frame",   outputKind: "clarity",       stakes: "low" },
+  "branch-select":    { family: "Thinking & Framing", stage: "explore", outputKind: "options",        stakes: "medium" },
+  "decompose-solve":  { family: "Thinking & Framing", stage: "analyze", outputKind: "plan",           stakes: "medium" },
+  "refine-loop":      { family: "Thinking & Framing", stage: "refine",  outputKind: "plan",           stakes: "medium" },
   // Deciding & Prioritising
+  "decide":           { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision",   stakes: "high" },
+  "review-decision":  { family: "Deciding & Prioritising", stage: "conclude", outputKind: "retrospective", stakes: "medium" },
+  "risk-decision":    { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision",   stakes: "high" },
   "explore-vs-exploit": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
-  "de-risk-with-test": { family: "Deciding & Prioritising", stage: "decide", outputKind: "plan", stakes: "medium" },
-  "prioritize-portfolio": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
-  "full-decision-process": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
-  "explore-to-decision": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "medium" },
-  "prioritise-under-constraints": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
-  "risk-informed-decision": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
-  "forecast-and-decide": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
-  "evidence-to-decision": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "prioritize":       { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision",   stakes: "high" },
   // Research & Analysis
-  "map-adoption-blockers": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "medium" },
-  "source-to-brief": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "medium" },
-  "learn-from-content": { family: "Research & Analysis", stage: "conclude", outputKind: "summary", stakes: "medium" },
-  "deep-research-synthesis": { family: "Research & Analysis", stage: "analyze", outputKind: "summary", stakes: "medium" },
-  "causal-inference": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "high" },
-  "data-to-story": { family: "Research & Analysis", stage: "conclude", outputKind: "draft", stakes: "medium" },
-  "design-a-study": { family: "Research & Analysis", stage: "frame", outputKind: "plan", stakes: "medium" },
-  "interpret-an-experiment": { family: "Research & Analysis", stage: "critique", outputKind: "summary", stakes: "medium" },
-  "measure-feature-impact": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "medium" },
+  "research":         { family: "Research & Analysis", stage: "analyze",  outputKind: "summary",      stakes: "medium" },
+  "hypothesis-test":  { family: "Research & Analysis", stage: "analyze",  outputKind: "brief",        stakes: "high" },
+  "data-to-story":    { family: "Research & Analysis", stage: "conclude", outputKind: "draft",        stakes: "medium" },
   // Writing & Communication
-  "communicate-a-change": { family: "Writing & Communication", stage: "conclude", outputKind: "brief", stakes: "medium" },
-  "negotiate-a-deal": { family: "Writing & Communication", stage: "decide", outputKind: "brief", stakes: "high" },
-  "write-critique-rewrite": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "medium" },
-  "stakeholder-alignment": { family: "Writing & Communication", stage: "decide", outputKind: "plan", stakes: "medium" },
-  "deliver-feedback": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "low" },
-  "develop-a-position": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "medium" },
-  "write-a-proposal": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "medium" },
+  "align-stakeholders": { family: "Writing & Communication", stage: "decide",  outputKind: "plan",   stakes: "medium" },
+  "deliver-feedback": { family: "Writing & Communication", stage: "refine",  outputKind: "draft",     stakes: "low" },
+  "develop-position": { family: "Writing & Communication", stage: "refine",  outputKind: "draft",     stakes: "medium" },
+  "negotiate":        { family: "Writing & Communication", stage: "decide",  outputKind: "brief",     stakes: "high" },
   // Planning & Execution
-  "design-for-outcomes": { family: "Planning & Execution", stage: "frame", outputKind: "plan", stakes: "medium" },
-  "define-and-measure": { family: "Planning & Execution", stage: "frame", outputKind: "plan", stakes: "medium" },
-  "product-design-sprint": { family: "Planning & Execution", stage: "decide", outputKind: "plan", stakes: "medium" },
-  "ship-a-feature": { family: "Planning & Execution", stage: "decide", outputKind: "plan", stakes: "high" },
+  "feature-design":   { family: "Planning & Execution", stage: "frame",   outputKind: "plan",         stakes: "high" },
+  "ship-feature":     { family: "Planning & Execution", stage: "decide",  outputKind: "plan",         stakes: "high" },
   // Critique & Review
-  "quick-sense-check": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "low" },
-  "audit-the-argument": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "medium" },
-  "ethical-review": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "high" },
-  "pressure-test-plan": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "high" },
+  "critique":         { family: "Critique & Review", stage: "critique", outputKind: "critique",       stakes: "medium" },
+  "ethical-review":   { family: "Critique & Review", stage: "critique", outputKind: "critique",       stakes: "high" },
+  "pressure-test":    { family: "Critique & Review", stage: "critique", outputKind: "critique",       stakes: "high" },
   // Prompt Craft
-  "prompt-repair": { family: "Prompt Craft", stage: "refine", outputKind: "prompt", stakes: "medium" },
-  "ai-workflow-design": { family: "Prompt Craft", stage: "frame", outputKind: "plan", stakes: "medium" },
-  "build-a-system-prompt": { family: "Prompt Craft", stage: "frame", outputKind: "prompt", stakes: "medium" },
-  "evaluate-model-output": { family: "Prompt Craft", stage: "critique", outputKind: "critique", stakes: "medium" },
-  "prompt-engineering-sprint": { family: "Prompt Craft", stage: "refine", outputKind: "prompt", stakes: "medium" },
+  "improve-prompt":     { family: "Prompt Craft", stage: "refine",  outputKind: "prompt",             stakes: "medium" },
+  "build-system-prompt": { family: "Prompt Craft", stage: "frame",  outputKind: "prompt",             stakes: "medium" },
   // Developer Workflows
-  "code-review": { family: "Developer Workflows", stage: "critique", outputKind: "critique", stakes: "high" },
-  "debug-a-failure": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
-  "debug-a-system": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
-  "technical-architecture-review": { family: "Developer Workflows", stage: "critique", outputKind: "critique", stakes: "high" },
-  "break-a-recurring-incident": { family: "Developer Workflows", stage: "conclude", outputKind: "plan", stakes: "high" },
-  "feature-design": { family: "Developer Workflows", stage: "frame", outputKind: "plan", stakes: "high" },
-  "hypothesis-driven-development": { family: "Developer Workflows", stage: "analyze", outputKind: "plan", stakes: "high" },
-  "incident-response": { family: "Developer Workflows", stage: "analyze", outputKind: "plan", stakes: "high" },
-  "performance-investigation": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
-  "read-before-change": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
-  "safe-migration": { family: "Developer Workflows", stage: "decide", outputKind: "plan", stakes: "high" },
-  "security-threat-model": { family: "Developer Workflows", stage: "critique", outputKind: "critique", stakes: "high" },
-  "technical-debt-triage": { family: "Developer Workflows", stage: "decide", outputKind: "decision", stakes: "high" },
-  "trace-to-fix": { family: "Developer Workflows", stage: "analyze", outputKind: "diagnosis", stakes: "high" },
+  "debug":                    { family: "Developer Workflows", stage: "analyze",  outputKind: "diagnosis", stakes: "high" },
+  "review-code":              { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
+  "architecture-review":      { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
+  "tech-debt-triage":         { family: "Developer Workflows", stage: "decide",   outputKind: "decision",  stakes: "high" },
+  "incident-response":        { family: "Developer Workflows", stage: "analyze",  outputKind: "plan",      stakes: "high" },
+  "break-recurring-incident": { family: "Developer Workflows", stage: "conclude", outputKind: "plan",      stakes: "high" },
+  "performance-fix":          { family: "Developer Workflows", stage: "analyze",  outputKind: "diagnosis", stakes: "high" },
+  "safe-migration":           { family: "Developer Workflows", stage: "decide",   outputKind: "plan",      stakes: "high" },
+  "security-threat-model":    { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
   // Reflection & Learning
-  "capture-and-act": { family: "Reflection & Learning", stage: "conclude", outputKind: "plan", stakes: "low" },
-  "after-action-review": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "low" },
-  "weekly-review": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "low" },
-  "decision-review": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "medium" },
-  "project-retrospective": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective", stakes: "low" }
+  "reflect-act": { family: "Reflection & Learning", stage: "conclude", outputKind: "retrospective",    stakes: "low" },
 };
 
 function validateStackMeta(baseNames) {
@@ -778,7 +747,7 @@ function makeStack(fileName) {
   const title = firstHeading(md).replace(/^Stack:\s*/, "");
   const useWhen = extractLeadLine(md);
   const inputs = extractSectionItems(md, "Useful inputs:");
-  const sequence = extractSectionItems(md, ["Suggested blocks:", "Suggested sequence:"]);
+  const sequence = extractSectionItems(md, ["Blocks:", "Suggested blocks:", "Suggested sequence:"]);
   const outputs = extractSectionItems(md, ["Expected outcome:", "Expected output:"]);
   const minimumBlocksMatch = md.match(/^\*\*Minimum blocks:\*\*\s*(.+)$/m);
   const whyMatch = md.match(/^\*\*Why this order works:\*\*\s*(.+)$/m);
@@ -963,76 +932,64 @@ const snippetOrder = [
   "prompt-compare.md"
 ];
 const stackOrder = [
-  // Small (≤3) — quick-start stacks
-  "quick-sense-check.md",
-  "fast-ideation.md",
-  "frame-the-ask.md",
-  "capture-and-act.md",
-  "audit-the-argument.md",
-  "orient-before-acting.md",
-  "clarify-the-real-job.md",
-  "design-for-outcomes.md",
-  "map-adoption-blockers.md",
-  // Medium (4–5) — focused workflows
-  "problem-framing.md",
-  "define-and-measure.md",
-  "unblock-stuck-problem.md",
-  "scenario-futures.md",
-  "ethical-review.md",
-  "communicate-a-change.md",
+  // Thinking & Framing
+  "frame-problem.md",
+  "branch-select.md",
+  "decompose-solve.md",
+  "refine-loop.md",
+  // Deciding & Prioritising
+  "decide.md",
+  "review-decision.md",
+  "risk-decision.md",
   "explore-vs-exploit.md",
-  "de-risk-with-test.md",
-  "pressure-test-plan.md",
-  "prioritize-portfolio.md",
-  "code-review.md",
-  "debug-a-failure.md",
-  "debug-a-system.md",
-  "interpret-an-experiment.md",
-  "technical-architecture-review.md",
-  "source-to-brief.md",
-  "learn-from-content.md",
-  "after-action-review.md",
-  "negotiate-a-deal.md",
-  "write-critique-rewrite.md",
-  "weekly-review.md",
-  // Large (6+) — deep end-to-end sequences
-  "ship-a-feature.md",
-  "full-decision-process.md",
-  "product-design-sprint.md",
-  "deep-research-synthesis.md",
-  "stakeholder-alignment.md",
-  "prompt-repair.md",
-  "explore-to-decision.md",
+  "prioritize.md",
+  // Research & Analysis
+  "research.md",
+  "hypothesis-test.md",
+  "data-to-story.md",
+  // Writing & Communication
+  "align-stakeholders.md",
+  "deliver-feedback.md",
+  "develop-position.md",
+  "negotiate.md",
+  // Planning & Execution
+  "feature-design.md",
+  "ship-feature.md",
+  // Critique & Review
+  "critique.md",
+  "ethical-review.md",
+  "pressure-test.md",
+  // Prompt Craft
+  "improve-prompt.md",
+  "build-system-prompt.md",
+  // Developer Workflows
+  "debug.md",
+  "review-code.md",
+  "architecture-review.md",
+  "tech-debt-triage.md",
+  "incident-response.md",
+  "break-recurring-incident.md",
+  "performance-fix.md",
+  "safe-migration.md",
+  "security-threat-model.md",
+  // Reflection & Learning
+  "reflect-act.md",
 ];
 const rubricOrder = [
-  "decision-quality.md",
-  "argument-quality.md",
-  "strategy-quality.md",
-  "plan-quality.md",
-  "research-quality.md",
-  "writing-quality.md",
-  "reflection-quality.md",
-  "prompt-quality.md"
+  "decision-quality",
+  "argument-quality",
+  "plan-quality",
+  "research-quality",
+  "writing-quality"
 ];
 
 const allBlockDirs = listDirs("prompts/blocks");
 const modes = orderNames(allBlockDirs.filter(d => d.startsWith("mode.")).map(d => d.slice(5)), modeOrder).map((dirName) => makeMode(dirName));
 const strategies = orderNames(allBlockDirs.filter(d => d.startsWith("strategy.")).map(d => d.slice(9)), strategyOrder).map((dirName) => makeStrategy(dirName));
 const promptBlocks = orderNames(allBlockDirs.filter(d => !d.startsWith("mode.") && !d.startsWith("strategy.") && !d.startsWith("rubric.")), promptBlockOrder).map((dirName) => makePromptBlock(dirName));
-const snippetBlocks = orderNames(list("prompts/snippets"), snippetOrder)
-  .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md")
-  .map((fileName) => makeSnippetBlock(fileName));
-const lensBlocks = [
-  ...list("prompts/concepts/game-theory").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("game-theory", fileName)),
-  ...list("prompts/concepts/psychology").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("psychology", fileName)),
-  ...list("prompts/concepts/computer-science").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("computer-science", fileName)),
-  ...list("prompts/concepts/economics").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("economics", fileName)),
-  ...list("prompts/concepts/systems-thinking").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("systems-thinking", fileName)),
-  ...list("prompts/concepts/philosophy").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("philosophy", fileName)),
-  ...list("prompts/concepts/statistics").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("statistics", fileName)),
-  ...list("prompts/concepts/design").filter((fileName) => fileName.endsWith(".md")).map((fileName) => makeLensBlock("design", fileName))
-];
-const rubricBlocks = orderNames(allBlockDirs.filter(d => d.startsWith("rubric.")).map(d => d.slice(7)), rubricOrder.map(f => f.replace(".md", "")))
+const snippetBlocks = [];
+const lensBlocks = [];
+const rubricBlocks = orderNames(allBlockDirs.filter(d => d.startsWith("rubric.")).map(d => d.slice(7)), rubricOrder)
   .map((baseName) => makeRubric(baseName));
 const stackFiles = orderNames(list("stacks"), stackOrder)
   .filter((fileName) => fileName.endsWith(".md") && fileName !== "README.md");
@@ -1063,81 +1020,51 @@ const featuredStacks = [
   },
   {
     title: "Explore or Exploit",
-    description: "When the real question is whether to keep searching or commit now. Forces the tradeoff between additional information and the cost of delay, then turns the answer into an immediate move.",
+    description: "When the real question is whether to keep searching or commit now. Forces the tradeoff between additional information and the cost of delay.",
     tags: ["decision", "exploration", "timing"],
-    refs: ["mode.decide", "frame.success-criteria", "frame.explore-exploit-decision", "guardrail.uncertainty", "schema.execution-brief"]
+    refs: ["mode.decide", "frame.success-criteria", "guardrail.uncertainty", "guardrail.disconfirming-evidence", "schema.execution-brief"]
   },
   {
-    title: "Prioritize a Portfolio",
+    title: "Prioritize and Execute",
     description: "When several good-looking bets compete for scarce resources. Defines criteria, ranks the field, and turns the winner into an execution brief.",
     tags: ["prioritization", "portfolio", "focus"],
-    refs: ["mode.decide", "frame.success-criteria", "frame.prioritize-opportunities", "schema.execution-brief", "guardrail.uncertainty"]
-  },
-  {
-    title: "De-Risk Before Committing",
-    description: "When a direction looks promising but the real blocker is uncertainty. Designs the cheapest credible test and makes the next checkpoint explicit.",
-    tags: ["experiment", "de-risk", "execution"],
-    refs: ["mode.decide", "frame.success-criteria", "frame.design-cheap-test", "schema.execution-brief", "guardrail.uncertainty"]
+    refs: ["mode.decide", "frame.success-criteria", "guardrail.assumption-audit", "schema.execution-brief"]
   },
   {
     title: "Pressure Test a Plan",
-    description: "Before committing to execution. Runs adversarial critique, premortem, and stress test to surface the plan's biggest vulnerabilities.",
+    description: "Before committing to execution. Runs adversarial critique, premortem, and red-team to surface the plan's biggest vulnerabilities.",
     tags: ["critique", "risk", "pre-commit"],
-    refs: ["mode.critique", "strategy.premortem", "strategy.red-team", "guardrail.assumption-audit", "guardrail.stress-test-assumptions"]
+    refs: ["mode.critique", "strategy.premortem", "strategy.red-team", "guardrail.assumption-audit", "guardrail.disconfirming-evidence"]
   },
   {
     title: "Debug a Failure",
-    description: "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with a reproducible target, checks the boundary, and turns the next move into a concrete debug plan.",
+    description: "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with task framing, critiques likely causes, maps causal chain, and turns the next move into a concrete plan.",
     tags: ["debugging", "incident", "diagnosis"],
-    refs: ["mode.critique", "frame.bug-reproduction-brief", "lens.debugger-loop", "lens.interface-contract-review", "lens.invariant-check", "schema.plan-next-actions"]
-  },
-  {
-    title: "Write and Sharpen",
-    description: "For content that needs to be good, not just done. Turns a brief into a real draft, critiques it rigorously, then rewrites for clarity.",
-    tags: ["writing", "critique", "revision"],
-    refs: ["frame.brief-to-draft", "mode.critique", "frame.critique-argument", "frame.rewrite-for-clarity", "rubric.writing-quality"]
+    refs: ["mode.explore", "frame.task", "mode.critique", "frame.cause-mapping", "schema.plan-next-actions"]
   },
   {
     title: "After-Action Review",
-    description: "When an outcome exists and the risk is repeating the same mistake. Maps causes, records the decision, and checks that reflection was actually useful.",
+    description: "When an outcome exists and the risk is repeating the same mistake. Maps causes, extracts reusable lessons, and assigns follow-on actions.",
     tags: ["reflect", "learning", "retrospective"],
-    refs: ["mode.reflect", "frame.cause-mapping", "schema.decision-journal-entry", "rubric.reflection-quality"]
+    refs: ["mode.reflect", "frame.cause-mapping", "frame.extract-insights", "schema.plan-next-actions"]
   },
   {
     title: "Improve a Prompt",
-    description: "When a prompt is underperforming. Critiques the current version, rewrites it, compares variants, and checks against a quality rubric.",
+    description: "When a prompt is underperforming. Frames the task, critiques the current version, audits for uncertainty, and rewrites against a quality rubric.",
     tags: ["prompting", "iteration", "repair"],
-    refs: ["mode.critique", "frame.prompt-critique", "frame.prompt-rewrite", "frame.prompt-compare", "rubric.prompt-quality"]
+    refs: ["frame.task", "mode.critique", "guardrail.uncertainty", "rubric.writing-quality"]
   },
   {
-    title: "Map Incentives",
-    description: "When behavior is not making sense or you are designing for a multi-player situation. Audits incentives, checks signals, and captures the analysis.",
-    tags: ["game theory", "incentives", "analysis"],
-    refs: ["mode.explore", "lens.incentive-audit", "lens.signaling-check", "schema.decision-memo"]
+    title: "Decompose and Solve",
+    description: "When a problem is too large to solve directly. Breaks it recursively into leaf-level problems, evaluates each answer, and synthesizes the result.",
+    tags: ["recursion", "decomposition", "problem-solving"],
+    refs: ["frame.task", "recurse.decompose", "recurse.evaluate", "guardrail.bounded-recursion"]
   },
   {
-    title: "Align Stakeholders",
-    description: "When the technical answer is not enough and alignment is the actual bottleneck. Maps stakeholders, checks coordination dynamics, and prepares the next conversation.",
-    tags: ["alignment", "stakeholders", "coordination"],
-    refs: ["mode.explore", "frame.stakeholder-map", "lens.coordination-plan", "lens.signaling-check", "frame.alignment-conversation-plan", "schema.execution-brief"]
-  },
-  {
-    title: "Read Before Changing",
-    description: "When a change looks simple but the surrounding codebase is unfamiliar. Maps the active code path, surfaces invariants, and checks blast radius before editing.",
-    tags: ["software engineering", "code reading", "change safety"],
-    refs: ["mode.explore", "frame.codepath-walkthrough", "lens.invariant-check", "lens.interface-contract-review", "guardrail.change-impact-review"]
-  },
-  {
-    title: "Turn Sources Into Action",
-    description: "When notes, transcripts, or dense source material need to become something decision-useful quickly. Distills the source, extracts what matters, and maps the next investigation or action.",
+    title: "Research to Decision",
+    description: "When you need a well-grounded view before deciding. Extracts insights, forces disconfirmation, maps causes, and checks research quality.",
     tags: ["research", "synthesis", "briefing"],
-    refs: ["mode.explore", "frame.summarize-source", "frame.extract-insights", "frame.research-questions", "schema.plan-next-actions"]
-  },
-  {
-    title: "Check for Bias",
-    description: "When a judgment or decision may be distorted. Reviews cognitive biases, steelmans alternatives, and guardrails against false certainty.",
-    tags: ["psychology", "bias", "rigor"],
-    refs: ["mode.critique", "lens.bias-check", "strategy.steelman", "guardrail.disconfirming-evidence", "guardrail.uncertainty"]
+    refs: ["mode.explore", "frame.extract-insights", "guardrail.disconfirming-evidence", "frame.cause-mapping", "rubric.research-quality"]
   }
 ];
 

@@ -804,7 +804,7 @@ globalThis.SITE_DATA = {
         "guardrail",
         "uncertainty"
       ],
-      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\nInput:\n{paste current analysis, recommendation, or draft}",
+      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- distinguish \"I don't know\" (absent evidence) from \"evidence is mixed\" (conflicting evidence)\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\nInput:\n{paste current analysis, recommendation, or draft}",
       "body": [
         [
           "Purpose",
@@ -912,82 +912,6 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/guardrail.disconfirming-evidence/prompt.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "compact",
-      "sourceKind": "Prompt Block",
-      "stage": "critique",
-      "strength": "heavy",
-      "contract": {
-        "purpose": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
-        "useWhen": "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged.",
-        "expects": "A plan, decision, argument, or recommendation.",
-        "adds": "An explicit inventory of assumptions, typed by category and ranked by consequence if false.",
-        "returns": [
-          "assumption statement",
-          "explicit or implied",
-          "type (empirical / causal / value)",
-          "confidence (high / medium / low)",
-          "impact if false",
-          "what would falsify it"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "strategy.premortem",
-          "guardrail.uncertainty",
-          "schema.decision-memo"
-        ],
-        "avoidWhen": "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
-      },
-      "key": "guardrail.assumption-audit",
-      "aliases": [
-        "core.assumption.audit",
-        "core.assumption-audit"
-      ],
-      "title": "guardrail.assumption-audit",
-      "summary": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
-      "tags": [
-        "guardrail",
-        "assumption",
-        "audit"
-      ],
-      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn for each:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\nInput:\n{paste plan, decision, argument, or recommendation}",
-      "body": [
-        [
-          "Purpose",
-          "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it."
-        ],
-        [
-          "Use when",
-          "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged."
-        ],
-        [
-          "Expects",
-          "A plan, decision, argument, or recommendation."
-        ],
-        [
-          "Adds",
-          "An explicit inventory of assumptions, typed by category and ranked by consequence if false."
-        ],
-        [
-          "Returns",
-          "assumption statement, explicit or implied, type (empirical / causal / value), confidence (high / medium / low), impact if false, what would falsify it"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, strategy.premortem, guardrail.uncertainty, schema.decision-memo"
-        ],
-        [
-          "Avoid when",
-          "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/assumption.audit/prompt.md"
     },
     {
       "section": "Block",
@@ -1152,12 +1076,13 @@ globalThis.SITE_DATA = {
         "adds": "A structured output format that separates objective, scope, key steps, success criteria, risks, and owner to make execution legible and trackable.",
         "returns": [
           "objective",
-          "scope",
-          "key steps",
-          "success criteria",
-          "risks",
-          "owner / responsible party",
-          "next action"
+          "owner or responsible role",
+          "sequence or milestones",
+          "dependencies",
+          "major risks",
+          "first checkpoint",
+          "pause or escalation trigger",
+          "immediate next action"
         ],
         "pairsWith": [
           "mode.decide",
@@ -1197,7 +1122,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Returns",
-          "objective, scope, key steps, success criteria, risks, owner / responsible party, next action"
+          "objective, owner or responsible role, sequence or milestones, dependencies, major risks, first checkpoint, pause or escalation trigger, immediate next action"
         ],
         [
           "Pairs with",
@@ -1216,1518 +1141,90 @@ globalThis.SITE_DATA = {
       "section": "Block",
       "canonicalType": "frame",
       "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "explore",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need multiple directions before choosing.",
-        "returns": [
-          "option",
-          "what it optimizes for",
-          "downside",
-          "unknowns",
-          "next comparison angle"
-        ],
-        "pairsWith": [
-          "mode.explore",
-          "frame.brainstorm-angles",
-          "frame.success-criteria"
-        ]
-      },
-      "key": "frame.generate-options",
-      "aliases": [
-        "core.generate-options"
-      ],
-      "title": "frame.generate-options",
-      "summary": "Use when you need multiple directions before choosing.",
-      "tags": [
-        "ideation",
-        "option generation",
-        "decision support"
-      ],
-      "copy": "Generate a diverse set of plausible options.\n\nRequirements:\n- include genuinely different approaches, not small variations\n- include at least one option that contradicts the default instinct\n- note what each option optimizes for\n- note the main downside of each option\n- surface any obvious unknowns\n- name the comparison dimension that matters most next\n\nReturn:\n- option\n- what it optimizes for\n- downside\n- unknowns\n- next comparison angle\n\nProblem:\n{paste problem}\n\nConstraints, limits, or non-goals:\n{paste constraints, limits, or non-goals}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need multiple directions before choosing."
-        ],
-        [
-          "Returns",
-          "option, what it optimizes for, downside, unknowns, next comparison angle"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.brainstorm-angles, frame.success-criteria"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/generate-options.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "explore",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you want fresh perspectives rather than polished ideas.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.generate-options",
-          "frame.reframe-the-problem"
-        ]
-      },
-      "key": "frame.brainstorm-angles",
-      "aliases": [
-        "core.brainstorm-angles"
-      ],
-      "title": "frame.brainstorm-angles",
-      "summary": "Use when you want fresh perspectives rather than polished ideas.",
-      "tags": [
-        "ideation",
-        "creative thinking",
-        "reframing"
-      ],
-      "copy": "Brainstorm unexpected but plausible angles on this.\n\nRequirements:\n- avoid obvious first-pass ideas\n- include at least one contrarian angle\n- include at least one practical angle\n- include at least one high-upside angle\n\nReturn for each angle:\n- angle\n- why it is non-obvious\n- potential upside if pursued\n\nTopic:\n{paste topic}",
-      "body": [
-        [
-          "Use when",
-          "Use when you want fresh perspectives rather than polished ideas."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.generate-options, frame.reframe-the-problem"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/brainstorm-angles.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "strategy",
-      "blockType": "strategy",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "explore",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when the stated problem may be the wrong problem, or when solutions keep failing.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.analogical-reasoning",
-          "frame.generate-options"
-        ]
-      },
-      "key": "strategy.reframe-the-problem",
-      "aliases": [
-        "core.reframe-the-problem"
-      ],
-      "title": "strategy.reframe-the-problem",
-      "summary": "Use when the stated problem may be the wrong problem, or when solutions keep failing.",
-      "tags": [
-        "problem design",
-        "lateral thinking",
-        "reframing",
-        "creative problem solving"
-      ],
-      "copy": "Challenge the framing of this problem and offer better alternatives.\n\nRequirements:\n- state the problem as currently framed\n- identify the hidden assumption baked into that framing\n- generate three alternative framings that dissolve or transform the problem\n- for each: state what changes if you accept this frame instead\n- recommend which frame is most likely to lead to a tractable solution\n- name what would need to be true for the original framing to be correct\n\nProblem as stated:\n{paste problem statement}\n\nWhat has already been tried:\n{paste any prior attempts or constraints}",
-      "body": [
-        [
-          "Use when",
-          "Use when the stated problem may be the wrong problem, or when solutions keep failing."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.analogical-reasoning, frame.generate-options"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/reframe-the-problem.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "strategy",
-      "blockType": "strategy",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "explore",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a problem is stuck and a solution from a structurally similar domain might transfer.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.reframe-the-problem",
-          "frame.generate-options"
-        ]
-      },
-      "key": "strategy.analogical-reasoning",
-      "aliases": [
-        "core.analogical-reasoning"
-      ],
-      "title": "strategy.analogical-reasoning",
-      "summary": "Use when a problem is stuck and a solution from a structurally similar domain might transfer.",
-      "tags": [
-        "analogical reasoning",
-        "transfer learning",
-        "creative problem solving",
-        "cross-domain thinking"
-      ],
-      "copy": "Find analogous problems from other domains and extract transferable solutions.\n\nRequirements:\n- identify the structural pattern or constraint at the core of this problem\n- find three domains or fields that have solved structurally similar problems\n- for each: describe the analogous problem, the solution used, and what specifically transfers\n- identify the key differences that might limit transfer\n- propose one concrete adaptation based on the best analogy\n\nProblem:\n{paste problem or challenge}\n\nWhat makes it hard:\n{paste the key constraint or tension}",
-      "body": [
-        [
-          "Use when",
-          "Use when a problem is stuck and a solution from a structurally similar domain might transfer."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.reframe-the-problem, frame.generate-options"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/analogical-reasoning.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "explore",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you have a question or problem and need to generate competing explanations before committing to an investigation path.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.experiment-design",
-          "guardrail.uncertainty"
-        ]
-      },
-      "key": "frame.hypothesis-generation",
-      "aliases": [
-        "core.hypothesis-generation"
-      ],
-      "title": "frame.hypothesis-generation",
-      "summary": "Use when you have a question or problem and need to generate competing explanations before committing to an investigation path.",
-      "tags": [
-        "hypothesis generation",
-        "scientific thinking",
-        "epistemic practice",
-        "causal reasoning"
-      ],
-      "copy": "Generate a set of competing hypotheses to explain or address this.\n\nRequirements:\n- produce at least 4–6 distinct hypotheses, not variations of the same idea\n- span different levels of explanation (proximate, structural, behavioural)\n- state each as a falsifiable claim: if X is true, we would expect Y\n- briefly note what evidence would confirm or disconfirm each\n- rank them roughly by prior plausibility given what is already known\n- flag any hypothesis that is uncomfortable but worth taking seriously\n\nQuestion or problem:\n{paste question, anomaly, or problem}\n\nKnown evidence or context:\n{paste what is already known}",
-      "body": [
-        [
-          "Use when",
-          "Use when you have a question or problem and need to generate competing explanations before committing to an investigation path."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.experiment-design, guardrail.uncertainty"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/hypothesis-generation.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when a request is vague or overloaded.",
-        "returns": [
-          "what the task most likely means",
-          "the biggest missing details",
-          "the best clarifying questions to ask next",
-          "a cleaner version of the task if I want to hand it back",
-          "the best next reasoning step"
-        ],
-        "pairsWith": [
-          "mode.explore",
-          "frame.task",
-          "frame.success-criteria"
-        ]
-      },
-      "key": "frame.clarify-task",
-      "aliases": [
-        "core.clarify-task"
-      ],
-      "title": "frame.clarify-task",
-      "summary": "Use when a request is vague or overloaded.",
-      "tags": [
-        "task framing",
-        "requirements",
-        "scoping"
-      ],
-      "copy": "Clarify this task before trying to solve it.\n\nReturn:\n- what the task most likely means\n- the biggest missing details\n- the best clarifying questions to ask next\n- a cleaner version of the task if I want to hand it back\n- the best next reasoning step\n\nTask:\n{paste task}",
-      "body": [
-        [
-          "Use when",
-          "Use when a request is vague or overloaded."
-        ],
-        [
-          "Returns",
-          "what the task most likely means, the biggest missing details, the best clarifying questions to ask next, a cleaner version of the task if I want to hand it back, the best next reasoning step"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.task, frame.success-criteria"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/clarify-task.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a goal, task, or initiative needs clearer measurement criteria before work begins.",
-        "pairsWith": [
-          "mode.decide",
-          "frame.success-criteria",
-          "rubric.plan-quality"
-        ]
-      },
-      "key": "frame.define-success-metrics",
-      "aliases": [
-        "core.define-success-metrics"
-      ],
-      "title": "frame.define-success-metrics",
-      "summary": "Use when a goal, task, or initiative needs clearer measurement criteria before work begins.",
-      "tags": [
-        "metrics design",
-        "goal setting",
-        "measurement",
-        "outcome thinking"
-      ],
-      "copy": "Define the success metrics for this goal or initiative.\n\nFor each dimension of success:\n- name it clearly\n- describe what \"good\" looks like at completion (not during the process)\n- suggest the most direct way to measure it\n- identify a leading indicator that would signal early progress\n- flag any metrics that could be gamed or that measure the wrong thing\n\nDistinguish between metrics that measure output (activity) and ones that measure\noutcome (actual impact).\n\nThen identify: which single metric, if it moved, would most definitively confirm\nthat the goal was achieved?\n\nGoal or initiative:\n{paste goal, task, or project description}",
-      "body": [
-        [
-          "Use when",
-          "Use when a goal, task, or initiative needs clearer measurement criteria before work begins."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.success-criteria, rubric.plan-quality"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/define-success-metrics.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
       "stage": "analyze",
       "strength": "medium",
       "contract": {
-        "useWhen": "Use when you need to understand the logical anatomy of a claim before evaluating or responding to it.",
-        "pairsWith": [
-          "mode.critique",
-          "strategy.steelman",
-          "rubric.argument-quality"
-        ]
-      },
-      "key": "frame.argument-structure",
-      "aliases": [
-        "core.argument-structure"
-      ],
-      "title": "frame.argument-structure",
-      "summary": "Use when you need to understand the logical anatomy of a claim before evaluating or responding to it.",
-      "tags": [
-        "critical thinking",
-        "argumentation",
-        "logic"
-      ],
-      "copy": "Extract and map the logical structure of this argument.\n\nIdentify:\n- the main conclusion (what the author wants you to accept)\n- the premises (stated reasons given to support the conclusion)\n- any hidden or unstated premises the argument depends on\n- the logical form: is the conclusion deductively entailed, or only made probable?\n- any key definitions or distinctions the argument relies on\n\nThen assess:\n- which premise is doing the most structural work?\n- which premise is most contestable?\n- does the conclusion follow given the premises, or is there a gap?\n\nArgument:\n{paste argument, essay, position, or chain of reasoning}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to understand the logical anatomy of a claim before evaluating or responding to it."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, strategy.steelman, rubric.argument-quality"
-        ]
-      ],
-      "family": "Thinking & Framing",
-      "group": "",
-      "sourcePath": "prompts/snippets/argument-structure.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you already have options and need a structured comparison.",
-        "pairsWith": [
-          "mode.decide",
-          "frame.success-criteria",
-          "schema.decision-memo"
-        ]
-      },
-      "key": "frame.compare-options",
-      "aliases": [
-        "core.compare-options"
-      ],
-      "title": "frame.compare-options",
-      "summary": "Use when you already have options and need a structured comparison.",
-      "tags": [
-        "evaluation",
-        "decision support",
-        "analysis"
-      ],
-      "copy": "Compare these options in a compact decision table.\n\nReturn columns:\n- option\n- criteria fit\n- strengths\n- weaknesses\n- best use case\n- key risk\n- overall judgment\n\nContext:\n{paste context}\n\nCriteria:\n{paste criteria}\n\nOptions:\n{paste options}",
-      "body": [
-        [
-          "Use when",
-          "Use when you already have options and need a structured comparison."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.success-criteria, schema.decision-memo"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/compare-options.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need a best current choice, not a perfect answer.",
-        "pairsWith": [
-          "mode.decide",
-          "guardrail.uncertainty",
-          "schema.decision-memo"
-        ]
-      },
-      "key": "frame.choose-under-uncertainty",
-      "aliases": [
-        "core.choose-under-uncertainty"
-      ],
-      "title": "frame.choose-under-uncertainty",
-      "summary": "Use when you need a best current choice, not a perfect answer.",
-      "tags": [
-        "decision theory",
-        "risk management",
-        "judgment under uncertainty"
-      ],
-      "copy": "Choose the best current option under uncertainty.\n\nRequirements:\n- state the criteria being used\n- choose one option or explicitly say no decision yet\n- name the biggest uncertainty\n- name what evidence would most change the decision\n- give the next action\n\nContext:\n{paste context}\n\nOptions:\n{paste options}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need a best current choice, not a perfect answer."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, guardrail.uncertainty, schema.decision-memo"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/choose-under-uncertainty.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to decide whether to keep searching, learning, or generating options versus committing to the best current path.",
+        "purpose": "Map cause-effect chains behind an outcome; separate contributing factors from root cause.",
+        "useWhen": "An outcome needs explanation beyond surface description. The main risk is misidentifying a symptom as the cause.",
+        "expects": "A problem, failure, or outcome to trace.",
+        "adds": "A multi-level causal chain with branching points and the earliest feasible intervention identified.",
         "returns": [
-          "current decision context",
-          "best current option",
-          "reasons to keep exploring",
-          "reasons to exploit now",
-          "value of additional information",
-          "cost of delay",
-          "reversibility of the decision",
-          "decision: explore more / exploit now / exploit with a bounded test",
-          "trigger that would flip the decision",
-          "next action"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.success-criteria",
-          "guardrail.uncertainty"
-        ]
-      },
-      "key": "frame.explore-exploit-decision",
-      "aliases": [
-        "core.explore-exploit-decision"
-      ],
-      "title": "frame.explore-exploit-decision",
-      "summary": "Use when you need to decide whether to keep searching, learning, or generating options versus committing to the best current path.",
-      "tags": [
-        "decision theory",
-        "strategic thinking",
-        "planning"
-      ],
-      "copy": "Decide whether this situation calls for more exploration or for exploitation of the best current option.\n\nReturn:\n- current decision context\n- best current option\n- reasons to keep exploring\n- reasons to exploit now\n- value of additional information\n- cost of delay\n- reversibility of the decision\n- decision: explore more / exploit now / exploit with a bounded test\n- trigger that would flip the decision\n- next action\n\nRequirements:\n- prefer exploitation when the best current option is already strong and further search has low expected value\n- prefer exploration when uncertainty is still highly decision-relevant and cheap learning is available\n- if the answer is mixed, recommend a bounded exploration window or cheap test rather than open-ended searching\n\nContext:\n{paste context}\n\nCurrent options or path:\n{paste options or current path}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to decide whether to keep searching, learning, or generating options versus committing to the best current path."
-        ],
-        [
-          "Returns",
-          "current decision context, best current option, reasons to keep exploring, reasons to exploit now, value of additional information, cost of delay, reversibility of the decision, decision: explore more / exploit now / exploit with a bounded test, trigger that would flip the decision, next action"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.success-criteria, guardrail.uncertainty"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/explore-exploit-decision.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you have too many plausible projects, bets, or tasks competing for attention.",
-        "pairsWith": [
-          "mode.decide",
-          "frame.success-criteria",
-          "frame.compare-options"
-        ]
-      },
-      "key": "frame.prioritize-opportunities",
-      "aliases": [
-        "core.prioritize-opportunities"
-      ],
-      "title": "frame.prioritize-opportunities",
-      "summary": "Use when you have too many plausible projects, bets, or tasks competing for attention.",
-      "tags": [
-        "prioritization",
-        "resource allocation",
-        "strategic thinking"
-      ],
-      "copy": "Prioritize these opportunities or tasks.\n\nReturn columns:\n- item\n- expected upside\n- strategic fit\n- effort or cost\n- urgency or timing\n- reversibility\n- key risk\n- recommendation (do now / later / drop)\n\nRequirements:\n- explain the top two picks\n- identify one attractive option that should still wait\n- avoid ranking purely by excitement\n\nContext:\n{paste context}\n\nItems:\n{paste items}",
-      "body": [
-        [
-          "Use when",
-          "Use when you have too many plausible projects, bets, or tasks competing for attention."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.success-criteria, frame.compare-options"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/prioritize-opportunities.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "explore",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when a decision depends on how the future unfolds and the range of plausible futures is wide.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.second-order-effects",
-          "guardrail.uncertainty"
-        ]
-      },
-      "key": "frame.scenario-planning",
-      "aliases": [
-        "core.scenario-planning"
-      ],
-      "title": "frame.scenario-planning",
-      "summary": "Use when a decision depends on how the future unfolds and the range of plausible futures is wide.",
-      "tags": [
-        "strategic thinking",
-        "foresight",
-        "risk management"
-      ],
-      "copy": "Generate three to four distinct future scenarios for this situation.\n\nRequirements:\n- scenarios should differ on the key uncertainties, not just optimism\n- each should be internally consistent and plausible\n- name the driving forces that distinguish each scenario\n- for each scenario: name it, describe the world it implies, and note what would be different about the right strategy in that world\n- identify which scenario would be the worst to be unprepared for\n- identify the earliest observable signal that each scenario is forming\n\nSituation or decision:\n{paste situation or decision}\n\nKey uncertainties:\n{paste main unknowns driving the range of outcomes}",
-      "body": [
-        [
-          "Use when",
-          "Use when a decision depends on how the future unfolds and the range of plausible futures is wide."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.second-order-effects, guardrail.uncertainty"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/scenario-planning.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when scanning an environment for emerging shifts that could affect a strategy, market, or plan.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.scenario-planning",
-          "lens.base-rate-check"
-        ]
-      },
-      "key": "frame.trend-analysis",
-      "aliases": [
-        "core.trend-analysis"
-      ],
-      "title": "frame.trend-analysis",
-      "summary": "Use when scanning an environment for emerging shifts that could affect a strategy, market, or plan.",
-      "tags": [
-        "trend analysis",
-        "foresight",
-        "strategic intelligence",
-        "environmental scanning"
-      ],
-      "copy": "Analyse the trends relevant to this domain or situation.\n\nFor each significant trend:\n- name it and describe it in one sentence\n- assess its trajectory: accelerating, stable, or reversing\n- note the time horizon over which it will likely have material impact\n- describe the direct first-order effects and the less-obvious second-order effects\n- identify which current assumptions or strategies it challenges\n- suggest the adaptive move it implies\n\nThen:\n- highlight the two or three trends most likely to compound or intersect\n- identify any counter-trends that could slow or reverse the main pattern\n- name the one development in this environment that most people are underweighting\n\nDomain or situation:\n{paste sector, challenge, or strategic context}",
-      "body": [
-        [
-          "Use when",
-          "Use when scanning an environment for emerging shifts that could affect a strategy, market, or plan."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.scenario-planning, lens.base-rate-check"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/trend-analysis.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a decision or action may trigger consequences beyond the obvious first-order outcomes.",
-        "pairsWith": [
-          "mode.critique",
-          "frame.scenario-planning",
-          "guardrail.uncertainty"
-        ]
-      },
-      "key": "frame.second-order-effects",
-      "aliases": [
-        "core.second-order-effects"
-      ],
-      "title": "frame.second-order-effects",
-      "summary": "Use when a decision or action may trigger consequences beyond the obvious first-order outcomes.",
-      "tags": [
-        "systems thinking",
-        "critical thinking",
-        "risk management"
-      ],
-      "copy": "Map the second and third-order effects of this action or decision.\n\nRequirements:\n- first: state the intended or obvious first-order effect\n- second: for each first-order effect, name what it causes in turn\n- third: trace at least one chain two levels deeper\n- flag any effects that contradict the intended outcome (backfire risk)\n- flag any effects that disproportionately impact a group not currently in view\n- identify the most likely unintended consequence and its magnitude\n\nAction or decision:\n{paste action or decision}\n\nContext:\n{paste relevant context, constraints, or system in which this takes place}",
-      "body": [
-        [
-          "Use when",
-          "Use when a decision or action may trigger consequences beyond the obvious first-order outcomes."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.scenario-planning, guardrail.uncertainty"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/second-order-effects.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when uncertainty is blocking commitment and you need the smallest useful experiment.",
-        "returns": [
-          "what decision or assumption needs de-risking",
-          "the riskiest unknown",
-          "the cheapest credible test",
-          "success signal",
-          "failure signal",
-          "time or cost ceiling",
-          "what to do if the signal is positive",
-          "what to do if the signal is negative"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.success-criteria",
-          "guardrail.uncertainty"
-        ]
-      },
-      "key": "frame.design-cheap-test",
-      "aliases": [
-        "core.design-cheap-test"
-      ],
-      "title": "frame.design-cheap-test",
-      "summary": "Use when uncertainty is blocking commitment and you need the smallest useful experiment.",
-      "tags": [
-        "experimentation",
-        "lean methodology",
-        "validation"
-      ],
-      "copy": "Design the cheapest useful test for this idea, decision, or plan.\n\nReturn:\n- what decision or assumption needs de-risking\n- the riskiest unknown\n- the cheapest credible test\n- success signal\n- failure signal\n- time or cost ceiling\n- what to do if the signal is positive\n- what to do if the signal is negative\n\nContext:\n{paste context}\n\nResource ceiling, if any:\n{paste time, budget, or effort limit}",
-      "body": [
-        [
-          "Use when",
-          "Use when uncertainty is blocking commitment and you need the smallest useful experiment."
-        ],
-        [
-          "Returns",
-          "what decision or assumption needs de-risking, the riskiest unknown, the cheapest credible test, success signal, failure signal, time or cost ceiling, what to do if the signal is positive, what to do if the signal is negative"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.success-criteria, guardrail.uncertainty"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/design-cheap-test.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need a structured inventory of risks before committing to a plan or project.",
-        "pairsWith": [
-          "mode.critique",
-          "strategy.premortem",
-          "guardrail.assumption-audit"
-        ]
-      },
-      "key": "frame.risk-register",
-      "aliases": [
-        "core.risk-register"
-      ],
-      "title": "frame.risk-register",
-      "summary": "Use when you need a structured inventory of risks before committing to a plan or project.",
-      "tags": [
-        "risk management",
-        "project planning",
-        "contingency planning",
-        "decision quality"
-      ],
-      "copy": "Build a risk register for this plan or situation.\n\nFor each significant risk:\n- risk name\n- description of the failure mode\n- likelihood: high / medium / low\n- impact if it materialises: high / medium / low\n- risk score: combine likelihood and impact\n- earliest warning signal\n- mitigation: what reduces likelihood or impact before the risk fires\n- contingency: what to do if it fires anyway\n\nReturn them sorted by risk score, highest first.\n\nPlan or project:\n{paste plan, project, or upcoming decision}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need a structured inventory of risks before committing to a plan or project."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, strategy.premortem, guardrail.assumption-audit"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/risk-register.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a plan or decision rests on assumptions that have not been pressure-tested.",
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.assumption-audit",
-          "strategy.premortem"
-        ]
-      },
-      "key": "guardrail.stress-test-assumptions",
-      "aliases": [
-        "core.stress-test-assumptions"
-      ],
-      "title": "guardrail.stress-test-assumptions",
-      "summary": "Use when a plan or decision rests on assumptions that have not been pressure-tested.",
-      "tags": [
-        "risk management",
-        "critical thinking",
-        "planning"
-      ],
-      "copy": "Stress test the assumptions behind this.\n\nFor each significant assumption:\n- state the assumption\n- rate confidence (high / medium / low)\n- name the failure mode if the assumption is wrong\n- suggest the cheapest way to verify it before committing\n\nFocus first on assumptions where being wrong would most damage the outcome.\n\nInput:\n{paste plan, decision, or argument}",
-      "body": [
-        [
-          "Use when",
-          "Use when a plan or decision rests on assumptions that have not been pressure-tested."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.assumption-audit, strategy.premortem"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/stress-test-assumptions.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you have a chosen direction and need an executable plan.",
-        "returns": [
-          "goal",
-          "ordered steps",
-          "dependencies",
-          "likely blockers",
-          "first checkpoint",
-          "first concrete action",
-          "what to check after step one"
+          "visible symptom",
+          "causal chain (≥ 3 levels)",
+          "branch points",
+          "earliest intervention point",
+          "most likely root cause"
         ],
         "pairsWith": [
           "mode.reflect",
-          "mode.decide",
-          "frame.extract-insights"
-        ]
-      },
-      "key": "schema.plan-next-actions",
-      "aliases": [
-        "core.plan-next-actions"
-      ],
-      "title": "schema.plan-next-actions",
-      "summary": "Use when you have a chosen direction and need an executable plan.",
-      "tags": [
-        "execution",
-        "planning",
-        "action design"
-      ],
-      "copy": "Turn this into a practical next-step plan.\n\nReturn:\n- goal\n- ordered steps\n- dependencies\n- likely blockers\n- first checkpoint\n- first concrete action\n- what to check after step one\n\nContext:\n{paste context}\n\nDeadline, constraint, or time horizon:\n{paste deadline, constraint, or time horizon}",
-      "body": [
-        [
-          "Use when",
-          "Use when you have a chosen direction and need an executable plan."
-        ],
-        [
-          "Returns",
-          "goal, ordered steps, dependencies, likely blockers, first checkpoint, first concrete action, what to check after step one"
-        ],
-        [
-          "Pairs with",
-          "mode.reflect, mode.decide, frame.extract-insights"
-        ]
-      ],
-      "family": "Planning & Execution",
-      "group": "",
-      "sourcePath": "prompts/snippets/plan-next-actions.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a workflow, process, or routine needs to be examined for inefficiency, gaps, or hidden failure modes.",
-        "pairsWith": [
           "mode.critique",
-          "lens.feedback-loops",
-          "frame.cause-mapping"
-        ]
-      },
-      "key": "frame.process-audit",
-      "aliases": [
-        "core.process-audit"
-      ],
-      "title": "frame.process-audit",
-      "summary": "Use when a workflow, process, or routine needs to be examined for inefficiency, gaps, or hidden failure modes.",
-      "tags": [
-        "process improvement",
-        "operations",
-        "systems analysis",
-        "workflow design"
-      ],
-      "copy": "Audit this process for inefficiencies, gaps, and failure modes.\n\nFor each major step:\n- describe what is supposed to happen\n- identify where variation or failure most commonly occurs\n- note which steps depend on tacit knowledge or specific people\n- flag handoffs that introduce delay or information loss\n\nThen provide:\n- the three highest-leverage improvement opportunities\n- any steps that could be eliminated without harming the outcome\n- the single most likely place the process quietly fails without being noticed\n\nProcess or workflow:\n{paste process description, sequence of steps, or system description}",
-      "body": [
-        [
-          "Use when",
-          "Use when a workflow, process, or routine needs to be examined for inefficiency, gaps, or hidden failure modes."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.feedback-loops, frame.cause-mapping"
-        ]
-      ],
-      "family": "Planning & Execution",
-      "group": "",
-      "sourcePath": "prompts/snippets/process-audit.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you have a decision or design and need a concrete, sequenced plan for releasing, deploying, or implementing it.",
-        "pairsWith": [
-          "mode.decide",
-          "frame.release-readiness",
-          "frame.migration-plan"
-        ]
-      },
-      "key": "schema.rollout-plan",
-      "aliases": [
-        "core.rollout-plan"
-      ],
-      "title": "schema.rollout-plan",
-      "summary": "Use when you have a decision or design and need a concrete, sequenced plan for releasing, deploying, or implementing it.",
-      "tags": [
-        "planning",
-        "risk management",
-        "process improvement",
-        "execution"
-      ],
-      "copy": "Create a rollout plan for this initiative.\n\nStructure the plan as:\n\n1. Pre-launch: what must be true before rollout begins\n   - dependencies that must be resolved\n   - stakeholders who need to be informed or aligned\n   - the minimum viable version of the thing being released\n\n2. Rollout sequence: the ordered steps, with the rationale for that order\n   - which steps are sequential (one must complete before the next starts)?\n   - which can happen in parallel?\n   - what is the single most fragile step?\n\n3. Go/no-go criteria: what would cause you to pause or abort?\n\n4. Monitoring: how will you know the rollout is going well?\n   - leading signal of success\n   - early signal of a problem\n\n5. Rollback: if you had to reverse this, how would you do it?\n\nInitiative or change:\n{paste what you are rolling out}",
-      "body": [
-        [
-          "Use when",
-          "Use when you have a decision or design and need a concrete, sequenced plan for releasing, deploying, or implementing it."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.release-readiness, frame.migration-plan"
-        ]
-      ],
-      "family": "Planning & Execution",
-      "group": "",
-      "sourcePath": "prompts/snippets/rollout-plan.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when handing off a task to ensure the person receiving it has everything they need to succeed without coming back for clarification.",
-        "pairsWith": [
-          "mode.decide",
-          "schema.execution-brief",
-          "frame.success-criteria"
-        ]
-      },
-      "key": "schema.delegation-brief",
-      "aliases": [
-        "core.delegation-brief"
-      ],
-      "title": "schema.delegation-brief",
-      "summary": "Use when handing off a task to ensure the person receiving it has everything they need to succeed without coming back for clarification.",
-      "tags": [
-        "planning",
-        "communication",
-        "organizational learning"
-      ],
-      "copy": "Write a delegation brief for this task.\n\nInclude:\n- the goal: what done looks like, not just what to do\n- context: why this matters and how it connects to the larger objective\n- scope: what is in and out of scope — what decisions they can make without checking back\n- constraints: non-negotiables (timing, budget, quality bar, style, stakeholders to involve)\n- resources: what they have access to and who they can ask\n- check-ins: when and how to sync (not how often — when it is actually needed)\n- success signal: how you will both know the task is complete and good enough\n\nAvoid describing how to do the work. Focus on what is needed and what good looks like.\n\nTask:\n{paste task description}\n\nContext about the person receiving it (optional):\n{paste any relevant context about their background or current workload}",
-      "body": [
-        [
-          "Use when",
-          "Use when handing off a task to ensure the person receiving it has everything they need to succeed without coming back for clarification."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, schema.execution-brief, frame.success-criteria"
-        ]
-      ],
-      "family": "Planning & Execution",
-      "group": "",
-      "sourcePath": "prompts/snippets/delegation-brief.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "refine",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need a first draft that is structured enough to survive critique, not just a fast blob of text.",
-        "returns": [
-          "chosen structure",
-          "draft",
-          "weakest part of the draft",
-          "the one thing to tighten in the next revision"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.critique-argument",
-          "frame.rewrite-for-clarity"
-        ]
-      },
-      "key": "frame.brief-to-draft",
-      "aliases": [
-        "core.brief-to-draft"
-      ],
-      "title": "frame.brief-to-draft",
-      "summary": "Use when you need a first draft that is structured enough to survive critique, not just a fast blob of text.",
-      "tags": [
-        "writing",
-        "drafting",
-        "communication",
-        "revision"
-      ],
-      "copy": "Turn this brief into a draft that is clear enough to critique and refine.\n\nBefore writing:\n- infer the single most important takeaway the reader should leave with\n- choose the simplest structure that fits the audience and goal\n- flag any missing information that would materially weaken the draft\n\nThen write the draft.\n\nReturn:\n- chosen structure\n- draft\n- weakest part of the draft\n- the one thing to tighten in the next revision\n\nAudience:\n{paste audience}\n\nGoal:\n{paste goal}\n\nBrief or source points:\n{paste notes, outline, or rough brief}\n\nNon-negotiables:\n{paste tone, length, facts that must stay, or constraints}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need a first draft that is structured enough to survive critique, not just a fast blob of text."
-        ],
-        [
-          "Returns",
-          "chosen structure, draft, weakest part of the draft, the one thing to tighten in the next revision"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.critique-argument, frame.rewrite-for-clarity"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/brief-to-draft.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "refine",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when a draft is muddled, bloated, or indirect.",
-        "pairsWith": [
-          "mode.critique",
-          "frame.brief-to-draft",
-          "rubric.writing-quality"
-        ]
-      },
-      "key": "frame.rewrite-for-clarity",
-      "aliases": [
-        "core.rewrite-for-clarity"
-      ],
-      "title": "frame.rewrite-for-clarity",
-      "summary": "Use when a draft is muddled, bloated, or indirect.",
-      "tags": [
-        "writing",
-        "editing",
-        "communication"
-      ],
-      "copy": "Rewrite this for clarity.\n\nRequirements:\n- keep the meaning\n- remove redundancy\n- tighten structure\n- make the key point obvious earlier\n- preserve useful nuance\n\nText:\n{paste draft}",
-      "body": [
-        [
-          "Use when",
-          "Use when a draft is muddled, bloated, or indirect."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.brief-to-draft, rubric.writing-quality"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/rewrite-for-clarity.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you want the weaknesses in a claim, draft, or argument.",
-        "returns": [
-          "strongest part",
-          "weakest part",
-          "top three findings",
-          "what would strengthen it most"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "strategy.steelman",
-          "rubric.argument-quality"
-        ]
-      },
-      "key": "frame.critique-argument",
-      "aliases": [
-        "core.critique-argument"
-      ],
-      "title": "frame.critique-argument",
-      "summary": "Use when you want the weaknesses in a claim, draft, or argument.",
-      "tags": [
-        "critical thinking",
-        "argumentation",
-        "logic"
-      ],
-      "copy": "Critique this argument.\n\nFocus on:\n- hidden assumptions\n- weak evidence\n- logical gaps\n- overclaims\n- what a smart skeptic would attack first\n\nReturn:\n- strongest part\n- weakest part\n- top three findings\n- what would strengthen it most\n\nArgument:\n{paste argument}",
-      "body": [
-        [
-          "Use when",
-          "Use when you want the weaknesses in a claim, draft, or argument."
-        ],
-        [
-          "Returns",
-          "strongest part, weakest part, top three findings, what would strengthen it most"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, strategy.steelman, rubric.argument-quality"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/critique-argument.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "refine",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to argue a clear position with evidence and honest counter-acknowledgment.",
-        "returns": [
-          "the position stated in one sentence",
-          "two or three strongest supporting reasons with evidence",
-          "the strongest objection to this position",
-          "a direct response to that objection",
-          "what evidence would change this position"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.argument-structure",
-          "frame.critique-argument"
-        ]
-      },
-      "key": "frame.position-draft",
-      "aliases": [
-        "core.position-draft"
-      ],
-      "title": "frame.position-draft",
-      "summary": "Use when you need to argue a clear position with evidence and honest counter-acknowledgment.",
-      "tags": [
-        "argumentation",
-        "persuasion",
-        "writing"
-      ],
-      "copy": "Write a clear position on this topic.\n\nReturn:\n- the position stated in one sentence\n- two or three strongest supporting reasons with evidence\n- the strongest objection to this position\n- a direct response to that objection\n- what evidence would change this position\n\nTopic or question:\n{paste topic}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to argue a clear position with evidence and honest counter-acknowledgment."
-        ],
-        [
-          "Returns",
-          "the position stated in one sentence, two or three strongest supporting reasons with evidence, the strongest objection to this position, a direct response to that objection, what evidence would change this position"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.argument-structure, frame.critique-argument"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/position-draft.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "refine",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you need actionable feedback rather than general impressions.",
-        "returns": [
-          "the specific question I should lead with to get the most useful response",
-          "the context I should give the reviewer before asking",
-          "two or three targeted questions that surface different kinds of feedback",
-          "the question that will surface what I most want to avoid hearing but most need to know",
-          "what I should do with the feedback once I receive it"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.blind-spot-check",
-          "rubric.writing-quality"
-        ]
-      },
-      "key": "frame.feedback-request",
-      "aliases": [
-        "core.feedback-request"
-      ],
-      "title": "frame.feedback-request",
-      "summary": "Use when you need actionable feedback rather than general impressions.",
-      "tags": [
-        "feedback design",
-        "communication",
-        "continuous improvement",
-        "quality improvement"
-      ],
-      "copy": "Help me request feedback on this work in a way that produces useful signal.\n\nReturn:\n- the specific question I should lead with to get the most useful response\n- the context I should give the reviewer before asking\n- two or three targeted questions that surface different kinds of feedback\n- the question that will surface what I most want to avoid hearing but most need to know\n- what I should do with the feedback once I receive it\n\nWork to be reviewed:\n{paste the output, plan, or draft being submitted for review}\n\nWhat I want to get from the feedback:\n{paste what kind of improvement you are looking for}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need actionable feedback rather than general impressions."
-        ],
-        [
-          "Returns",
-          "the specific question I should lead with to get the most useful response, the context I should give the reviewer before asking, two or three targeted questions that surface different kinds of feedback, the question that will surface what I most want to avoid hearing but most need to know, what I should do with the feedback once I receive it"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.blind-spot-check, rubric.writing-quality"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/feedback-request.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when preparing for a negotiation, difficult conversation, or situation where conflicting interests need to be reconciled.",
-        "pairsWith": [
-          "mode.decide",
-          "frame.stakeholder-map",
-          "lens.incentive-audit"
-        ]
-      },
-      "key": "frame.negotiation-prep",
-      "aliases": [
-        "core.negotiation-prep"
-      ],
-      "title": "frame.negotiation-prep",
-      "summary": "Use when preparing for a negotiation, difficult conversation, or situation where conflicting interests need to be reconciled.",
-      "tags": [
-        "negotiation",
-        "interest-based bargaining",
-        "conflict resolution",
-        "influence"
-      ],
-      "copy": "Prepare a negotiation analysis for this situation.\n\nCover:\n- our primary interests (what we actually need, beneath stated positions)\n- their likely primary interests (infer from available context)\n- our BATNA: best alternative if no agreement is reached\n- their likely BATNA\n- the zone of possible agreement (ZOPA): the range where both sides could accept a deal\n- potential trades or package deals that create value for both sides\n- the concession to give last: what seems costly to us but matters most to them\n- the most likely objection they will raise, and how to address it honestly\n\nThen recommend an opening position strategy: what to ask for first and how to set\na credible anchor.\n\nSituation:\n{paste negotiation context and background}\n\nOur stated position vs. our actual interests:\n{paste if you can distinguish them}",
-      "body": [
-        [
-          "Use when",
-          "Use when preparing for a negotiation, difficult conversation, or situation where conflicting interests need to be reconciled."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.stakeholder-map, lens.incentive-audit"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/negotiation-prep.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a message, announcement, or change needs a plan for who hears what, when, and how.",
-        "returns": [
-          "core message: one sentence that captures what must land",
-          "audiences: list each distinct audience and what they specifically need to hear",
-          "sequencing: who should hear this first and why",
-          "channel recommendation for each audience",
-          "likely questions or objections, and prepared responses",
-          "what success looks like 48 hours after communication goes out",
-          "what to do if the message lands badly"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.stakeholder-map",
-          "lens.signaling-check"
-        ]
-      },
-      "key": "schema.communication-brief",
-      "aliases": [
-        "core.communication-brief"
-      ],
-      "title": "schema.communication-brief",
-      "summary": "Use when a message, announcement, or change needs a plan for who hears what, when, and how.",
-      "tags": [
-        "communication planning",
-        "change management",
-        "stakeholder management",
-        "messaging strategy"
-      ],
-      "copy": "Build a communication brief for this situation.\n\nReturn:\n- core message: one sentence that captures what must land\n- audiences: list each distinct audience and what they specifically need to hear\n- sequencing: who should hear this first and why\n- channel recommendation for each audience\n- likely questions or objections, and prepared responses\n- what success looks like 48 hours after communication goes out\n- what to do if the message lands badly\n\nSituation:\n{paste the change, decision, or news to communicate}\n\nAudiences:\n{paste the groups or individuals involved}",
-      "body": [
-        [
-          "Use when",
-          "Use when a message, announcement, or change needs a plan for who hears what, when, and how."
-        ],
-        [
-          "Returns",
-          "core message: one sentence that captures what must land, audiences: list each distinct audience and what they specifically need to hear, sequencing: who should hear this first and why, channel recommendation for each audience, likely questions or objections, and prepared responses, what success looks like 48 hours after communication goes out, what to do if the message lands badly"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.stakeholder-map, lens.signaling-check"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/communication-brief.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a conversation matters because alignment, commitment, or resistance will shape the outcome.",
-        "returns": [
-          "my objective: what I need to leave with",
-          "their likely objective: incentives, pressures, or fears shaping their stance",
-          "what must be true by the end for this conversation to count as progress",
-          "unknowns to resolve during the conversation",
-          "strongest likely objection or tension",
-          "evidence or examples I should bring",
-          "best opening move",
-          "best questions to ask",
-          "concessions or tradeoffs I can make without harming the real goal",
-          "minimum acceptable outcome if full alignment is not possible today",
-          "follow-up move if no decision is reached"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.stakeholder-map",
-          "lens.coordination-plan"
-        ]
-      },
-      "key": "frame.alignment-conversation-plan",
-      "aliases": [
-        "core.alignment-conversation-plan"
-      ],
-      "title": "frame.alignment-conversation-plan",
-      "summary": "Use when a conversation matters because alignment, commitment, or resistance will shape the outcome.",
-      "tags": [
-        "communication planning",
-        "stakeholder alignment",
-        "negotiation",
-        "decision making"
-      ],
-      "copy": "Plan this conversation for alignment, not just information exchange.\n\nReturn:\n- my objective: what I need to leave with\n- their likely objective: incentives, pressures, or fears shaping their stance\n- what must be true by the end for this conversation to count as progress\n- unknowns to resolve during the conversation\n- strongest likely objection or tension\n- evidence or examples I should bring\n- best opening move\n- best questions to ask\n- concessions or tradeoffs I can make without harming the real goal\n- minimum acceptable outcome if full alignment is not possible today\n- follow-up move if no decision is reached\n\nContext:\n{paste the situation, people involved, and what is at stake}\n\nMy desired outcome:\n{paste the outcome I want from the conversation}",
-      "body": [
-        [
-          "Use when",
-          "Use when a conversation matters because alignment, commitment, or resistance will shape the outcome."
-        ],
-        [
-          "Returns",
-          "my objective: what I need to leave with, their likely objective: incentives, pressures, or fears shaping their stance, what must be true by the end for this conversation to count as progress, unknowns to resolve during the conversation, strongest likely objection or tension, evidence or examples I should bring, best opening move, best questions to ask, concessions or tradeoffs I can make without harming the real goal, minimum acceptable outcome if full alignment is not possible today, follow-up move if no decision is reached"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.stakeholder-map, lens.coordination-plan"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/alignment-conversation-plan.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you need a dense source turned into something useful.",
-        "returns": [
-          "core thesis",
-          "most important supporting points",
-          "useful facts or evidence",
-          "caveats or limitations",
-          "what matters for my purpose"
-        ],
-        "pairsWith": [
-          "mode.reflect",
           "frame.extract-insights",
-          "frame.research-questions"
-        ]
+          "schema.incident-postmortem"
+        ],
+        "avoidWhen": "The outcome is still unfolding and causal chains cannot yet be traced. Use `guardrail.uncertainty` first."
       },
-      "key": "frame.summarize-source",
+      "key": "frame.cause-mapping",
       "aliases": [
-        "core.summarize-source"
+        "core.frame.cause-mapping",
+        "core.frame-cause-mapping"
       ],
-      "title": "frame.summarize-source",
-      "summary": "Use when you need a dense source turned into something useful.",
+      "title": "frame.cause-mapping",
+      "summary": "Map cause-effect chains behind an outcome; separate contributing factors from root cause.",
       "tags": [
-        "synthesis",
-        "knowledge management",
-        "comprehension"
+        "frame",
+        "cause",
+        "mapping"
       ],
-      "copy": "Summarize this source for practical use.\n\nReturn:\n- core thesis\n- most important supporting points\n- useful facts or evidence\n- caveats or limitations\n- what matters for my purpose\n\nMy purpose:\n{paste purpose}\n\nSource:\n{paste source}",
+      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nProblem or outcome:\n{paste problem or outcome}",
       "body": [
         [
+          "Purpose",
+          "Map cause-effect chains behind an outcome; separate contributing factors from root cause."
+        ],
+        [
           "Use when",
-          "Use when you need a dense source turned into something useful."
+          "An outcome needs explanation beyond surface description. The main risk is misidentifying a symptom as the cause."
+        ],
+        [
+          "Expects",
+          "A problem, failure, or outcome to trace."
+        ],
+        [
+          "Adds",
+          "A multi-level causal chain with branching points and the earliest feasible intervention identified."
         ],
         [
           "Returns",
-          "core thesis, most important supporting points, useful facts or evidence, caveats or limitations, what matters for my purpose"
+          "visible symptom, causal chain (≥ 3 levels), branch points, earliest intervention point, most likely root cause"
         ],
         [
           "Pairs with",
-          "mode.reflect, frame.extract-insights, frame.research-questions"
+          "mode.reflect, mode.critique, frame.extract-insights, schema.incident-postmortem"
+        ],
+        [
+          "Avoid when",
+          "The outcome is still unfolding and causal chains cannot yet be traced. Use `guardrail.uncertainty` first."
         ]
       ],
-      "family": "Research & Synthesis",
+      "family": "Prompt Blocks",
       "group": "",
-      "sourcePath": "prompts/snippets/summarize-source.md"
+      "sourcePath": "prompts/blocks/frame.cause-mapping/prompt.md"
     },
     {
       "section": "Block",
       "canonicalType": "frame",
       "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you have consumed multiple sources and need to integrate them into a coherent, unified view rather than a list of summaries.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.summarize-source",
-          "frame.extract-insights"
-        ]
-      },
-      "key": "frame.synthesize-sources",
-      "aliases": [
-        "core.synthesize-sources"
-      ],
-      "title": "frame.synthesize-sources",
-      "summary": "Use when you have consumed multiple sources and need to integrate them into a coherent, unified view rather than a list of summaries.",
-      "tags": [
-        "knowledge management",
-        "synthesis",
-        "research",
-        "epistemics"
-      ],
-      "copy": "Synthesize these sources into a unified analysis.\n\nSteps:\n- identify the core question or problem all the sources address\n- map the points of agreement across sources\n- map the points of genuine disagreement, noting what drives each difference\n  (different evidence, different values, different framing, or different time period)\n- identify any significant gap: the important point that none of the sources address\n- produce an integrated position that honestly reflects the weight of evidence,\n  explicitly noting remaining uncertainty\n\nFormat as a synthesis, not as a sequence of summaries. Cite the source when\ncrediting a specific claim.\n\nSources:\n{paste or summarize the key content from each source, labelled Source 1, Source 2, etc.}\n\nCentral question:\n{paste the question or problem you are trying to resolve}",
-      "body": [
-        [
-          "Use when",
-          "Use when you have consumed multiple sources and need to integrate them into a coherent, unified view rather than a list of summaries."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.summarize-source, frame.extract-insights"
-        ]
-      ],
-      "family": "Research & Synthesis",
-      "group": "",
-      "sourcePath": "prompts/snippets/synthesize-sources.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
       "stage": "conclude",
       "strength": "light",
       "contract": {
-        "useWhen": "Use when notes, transcripts, or documents contain signal buried in noise.",
+        "purpose": "Extract the highest-leverage findings from evidence, experience, or analysis.",
+        "useWhen": "Notes, data, or reviewed material contains signal buried in noise and the goal is actionable takeaway, not faithful summary.",
+        "expects": "Any material plus the purpose or decision it should inform.",
+        "adds": "Structured extraction that ties each insight to evidence and an implication.",
         "returns": [
           "key insight",
           "why it matters",
@@ -2737,25 +1234,40 @@ globalThis.SITE_DATA = {
         "pairsWith": [
           "mode.reflect",
           "frame.cause-mapping",
-          "frame.plan-next-actions"
-        ]
+          "schema.plan-next-actions",
+          "rubric.research-quality"
+        ],
+        "avoidWhen": "The goal is faithful summary rather than actionable signal. Use `frame.summarize-source` instead."
       },
       "key": "frame.extract-insights",
       "aliases": [
-        "core.extract-insights"
+        "core.frame.extract-insights",
+        "core.frame-extract-insights"
       ],
       "title": "frame.extract-insights",
-      "summary": "Use when notes, transcripts, or documents contain signal buried in noise.",
+      "summary": "Extract the highest-leverage findings from evidence, experience, or analysis.",
       "tags": [
-        "synthesis",
-        "analysis",
-        "knowledge management"
+        "frame",
+        "extract",
+        "insights"
       ],
-      "copy": "Extract the highest-value insights from this material.\n\nReturn:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\nMy purpose:\n{paste purpose or decision this should inform}\n\nMaterial:\n{paste material}",
+      "copy": "Extract the highest-value insights from this material.\n\nReturn for each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\nMy purpose:\n{paste purpose or decision this should inform}\n\nMaterial:\n{paste material}",
       "body": [
         [
+          "Purpose",
+          "Extract the highest-leverage findings from evidence, experience, or analysis."
+        ],
+        [
           "Use when",
-          "Use when notes, transcripts, or documents contain signal buried in noise."
+          "Notes, data, or reviewed material contains signal buried in noise and the goal is actionable takeaway, not faithful summary."
+        ],
+        [
+          "Expects",
+          "Any material plus the purpose or decision it should inform."
+        ],
+        [
+          "Adds",
+          "Structured extraction that ties each insight to evidence and an implication."
         ],
         [
           "Returns",
@@ -2763,3426 +1275,606 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.reflect, frame.cause-mapping, frame.plan-next-actions"
-        ]
-      ],
-      "family": "Research & Synthesis",
-      "group": "",
-      "sourcePath": "prompts/snippets/extract-insights.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to understand why an outcome happened, not just what happened.",
-        "pairsWith": [
-          "mode.reflect",
-          "mode.critique",
-          "frame.extract-insights"
-        ]
-      },
-      "key": "frame.cause-mapping",
-      "aliases": [
-        "core.cause-mapping"
-      ],
-      "title": "frame.cause-mapping",
-      "summary": "Use when you need to understand why an outcome happened, not just what happened.",
-      "tags": [
-        "root cause analysis",
-        "diagnostics",
-        "systems thinking"
-      ],
-      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nProblem or outcome:\n{paste problem or outcome}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to understand why an outcome happened, not just what happened."
+          "mode.reflect, frame.cause-mapping, schema.plan-next-actions, rubric.research-quality"
         ],
         [
-          "Pairs with",
-          "mode.reflect, mode.critique, frame.extract-insights"
+          "Avoid when",
+          "The goal is faithful summary rather than actionable signal. Use `frame.summarize-source` instead."
         ]
       ],
-      "family": "Research & Synthesis",
+      "family": "Prompt Blocks",
       "group": "",
-      "sourcePath": "prompts/snippets/cause-mapping.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "explore",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you need to map what to investigate next.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.hypothesis-generation",
-          "frame.synthesize-sources"
-        ]
-      },
-      "key": "frame.research-questions",
-      "aliases": [
-        "core.research-questions"
-      ],
-      "title": "frame.research-questions",
-      "summary": "Use when you need to map what to investigate next.",
-      "tags": [
-        "research design",
-        "epistemic planning",
-        "inquiry"
-      ],
-      "copy": "Generate the best research questions for this topic.\n\nRequirements:\n- prioritize questions that would materially improve understanding\n- separate foundational questions from edge-case questions\n- note which questions are most decision-relevant\n- note what would change if each important question were answered\n\nMy purpose:\n{paste the decision, project, or output this research supports}\n\nTopic:\n{paste topic}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to map what to investigate next."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.hypothesis-generation, frame.synthesize-sources"
-        ]
-      ],
-      "family": "Research & Synthesis",
-      "group": "",
-      "sourcePath": "prompts/snippets/research-questions.md"
+      "sourcePath": "prompts/blocks/frame.extract-insights/prompt.md"
     },
     {
       "section": "Block",
       "canonicalType": "guardrail",
       "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you want to surface what you are probably not thinking about.",
-        "returns": [
-          "blind spots identified",
-          "most consequential blind spot",
-          "the question I should be asking but am not",
-          "what a skeptical outside observer would probably say"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.disconfirming-evidence",
-          "guardrail.uncertainty"
-        ]
-      },
-      "key": "guardrail.blind-spot-check",
-      "aliases": [
-        "core.blind-spot-check"
-      ],
-      "title": "guardrail.blind-spot-check",
-      "summary": "Use when you want to surface what you are probably not thinking about.",
-      "tags": [
-        "critical thinking",
-        "reflection",
-        "epistemics"
-      ],
-      "copy": "Surface the blind spots I am probably missing here.\n\nLook for:\n- perspectives of stakeholders I may be underweighting\n- common failure categories that apply to this type of problem\n- hidden incentives or dynamics I may be ignoring\n- the question I should be asking but am not\n- evidence I might be filtering out because it is inconvenient\n\nReturn:\n- blind spots identified\n- most consequential blind spot\n- the question I should be asking but am not\n- what a skeptical outside observer would probably say\n\nContext:\n{paste context}",
-      "body": [
-        [
-          "Use when",
-          "Use when you want to surface what you are probably not thinking about."
-        ],
-        [
-          "Returns",
-          "blind spots identified, most consequential blind spot, the question I should be asking but am not, what a skeptical outside observer would probably say"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.disconfirming-evidence, guardrail.uncertainty"
-        ]
-      ],
-      "family": "Review & Reflection",
-      "group": "",
-      "sourcePath": "prompts/snippets/blind-spot-check.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when buy-in, resistance, or coordination will shape the outcome.",
-        "returns": [
-          "biggest alignment risk",
-          "the single most important conversation to have next"
-        ],
-        "pairsWith": [
-          "mode.explore",
-          "lens.incentive-audit",
-          "lens.coordination-plan"
-        ]
-      },
-      "key": "frame.stakeholder-map",
-      "aliases": [
-        "core.stakeholder-map"
-      ],
-      "title": "frame.stakeholder-map",
-      "summary": "Use when buy-in, resistance, or coordination will shape the outcome.",
-      "tags": [
-        "stakeholder analysis",
-        "change management",
-        "influence"
-      ],
-      "copy": "Map the stakeholders in this situation.\n\nReturn for each stakeholder:\n- stakeholder\n- goals\n- likely concerns\n- influence level\n- current support level\n- what they need to say yes\n- best communication move\n\nThen return:\n- biggest alignment risk\n- the single most important conversation to have next\n\nDecision, project, or goal:\n{paste the outcome you are trying to achieve}\n\nSituation:\n{paste situation}",
-      "body": [
-        [
-          "Use when",
-          "Use when buy-in, resistance, or coordination will shape the outcome."
-        ],
-        [
-          "Returns",
-          "biggest alignment risk, the single most important conversation to have next"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, lens.incentive-audit, lens.coordination-plan"
-        ]
-      ],
-      "family": "Review & Reflection",
-      "group": "",
-      "sourcePath": "prompts/snippets/stakeholder-map.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when a situation feels confusing because facts, interpretations, and assumptions are getting mixed together.",
-        "pairsWith": [
-          "mode.critique",
-          "frame.log-triage",
-          "frame.cause-mapping"
-        ]
-      },
-      "key": "guardrail.triage-the-unknown",
-      "aliases": [
-        "core.triage-the-unknown"
-      ],
-      "title": "guardrail.triage-the-unknown",
-      "summary": "Use when a situation feels confusing because facts, interpretations, and assumptions are getting mixed together.",
-      "tags": [
-        "diagnostics",
-        "epistemics",
-        "debugging",
-        "decision hygiene"
-      ],
-      "copy": "Triage this ambiguous situation before trying to solve it.\n\nSeparate:\n- observed facts: what is directly known or evidenced\n- interpretations: what story is being told about those facts\n- assumptions: what is currently being taken for granted\n- unknowns: what is genuinely missing\n\nThen produce:\n- the two or three most plausible explanations\n- the single confusion that matters most to resolve first\n- the smallest discriminating check or question that would collapse uncertainty fastest\n- what not to do yet because it would commit too early\n\nSituation:\n{paste the symptoms, questions, observations, and available evidence}",
-      "body": [
-        [
-          "Use when",
-          "Use when a situation feels confusing because facts, interpretations, and assumptions are getting mixed together."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.log-triage, frame.cause-mapping"
-        ]
-      ],
-      "family": "Review & Reflection",
-      "group": "",
-      "sourcePath": "prompts/snippets/triage-the-unknown.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you want to record a decision well enough to reflect on it later.",
-        "returns": [
-          "decision",
-          "options considered",
-          "criteria used",
-          "key assumptions",
-          "confidence level",
-          "what would prove this wrong",
-          "next checkpoint date"
-        ],
-        "pairsWith": [
-          "mode.reflect",
-          "mode.decide",
-          "rubric.reflection-quality"
-        ]
-      },
-      "key": "schema.decision-journal-entry",
-      "aliases": [
-        "core.decision-journal-entry"
-      ],
-      "title": "schema.decision-journal-entry",
-      "summary": "Use when you want to record a decision well enough to reflect on it later.",
-      "tags": [
-        "reflection",
-        "decision tracking",
-        "personal effectiveness"
-      ],
-      "copy": "Turn this into a decision journal entry.\n\nReturn:\n- decision\n- options considered\n- criteria used\n- key assumptions\n- confidence level\n- what would prove this wrong\n- next checkpoint date\n\nDecision context:\n{paste context}",
-      "body": [
-        [
-          "Use when",
-          "Use when you want to record a decision well enough to reflect on it later."
-        ],
-        [
-          "Returns",
-          "decision, options considered, criteria used, key assumptions, confidence level, what would prove this wrong, next checkpoint date"
-        ],
-        [
-          "Pairs with",
-          "mode.reflect, mode.decide, rubric.reflection-quality"
-        ]
-      ],
-      "family": "Review & Reflection",
-      "group": "",
-      "sourcePath": "prompts/snippets/decision-journal-entry.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when reflecting on a week of work or decisions.",
-        "returns": [
-          "what moved forward",
-          "what stalled",
-          "what created the most value",
-          "what created friction",
-          "what I should stop doing",
-          "what I should repeat next week",
-          "the single best focus for next week"
-        ],
-        "pairsWith": [
-          "mode.reflect",
-          "frame.cause-mapping",
-          "rubric.reflection-quality"
-        ]
-      },
-      "key": "frame.weekly-review",
-      "aliases": [
-        "core.weekly-review"
-      ],
-      "title": "frame.weekly-review",
-      "summary": "Use when reflecting on a week of work or decisions.",
-      "tags": [
-        "reflection",
-        "personal effectiveness",
-        "retrospective"
-      ],
-      "copy": "Run a useful weekly review.\n\nReturn:\n- what moved forward\n- what stalled\n- what created the most value\n- what created friction\n- what I should stop doing\n- what I should repeat next week\n- the single best focus for next week\n\nNotes:\n{paste notes}",
-      "body": [
-        [
-          "Use when",
-          "Use when reflecting on a week of work or decisions."
-        ],
-        [
-          "Returns",
-          "what moved forward, what stalled, what created the most value, what created friction, what I should stop doing, what I should repeat next week, the single best focus for next week"
-        ],
-        [
-          "Pairs with",
-          "mode.reflect, frame.cause-mapping, rubric.reflection-quality"
-        ]
-      ],
-      "family": "Review & Reflection",
-      "group": "",
-      "sourcePath": "prompts/snippets/weekly-review.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
       "stage": "critique",
       "strength": "heavy",
       "contract": {
-        "useWhen": "Use when reviewing a pull request, diff, or piece of code and you want to give structured, actionable feedback.",
-        "pairsWith": [
-          "mode.critique",
-          "lens.invariant-check",
-          "lens.interface-contract-review"
-        ]
-      },
-      "key": "frame.code-review",
-      "aliases": [
-        "core.code-review"
-      ],
-      "title": "frame.code-review",
-      "summary": "Use when reviewing a pull request, diff, or piece of code and you want to give structured, actionable feedback.",
-      "tags": [
-        "software engineering",
-        "critical thinking",
-        "quality"
-      ],
-      "copy": "Review this code and give structured, actionable feedback.\n\nCover:\n1. Correctness: does it do what it is supposed to? Are there edge cases it mishandles?\n2. Logic errors: are there off-by-one errors, incorrect conditionals, or missed branches?\n3. Security: are there injection points, untrusted inputs, or exposed secrets?\n4. Performance: are there obvious bottlenecks — O(n²) operations, repeated reads, redundant work?\n5. Maintainability: is the code understandable, correctly named, and structured for change?\n6. Test coverage: what cases are not covered and are most likely to fail in production?\n\nFormat each issue as:\n- Location (file, function, or line reference)\n- Issue (specific and factual)\n- Suggested fix or approach\n\nOnly flag real issues. Do not suggest changes that are purely stylistic preference\nwithout an objective cost.\n\nCode:\n{paste code under review}\n\nLanguage and context:\n{paste language, framework, and purpose of this code}",
-      "body": [
-        [
-          "Use when",
-          "Use when reviewing a pull request, diff, or piece of code and you want to give structured, actionable feedback."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.invariant-check, lens.interface-contract-review"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/code-review.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a bug report is vague, inconsistent, or dependent on hidden state and you need a reproducible investigation target.",
+        "purpose": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
+        "useWhen": "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged.",
+        "expects": "A plan, decision, argument, or recommendation.",
+        "adds": "An explicit inventory of assumptions, typed by category and ranked by consequence if false.",
         "returns": [
-          "expected behavior",
-          "actual behavior",
-          "exact reproduction steps, or the missing details that prevent them",
-          "environment dimensions to control: OS, browser, device, flags, data state, timing, permissions",
-          "evidence to capture while reproducing: logs, screenshots, requests, traces, database state",
-          "likely sources of hidden state or non-determinism",
-          "smallest reliable reproduction target: test, endpoint, page flow, worker, or script",
-          "next move if the bug still cannot be reproduced"
+          "assumption statement",
+          "explicit or implied",
+          "type (empirical / causal / value)",
+          "confidence (high / medium / low)",
+          "impact if false",
+          "what would falsify it"
         ],
-        "pairsWith": [
-          "mode.critique",
-          "lens.debugger-loop",
-          "lens.interface-contract-review"
-        ]
-      },
-      "key": "frame.bug-reproduction-brief",
-      "aliases": [
-        "core.bug-reproduction-brief"
-      ],
-      "title": "frame.bug-reproduction-brief",
-      "summary": "Use when a bug report is vague, inconsistent, or dependent on hidden state and you need a reproducible investigation target.",
-      "tags": [
-        "software engineering",
-        "debugging",
-        "reproduction",
-        "quality"
-      ],
-      "copy": "Turn this bug report or symptom into a reproducible investigation brief.\n\nReturn:\n- expected behavior\n- actual behavior\n- exact reproduction steps, or the missing details that prevent them\n- environment dimensions to control: OS, browser, device, flags, data state, timing, permissions\n- evidence to capture while reproducing: logs, screenshots, requests, traces, database state\n- likely sources of hidden state or non-determinism\n- smallest reliable reproduction target: test, endpoint, page flow, worker, or script\n- next move if the bug still cannot be reproduced\n\nBug report or symptom:\n{paste the report, issue description, or observed behavior}\n\nKnown evidence:\n{paste logs, screenshots, recent changes, or user reports}",
-      "body": [
-        [
-          "Use when",
-          "Use when a bug report is vague, inconsistent, or dependent on hidden state and you need a reproducible investigation target."
-        ],
-        [
-          "Returns",
-          "expected behavior, actual behavior, exact reproduction steps, or the missing details that prevent them, environment dimensions to control: OS, browser, device, flags, data state, timing, permissions, evidence to capture while reproducing: logs, screenshots, requests, traces, database state, likely sources of hidden state or non-determinism, smallest reliable reproduction target: test, endpoint, page flow, worker, or script, next move if the bug still cannot be reproduced"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.debugger-loop, lens.interface-contract-review"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/bug-reproduction-brief.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you have logs, traces, or event streams but do not yet know which signals are symptoms, causes, or noise.",
-        "returns": [
-          "timeline summary",
-          "first anomalous event",
-          "top hypotheses",
-          "missing telemetry",
-          "highest-information next check",
-          "what should not yet be concluded"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.triage-the-unknown",
-          "frame.bug-reproduction-brief"
-        ]
-      },
-      "key": "frame.log-triage",
-      "aliases": [
-        "core.log-triage"
-      ],
-      "title": "frame.log-triage",
-      "summary": "Use when you have logs, traces, or event streams but do not yet know which signals are symptoms, causes, or noise.",
-      "tags": [
-        "software engineering",
-        "observability",
-        "debugging",
-        "incident response"
-      ],
-      "copy": "Triage these logs or traces without jumping to a fix.\n\nWork through:\n1. Timeline - what happened first, what changed next, and what happened immediately before the visible failure?\n2. Signal separation - which entries are likely symptoms, cause candidates, retries, or secondary fallout?\n3. Last known good state - what appears to have been working before the anomaly?\n4. First anomalous event - what is the earliest event that meaningfully departs from normal behavior?\n5. Missing telemetry - what key observation is absent and prevents confident diagnosis?\n6. Hypotheses - generate two to four plausible explanations, with supporting evidence and contradictions for each\n\nReturn:\n- timeline summary\n- first anomalous event\n- top hypotheses\n- missing telemetry\n- highest-information next check\n- what should not yet be concluded\n\nLogs, traces, or events:\n{paste the relevant signals}\n\nSystem context and recent changes:\n{paste architecture context, deploys, config changes, or traffic shifts}",
-      "body": [
-        [
-          "Use when",
-          "Use when you have logs, traces, or event streams but do not yet know which signals are symptoms, causes, or noise."
-        ],
-        [
-          "Returns",
-          "timeline summary, first anomalous event, top hypotheses, missing telemetry, highest-information next check, what should not yet be concluded"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.triage-the-unknown, frame.bug-reproduction-brief"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/log-triage.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to understand how a behavior actually flows through a codebase before debugging, refactoring, or extending it.",
-        "returns": [
-          "entry points",
-          "main execution path",
-          "important branch points, feature flags, and fallback paths",
-          "external calls and trust boundaries",
-          "state mutations and persistence points",
-          "caches, queues, background jobs, or async boundaries touched",
-          "best place to instrument, log, or breakpoint",
-          "safest seam for a change"
-        ],
-        "pairsWith": [
-          "mode.explore",
-          "lens.invariant-check",
-          "lens.interface-contract-review"
-        ]
-      },
-      "key": "frame.codepath-walkthrough",
-      "aliases": [
-        "core.codepath-walkthrough"
-      ],
-      "title": "frame.codepath-walkthrough",
-      "summary": "Use when you need to understand how a behavior actually flows through a codebase before debugging, refactoring, or extending it.",
-      "tags": [
-        "software engineering",
-        "code comprehension",
-        "debugging",
-        "architecture"
-      ],
-      "copy": "Map the code path for this behavior or request.\n\nReturn:\n- entry points\n- main execution path\n- important branch points, feature flags, and fallback paths\n- external calls and trust boundaries\n- state mutations and persistence points\n- caches, queues, background jobs, or async boundaries touched\n- best place to instrument, log, or breakpoint\n- safest seam for a change\n\nBehavior or request to trace:\n{paste the user flow, API request, job, or failing behavior}\n\nKnown code or architecture context:\n{paste any file paths, components, or diagrams already known}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to understand how a behavior actually flows through a codebase before debugging, refactoring, or extending it."
-        ],
-        [
-          "Returns",
-          "entry points, main execution path, important branch points, feature flags, and fallback paths, external calls and trust boundaries, state mutations and persistence points, caches, queues, background jobs, or async boundaries touched, best place to instrument, log, or breakpoint, safest seam for a change"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, lens.invariant-check, lens.interface-contract-review"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/codepath-walkthrough.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a code change seems local but might have a larger blast radius across contracts, state, or operations.",
-        "returns": [
-          "directly affected components",
-          "indirectly affected components",
-          "highest-risk edge case",
-          "most likely user-visible failure if the change is wrong",
-          "pre-merge checks",
-          "post-release monitoring plan"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "lens.invariant-check",
-          "lens.interface-contract-review"
-        ]
-      },
-      "key": "guardrail.change-impact-review",
-      "aliases": [
-        "core.change-impact-review"
-      ],
-      "title": "guardrail.change-impact-review",
-      "summary": "Use when a code change seems local but might have a larger blast radius across contracts, state, or operations.",
-      "tags": [
-        "software engineering",
-        "change management",
-        "risk management",
-        "code review"
-      ],
-      "copy": "Assess the blast radius of this proposed change before it ships.\n\nReview:\n1. Directly affected components - what code paths are being changed on purpose?\n2. Indirectly affected components - what depends on those paths, contracts, schemas, caches, queues, or permissions?\n3. Boundary risk - what external callers, background jobs, or operators could experience breakage first?\n4. Partial rollout risk - what fails if this change is only partly deployed, behind a flag, or rolled back?\n5. Test implications - what must be covered before merge to trust the change?\n6. Observability implications - what should be monitored immediately after rollout?\n\nReturn:\n- directly affected components\n- indirectly affected components\n- highest-risk edge case\n- most likely user-visible failure if the change is wrong\n- pre-merge checks\n- post-release monitoring plan\n\nChange description or diff summary:\n{paste the proposed change}\n\nSystem context:\n{paste architecture notes, relevant services, or module boundaries}",
-      "body": [
-        [
-          "Use when",
-          "Use when a code change seems local but might have a larger blast radius across contracts, state, or operations."
-        ],
-        [
-          "Returns",
-          "directly affected components, indirectly affected components, highest-risk edge case, most likely user-visible failure if the change is wrong, pre-merge checks, post-release monitoring plan"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.invariant-check, lens.interface-contract-review"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/change-impact-review.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when a schema, API, storage model, config shape, or workflow must change without breaking live traffic or corrupting state.",
-        "returns": [
-          "source state and target state",
-          "compatibility strategy: expand-contract, dual read, dual write, backfill, version bridge, or other",
-          "invariants that must stay true throughout the migration",
-          "phased migration plan",
-          "verification points after each phase",
-          "rollback or stop conditions",
-          "cleanup step to reach the final simplified end state",
-          "biggest irreversible risk"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "lens.abstraction-boundary",
-          "lens.failure-mode-analysis"
-        ]
-      },
-      "key": "frame.migration-plan",
-      "aliases": [
-        "core.migration-plan"
-      ],
-      "title": "frame.migration-plan",
-      "summary": "Use when a schema, API, storage model, config shape, or workflow must change without breaking live traffic or corrupting state.",
-      "tags": [
-        "software engineering",
-        "migration",
-        "rollout",
-        "risk management"
-      ],
-      "copy": "Plan a safe migration for this change.\n\nReturn:\n- source state and target state\n- compatibility strategy: expand-contract, dual read, dual write, backfill, version bridge, or other\n- invariants that must stay true throughout the migration\n- phased migration plan\n- verification points after each phase\n- rollback or stop conditions\n- cleanup step to reach the final simplified end state\n- biggest irreversible risk\n\nMigration target:\n{paste the schema, API, config, or state change}\n\nOperational context:\n{paste traffic patterns, dependencies, release constraints, and data sensitivity}",
-      "body": [
-        [
-          "Use when",
-          "Use when a schema, API, storage model, config shape, or workflow must change without breaking live traffic or corrupting state."
-        ],
-        [
-          "Returns",
-          "source state and target state, compatibility strategy: expand-contract, dual read, dual write, backfill, version bridge, or other, invariants that must stay true throughout the migration, phased migration plan, verification points after each phase, rollback or stop conditions, cleanup step to reach the final simplified end state, biggest irreversible risk"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, lens.abstraction-boundary, lens.failure-mode-analysis"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/migration-plan.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when deciding whether a change is actually ready to ship, not just feature-complete.",
-        "returns": [
-          "release verdict: ship now / ship behind guardrails / fix before ship",
-          "blockers",
-          "watch items",
-          "first 30 minutes monitoring plan",
-          "trigger to halt or rollback"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.test-strategy",
-          "frame.rollout-plan"
-        ]
-      },
-      "key": "guardrail.release-readiness",
-      "aliases": [
-        "core.release-readiness"
-      ],
-      "title": "guardrail.release-readiness",
-      "summary": "Use when deciding whether a change is actually ready to ship, not just feature-complete.",
-      "tags": [
-        "software engineering",
-        "release engineering",
-        "operations",
-        "risk management"
-      ],
-      "copy": "Assess whether this change is ready to release.\n\nCheck:\n1. Correctness confidence - what evidence says the change works in the cases that matter most?\n2. Operational visibility - what metrics, logs, traces, or alerts will show success or failure quickly?\n3. Rollback path - can this be reversed safely and quickly if needed?\n4. Dependency readiness - what external systems, migrations, support steps, or stakeholders must be ready first?\n5. User and operator readiness - what docs, runbooks, support notes, or comms should exist before ship?\n6. Control mechanisms - feature flag, kill switch, circuit breaker, rate limit, or staged rollout options\n7. Known unknowns - what is still unproven and how dangerous is it?\n\nReturn:\n- release verdict: ship now / ship behind guardrails / fix before ship\n- blockers\n- watch items\n- first 30 minutes monitoring plan\n- trigger to halt or rollback\n\nChange or release candidate:\n{paste the feature, fix, or release summary}\n\nKnown evidence:\n{paste test results, rollout constraints, operational context, and open risks}",
-      "body": [
-        [
-          "Use when",
-          "Use when deciding whether a change is actually ready to ship, not just feature-complete."
-        ],
-        [
-          "Returns",
-          "release verdict: ship now / ship behind guardrails / fix before ship, blockers, watch items, first 30 minutes monitoring plan, trigger to halt or rollback"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.test-strategy, frame.rollout-plan"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/release-readiness.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when code needs to be improved structurally without changing its behaviour, and you want to plan the work safely before touching anything.",
-        "pairsWith": [
-          "mode.decide",
-          "lens.complexity-tradeoff",
-          "frame.test-strategy"
-        ]
-      },
-      "key": "frame.refactor-plan",
-      "aliases": [
-        "core.refactor-plan"
-      ],
-      "title": "frame.refactor-plan",
-      "summary": "Use when code needs to be improved structurally without changing its behaviour, and you want to plan the work safely before touching anything.",
-      "tags": [
-        "software engineering",
-        "planning",
-        "quality"
-      ],
-      "copy": "Create a refactoring plan for this code.\n\nAssess the current state:\n- the primary structural problems (not style — things that make change expensive or risky)\n- the business logic or behaviour that must be preserved exactly\n- any parts of the code that are difficult to test as currently structured\n\nPlan the refactoring in safe, incremental steps:\n- each step should leave the code in a functioning state\n- earlier steps should not require later steps to complete\n- identify the step where test coverage can first be added if it is missing now\n- flag the step with the highest regression risk\n\nState the end state: what does the code structure look like when the refactoring is done?\n\nCode to refactor:\n{paste the code}\n\nConstraints (language, framework, things that cannot change):\n{paste constraints}",
-      "body": [
-        [
-          "Use when",
-          "Use when code needs to be improved structurally without changing its behaviour, and you want to plan the work safely before touching anything."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, lens.complexity-tradeoff, frame.test-strategy"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/refactor-plan.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you do not need a full test strategy, just a compact set of high-value tests for one behavior, bug, or change.",
-        "returns": [
-          "core happy-path test",
-          "boundary tests",
-          "error-path tests",
-          "regression test for the known bug or risk",
-          "contract or integration test if a boundary is involved",
-          "minimal fixture or setup data needed",
-          "what not to test here because it belongs at another layer"
-        ],
-        "pairsWith": [
-          "frame.requirements-decomposition",
-          "lens.invariant-check",
-          "frame.test-strategy"
-        ]
-      },
-      "key": "frame.test-case-design",
-      "aliases": [
-        "core.test-case-design"
-      ],
-      "title": "frame.test-case-design",
-      "summary": "Use when you do not need a full test strategy, just a compact set of high-value tests for one behavior, bug, or change.",
-      "tags": [
-        "software engineering",
-        "testing",
-        "quality",
-        "regression prevention"
-      ],
-      "copy": "Design a compact, high-value test set for this behavior or change.\n\nReturn:\n- core happy-path test\n- boundary tests\n- error-path tests\n- regression test for the known bug or risk\n- contract or integration test if a boundary is involved\n- minimal fixture or setup data needed\n- what not to test here because it belongs at another layer\n\nBehavior, bug, or change:\n{paste the requirement, bug, or diff summary}\n\nLanguage, test framework, and relevant constraints:\n{paste tooling, framework, and any setup limitations}",
-      "body": [
-        [
-          "Use when",
-          "Use when you do not need a full test strategy, just a compact set of high-value tests for one behavior, bug, or change."
-        ],
-        [
-          "Returns",
-          "core happy-path test, boundary tests, error-path tests, regression test for the known bug or risk, contract or integration test if a boundary is involved, minimal fixture or setup data needed, what not to test here because it belongs at another layer"
-        ],
-        [
-          "Pairs with",
-          "frame.requirements-decomposition, lens.invariant-check, frame.test-strategy"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/test-case-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when designing or auditing the test coverage for a system, module, or feature.",
-        "pairsWith": [
-          "mode.critique",
-          "frame.requirements-decomposition",
-          "frame.release-readiness"
-        ]
-      },
-      "key": "frame.test-strategy",
-      "aliases": [
-        "core.test-strategy"
-      ],
-      "title": "frame.test-strategy",
-      "summary": "Use when designing or auditing the test coverage for a system, module, or feature.",
-      "tags": [
-        "software engineering",
-        "risk management",
-        "quality"
-      ],
-      "copy": "Design a test strategy for this system or feature.\n\nCover:\n1. Risk map: what are the highest-risk behaviours — where would a bug cause the worst outcome?\n2. Unit boundaries: what are the smallest testable units and what contracts do they have?\n3. Integration points: which component boundaries are most likely to fail?\n4. Happy path: what does the minimally working case look like?\n5. Edge cases and error paths: what inputs, states, or conditions are most likely to break things?\n6. Test types recommended: unit / integration / contract / end-to-end / load — which are needed and why?\n7. What should NOT be tested at a low level (because it would make tests brittle without adding value)?\n\nThen identify: what is the single most valuable test that does not exist yet?\n\nSystem or feature:\n{paste description, spec, or existing test suite}\n\nLanguage and framework:\n{paste language and testing tools in use}",
-      "body": [
-        [
-          "Use when",
-          "Use when designing or auditing the test coverage for a system, module, or feature."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.requirements-decomposition, frame.release-readiness"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/test-strategy.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a high-level feature, epic, or user need must be broken into clear, independently shippable requirements before estimation or implementation begins.",
-        "pairsWith": [
-          "frame.clarify-task",
-          "frame.define-success-metrics",
-          "frame.test-strategy"
-        ]
-      },
-      "key": "frame.requirements-decomposition",
-      "aliases": [
-        "core.requirements-decomposition"
-      ],
-      "title": "frame.requirements-decomposition",
-      "summary": "Use when a high-level feature, epic, or user need must be broken into clear, independently shippable requirements before estimation or implementation begins.",
-      "tags": [
-        "software engineering",
-        "planning",
-        "communication"
-      ],
-      "copy": "Decompose this feature or requirement into clear, independently testable stories.\n\nFor each story:\n- state it as a specific capability the system should have after the story is complete\n- describe the acceptance criteria (what a tester would verify)\n- identify dependencies on other stories\n- estimate implementation complexity: small / medium / large\n\nAfter the stories:\n- identify the minimum viable subset that would deliver something demonstrably useful\n- flag any story that hides significant unknowns requiring a spike before estimation is reliable\n- note any non-functional requirements (performance, security, observability) that apply across multiple stories\n\nFeature or requirement:\n{paste the high-level description}\n\nContext (system, users, constraints):\n{paste relevant context}",
-      "body": [
-        [
-          "Use when",
-          "Use when a high-level feature, epic, or user need must be broken into clear, independently shippable requirements before estimation or implementation begins."
-        ],
-        [
-          "Pairs with",
-          "frame.clarify-task, frame.define-success-metrics, frame.test-strategy"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/requirements-decomposition.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when interpreting results from an experiment, A/B test, or data analysis to avoid acting on noise.",
-        "pairsWith": [
-          "frame.experiment-design",
-          "lens.base-rate-check",
-          "frame.interpret-regression"
-        ]
-      },
-      "key": "guardrail.statistical-significance-check",
-      "aliases": [
-        "core.statistical-significance-check"
-      ],
-      "title": "guardrail.statistical-significance-check",
-      "summary": "Use when interpreting results from an experiment, A/B test, or data analysis to avoid acting on noise.",
-      "tags": [
-        "statistics",
-        "epistemics",
-        "decision theory"
-      ],
-      "copy": "Interpret these test results with statistical rigour.\n\nCheck:\n1. Sample size: was the sample large enough to detect the effect size that would actually matter for a decision?\n2. Pre-registration: was the hypothesis and primary metric set before data collection, or post-hoc?\n3. Statistical significance: what is the p-value and confidence interval on the primary metric?\n4. Practical significance: is the effect size large enough to matter, even if statistically significant?\n5. Multiple comparisons: were many metrics or segments tested? If so, inflate the significance threshold accordingly.\n6. Novelty effects: could the result reflect short-term response to change rather than true steady-state behaviour?\n7. Segment breakdown: does the effect hold across key sub-groups, or is it driven by one segment?\n\nVerdict: should this result be acted on, replicated, or discarded — and why?\n\nExperiment or test results:\n{paste result summary: metric, p-value, confidence interval, sample size, duration}",
-      "body": [
-        [
-          "Use when",
-          "Use when interpreting results from an experiment, A/B test, or data analysis to avoid acting on noise."
-        ],
-        [
-          "Pairs with",
-          "frame.experiment-design, lens.base-rate-check, frame.interpret-regression"
-        ]
-      ],
-      "family": "Statistics",
-      "group": "",
-      "sourcePath": "prompts/snippets/statistical-significance-check.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when an observed association is being used to justify a causal claim or a policy decision.",
-        "pairsWith": [
-          "frame.experiment-design",
-          "lens.base-rate-check",
-          "frame.research-questions"
-        ]
-      },
-      "key": "guardrail.correlation-vs-causation",
-      "aliases": [
-        "core.correlation-vs-causation"
-      ],
-      "title": "guardrail.correlation-vs-causation",
-      "summary": "Use when an observed association is being used to justify a causal claim or a policy decision.",
-      "tags": [
-        "statistics",
-        "causal reasoning",
-        "epistemics"
-      ],
-      "copy": "Assess whether a causal claim is justified from this observed association.\n\nSteps:\n1. State the association precisely: what varies with what?\n2. Test reverse causation: could the effect be causing the cause instead?\n3. Test confounding: is there a third variable that causes both?\n4. Apply the Bradford Hill criteria where applicable:\n   - strength of association\n   - consistency across studies and populations\n   - temporality (cause precedes effect)\n   - dose-response relationship\n   - plausibility (a credible mechanism exists)\n5. What experiment would most efficiently establish or refute the causal direction?\n\nVerdict: is the claim well-supported, plausible but requiring more evidence, or unjustified?\n\nAlso note: what decision would change if causation is not established?\n\nClaim and supporting data:\n{paste the association, the data, and the causal claim being made}",
-      "body": [
-        [
-          "Use when",
-          "Use when an observed association is being used to justify a causal claim or a policy decision."
-        ],
-        [
-          "Pairs with",
-          "frame.experiment-design, lens.base-rate-check, frame.research-questions"
-        ]
-      ],
-      "family": "Statistics",
-      "group": "",
-      "sourcePath": "prompts/snippets/correlation-vs-causation.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a prompt feels vague, bloated, or unreliable.",
-        "returns": [
-          "what the prompt is trying to do",
-          "the biggest weaknesses",
-          "the highest-leverage fixes",
-          "a revised prompt skeleton"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.prompt-decompose",
-          "frame.prompt-rewrite"
-        ]
-      },
-      "key": "frame.prompt-critique",
-      "aliases": [
-        "core.prompt-critique"
-      ],
-      "title": "frame.prompt-critique",
-      "summary": "Use when a prompt feels vague, bloated, or unreliable.",
-      "tags": [
-        "prompt engineering",
-        "quality improvement",
-        "evaluation"
-      ],
-      "copy": "Critique this prompt for reliability and clarity.\n\nFocus on:\n- unclear goals\n- missing constraints\n- weak or ambiguous output format\n- failure modes\n- unnecessary verbosity\n- places where the model could reasonably misread intent\n\nReturn:\n- what the prompt is trying to do\n- the biggest weaknesses\n- the highest-leverage fixes\n- a revised prompt skeleton\n\nDesired task or output:\n{paste the job this prompt should do}\n\nObserved failure modes, if any:\n{paste what is going wrong, if known}\n\nPrompt:\n{paste prompt}",
-      "body": [
-        [
-          "Use when",
-          "Use when a prompt feels vague, bloated, or unreliable."
-        ],
-        [
-          "Returns",
-          "what the prompt is trying to do, the biggest weaknesses, the highest-leverage fixes, a revised prompt skeleton"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.prompt-decompose, frame.prompt-rewrite"
-        ]
-      ],
-      "family": "Prompt Craft",
-      "group": "",
-      "sourcePath": "prompts/snippets/prompt-critique.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "refine",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you want to turn a rough prompt into a sharper version quickly.",
-        "returns": [
-          "revised prompt",
-          "short note on what changed and why"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.prompt-critique",
-          "frame.prompt-compare"
-        ]
-      },
-      "key": "frame.prompt-rewrite",
-      "aliases": [
-        "core.prompt-rewrite"
-      ],
-      "title": "frame.prompt-rewrite",
-      "summary": "Use when you want to turn a rough prompt into a sharper version quickly.",
-      "tags": [
-        "prompt engineering",
-        "iteration",
-        "revision"
-      ],
-      "copy": "Rewrite this prompt for better model performance.\n\nRequirements:\n- preserve the original intent\n- make the desired output explicit\n- remove ambiguity and redundancy\n- add only the minimum useful constraints\n- keep it short unless detail clearly improves results\n\nReturn:\n- revised prompt\n- short note on what changed and why\n\nDesired task or output:\n{paste the job this prompt should do}\n\nObserved failure modes, if any:\n{paste what is going wrong, if known}\n\nPrompt:\n{paste prompt}",
-      "body": [
-        [
-          "Use when",
-          "Use when you want to turn a rough prompt into a sharper version quickly."
-        ],
-        [
-          "Returns",
-          "revised prompt, short note on what changed and why"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.prompt-critique, frame.prompt-compare"
-        ]
-      ],
-      "family": "Prompt Craft",
-      "group": "",
-      "sourcePath": "prompts/snippets/prompt-rewrite.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "refine",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you have two or more prompt variants and want to choose the strongest one.",
-        "returns": [
-          "best prompt",
-          "why it is strongest",
-          "what to borrow from the others",
-          "one or two targeted edits to make it even better"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.prompt-critique",
-          "rubric.prompt-quality"
-        ]
-      },
-      "key": "frame.prompt-compare",
-      "aliases": [
-        "core.prompt-compare"
-      ],
-      "title": "frame.prompt-compare",
-      "summary": "Use when you have two or more prompt variants and want to choose the strongest one.",
-      "tags": [
-        "prompt engineering",
-        "evaluation",
-        "testing"
-      ],
-      "copy": "Compare these prompt variants and recommend the best one.\n\nJudge them on:\n- clarity\n- specificity\n- likelihood of producing the requested output\n- token efficiency\n- risk of model confusion\n\nReturn:\n- best prompt\n- why it is strongest\n- what to borrow from the others\n- one or two targeted edits to make it even better\n\nDesired task or output:\n{paste the job these prompts should do}\n\nVariants:\n{paste prompt variants}",
-      "body": [
-        [
-          "Use when",
-          "Use when you have two or more prompt variants and want to choose the strongest one."
-        ],
-        [
-          "Returns",
-          "best prompt, why it is strongest, what to borrow from the others, one or two targeted edits to make it even better"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.prompt-critique, rubric.prompt-quality"
-        ]
-      ],
-      "family": "Prompt Craft",
-      "group": "",
-      "sourcePath": "prompts/snippets/prompt-compare.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you need to design or review an API surface — REST, GraphQL, RPC, or library interface.",
-        "expects": "API purpose, Consumers and usage context, Existing design or draft (if any)",
-        "returns": [
-          "A revised or initial API specification sketch for the core endpoints or operations",
-          "The top three design risks",
-          "One invariant the API must preserve under all conditions"
-        ],
-        "pairsWith": [
-          "frame.requirements-decomposition",
-          "lens.interface-contract-review",
-          "frame.test-strategy"
-        ]
-      },
-      "key": "frame.api-design",
-      "aliases": [
-        "core.api-design"
-      ],
-      "title": "frame.api-design",
-      "summary": "Use when you need to design or review an API surface — REST, GraphQL, RPC, or library interface.",
-      "tags": [
-        "software engineering",
-        "API design",
-        "systems design",
-        "contracts"
-      ],
-      "copy": "Design or critique the following API.\n\nAPI purpose: {api_purpose}\n\nConsumers and usage context: {consumers}\n\nExisting design or draft (if any): {draft}\n\nAddress:\n1. Resource and operation model — are resources coherent and operations well-named?\n2. Contract clarity — are inputs, outputs, errors, and edge cases precisely specified?\n3. Consistency — naming conventions, pagination, error shapes, versioning strategy\n4. Evolvability — can the API change without breaking existing callers?\n5. Security surface — authentication, authorisation, rate limiting, input validation points\n6. Discoverability — will new consumers understand it without reading all the code?\n7. Leaky abstractions — places where internal implementation details bleed into the contract\n\nProduce:\n- A revised or initial API specification sketch for the core endpoints or operations\n- The top three design risks\n- One invariant the API must preserve under all conditions",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to design or review an API surface — REST, GraphQL, RPC, or library interface."
-        ],
-        [
-          "Expects",
-          "API purpose, Consumers and usage context, Existing design or draft (if any)"
-        ],
-        [
-          "Returns",
-          "A revised or initial API specification sketch for the core endpoints or operations, The top three design risks, One invariant the API must preserve under all conditions"
-        ],
-        [
-          "Pairs with",
-          "frame.requirements-decomposition, lens.interface-contract-review, frame.test-strategy"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/api-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you need to map the landscape of competing options, products, organisations, or approaches before making a decision or building a strategy.",
-        "expects": "Subject, Purpose of this analysis, Known competitors or alternatives (if any)",
-        "pairsWith": [
-          "mode.explore",
-          "lens.incentive-audit",
-          "frame.stress-test-assumptions"
-        ]
-      },
-      "key": "frame.competitive-analysis",
-      "aliases": [
-        "core.competitive-analysis"
-      ],
-      "title": "frame.competitive-analysis",
-      "summary": "Use when you need to map the landscape of competing options, products, organisations, or approaches before making a decision or building a strategy.",
-      "tags": [
-        "research",
-        "strategy",
-        "competitive intelligence",
-        "synthesis"
-      ],
-      "copy": "Analyse the competitive landscape for the following context.\n\nSubject: {subject_or_product}\n\nPurpose of this analysis: {purpose}\n\nKnown competitors or alternatives (if any): {known_competitors}\n\nFor each significant competitor or alternative:\n- Brief description: what it is and who it serves\n- Core strengths: what it genuinely does well\n- Core weaknesses: where it falls short or creates friction\n- Differentiation claim: what makes it distinct\n\nThen synthesise:\n1. Market structure — is this a crowded space, a few dominant players, or an open field?\n2. Key dimensions of competition — what are the 2–3 axes on which competitors actually differ?\n3. Whitespace — is there a position no current competitor occupies that is worth considering?\n4. Competitive risks — which competitor poses the greatest threat and why?\n5. Recommendation — what does this landscape suggest about positioning or strategy?\n\nName your sources and flag any significant uncertainty in your characterisation.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to map the landscape of competing options, products, organisations, or approaches before making a decision or building a strategy."
-        ],
-        [
-          "Expects",
-          "Subject, Purpose of this analysis, Known competitors or alternatives (if any)"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, lens.incentive-audit, frame.stress-test-assumptions"
-        ]
-      ],
-      "family": "Research & Synthesis",
-      "group": "",
-      "sourcePath": "prompts/snippets/competitive-analysis.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to assess whether a dataset is fit for a specific analytical purpose.",
-        "expects": "Dataset description, Intended use",
-        "pairsWith": [
-          "frame.experiment-design",
-          "lens.survivorship-bias",
-          "frame.statistical-significance-check"
-        ]
-      },
-      "key": "guardrail.data-quality-check",
-      "aliases": [
-        "core.data-quality-check"
-      ],
-      "title": "guardrail.data-quality-check",
-      "summary": "Use when you need to assess whether a dataset is fit for a specific analytical purpose.",
-      "tags": [
-        "statistics",
-        "data quality",
-        "analysis",
-        "research"
-      ],
-      "copy": "Assess whether this data is fit for its intended purpose.\n\nDataset description: {dataset_description}\n\nIntended use: {intended_use}\n\nEvaluate:\n1. Completeness — what is missing or sparse, and whether it materially affects the intended use\n2. Accuracy — what might be mislabelled, inconsistently measured, or incorrect\n3. Representativeness — whether the sample reflects the population of interest\n4. Recency — whether the data is current enough; what may have changed since collection\n5. Bias risks — systematic distortions that could skew conclusions\n6. Fitness verdict — overall suitability for the intended use, and caveats that must accompany any findings\n\nName the single biggest data quality concern prominently at the top.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to assess whether a dataset is fit for a specific analytical purpose."
-        ],
-        [
-          "Expects",
-          "Dataset description, Intended use"
-        ],
-        [
-          "Pairs with",
-          "frame.experiment-design, lens.survivorship-bias, frame.statistical-significance-check"
-        ]
-      ],
-      "family": "Statistics",
-      "group": "",
-      "sourcePath": "prompts/snippets/data-quality-check.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you need to design, review, or critique a data schema or database interaction layer.",
-        "expects": "Schema or model description, Key queries and access patterns, Context (database type, scale, consistency requirements)",
-        "returns": [
-          "Specific recommendations per concern",
-          "The most dangerous thing about the current design (if reviewing)",
-          "The two indexes most critical to add or verify"
-        ],
-        "pairsWith": [
-          "frame.requirements-decomposition",
-          "lens.invariant-check",
-          "frame.test-strategy"
-        ]
-      },
-      "key": "frame.database-design",
-      "aliases": [
-        "core.database-design"
-      ],
-      "title": "frame.database-design",
-      "summary": "Use when you need to design, review, or critique a data schema or database interaction layer.",
-      "tags": [
-        "software engineering",
-        "databases",
-        "schema design",
-        "query performance"
-      ],
-      "copy": "Review or design the following database schema and access patterns.\n\nSchema or model description: {schema}\n\nKey queries and access patterns: {access_patterns}\n\nContext (database type, scale, consistency requirements): {context}\n\nEvaluate:\n1. Schema correctness — normalisation, referential integrity, null handling, data types\n2. Query efficiency — indexes required, N+1 risks, full-table scan exposure\n3. Consistency model — transactions, isolation levels, and whether they match the access patterns\n4. Evolvability — how easily can the schema change as requirements grow?\n5. Constraints and invariants — rules that must always hold, and whether they are enforced at the database level\n6. Anti-patterns — soft deletes, polymorphic associations, EAV patterns, or other structures that will cause problems at scale\n\nProduce:\n- Specific recommendations per concern\n- The most dangerous thing about the current design (if reviewing)\n- The two indexes most critical to add or verify",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to design, review, or critique a data schema or database interaction layer."
-        ],
-        [
-          "Expects",
-          "Schema or model description, Key queries and access patterns, Context (database type, scale, consistency requirements)"
-        ],
-        [
-          "Returns",
-          "Specific recommendations per concern, The most dangerous thing about the current design (if reviewing), The two indexes most critical to add or verify"
-        ],
-        [
-          "Pairs with",
-          "frame.requirements-decomposition, lens.invariant-check, frame.test-strategy"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/database-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to understand sequencing, critical paths, and parallelisation opportunities in a plan.",
-        "expects": "Work to be sequenced",
-        "returns": [
-          "Dependency list — for each task or workstream, what must be complete before it can start",
-          "Critical path — the longest chain of dependent steps that sets the minimum delivery time",
-          "Parallel tracks — work that can proceed simultaneously without blocking other tasks",
-          "Bottlenecks — tasks that block disproportionately many downstream items",
-          "External dependencies — anything awaiting input, approval, or delivery from outside the team",
-          "Sequencing recommendation — the order that minimises risk and reduces idle time"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.risk-register",
-          "frame.prioritize-opportunities"
-        ]
-      },
-      "key": "frame.dependency-map",
-      "aliases": [
-        "core.dependency-map"
-      ],
-      "title": "frame.dependency-map",
-      "summary": "Use when you need to understand sequencing, critical paths, and parallelisation opportunities in a plan.",
-      "tags": [
-        "planning",
-        "sequencing",
-        "project management",
-        "dependencies"
-      ],
-      "copy": "Map the dependencies in the following work.\n\nWork to be sequenced: {work_description}\n\nProduce:\n1. Dependency list — for each task or workstream, what must be complete before it can start\n2. Critical path — the longest chain of dependent steps that sets the minimum delivery time\n3. Parallel tracks — work that can proceed simultaneously without blocking other tasks\n4. Bottlenecks — tasks that block disproportionately many downstream items\n5. External dependencies — anything awaiting input, approval, or delivery from outside the team\n6. Sequencing recommendation — the order that minimises risk and reduces idle time\n\nIf the work is underspecified, state what information you need before mapping it reliably.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to understand sequencing, critical paths, and parallelisation opportunities in a plan."
-        ],
-        [
-          "Expects",
-          "Work to be sequenced"
-        ],
-        [
-          "Returns",
-          "Dependency list — for each task or workstream, what must be complete before it can start, Critical path — the longest chain of dependent steps that sets the minimum delivery time, Parallel tracks — work that can proceed simultaneously without blocking other tasks, Bottlenecks — tasks that block disproportionately many downstream items, External dependencies — anything awaiting input, approval, or delivery from outside the team, Sequencing recommendation — the order that minimises risk and reduces idle time"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.risk-register, frame.prioritize-opportunities"
-        ]
-      ],
-      "family": "Planning & Execution",
-      "group": "",
-      "sourcePath": "prompts/snippets/dependency-map.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when you need to condense a complex document, analysis, or recommendation into a concise summary for a decision-maker.",
-        "expects": "Source material, Audience, Decision or action they need to take",
-        "pairsWith": [
-          "mode.decide",
-          "frame.extract-insights",
-          "frame.brief-to-draft"
-        ]
-      },
-      "key": "schema.executive-summary",
-      "aliases": [
-        "core.executive-summary"
-      ],
-      "title": "schema.executive-summary",
-      "summary": "Use when you need to condense a complex document, analysis, or recommendation into a concise summary for a decision-maker.",
-      "tags": [
-        "writing",
-        "communication",
-        "synthesis",
-        "executive communication"
-      ],
-      "copy": "Write an executive summary of the following material.\n\nSource material: {source_material}\n\nAudience: {audience}\n\nDecision or action they need to take: {decision_or_action}\n\nThe summary must:\n1. Open with the single most important thing the reader needs to know\n2. State the recommendation or conclusion directly — do not bury it\n3. Give the two or three supporting reasons that matter most to this audience\n4. Name the key risk or caveat they need to be aware of\n5. Close with the specific action requested, if any\n\nConstraints:\n- Maximum 250 words\n- No jargon the audience would not recognise\n- Every sentence must earn its place — cut anything that does not change what the reader would decide or do",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to condense a complex document, analysis, or recommendation into a concise summary for a decision-maker."
-        ],
-        [
-          "Expects",
-          "Source material, Audience, Decision or action they need to take"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.extract-insights, frame.brief-to-draft"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/executive-summary.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you need to design a rigorous experiment or A/B test before running it.",
-        "expects": "Hypothesis, Context",
-        "pairsWith": [
-          "frame.hypothesis-generation",
-          "frame.statistical-significance-check",
-          "frame.research-questions"
-        ]
-      },
-      "key": "frame.experiment-design",
-      "aliases": [
-        "core.experiment-design"
-      ],
-      "title": "frame.experiment-design",
-      "summary": "Use when you need to design a rigorous experiment or A/B test before running it.",
-      "tags": [
-        "statistics",
-        "experimentation",
-        "research",
-        "measurement"
-      ],
-      "copy": "Design an experiment to test the following hypothesis.\n\nHypothesis: {hypothesis}\n\nContext: {context}\n\nSpecify:\n1. Treatment and control — what exactly is being compared, and what the baseline is\n2. Primary metric — the one measurable outcome that determines success or failure\n3. Secondary metrics — supporting signals and guardrail metrics\n4. Sample requirements — who must be included, and the reasoning behind minimum sample size\n5. Duration — how long to run the experiment and why\n6. Risks and confounds — what could invalidate results or introduce bias\n7. Decision rule — what outcome triggers each possible action\n\nBe specific. Flag any assumptions embedded in the design.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to design a rigorous experiment or A/B test before running it."
-        ],
-        [
-          "Expects",
-          "Hypothesis, Context"
-        ],
-        [
-          "Pairs with",
-          "frame.hypothesis-generation, frame.statistical-significance-check, frame.research-questions"
-        ]
-      ],
-      "family": "Statistics",
-      "group": "",
-      "sourcePath": "prompts/snippets/experiment-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you need to make a structured probability-based forecast about an uncertain outcome.",
-        "expects": "Forecast question, Context and available evidence, Time horizon",
-        "pairsWith": [
-          "lens.base-rate-check",
-          "frame.scenario-planning",
-          "frame.choose-under-uncertainty"
-        ]
-      },
-      "key": "frame.forecast",
-      "aliases": [
-        "core.forecast"
-      ],
-      "title": "frame.forecast",
-      "summary": "Use when you need to make a structured probability-based forecast about an uncertain outcome.",
-      "tags": [
-        "forecasting",
-        "decision making",
-        "uncertainty",
-        "epistemics"
-      ],
-      "copy": "Produce a structured forecast for the following question.\n\nForecast question: {question}\n\nContext and available evidence: {context}\n\nTime horizon: {time_horizon}\n\nWork through:\n1. Base rate — what is the historical frequency of this type of outcome? Start here before considering specifics.\n2. Inside view — given the specific details of this situation, what adjusts the base rate up or down?\n3. Reference class — what is the best comparison class for this situation?\n4. Disconfirming evidence — what is the strongest reason this forecast might be wrong?\n5. Probability estimate — give a specific probability or probability range, not a vague qualifier\n6. Key uncertainties — the two or three things that most affect whether this forecast holds\n7. Update triggers — what new information should cause you to revise the forecast, and in which direction?\n\nState the forecast as: \"I estimate [X]% probability that [outcome] by [time horizon], because [main reason]. I would revise this upward if [trigger] and downward if [trigger].\"",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to make a structured probability-based forecast about an uncertain outcome."
-        ],
-        [
-          "Expects",
-          "Forecast question, Context and available evidence, Time horizon"
-        ],
-        [
-          "Pairs with",
-          "lens.base-rate-check, frame.scenario-planning, frame.choose-under-uncertainty"
-        ]
-      ],
-      "family": "Deciding & Prioritising",
-      "group": "",
-      "sourcePath": "prompts/snippets/forecast.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "schema",
-      "blockType": "schema",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "conclude",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when a system incident or significant failure has occurred and you need a structured, blame-free analysis.",
-        "expects": "Incident summary, Impact, Duration",
-        "pairsWith": [
-          "mode.reflect",
-          "frame.cause-mapping",
-          "frame.plan-next-actions"
-        ]
-      },
-      "key": "schema.incident-postmortem",
-      "aliases": [
-        "core.incident-postmortem"
-      ],
-      "title": "schema.incident-postmortem",
-      "summary": "Use when a system incident or significant failure has occurred and you need a structured, blame-free analysis.",
-      "tags": [
-        "software engineering",
-        "incident management",
-        "reliability",
-        "learning"
-      ],
-      "copy": "Facilitate a structured post-mortem for the following incident.\n\nIncident summary: {incident_summary}\n\nImpact: {impact}\n\nDuration: {duration}\n\nWork through:\n1. Timeline — reconstruct key events: detection, escalation, diagnosis, resolution\n2. Root cause — the deepest systemic cause (apply five-whys or equivalent reasoning)\n3. Contributing factors — conditions that made the root cause possible or made the impact worse\n4. What went well — detection speed, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident, not just this instance\n\nAvoid blame. Focus on system conditions, not individual mistakes.",
-      "body": [
-        [
-          "Use when",
-          "Use when a system incident or significant failure has occurred and you need a structured, blame-free analysis."
-        ],
-        [
-          "Expects",
-          "Incident summary, Impact, Duration"
-        ],
-        [
-          "Pairs with",
-          "mode.reflect, frame.cause-mapping, frame.plan-next-actions"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/incident-postmortem.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you have regression model output and need to reason carefully about what it does and does not tell you.",
-        "expects": "Model output, What was being predicted, Key predictors, Context and purpose",
-        "pairsWith": [
-          "frame.statistical-significance-check",
-          "lens.survivorship-bias",
-          "lens.base-rate-check"
-        ]
-      },
-      "key": "frame.interpret-regression",
-      "aliases": [
-        "core.interpret-regression"
-      ],
-      "title": "frame.interpret-regression",
-      "summary": "Use when you have regression model output and need to reason carefully about what it does and does not tell you.",
-      "tags": [
-        "statistics",
-        "regression",
-        "model interpretation",
-        "data analysis"
-      ],
-      "copy": "Interpret the following regression or model output.\n\nModel output: {model_output}\n\nWhat was being predicted: {outcome_variable}\n\nKey predictors: {predictors}\n\nContext and purpose: {context}\n\nWork through:\n1. Coefficient interpretation — what do the coefficients mean in plain language for the key predictors?\n2. Statistical significance — which effects are likely real vs noise? Apply appropriate scepticism to borderline p-values.\n3. Practical significance — are statistically significant effects large enough to matter?\n4. Model fit — what does R², RMSE, or equivalent tell you about how well the model explains the data?\n5. Assumption check — which regression assumptions (linearity, independence, homoscedasticity, normality of residuals) are most likely to be violated, and what would that imply?\n6. Causation claim — does this model support causal claims? Why or why not?\n7. What the model cannot answer — explicit limits of this analysis\n\nProduce a plain-language summary suitable for a non-technical decision-maker, followed by the technical caveats.",
-      "body": [
-        [
-          "Use when",
-          "Use when you have regression model output and need to reason carefully about what it does and does not tell you."
-        ],
-        [
-          "Expects",
-          "Model output, What was being predicted, Key predictors, Context and purpose"
-        ],
-        [
-          "Pairs with",
-          "frame.statistical-significance-check, lens.survivorship-bias, lens.base-rate-check"
-        ]
-      ],
-      "family": "Statistics",
-      "group": "",
-      "sourcePath": "prompts/snippets/interpret-regression.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you have conducted multiple qualitative interviews or conversations and need to extract patterns, not just quotes.",
-        "expects": "Interviews or responses, Research question or goal",
-        "pairsWith": [
-          "mode.explore",
-          "frame.synthesize-sources",
-          "frame.extract-insights"
-        ]
-      },
-      "key": "frame.interview-synthesis",
-      "aliases": [
-        "core.interview-synthesis"
-      ],
-      "title": "frame.interview-synthesis",
-      "summary": "Use when you have conducted multiple qualitative interviews or conversations and need to extract patterns, not just quotes.",
-      "tags": [
-        "research",
-        "qualitative analysis",
-        "synthesis",
-        "user research"
-      ],
-      "copy": "Synthesise the following interview data.\n\nInterviews or responses: {interview_data}\n\nResearch question or goal: {research_question}\n\nAnalyse:\n1. Recurring themes — what comes up across multiple respondents, unprompted?\n2. Divergent views — where do respondents disagree, and what might explain the split?\n3. Surprising findings — what was said that you did not expect, or that contradicts assumptions?\n4. Absence signals — what was conspicuously not mentioned by most respondents?\n5. Emotional intensity — which topics generated the strongest reactions, positive or negative?\n6. Quotable anchors — two or three direct quotes that best capture the overall picture\n\nThen produce:\n- A three-sentence synthesis of what the interviews collectively reveal\n- The one thing that most challenges your prior assumptions\n- The most important follow-up question this data raises",
-      "body": [
-        [
-          "Use when",
-          "Use when you have conducted multiple qualitative interviews or conversations and need to extract patterns, not just quotes."
-        ],
-        [
-          "Expects",
-          "Interviews or responses, Research question or goal"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.synthesize-sources, frame.extract-insights"
-        ]
-      ],
-      "family": "Research & Synthesis",
-      "group": "",
-      "sourcePath": "prompts/snippets/interview-synthesis.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to design a measure for an abstract concept — product quality, team health, customer satisfaction, or any outcome that is not directly observable.",
-        "expects": "Concept to measure, Decision this metric will inform, Constraints (data available, measurement frequency, audience)",
-        "pairsWith": [
-          "frame.define-success-metrics",
-          "frame.experiment-design",
-          "lens.survivorship-bias"
-        ]
-      },
-      "key": "frame.metric-design",
-      "aliases": [
-        "core.metric-design"
-      ],
-      "title": "frame.metric-design",
-      "summary": "Use when you need to design a measure for an abstract concept — product quality, team health, customer satisfaction, or any outcome that is not directly observable.",
-      "tags": [
-        "statistics",
-        "measurement",
-        "product",
-        "decision making"
-      ],
-      "copy": "Design a metric for the following concept.\n\nConcept to measure: {concept}\n\nDecision this metric will inform: {decision}\n\nConstraints (data available, measurement frequency, audience): {constraints}\n\nAddress:\n1. Operationalisation — the specific, observable quantity that will stand in for the concept\n2. Validity — how well does the metric actually capture what you care about, and where does it diverge?\n3. Goodhart risk — how could this metric be gamed or optimised in a way that destroys its signal?\n4. Leading vs lagging — does this measure a cause or an effect? What is the lag?\n5. Benchmarks — what would good, acceptable, and bad values look like?\n6. Counter-metric — what should move in the opposite direction if the primary metric improves deceptively?\n\nProduce a one-paragraph metric specification: what is measured, how, how often, and how it will be used.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to design a measure for an abstract concept — product quality, team health, customer satisfaction, or any outcome that is not directly observable."
-        ],
-        [
-          "Expects",
-          "Concept to measure, Decision this metric will inform, Constraints (data available, measurement frequency, audience)"
-        ],
-        [
-          "Pairs with",
-          "frame.define-success-metrics, frame.experiment-design, lens.survivorship-bias"
-        ]
-      ],
-      "family": "Statistics",
-      "group": "",
-      "sourcePath": "prompts/snippets/metric-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "decide",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to define meaningful checkpoints for a plan or project — ones that test real progress, not just activity.",
-        "expects": "Initiative, Desired outcome, Rough timescale",
-        "pairsWith": [
-          "mode.decide",
-          "frame.success-criteria",
-          "rubric.plan-quality"
-        ]
-      },
-      "key": "frame.milestone-design",
-      "aliases": [
-        "core.milestone-design"
-      ],
-      "title": "frame.milestone-design",
-      "summary": "Use when you need to define meaningful checkpoints for a plan or project — ones that test real progress, not just activity.",
-      "tags": [
-        "planning",
-        "milestones",
-        "project management",
-        "outcomes"
-      ],
-      "copy": "Design milestones for the following initiative.\n\nInitiative: {initiative}\n\nDesired outcome: {outcome}\n\nRough timescale: {timescale}\n\nFor each milestone, specify:\n- Name — an outcome-oriented label, not an activity label\n- Definition of done — exactly what must be true for this milestone to be complete\n- Leading indicators — early signals that suggest you are on track before the milestone is reached\n- Key risks — what most commonly causes this type of milestone to slip\n- Decision point — what question does reaching this milestone answer about whether to continue?\n\nAim for 3–5 milestones. The final milestone should match the desired outcome directly.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to define meaningful checkpoints for a plan or project — ones that test real progress, not just activity."
-        ],
-        [
-          "Expects",
-          "Initiative, Desired outcome, Rough timescale"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.success-criteria, rubric.plan-quality"
-        ]
-      ],
-      "family": "Planning & Execution",
-      "group": "",
-      "sourcePath": "prompts/snippets/milestone-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to assess how easy it is to get productive in a codebase, or to design a better onboarding experience.",
-        "expects": "Codebase description, Target newcomer profile (experience level, background)",
-        "returns": [
-          "A severity-ranked list of onboarding blockers",
-          "The single change that would most improve time-to-productivity",
-          "A suggested first-week learning path for the target newcomer"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "lens.jobs-to-be-done",
-          "frame.process-audit"
-        ]
-      },
-      "key": "frame.onboarding-audit",
-      "aliases": [
-        "core.onboarding-audit"
-      ],
-      "title": "frame.onboarding-audit",
-      "summary": "Use when you need to assess how easy it is to get productive in a codebase, or to design a better onboarding experience.",
-      "tags": [
-        "software engineering",
-        "developer experience",
-        "documentation",
-        "onboarding"
-      ],
-      "copy": "Audit the onboarding experience for the following codebase.\n\nCodebase description: {codebase_description}\n\nTarget newcomer profile (experience level, background): {newcomer_profile}\n\nEvaluate:\n1. Entry points — is there a clear starting point? Is setup documented and does it work?\n2. Mental model — can a newcomer build a correct picture of how the system works without reading all the code?\n3. Documentation coverage — which critical paths are undocumented? Where does documentation lie?\n4. Conventions — are naming, structure, and patterns consistent enough to be learned and applied?\n5. Test coverage as documentation — do tests explain intended behaviour, or are they opaque?\n6. Danger zones — what areas are brittle, poorly understood, or likely to bite a newcomer?\n7. Time-to-first-contribution — what is the realistic path to a meaningful first commit?\n\nProduce:\n- A severity-ranked list of onboarding blockers\n- The single change that would most improve time-to-productivity\n- A suggested first-week learning path for the target newcomer",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to assess how easy it is to get productive in a codebase, or to design a better onboarding experience."
-        ],
-        [
-          "Expects",
-          "Codebase description, Target newcomer profile (experience level, background)"
-        ],
-        [
-          "Returns",
-          "A severity-ranked list of onboarding blockers, The single change that would most improve time-to-productivity, A suggested first-week learning path for the target newcomer"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.jobs-to-be-done, frame.process-audit"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/onboarding-audit.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when a system is slow, resource-hungry, or failing under load, and you need to reason systematically about the cause before optimising.",
-        "expects": "System description, Observed symptoms (latency, throughput, resource usage), Available data (profiler output, metrics, traces, logs)",
-        "pairsWith": [
-          "frame.codepath-walkthrough",
-          "lens.debugger-loop",
-          "frame.refactor-plan"
-        ]
-      },
-      "key": "frame.performance-analysis",
-      "aliases": [
-        "core.performance-analysis"
-      ],
-      "title": "frame.performance-analysis",
-      "summary": "Use when a system is slow, resource-hungry, or failing under load, and you need to reason systematically about the cause before optimising.",
-      "tags": [
-        "software engineering",
-        "performance",
-        "systems",
-        "debugging"
-      ],
-      "copy": "Analyse the performance problem in the following system.\n\nSystem description: {system_description}\n\nObserved symptoms (latency, throughput, resource usage): {symptoms}\n\nAvailable data (profiler output, metrics, traces, logs): {data}\n\nWork through:\n1. Bottleneck identification — which component, layer, or operation is the constraint?\n2. Hotspot analysis — from the available data, where is time or resource being spent?\n3. Contributing causes — structural reasons the bottleneck exists (N+1, missing index, lock contention, etc.)\n4. Measurement quality — are the symptoms being measured accurately, or could instrumentation be misleading?\n5. Optimisation options — at least three levers, ranked by expected impact and implementation cost\n6. Risk of optimisation — what could break or regress if each option is applied?\n\nDo not recommend an optimisation until the bottleneck is confirmed. If data is insufficient, name what measurements are needed first.",
-      "body": [
-        [
-          "Use when",
-          "Use when a system is slow, resource-hungry, or failing under load, and you need to reason systematically about the cause before optimising."
-        ],
-        [
-          "Expects",
-          "System description, Observed symptoms (latency, throughput, resource usage), Available data (profiler output, metrics, traces, logs)"
-        ],
-        [
-          "Pairs with",
-          "frame.codepath-walkthrough, lens.debugger-loop, frame.refactor-plan"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/performance-analysis.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to assess how persuasive a piece of writing is and identify where it loses the reader.",
-        "expects": "Text, Intended audience, Goal (what the writing should make the reader believe or do)",
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.disconfirming-evidence",
-          "rubric.argument-quality"
-        ]
-      },
-      "key": "guardrail.persuasion-audit",
-      "aliases": [
-        "core.persuasion-audit"
-      ],
-      "title": "guardrail.persuasion-audit",
-      "summary": "Use when you need to assess how persuasive a piece of writing is and identify where it loses the reader.",
-      "tags": [
-        "writing",
-        "rhetoric",
-        "communication",
-        "critique"
-      ],
-      "copy": "Audit the persuasive strength of the following piece of writing.\n\nText: {text}\n\nIntended audience: {audience}\n\nGoal (what the writing should make the reader believe or do): {goal}\n\nEvaluate:\n1. Opening — does it establish why the reader should care? How quickly?\n2. Claim clarity — is the central claim stated plainly and early?\n3. Evidence quality — is the evidence credible, specific, and sufficient for the claim?\n4. Objection handling — are the strongest counter-arguments addressed honestly?\n5. Logical structure — does each section follow from the last? Are there gaps or leaps?\n6. Emotional register — is the tone appropriate for the audience and goal?\n7. Call to action — is it clear what the reader should believe or do after reading?\n\nDeliver:\n- Overall persuasion score: Strong / Adequate / Weak, with one sentence of justification\n- The single biggest reason a sceptical reader would not be convinced\n- Three specific edits that would most improve persuasive impact",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to assess how persuasive a piece of writing is and identify where it loses the reader."
-        ],
-        [
-          "Expects",
-          "Text, Intended audience, Goal (what the writing should make the reader believe or do)"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.disconfirming-evidence, rubric.argument-quality"
-        ]
-      ],
-      "family": "Writing & Communication",
-      "group": "",
-      "sourcePath": "prompts/snippets/persuasion-audit.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "frame",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you need to design a multi-step AI workflow for a complex task that a single prompt cannot handle reliably.",
-        "expects": "Goal, Starting material",
-        "pairsWith": [
-          "frame.clarify-task",
-          "frame.prompt-decompose",
-          "frame.test-strategy"
-        ]
-      },
-      "key": "frame.prompt-chain-design",
-      "aliases": [
-        "core.prompt-chain-design"
-      ],
-      "title": "frame.prompt-chain-design",
-      "summary": "Use when you need to design a multi-step AI workflow for a complex task that a single prompt cannot handle reliably.",
-      "tags": [
-        "prompt engineering",
-        "chain",
-        "workflow",
-        "design"
-      ],
-      "copy": "Design a prompt chain to accomplish the following goal.\n\nGoal: {goal}\n\nStarting material: {input}\n\nFor each step in the chain, specify:\n- Step name — a short label\n- Purpose — what this step achieves\n- Input — what it receives (from the user or previous step)\n- Prompt sketch — the core instruction in 2–4 sentences\n- Output — what it produces for the next step\n\nThen address:\n- Handoff risks — where output quality could degrade between steps\n- Minimal version — the shortest chain that would produce acceptable results\n- Failure modes — which step is most likely to fail and why\n\nKeep steps distinct and non-redundant.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to design a multi-step AI workflow for a complex task that a single prompt cannot handle reliably."
-        ],
-        [
-          "Expects",
-          "Goal, Starting material"
-        ],
-        [
-          "Pairs with",
-          "frame.clarify-task, frame.prompt-decompose, frame.test-strategy"
-        ]
-      ],
-      "family": "Prompt Craft",
-      "group": "",
-      "sourcePath": "prompts/snippets/prompt-chain-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you want to understand why a prompt is not working or how to improve its structure before rewriting it.",
-        "expects": "Prompt",
-        "pairsWith": [
-          "mode.critique",
-          "frame.prompt-critique",
-          "frame.prompt-rewrite"
-        ]
-      },
-      "key": "frame.prompt-decompose",
-      "aliases": [
-        "core.prompt-decompose"
-      ],
-      "title": "frame.prompt-decompose",
-      "summary": "Use when you want to understand why a prompt is not working or how to improve its structure before rewriting it.",
-      "tags": [
-        "prompt engineering",
-        "critique",
-        "structure",
-        "meta"
-      ],
-      "copy": "Analyse the following prompt by decomposing it into its structural components.\n\nPrompt: {prompt}\n\nFor each component, describe what is present and assess its quality:\n1. Task — what the model is being asked to do; is it clear and specific?\n2. Context — what background is provided; what is missing?\n3. Format — how the output should be structured; is it specified?\n4. Constraints — what limits or rules are given; are they adequate?\n5. Tone or persona — style or voice guidance; is it appropriate?\n6. Examples — any few-shot examples; are they present and helpful?\n\nThen give:\n- Diagnosis: the single biggest structural weakness\n- Recommended fix: the one change most likely to improve results",
-      "body": [
-        [
-          "Use when",
-          "Use when you want to understand why a prompt is not working or how to improve its structure before rewriting it."
-        ],
-        [
-          "Expects",
-          "Prompt"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.prompt-critique, frame.prompt-rewrite"
-        ]
-      ],
-      "family": "Prompt Craft",
-      "group": "",
-      "sourcePath": "prompts/snippets/prompt-decompose.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "frame",
-      "blockType": "frame",
-      "form": "full_task",
-      "sourceKind": "Snippet",
-      "stage": "critique",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when you need to identify security vulnerabilities in code, a design, or a technical proposal before shipping.",
-        "expects": "Input, Context (language, framework, what it does)",
-        "pairsWith": [
-          "mode.critique",
-          "lens.failure-mode-analysis",
-          "frame.risk-register"
-        ]
-      },
-      "key": "frame.security-review",
-      "aliases": [
-        "core.security-review"
-      ],
-      "title": "frame.security-review",
-      "summary": "Use when you need to identify security vulnerabilities in code, a design, or a technical proposal before shipping.",
-      "tags": [
-        "security",
-        "software engineering",
-        "code review",
-        "OWASP"
-      ],
-      "copy": "Perform a security review of the following code or design.\n\nInput: {code_or_design}\n\nContext (language, framework, what it does): {context}\n\nCheck for:\n1. Injection risks — SQL, command, template, path traversal\n2. Authentication and authorisation — missing checks, privilege escalation, insecure defaults\n3. Input validation — unvalidated or unsanitised inputs reaching sensitive operations\n4. Secrets and credentials — hardcoded values, logging sensitive data, insecure storage\n5. Cryptography — weak algorithms, improper use of randomness, key management problems\n6. Dependency risk — known-vulnerable libraries or unnecessary dependencies\n7. Error handling — stack traces or internal details leaking to untrusted callers\n\nFor each finding:\n- Name the vulnerability class (e.g. OWASP category)\n- Locate it precisely\n- Describe the attack scenario\n- Recommend a concrete fix\n\nRank findings: Critical / High / Medium / Low.",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to identify security vulnerabilities in code, a design, or a technical proposal before shipping."
-        ],
-        [
-          "Expects",
-          "Input, Context (language, framework, what it does)"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.failure-mode-analysis, frame.risk-register"
-        ]
-      ],
-      "family": "Software Engineering",
-      "group": "",
-      "sourcePath": "prompts/snippets/security-review.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when the main problem is getting multiple actors to align without drift.",
-        "returns": [
-          "what must be coordinated",
-          "likely focal points",
-          "sources of misalignment",
-          "commitments needed",
-          "communication or protocol changes",
-          "how to detect drift early"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.stakeholder-map",
-          "lens.incentive-audit"
-        ]
-      },
-      "key": "lens.coordination-plan",
-      "aliases": [
-        "lens.game-theory-coordination-plan"
-      ],
-      "title": "Coordination Plan",
-      "summary": "Use when the main problem is getting multiple actors to align without drift.",
-      "tags": [
-        "game theory",
-        "organizational learning",
-        "influence"
-      ],
-      "copy": "Analyze this as a coordination problem.\n\nReturn:\n- what must be coordinated\n- likely focal points\n- sources of misalignment\n- commitments needed\n- communication or protocol changes\n- how to detect drift early\n\nSituation:\n{paste situation}",
-      "body": [
-        [
-          "Use when",
-          "Use when the main problem is getting multiple actors to align without drift."
-        ],
-        [
-          "Returns",
-          "what must be coordinated, likely focal points, sources of misalignment, commitments needed, communication or protocol changes, how to detect drift early"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.stakeholder-map, lens.incentive-audit"
-        ]
-      ],
-      "family": "",
-      "group": "Game Theory",
-      "sourcePath": "prompts/concepts/game-theory/coordination-plan.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when behavior is being shaped by rewards, costs, or perverse incentives.",
-        "returns": [
-          "actors",
-          "goals",
-          "explicit incentives",
-          "hidden incentives",
-          "likely equilibrium behavior",
-          "perverse incentives",
-          "one lever to realign behavior without creating new gaming"
-        ],
-        "pairsWith": [
-          "mode.explore",
-          "frame.stakeholder-map",
-          "lens.coordination-plan"
-        ]
-      },
-      "key": "lens.incentive-audit",
-      "aliases": [
-        "lens.game-theory-incentive-audit"
-      ],
-      "title": "Incentive Audit",
-      "summary": "Use when behavior is being shaped by rewards, costs, or perverse incentives.",
-      "tags": [
-        "game theory",
-        "behavioral science",
-        "organizational learning"
-      ],
-      "copy": "Analyze this situation as an incentive system.\n\nReturn:\n- actors\n- goals\n- explicit incentives\n- hidden incentives\n- likely equilibrium behavior\n- perverse incentives\n- one lever to realign behavior without creating new gaming\n\nSituation:\n{paste situation}",
-      "body": [
-        [
-          "Use when",
-          "Use when behavior is being shaped by rewards, costs, or perverse incentives."
-        ],
-        [
-          "Returns",
-          "actors, goals, explicit incentives, hidden incentives, likely equilibrium behavior, perverse incentives, one lever to realign behavior without creating new gaming"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.stakeholder-map, lens.coordination-plan"
-        ]
-      ],
-      "family": "",
-      "group": "Game Theory",
-      "sourcePath": "prompts/concepts/game-theory/incentive-audit.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when words, status, or actions may be sending a signal to other people.",
-        "returns": [
-          "which signals are credible vs cheap talk",
-          "who is sending each signal",
-          "who the audience is",
-          "what action would be a stronger signal than words",
-          "where noise or ambiguity could mislead"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.communication-brief",
-          "lens.incentive-audit"
-        ]
-      },
-      "key": "lens.signaling-check",
-      "aliases": [
-        "lens.game-theory-signaling-check"
-      ],
-      "title": "Signaling Check",
-      "summary": "Use when words, status, or actions may be sending a signal to other people.",
-      "tags": [
-        "game theory",
-        "communication",
-        "influence"
-      ],
-      "copy": "Analyze the signals in this situation.\n\nReturn:\n- which signals are credible vs cheap talk\n- who is sending each signal\n- who the audience is\n- what action would be a stronger signal than words\n- where noise or ambiguity could mislead\n\nSituation:\n{paste situation}",
-      "body": [
-        [
-          "Use when",
-          "Use when words, status, or actions may be sending a signal to other people."
-        ],
-        [
-          "Returns",
-          "which signals are credible vs cheap talk, who is sending each signal, who the audience is, what action would be a stronger signal than words, where noise or ambiguity could mislead"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.communication-brief, lens.incentive-audit"
-        ]
-      ],
-      "family": "",
-      "group": "Game Theory",
-      "sourcePath": "prompts/concepts/game-theory/signaling-check.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when an intention needs to become a repeatable habit.",
-        "returns": [
-          "target behavior",
-          "cue",
-          "friction reduction",
-          "implementation intention",
-          "environment change",
-          "feedback loop",
-          "likely failure mode",
-          "minimum viable habit"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "lens.motivation-diagnosis",
-          "lens.incentive-audit"
-        ]
-      },
-      "key": "lens.behavior-change-plan",
-      "aliases": [
-        "lens.psychology-behavior-change-plan"
-      ],
-      "title": "Behavior Change Plan",
-      "summary": "Use when an intention needs to become a repeatable habit.",
-      "tags": [
-        "behavioral science",
-        "psychology",
-        "planning"
-      ],
-      "copy": "Turn this intention into a behavior-change plan.\n\nReturn:\n- target behavior\n- cue\n- friction reduction\n- implementation intention\n- environment change\n- feedback loop\n- likely failure mode\n- minimum viable habit\n\nIntention:\n{paste intention}",
-      "body": [
-        [
-          "Use when",
-          "Use when an intention needs to become a repeatable habit."
-        ],
-        [
-          "Returns",
-          "target behavior, cue, friction reduction, implementation intention, environment change, feedback loop, likely failure mode, minimum viable habit"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, lens.motivation-diagnosis, lens.incentive-audit"
-        ]
-      ],
-      "family": "",
-      "group": "Psychology",
-      "sourcePath": "prompts/concepts/psychology/behavior-change-plan.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when judgment may be distorted by a known cognitive bias.",
-        "returns": [
-          "likely biases at play",
-          "how each bias would distort judgment",
-          "the most useful counter-question for each bias",
-          "what evidence would reduce the distortion",
-          "what a calmer outside observer would probably say"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.disconfirming-evidence",
-          "guardrail.assumption-audit"
-        ]
-      },
-      "key": "lens.bias-check",
-      "aliases": [
-        "lens.psychology-bias-check"
-      ],
-      "title": "Bias Check",
-      "summary": "Use when judgment may be distorted by a known cognitive bias.",
-      "tags": [
-        "behavioral science",
-        "decision theory",
-        "reflection"
-      ],
-      "copy": "Review this through a cognitive-bias lens.\n\nReturn:\n- likely biases at play\n- how each bias would distort judgment\n- the most useful counter-question for each bias\n- what evidence would reduce the distortion\n- what a calmer outside observer would probably say\n\nSituation:\n{paste situation}",
-      "body": [
-        [
-          "Use when",
-          "Use when judgment may be distorted by a known cognitive bias."
-        ],
-        [
-          "Returns",
-          "likely biases at play, how each bias would distort judgment, the most useful counter-question for each bias, what evidence would reduce the distortion, what a calmer outside observer would probably say"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.disconfirming-evidence, guardrail.assumption-audit"
-        ]
-      ],
-      "family": "",
-      "group": "Psychology",
-      "sourcePath": "prompts/concepts/psychology/bias-check.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when behavior is stuck and you need to know why.",
-        "returns": [
-          "goal clarity",
-          "ability / skill gap",
-          "friction / effort",
-          "reward / feedback loop",
-          "identity / values conflict",
-          "social pressure",
-          "emotional resistance",
-          "smallest intervention"
-        ],
-        "pairsWith": [
-          "mode.explore",
-          "lens.incentive-audit",
-          "lens.behavior-change-plan"
-        ]
-      },
-      "key": "lens.motivation-diagnosis",
-      "aliases": [
-        "lens.psychology-motivation-diagnosis"
-      ],
-      "title": "Motivation Diagnosis",
-      "summary": "Use when behavior is stuck and you need to know why.",
-      "tags": [
-        "behavioral science",
-        "psychology",
-        "organizational learning"
-      ],
-      "copy": "Diagnose why this behavior is or is not happening.\n\nReturn:\n- goal clarity\n- ability / skill gap\n- friction / effort\n- reward / feedback loop\n- identity / values conflict\n- social pressure\n- emotional resistance\n- smallest intervention\n\nSituation:\n{paste situation}",
-      "body": [
-        [
-          "Use when",
-          "Use when behavior is stuck and you need to know why."
-        ],
-        [
-          "Returns",
-          "goal clarity, ability / skill gap, friction / effort, reward / feedback loop, identity / values conflict, social pressure, emotional resistance, smallest intervention"
-        ],
-        [
-          "Pairs with",
-          "mode.explore, lens.incentive-audit, lens.behavior-change-plan"
-        ]
-      ],
-      "family": "",
-      "group": "Psychology",
-      "sourcePath": "prompts/concepts/psychology/motivation-diagnosis.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Apply when a design decision involves where to draw the lines between components, layers, or services — and what each side is allowed to know about the other.",
-        "pairsWith": [
-          "mode.critique",
-          "lens.interface-contract-review",
-          "lens.invariant-check"
-        ]
-      },
-      "key": "lens.abstraction-boundary",
-      "aliases": [
-        "lens.computer-science-abstraction-boundary"
-      ],
-      "title": "Abstraction Boundary",
-      "summary": "Apply when a design decision involves where to draw the lines between components, layers, or services — and what each side is allowed to know about the other.",
-      "tags": [
-        "software engineering",
-        "systems thinking",
-        "design"
-      ],
-      "copy": "Analyse the abstraction boundaries in this design.\n\nFor each major boundary:\n- what does each side expose to the other?\n- what is each side allowed to assume about the other's implementation?\n- is the boundary leaky? (does one side need to know things it shouldn't?)\n- what would change on one side if the other were replaced with a different implementation?\n\nIdentify:\n- the boundary that is most likely to become the wrong boundary as the system grows\n- any circular dependencies or bidirectional knowledge that should be resolved\n- the one abstraction that is doing too much and should be split\n\nDesign:\n{paste architecture description, diagram summary, or relevant code}",
-      "body": [
-        [
-          "Use when",
-          "Apply when a design decision involves where to draw the lines between components, layers, or services — and what each side is allowed to know about the other."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.interface-contract-review, lens.invariant-check"
-        ]
-      ],
-      "family": "",
-      "group": "Computer Science",
-      "sourcePath": "prompts/concepts/computer-science/abstraction-boundary.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to choose an approach based on cost, scale, or maintainability.",
-        "returns": [
-          "time complexity",
-          "space complexity",
-          "latency or throughput impact",
-          "bottlenecks",
-          "maintainability cost",
-          "simplest adequate approach"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "lens.interface-contract-review",
-          "frame.refactor-plan"
-        ]
-      },
-      "key": "lens.complexity-tradeoff",
-      "aliases": [
-        "lens.computer-science-complexity-tradeoff"
-      ],
-      "title": "Complexity Tradeoff",
-      "summary": "Use when you need to choose an approach based on cost, scale, or maintainability.",
-      "tags": [
-        "software engineering",
-        "decision theory",
-        "systems thinking"
-      ],
-      "copy": "Evaluate the algorithm or system tradeoffs.\n\nReturn:\n- time complexity\n- space complexity\n- latency or throughput impact\n- bottlenecks\n- maintainability cost\n- simplest adequate approach\n\nContext:\n{paste context}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to choose an approach based on cost, scale, or maintainability."
-        ],
-        [
-          "Returns",
-          "time complexity, space complexity, latency or throughput impact, bottlenecks, maintainability cost, simplest adequate approach"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.interface-contract-review, frame.refactor-plan"
-        ]
-      ],
-      "family": "",
-      "group": "Computer Science",
-      "sourcePath": "prompts/concepts/computer-science/complexity-tradeoff.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need a systematic way to localize a bug or failure.",
-        "returns": [
-          "reproduction steps",
-          "observations",
-          "hypotheses",
-          "experiments",
-          "localization",
-          "fix",
-          "regression test"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.bug-reproduction-brief",
-          "lens.invariant-check"
-        ]
-      },
-      "key": "lens.debugger-loop",
-      "aliases": [
-        "lens.computer-science-debugger-loop"
-      ],
-      "title": "Debugger Loop",
-      "summary": "Use when you need a systematic way to localize a bug or failure.",
-      "tags": [
-        "software engineering",
-        "causal reasoning",
-        "critical thinking"
-      ],
-      "copy": "Debug this systematically.\n\nReturn:\n- reproduction steps\n- observations\n- hypotheses\n- experiments\n- localization\n- fix\n- regression test\n\nBug or failure:\n{paste bug or failure}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need a systematic way to localize a bug or failure."
-        ],
-        [
-          "Returns",
-          "reproduction steps, observations, hypotheses, experiments, localization, fix, regression test"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.bug-reproduction-brief, lens.invariant-check"
-        ]
-      ],
-      "family": "",
-      "group": "Computer Science",
-      "sourcePath": "prompts/concepts/computer-science/debugger-loop.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Apply when designing, reviewing, or debugging a distributed system, service, or integration to surface how it fails and how gracefully it does so.",
         "pairsWith": [
           "mode.critique",
           "strategy.premortem",
-          "frame.risk-register"
-        ]
+          "guardrail.uncertainty",
+          "schema.decision-memo"
+        ],
+        "avoidWhen": "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
       },
-      "key": "lens.failure-mode-analysis",
+      "key": "guardrail.assumption-audit",
       "aliases": [
-        "lens.computer-science-failure-mode-analysis"
+        "core.guardrail.assumption-audit",
+        "core.guardrail-assumption-audit"
       ],
-      "title": "Failure Mode Analysis",
-      "summary": "Apply when designing, reviewing, or debugging a distributed system, service, or integration to surface how it fails and how gracefully it does so.",
+      "title": "guardrail.assumption-audit",
+      "summary": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
       "tags": [
-        "software engineering",
-        "risk management",
-        "systems thinking"
+        "guardrail",
+        "assumption",
+        "audit"
       ],
-      "copy": "Analyse the failure modes of this system or integration.\n\nFor each major component or dependency:\n- how does it fail? (crash, hang, slow response, partial response, data corruption)\n- what is the blast radius when it fails? (what else breaks with it?)\n- how does the system currently detect this failure?\n- does the system degrade gracefully or fail hard?\n- is there a recovery path, and is it automatic or manual?\n\nThen assess:\n- which failure mode would be hardest to detect before users notice?\n- which failure mode has the largest blast radius?\n- what single change would most improve resilience?\n\nSystem or integration:\n{paste architecture description, service diagram, or relevant code}",
+      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn for each:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\nInput:\n{paste plan, decision, argument, or recommendation}",
       "body": [
         [
+          "Purpose",
+          "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it."
+        ],
+        [
           "Use when",
-          "Apply when designing, reviewing, or debugging a distributed system, service, or integration to surface how it fails and how gracefully it does so."
+          "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged."
+        ],
+        [
+          "Expects",
+          "A plan, decision, argument, or recommendation."
+        ],
+        [
+          "Adds",
+          "An explicit inventory of assumptions, typed by category and ranked by consequence if false."
+        ],
+        [
+          "Returns",
+          "assumption statement, explicit or implied, type (empirical / causal / value), confidence (high / medium / low), impact if false, what would falsify it"
         ],
         [
           "Pairs with",
-          "mode.critique, strategy.premortem, frame.risk-register"
+          "mode.critique, strategy.premortem, guardrail.uncertainty, schema.decision-memo"
+        ],
+        [
+          "Avoid when",
+          "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
         ]
       ],
       "family": "",
-      "group": "Computer Science",
-      "sourcePath": "prompts/concepts/computer-science/failure-mode-analysis.md"
+      "group": "",
+      "sourcePath": "prompts/blocks/guardrail.assumption-audit/prompt.md"
     },
     {
       "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
+      "canonicalType": "guardrail",
+      "blockType": "guardrail",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "any",
+      "strength": "heavy",
+      "contract": {
+        "purpose": "Enforce explicit stopping conditions on any recursive or iterative block, preventing infinite loops or uncontrolled expansion.",
+        "useWhen": "Using `recurse.decompose`, `recurse.refine`, or `recurse.branch-prune`. Always pair with recursive blocks. Must be declared before the first recursive step begins.",
+        "expects": "- max_depth: hard recursion depth limit\n- max_iterations: hard iteration limit\n- stop_condition: explicit natural-language condition checked before each step",
+        "adds": "A directive to check all stopping conditions before every recursive or iterative step, and to halt with an explicit stopping reason when any condition is met.",
+        "returns": [
+          "current depth or iteration at stopping point",
+          "stopping_reason: `condition_met` | `max_depth_reached` | `max_iterations_reached`",
+          "final state at stopping point"
+        ],
+        "pairsWith": [
+          "recurse.decompose",
+          "recurse.refine",
+          "recurse.branch-prune"
+        ],
+        "avoidWhen": "Used alone without a recursive block — this is a guardrail, not a standalone reasoning block."
+      },
+      "key": "guardrail.bounded-recursion",
+      "aliases": [
+        "core.guardrail.bounded-recursion",
+        "core.guardrail-bounded-recursion"
+      ],
+      "title": "guardrail.bounded-recursion",
+      "summary": "Enforce explicit stopping conditions on any recursive or iterative block, preventing infinite loops or uncontrolled expansion.",
+      "tags": [
+        "guardrail",
+        "bounded",
+        "recursion"
+      ],
+      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Has max_depth been reached? If yes → STOP. Reason: `max_depth_reached`.\n2. Has max_iterations been reached? If yes → STOP. Reason: `max_iterations_reached`.\n3. Is the stop_condition met? If yes → STOP. Reason: `condition_met`.\n4. Only if all three checks pass → proceed with the next step.\n\nOn stopping, always output:\n- current depth or iteration: N\n- stopping_reason: [`condition_met` | `max_depth_reached` | `max_iterations_reached`]\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\nmax_depth: {max_depth}\nmax_iterations: {max_iterations}\nstop_condition: {stop_condition}",
+      "body": [
+        [
+          "Purpose",
+          "Enforce explicit stopping conditions on any recursive or iterative block, preventing infinite loops or uncontrolled expansion."
+        ],
+        [
+          "Use when",
+          "Using `recurse.decompose`, `recurse.refine`, or `recurse.branch-prune`. Always pair with recursive blocks. Must be declared before the first recursive step begins."
+        ],
+        [
+          "Expects",
+          "- max_depth: hard recursion depth limit\n- max_iterations: hard iteration limit\n- stop_condition: explicit natural-language condition checked before each step"
+        ],
+        [
+          "Adds",
+          "A directive to check all stopping conditions before every recursive or iterative step, and to halt with an explicit stopping reason when any condition is met."
+        ],
+        [
+          "Returns",
+          "current depth or iteration at stopping point, stopping_reason: `condition_met` | `max_depth_reached` | `max_iterations_reached`, final state at stopping point"
+        ],
+        [
+          "Pairs with",
+          "recurse.decompose, recurse.refine, recurse.branch-prune"
+        ],
+        [
+          "Avoid when",
+          "Used alone without a recursive block — this is a guardrail, not a standalone reasoning block."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/guardrail.bounded-recursion/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "explore",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Generate a small number of distinct reasoning paths and select the strongest, pruning all others before continuing.",
+        "useWhen": "Multiple approaches to a problem are plausible and selecting the best path before committing resources matters. Use when you need a single high-quality path, not broad exploration.",
+        "expects": "- problem_or_task: what to reason about\n- branch_count: number of paths to generate (2–3 only)\n- selection_criterion: explicit statement of what makes one path better than another",
+        "adds": "A directive to generate exactly `branch_count` paths, evaluate each against the selection criterion, select one winner, and prune all others with explicit rationale.",
+        "returns": [
+          "N branches with brief rationale per branch",
+          "per-branch assessment against selection_criterion",
+          "selected branch (winner) with one-sentence verdict",
+          "pruned branches listed with elimination rationale"
+        ],
+        "pairsWith": [
+          "recurse.evaluate",
+          "recurse.refine",
+          "guardrail.bounded-recursion"
+        ],
+        "avoidWhen": "- branch_count > 3 (cost exceeds benefit; use `mode.explore` for broad exploration)\n- the problem has a clear single best path already\n- you need to keep multiple options open past this step"
+      },
+      "key": "recurse.branch-prune",
+      "aliases": [
+        "core.recurse.branch-prune",
+        "core.recurse-branch-prune"
+      ],
+      "title": "recurse.branch-prune",
+      "summary": "Generate a small number of distinct reasoning paths and select the strongest, pruning all others before continuing.",
+      "tags": [
+        "recurse",
+        "branch",
+        "prune"
+      ],
+      "copy": "Apply BRANCH + PRUNE.\n\nRules:\n1. Generate exactly {branch_count} distinct approaches. Each must differ in a meaningful way — different method, assumption, or framing. Rewording the same approach is not a distinct branch.\n2. For each branch: provide a short label, a 2–3 sentence rationale, and a one-line assessment against the selection criterion.\n3. Select the strongest branch. State the verdict explicitly in one sentence.\n4. Prune all other branches. For each pruned branch, give one sentence explaining why it was eliminated.\n5. Continue only on the selected branch. Do not reference or merge pruned branches downstream.\n\nConstraints:\n- Exactly {branch_count} branches. No more, no fewer.\n- Pruning is mandatory. You must end this block with exactly one active branch.\n- Branches must be genuinely distinct, not paraphrases.\n\nOutput format:\n\n**Branch A: [label]**\nRationale: ...\nAssessment: ...\n\n**Branch B: [label]**\nRationale: ...\nAssessment: ...\n\n**Selected: Branch [X]** — [one sentence verdict]\n**Pruned:** Branch [Y] — [reason] | Branch [Z] — [reason]\n\n**Continuing on: Branch [X]**\n\nbranch_count: {branch_count}\nselection_criterion: {selection_criterion}\n\nProblem or task:\n{paste problem or task}",
+      "body": [
+        [
+          "Purpose",
+          "Generate a small number of distinct reasoning paths and select the strongest, pruning all others before continuing."
+        ],
+        [
+          "Use when",
+          "Multiple approaches to a problem are plausible and selecting the best path before committing resources matters. Use when you need a single high-quality path, not broad exploration."
+        ],
+        [
+          "Expects",
+          "- problem_or_task: what to reason about\n- branch_count: number of paths to generate (2–3 only)\n- selection_criterion: explicit statement of what makes one path better than another"
+        ],
+        [
+          "Adds",
+          "A directive to generate exactly `branch_count` paths, evaluate each against the selection criterion, select one winner, and prune all others with explicit rationale."
+        ],
+        [
+          "Returns",
+          "N branches with brief rationale per branch, per-branch assessment against selection_criterion, selected branch (winner) with one-sentence verdict, pruned branches listed with elimination rationale"
+        ],
+        [
+          "Pairs with",
+          "recurse.evaluate, recurse.refine, guardrail.bounded-recursion"
+        ],
+        [
+          "Avoid when",
+          "- branch_count > 3 (cost exceeds benefit; use `mode.explore` for broad exploration)\n- the problem has a clear single best path already\n- you need to keep multiple options open past this step"
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.branch-prune/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Break a problem into a structured hierarchy of subproblems recursively, stopping when subproblems are directly solvable.",
+        "useWhen": "A problem is too large or complex to address directly. Use when the path to a solution requires understanding structure first.",
+        "expects": "- problem: the problem or task to decompose\n- max_depth: how many recursive levels to allow (1–4; default 2)\n- max_subproblems: max subproblems per level (2–5; default 3)",
+        "adds": "A directive to enumerate subproblems, check for direct solvability at each node, and stop recursing when a subproblem can be resolved directly or depth/count limits are reached.",
+        "returns": [
+          "structured hierarchy of subproblems (numbered tree)",
+          "leaf-level direct answers where available",
+          "stopping reason per branch: `solved` | `depth_reached` | `not_decomposable`",
+          "final synthesis of leaf answers"
+        ],
+        "pairsWith": [
+          "recurse.evaluate",
+          "recurse.refine",
+          "guardrail.bounded-recursion",
+          "strategy.problem-split"
+        ],
+        "avoidWhen": "The problem is already well-scoped — decomposition adds noise when a direct approach suffices. Test depth 1 first."
+      },
+      "key": "recurse.decompose",
+      "aliases": [
+        "core.recurse.decompose",
+        "core.recurse-decompose"
+      ],
+      "title": "recurse.decompose",
+      "summary": "Break a problem into a structured hierarchy of subproblems recursively, stopping when subproblems are directly solvable.",
+      "tags": [
+        "recurse",
+        "decompose"
+      ],
+      "copy": "Apply RECURSIVE DECOMPOSITION.\n\nRules:\n1. Inspect the problem. If it is directly solvable in one step, solve it and stop — do not decompose.\n2. Otherwise, break it into at most {max_subproblems} distinct subproblems.\n3. For each subproblem, repeat rule 1. Stop recursing when the subproblem is directly solvable or depth {max_depth} is reached.\n4. At depth {max_depth}, solve each remaining subproblem directly — even if imperfect.\n5. After all branches are resolved, synthesize the leaf answers into a single final answer.\n\nConstraints:\n- Never generate more than {max_subproblems} subproblems at any one level.\n- Each subproblem must be strictly smaller in scope than its parent.\n- Do not merge subproblems at the same level — keep them independent.\n- Synthesis happens exactly once, at the end.\n\nOutput format:\n- Use a numbered tree: 1, 1.1, 1.2, 1.1.1, etc.\n- Each node: `[subproblem statement] → [direct answer | decomposed further]`\n- End with a `## Synthesis` section that assembles the leaf answers.\n\nmax_depth: {max_depth}\nmax_subproblems: {max_subproblems}\n\nProblem:\n{paste problem or task}",
+      "body": [
+        [
+          "Purpose",
+          "Break a problem into a structured hierarchy of subproblems recursively, stopping when subproblems are directly solvable."
+        ],
+        [
+          "Use when",
+          "A problem is too large or complex to address directly. Use when the path to a solution requires understanding structure first."
+        ],
+        [
+          "Expects",
+          "- problem: the problem or task to decompose\n- max_depth: how many recursive levels to allow (1–4; default 2)\n- max_subproblems: max subproblems per level (2–5; default 3)"
+        ],
+        [
+          "Adds",
+          "A directive to enumerate subproblems, check for direct solvability at each node, and stop recursing when a subproblem can be resolved directly or depth/count limits are reached."
+        ],
+        [
+          "Returns",
+          "structured hierarchy of subproblems (numbered tree), leaf-level direct answers where available, stopping reason per branch: `solved` | `depth_reached` | `not_decomposable`, final synthesis of leaf answers"
+        ],
+        [
+          "Pairs with",
+          "recurse.evaluate, recurse.refine, guardrail.bounded-recursion, strategy.problem-split"
+        ],
+        [
+          "Avoid when",
+          "The problem is already well-scoped — decomposition adds noise when a direct approach suffices. Test depth 1 first."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.decompose/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
       "stage": "critique",
       "strength": "medium",
       "contract": {
-        "useWhen": "Use when failures may be happening at a boundary between components.",
+        "purpose": "Critically assess a candidate output against explicit criteria and return a structured per-criterion verdict.",
+        "useWhen": "A candidate output needs to be assessed before deciding whether to refine, accept, or discard it. Always supply explicit criteria.",
+        "expects": "- candidate_output: the output to assess\n- criteria: an explicit comma-separated list of evaluation criteria",
+        "adds": "A directive to map each criterion to a `pass | partial | fail` verdict with specific gaps, risks, and the highest-leverage fix per failing item.",
         "returns": [
-          "inputs",
-          "outputs",
-          "contracts",
-          "error handling",
-          "retry and idempotency assumptions",
-          "observability",
-          "one boundary-hardening change"
+          "per-criterion verdict table: `pass | partial | fail`",
+          "specific gap and risk per `partial` or `fail`",
+          "highest-leverage fix per `partial` or `fail`",
+          "overall verdict: `accept | refine | reject`"
         ],
         "pairsWith": [
+          "recurse.refine",
+          "recurse.decompose",
+          "guardrail.bounded-recursion",
+          "rubric.*",
+          "mode.critique"
+        ],
+        "avoidWhen": "Criteria are not defined — evaluation without explicit criteria produces impressionistic opinions, not actionable verdicts."
+      },
+      "key": "recurse.evaluate",
+      "aliases": [
+        "core.recurse.evaluate",
+        "core.recurse-evaluate"
+      ],
+      "title": "recurse.evaluate",
+      "summary": "Critically assess a candidate output against explicit criteria and return a structured per-criterion verdict.",
+      "tags": [
+        "recurse",
+        "evaluate"
+      ],
+      "copy": "Apply EVALUATION.\n\nRules:\n1. For each criterion, assess the candidate output: `pass` | `partial` | `fail`.\n2. For every `partial` or `fail`: state the specific gap, the risk it introduces, and the single highest-leverage fix.\n3. Do not suppress failing verdicts. Do not add praise unrelated to the criteria.\n4. Derive the overall verdict from the table: `accept` if all criteria pass | `refine` if only minor gaps remain | `reject` if any criterion fails critically.\n\nOutput format:\n\n| Criterion | Verdict | Gap / Risk | Highest-leverage fix |\n|-----------|---------|------------|----------------------|\n| ...       | ...     | ...        | ...                  |\n\nOverall verdict: [accept | refine | reject]\nRationale: [one sentence]\n\ncriteria: {criteria}\n\nCandidate output:\n{paste candidate output}",
+      "body": [
+        [
+          "Purpose",
+          "Critically assess a candidate output against explicit criteria and return a structured per-criterion verdict."
+        ],
+        [
+          "Use when",
+          "A candidate output needs to be assessed before deciding whether to refine, accept, or discard it. Always supply explicit criteria."
+        ],
+        [
+          "Expects",
+          "- candidate_output: the output to assess\n- criteria: an explicit comma-separated list of evaluation criteria"
+        ],
+        [
+          "Adds",
+          "A directive to map each criterion to a `pass | partial | fail` verdict with specific gaps, risks, and the highest-leverage fix per failing item."
+        ],
+        [
+          "Returns",
+          "per-criterion verdict table: `pass | partial | fail`, specific gap and risk per `partial` or `fail`, highest-leverage fix per `partial` or `fail`, overall verdict: `accept | refine | reject`"
+        ],
+        [
+          "Pairs with",
+          "recurse.refine, recurse.decompose, guardrail.bounded-recursion, rubric.*, mode.critique"
+        ],
+        [
+          "Avoid when",
+          "Criteria are not defined — evaluation without explicit criteria produces impressionistic opinions, not actionable verdicts."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.evaluate/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "refine",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Improve an output through bounded critique-and-revise loops, stopping when all criteria pass or the iteration limit is reached.",
+        "useWhen": "A first-pass output exists and quality matters enough to warrant structured improvement. Always pair with explicit criteria and an iteration limit.",
+        "expects": "- initial_output: the output to refine\n- iteration_limit: number of refinement rounds allowed (1–5; default 2)\n- criteria: an explicit comma-separated list of evaluation criteria (required)",
+        "adds": "A directive to critique against criteria each round, apply only fixes tied to specific gaps, and stop when criteria are met or the limit is reached.",
+        "returns": [
+          "final refined output only (no intermediate reasoning unless requested)",
+          "iteration count: N of {iteration_limit}",
+          "stopping reason: `criteria_met` | `limit_reached`"
+        ],
+        "pairsWith": [
+          "recurse.evaluate",
+          "guardrail.bounded-recursion",
           "mode.critique",
-          "lens.invariant-check",
-          "lens.abstraction-boundary"
-        ]
+          "rubric.*"
+        ],
+        "avoidWhen": "Criteria are not defined — vague refinement loops produce stylistic drift, not quality improvement."
       },
-      "key": "lens.interface-contract-review",
+      "key": "recurse.refine",
       "aliases": [
-        "lens.computer-science-interface-contract-review"
+        "core.recurse.refine",
+        "core.recurse-refine"
       ],
-      "title": "Interface Contract Review",
-      "summary": "Use when failures may be happening at a boundary between components.",
+      "title": "recurse.refine",
+      "summary": "Improve an output through bounded critique-and-revise loops, stopping when all criteria pass or the iteration limit is reached.",
       "tags": [
-        "software engineering",
-        "systems thinking",
-        "critical thinking"
+        "recurse",
+        "refine"
       ],
-      "copy": "Review the interface boundary.\n\nReturn:\n- inputs\n- outputs\n- contracts\n- error handling\n- retry and idempotency assumptions\n- observability\n- one boundary-hardening change\n\nBoundary:\n{paste boundary}",
+      "copy": "Apply ITERATIVE REFINEMENT.\n\nRules:\n1. Evaluate the current output against each criterion. Identify every gap.\n2. Apply fixes in order of highest leverage first. Only make changes tied to a specific criterion gap.\n3. After applying fixes, check: do all criteria pass? If yes, stop — return the final output immediately.\n4. If gaps remain and iterations allow, repeat from rule 1.\n5. After {iteration_limit} iterations, stop regardless of remaining gaps.\n\nConstraints:\n- Return the final output only. Do not show per-iteration reasoning unless explicitly requested.\n- Each iteration must address at least one concrete gap. If no gaps are found, stop early.\n- Do not make changes that are not tied to a failing criterion.\n\nOutput:\n- final refined output\n- iteration count: N of {iteration_limit}\n- stopping reason: `criteria_met` | `limit_reached`\n\niteration_limit: {iteration_limit}\ncriteria: {criteria}\n\nOutput to refine:\n{paste initial output}",
       "body": [
         [
+          "Purpose",
+          "Improve an output through bounded critique-and-revise loops, stopping when all criteria pass or the iteration limit is reached."
+        ],
+        [
           "Use when",
-          "Use when failures may be happening at a boundary between components."
+          "A first-pass output exists and quality matters enough to warrant structured improvement. Always pair with explicit criteria and an iteration limit."
+        ],
+        [
+          "Expects",
+          "- initial_output: the output to refine\n- iteration_limit: number of refinement rounds allowed (1–5; default 2)\n- criteria: an explicit comma-separated list of evaluation criteria (required)"
+        ],
+        [
+          "Adds",
+          "A directive to critique against criteria each round, apply only fixes tied to specific gaps, and stop when criteria are met or the limit is reached."
         ],
         [
           "Returns",
-          "inputs, outputs, contracts, error handling, retry and idempotency assumptions, observability, one boundary-hardening change"
+          "final refined output only (no intermediate reasoning unless requested), iteration count: N of {iteration_limit}, stopping reason: `criteria_met` | `limit_reached`"
         ],
         [
           "Pairs with",
-          "mode.critique, lens.invariant-check, lens.abstraction-boundary"
+          "recurse.evaluate, guardrail.bounded-recursion, mode.critique, rubric.*"
+        ],
+        [
+          "Avoid when",
+          "Criteria are not defined — vague refinement loops produce stylistic drift, not quality improvement."
         ]
       ],
       "family": "",
-      "group": "Computer Science",
-      "sourcePath": "prompts/concepts/computer-science/interface-contract-review.md"
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.refine/prompt.md"
     },
     {
       "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "medium",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "heavy",
       "contract": {
-        "useWhen": "Use when correctness depends on things staying true across steps.",
+        "purpose": "Render a structured, blame-free post-mortem for a system incident or significant failure.",
+        "useWhen": "After an incident has been stabilized and the team needs to extract root cause and corrective actions before the signal decays.",
+        "expects": "Incident summary, impact description, and duration.",
+        "adds": "A structured timeline-to-prevention format that separates root cause from contributing factors and closes with structural remediation.",
         "returns": [
-          "invariants",
-          "preconditions",
-          "postconditions",
-          "edge cases",
-          "failure modes",
-          "a test that would catch violations"
+          "timeline",
+          "root cause",
+          "contributing factors",
+          "what went well",
+          "remediation items (with owner and urgency)",
+          "structural prevention"
         ],
         "pairsWith": [
-          "mode.critique",
-          "lens.interface-contract-review",
-          "frame.test-case-design"
-        ]
-      },
-      "key": "lens.invariant-check",
-      "aliases": [
-        "lens.computer-science-invariant-check"
-      ],
-      "title": "Invariant Check",
-      "summary": "Use when correctness depends on things staying true across steps.",
-      "tags": [
-        "software engineering",
-        "critical thinking",
-        "epistemics"
-      ],
-      "copy": "Find the invariants in this system or argument.\n\nReturn:\n- invariants\n- preconditions\n- postconditions\n- edge cases\n- failure modes\n- a test that would catch violations\n\nSystem or argument:\n{paste system or argument}",
-      "body": [
-        [
-          "Use when",
-          "Use when correctness depends on things staying true across steps."
-        ],
-        [
-          "Returns",
-          "invariants, preconditions, postconditions, edge cases, failure modes, a test that would catch violations"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, lens.interface-contract-review, frame.test-case-design"
-        ]
-      ],
-      "family": "",
-      "group": "Computer Science",
-      "sourcePath": "prompts/concepts/computer-science/invariant-check.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when you need to decide how much of something to do, or whether to do one more unit.",
-        "returns": [
-          "the marginal benefit of doing one more unit",
-          "the marginal cost of doing one more unit",
-          "the point of diminishing returns",
-          "whether the current level is below, at, or above the optimal margin",
-          "what changes if you shift the level up or down by 20%",
-          "the implied recommendation"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.compare-options",
-          "frame.prioritize-opportunities"
-        ]
-      },
-      "key": "lens.marginal-analysis",
-      "aliases": [
-        "lens.economics-marginal-analysis"
-      ],
-      "title": "Marginal Analysis",
-      "summary": "Use when you need to decide how much of something to do, or whether to do one more unit.",
-      "tags": [
-        "economics",
-        "decision theory",
-        "planning"
-      ],
-      "copy": "Apply marginal analysis to this decision.\n\nReturn:\n- the marginal benefit of doing one more unit\n- the marginal cost of doing one more unit\n- the point of diminishing returns\n- whether the current level is below, at, or above the optimal margin\n- what changes if you shift the level up or down by 20%\n- the implied recommendation\n\nDecision or activity:\n{paste the decision, investment, or activity to analyze}",
-      "body": [
-        [
-          "Use when",
-          "Use when you need to decide how much of something to do, or whether to do one more unit."
-        ],
-        [
-          "Returns",
-          "the marginal benefit of doing one more unit, the marginal cost of doing one more unit, the point of diminishing returns, whether the current level is below, at, or above the optimal margin, what changes if you shift the level up or down by 20%, the implied recommendation"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.compare-options, frame.prioritize-opportunities"
-        ]
-      ],
-      "family": "",
-      "group": "Economics",
-      "sourcePath": "prompts/concepts/economics/marginal-analysis.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use when a choice implicitly rules out alternatives whose value is not being counted.",
-        "returns": [
-          "the best forgone alternative",
-          "what that alternative would have produced or protected",
-          "the implicit cost of staying on the current path",
-          "whether the current choice is worth that cost given what is actually known",
-          "any reversibility asymmetry between the options",
-          "the key question that would change the answer"
-        ],
-        "pairsWith": [
-          "mode.decide",
-          "frame.compare-options",
-          "frame.prioritize-opportunities"
-        ]
-      },
-      "key": "lens.opportunity-cost",
-      "aliases": [
-        "lens.economics-opportunity-cost"
-      ],
-      "title": "Opportunity Cost",
-      "summary": "Use when a choice implicitly rules out alternatives whose value is not being counted.",
-      "tags": [
-        "economics",
-        "decision theory",
-        "planning"
-      ],
-      "copy": "Analyze the opportunity cost of this choice.\n\nReturn:\n- the best forgone alternative\n- what that alternative would have produced or protected\n- the implicit cost of staying on the current path\n- whether the current choice is worth that cost given what is actually known\n- any reversibility asymmetry between the options\n- the key question that would change the answer\n\nChoice or commitment:\n{paste the choice being considered or already made}",
-      "body": [
-        [
-          "Use when",
-          "Use when a choice implicitly rules out alternatives whose value is not being counted."
-        ],
-        [
-          "Returns",
-          "the best forgone alternative, what that alternative would have produced or protected, the implicit cost of staying on the current path, whether the current choice is worth that cost given what is actually known, any reversibility asymmetry between the options, the key question that would change the answer"
-        ],
-        [
-          "Pairs with",
-          "mode.decide, frame.compare-options, frame.prioritize-opportunities"
-        ]
-      ],
-      "family": "",
-      "group": "Economics",
-      "sourcePath": "prompts/concepts/economics/opportunity-cost.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Apply when a past investment (money, time, or effort) is influencing a forward-looking decision in a way that distorts it.",
-        "pairsWith": [
-          "mode.decide",
-          "guardrail.disconfirming-evidence",
-          "frame.compare-options"
-        ]
-      },
-      "key": "lens.sunk-cost",
-      "aliases": [
-        "lens.economics-sunk-cost"
-      ],
-      "title": "Sunk Cost",
-      "summary": "Apply when a past investment (money, time, or effort) is influencing a forward-looking decision in a way that distorts it.",
-      "tags": [
-        "economics",
-        "decision theory",
-        "critical thinking"
-      ],
-      "copy": "Apply sunk cost analysis to this decision.\n\nReframe the decision as follows:\n- identify what has already been spent (the sunk cost)\n- state clearly: that cost cannot be recovered regardless of the choice ahead\n- restate the decision purely in terms of future costs and future benefits\n- given only the forward-looking view, what is the right choice?\n- if the answer changed once sunk costs were excluded, name what was distorting it\n\nAdditional check:\n- is there a legitimate forward-looking reason to stay the course?\n  (learning value, relationship capital, strategic positioning)\n- if yes, name it explicitly and separate it from the sunk cost argument\n\nDecision or situation:\n{paste the situation and the past investment involved}",
-      "body": [
-        [
-          "Use when",
-          "Apply when a past investment (money, time, or effort) is influencing a forward-looking decision in a way that distorts it."
-        ],
-        [
-          "Pairs with",
-          "mode.decide, guardrail.disconfirming-evidence, frame.compare-options"
-        ]
-      ],
-      "family": "",
-      "group": "Economics",
-      "sourcePath": "prompts/concepts/economics/sunk-cost.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use when a situation keeps recurring, surprising, or oscillating despite interventions.",
-        "returns": [
-          "reinforcing loops: what amplifies and accelerates in this system",
-          "balancing loops: what stabilises or resists change",
-          "key delays: where lag between cause and effect creates unpredictability",
-          "dominant loop: which loop is driving current behaviour",
-          "intervention risk: which loops would be accidentally strengthened by a naive fix",
-          "highest-leverage intervention that changes the loop structure rather than just current levels"
-        ],
-        "pairsWith": [
-          "mode.explore",
+          "mode.reflect",
           "frame.cause-mapping",
-          "lens.leverage-points"
-        ]
+          "schema.plan-next-actions"
+        ],
+        "avoidWhen": "The incident is still active — stabilize first, then debrief."
       },
-      "key": "lens.feedback-loops",
+      "key": "schema.incident-postmortem",
       "aliases": [
-        "lens.systems-thinking-feedback-loops"
+        "core.schema.incident-postmortem",
+        "core.schema-incident-postmortem"
       ],
-      "title": "Feedback Loops",
-      "summary": "Use when a situation keeps recurring, surprising, or oscillating despite interventions.",
+      "title": "schema.incident-postmortem",
+      "summary": "Render a structured, blame-free post-mortem for a system incident or significant failure.",
       "tags": [
-        "systems thinking",
-        "causal reasoning",
-        "planning"
+        "incident",
+        "postmortem"
       ],
-      "copy": "Map the feedback loops in this system.\n\nReturn:\n- reinforcing loops: what amplifies and accelerates in this system\n- balancing loops: what stabilises or resists change\n- key delays: where lag between cause and effect creates unpredictability\n- dominant loop: which loop is driving current behaviour\n- intervention risk: which loops would be accidentally strengthened by a naive fix\n- highest-leverage intervention that changes the loop structure rather than just current levels\n\nSystem or situation:\n{paste the recurring situation, system, or dynamic you are trying to understand}",
+      "copy": "Facilitate a structured post-mortem for this incident.\n\nIncident summary: {incident_summary}\nImpact: {impact}\nDuration: {duration}\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.",
       "body": [
         [
+          "Purpose",
+          "Render a structured, blame-free post-mortem for a system incident or significant failure."
+        ],
+        [
           "Use when",
-          "Use when a situation keeps recurring, surprising, or oscillating despite interventions."
+          "After an incident has been stabilized and the team needs to extract root cause and corrective actions before the signal decays."
+        ],
+        [
+          "Expects",
+          "Incident summary, impact description, and duration."
+        ],
+        [
+          "Adds",
+          "A structured timeline-to-prevention format that separates root cause from contributing factors and closes with structural remediation."
         ],
         [
           "Returns",
-          "reinforcing loops: what amplifies and accelerates in this system, balancing loops: what stabilises or resists change, key delays: where lag between cause and effect creates unpredictability, dominant loop: which loop is driving current behaviour, intervention risk: which loops would be accidentally strengthened by a naive fix, highest-leverage intervention that changes the loop structure rather than just current levels"
+          "timeline, root cause, contributing factors, what went well, remediation items (with owner and urgency), structural prevention"
         ],
         [
           "Pairs with",
-          "mode.explore, frame.cause-mapping, lens.leverage-points"
+          "mode.reflect, frame.cause-mapping, schema.plan-next-actions"
+        ],
+        [
+          "Avoid when",
+          "The incident is still active — stabilize first, then debrief."
         ]
       ],
       "family": "",
-      "group": "Systems Thinking",
-      "sourcePath": "prompts/concepts/systems-thinking/feedback-loops.md"
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.incident-postmortem/prompt.md"
     },
     {
       "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "light",
       "contract": {
-        "useWhen": "Use when you want maximum effect from minimum intervention in a complex system.",
+        "purpose": "Render a prioritized, executable action plan from a chosen direction or set of findings.",
+        "useWhen": "After deciding or concluding, when the main risk is leaving the session without a concrete next step.",
+        "expects": "A chosen direction, decision, or set of findings to translate into actions.",
+        "adds": "Ordered steps with blockers, dependencies, and a concrete first action named.",
         "returns": [
-          "the system's stated goal and its actual behaviour",
-          "the structural levers ordered from low to high leverage:",
-          "numbers and flows (low leverage)",
-          "feedback loop strength",
-          "information flows and who can see what",
-          "rules and constraints",
-          "goals and incentives",
-          "power to change rules",
-          "system paradigm or mental model (high leverage)",
-          "the most accessible high-leverage point currently available",
-          "the most likely resistance to using it"
+          "goal",
+          "ordered steps",
+          "dependencies",
+          "likely blockers",
+          "first concrete action",
+          "first checkpoint"
         ],
         "pairsWith": [
-          "mode.explore",
-          "lens.feedback-loops",
-          "frame.scenario-planning"
-        ]
+          "mode.decide",
+          "mode.reflect",
+          "frame.extract-insights",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "No direction has been chosen yet — this schema executes, it does not decide."
       },
-      "key": "lens.leverage-points",
+      "key": "schema.plan-next-actions",
       "aliases": [
-        "lens.systems-thinking-leverage-points"
+        "core.schema.plan-next-actions",
+        "core.schema-plan-next-actions"
       ],
-      "title": "Leverage Points",
-      "summary": "Use when you want maximum effect from minimum intervention in a complex system.",
+      "title": "schema.plan-next-actions",
+      "summary": "Render a prioritized, executable action plan from a chosen direction or set of findings.",
       "tags": [
-        "systems thinking",
-        "strategic thinking",
-        "planning"
+        "plan",
+        "next",
+        "actions"
       ],
-      "copy": "Identify the leverage points in this system.\n\nReturn:\n- the system's stated goal and its actual behaviour\n- the structural levers ordered from low to high leverage:\n  - numbers and flows (low leverage)\n  - feedback loop strength\n  - information flows and who can see what\n  - rules and constraints\n  - goals and incentives\n  - power to change rules\n  - system paradigm or mental model (high leverage)\n- the most accessible high-leverage point currently available\n- the most likely resistance to using it\n\nSystem or situation:\n{paste the system, organisation, or ongoing situation}",
+      "copy": "Turn this chosen direction or analysis into a practical next-step plan.\n\nRequirements:\n- order steps by dependency, not preference\n- name likely blockers before they become surprises\n- keep the first action concrete enough to do immediately\n\nReturn:\n- goal\n- ordered steps\n- dependencies\n- likely blockers\n- first concrete action\n- first checkpoint\n\nContext:\n{paste context, chosen direction, or findings}",
       "body": [
         [
+          "Purpose",
+          "Render a prioritized, executable action plan from a chosen direction or set of findings."
+        ],
+        [
           "Use when",
-          "Use when you want maximum effect from minimum intervention in a complex system."
+          "After deciding or concluding, when the main risk is leaving the session without a concrete next step."
+        ],
+        [
+          "Expects",
+          "A chosen direction, decision, or set of findings to translate into actions."
+        ],
+        [
+          "Adds",
+          "Ordered steps with blockers, dependencies, and a concrete first action named."
         ],
         [
           "Returns",
-          "the system's stated goal and its actual behaviour, the structural levers ordered from low to high leverage:, numbers and flows (low leverage), feedback loop strength, information flows and who can see what, rules and constraints, goals and incentives, power to change rules, system paradigm or mental model (high leverage), the most accessible high-leverage point currently available, the most likely resistance to using it"
+          "goal, ordered steps, dependencies, likely blockers, first concrete action, first checkpoint"
         ],
         [
           "Pairs with",
-          "mode.explore, lens.feedback-loops, frame.scenario-planning"
+          "mode.decide, mode.reflect, frame.extract-insights, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "No direction has been chosen yet — this schema executes, it does not decide."
         ]
       ],
       "family": "",
-      "group": "Systems Thinking",
-      "sourcePath": "prompts/concepts/systems-thinking/leverage-points.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when a decision involves competing values, duties, or harms that cannot all be satisfied.",
-        "returns": [
-          "the values or duties in tension",
-          "what each ethical framework implies:",
-          "consequentialist view: which choice produces the best outcomes across all affected parties",
-          "deontological view: which choice respects duties, rights, or constraints regardless of outcome",
-          "virtue view: what a person of good character would do in this situation",
-          "who bears the cost of each available choice",
-          "the choice that most frameworks converge on, if any",
-          "if they diverge: the clearest way to state what you are actually choosing between",
-          "what additional information would change the answer"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.second-order-effects",
-          "guardrail.disconfirming-evidence"
-        ]
-      },
-      "key": "lens.ethical-tradeoffs",
-      "aliases": [
-        "lens.philosophy-ethical-tradeoffs"
-      ],
-      "title": "Ethical Tradeoffs",
-      "summary": "Use when a decision involves competing values, duties, or harms that cannot all be satisfied.",
-      "tags": [
-        "ethics",
-        "critical thinking",
-        "decision theory"
-      ],
-      "copy": "Analyze the ethical tradeoffs in this decision.\n\nReturn:\n- the values or duties in tension\n- what each ethical framework implies:\n  - consequentialist view: which choice produces the best outcomes across all affected parties\n  - deontological view: which choice respects duties, rights, or constraints regardless of outcome\n  - virtue view: what a person of good character would do in this situation\n- who bears the cost of each available choice\n- the choice that most frameworks converge on, if any\n- if they diverge: the clearest way to state what you are actually choosing between\n- what additional information would change the answer\n\nDecision or situation:\n{paste the decision or situation involving ethical tension}",
-      "body": [
-        [
-          "Use when",
-          "Use when a decision involves competing values, duties, or harms that cannot all be satisfied."
-        ],
-        [
-          "Returns",
-          "the values or duties in tension, what each ethical framework implies:, consequentialist view: which choice produces the best outcomes across all affected parties, deontological view: which choice respects duties, rights, or constraints regardless of outcome, virtue view: what a person of good character would do in this situation, who bears the cost of each available choice, the choice that most frameworks converge on, if any, if they diverge: the clearest way to state what you are actually choosing between, what additional information would change the answer"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.second-order-effects, guardrail.disconfirming-evidence"
-        ]
-      ],
-      "family": "",
-      "group": "Philosophy",
-      "sourcePath": "prompts/concepts/philosophy/ethical-tradeoffs.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "explore",
-      "strength": "heavy",
-      "contract": {
-        "useWhen": "Use when a problem or solution rests on inherited assumptions that should be examined from scratch.",
-        "pairsWith": [
-          "mode.explore",
-          "strategy.problem-split",
-          "frame.reframe-the-problem"
-        ]
-      },
-      "key": "lens.first-principles",
-      "aliases": [
-        "lens.philosophy-first-principles"
-      ],
-      "title": "First Principles",
-      "summary": "Use when a problem or solution rests on inherited assumptions that should be examined from scratch.",
-      "tags": [
-        "first principles",
-        "critical thinking",
-        "creative thinking"
-      ],
-      "copy": "Break this down to first principles.\n\nRequirements:\n- identify what is assumed to be true without direct justification\n- strip each assumption back to the most fundamental claim that can still be verified\n- list what remains when all inherited assumptions are removed\n- from those fundamentals, re-derive the approach without retracing the same path\n- state what genuinely changes if you build back up from scratch\n\nProblem or assumption set:\n{paste the problem, system, approach, or belief to examine}",
-      "body": [
-        [
-          "Use when",
-          "Use when a problem or solution rests on inherited assumptions that should be examined from scratch."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, strategy.problem-split, frame.reframe-the-problem"
-        ]
-      ],
-      "family": "",
-      "group": "Philosophy",
-      "sourcePath": "prompts/concepts/philosophy/first-principles.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "explore",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Apply when an abstract claim, value, or principle needs to be tested against a hypothetical case to reveal its implications or limits.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.generate-options",
-          "lens.first-principles"
-        ]
-      },
-      "key": "lens.thought-experiment",
-      "aliases": [
-        "lens.philosophy-thought-experiment"
-      ],
-      "title": "Thought Experiment",
-      "summary": "Apply when an abstract claim, value, or principle needs to be tested against a hypothetical case to reveal its implications or limits.",
-      "tags": [
-        "philosophy",
-        "critical thinking",
-        "epistemics"
-      ],
-      "copy": "Design and run a thought experiment to test this principle or claim.\n\nSteps:\n1. State the principle or claim to be tested in precise terms\n2. Design a hypothetical case that isolates the relevant variable:\n   - select a scenario where the principle clearly applies\n   - introduce a variation that creates tension or forces a difficult implication\n   - strip away distracting real-world complexity\n3. Apply the principle rigorously to the hypothetical case\n4. Assess the result:\n   - is the implied outcome acceptable? If not, what does that reveal about the principle?\n   - does the principle need to be qualified, scoped, or revised?\n   - what does the thought experiment show that direct argument could not?\n\nPrinciple or claim:\n{paste the claim, rule, or value to examine}",
-      "body": [
-        [
-          "Use when",
-          "Apply when an abstract claim, value, or principle needs to be tested against a hypothetical case to reveal its implications or limits."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.generate-options, lens.first-principles"
-        ]
-      ],
-      "family": "",
-      "group": "Philosophy",
-      "sourcePath": "prompts/concepts/philosophy/thought-experiment.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Apply when estimating probabilities or making predictions, to avoid neglecting the historical frequency of similar cases.",
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.uncertainty",
-          "lens.survivorship-bias"
-        ]
-      },
-      "key": "lens.base-rate-check",
-      "aliases": [
-        "lens.base-rate-check"
-      ],
-      "title": "Base Rate Check",
-      "summary": "Apply when estimating probabilities or making predictions, to avoid neglecting the historical frequency of similar cases.",
-      "tags": [
-        "statistics",
-        "epistemics",
-        "decision theory"
-      ],
-      "copy": "Apply base rate thinking to this forecast or estimate.\n\nSteps:\n- identify the reference class: what category of similar cases does this belong to?\n- find or estimate the base rate for that class (historical frequency of the outcome)\n- note how confident you are in the reference class — is it genuinely comparable?\n- adjust from the base rate only for specific, clearly relevant factors (not vague optimism)\n- state your final calibrated estimate with explicit reasoning for any departure from the base rate\n- identify where overconfidence or underconfidence is most likely to distort this estimate\n\nForecast or estimate:\n{paste claim, prediction, or probability assessment}",
-      "body": [
-        [
-          "Use when",
-          "Apply when estimating probabilities or making predictions, to avoid neglecting the historical frequency of similar cases."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.uncertainty, lens.survivorship-bias"
-        ]
-      ],
-      "family": "",
-      "group": "Statistics",
-      "sourcePath": "prompts/concepts/statistics/base-rate-check.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Apply when a plan, argument, or claim rests on confident assertions that have not been examined for whether the expressed certainty is warranted.",
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.uncertainty",
-          "lens.base-rate-check"
-        ]
-      },
-      "key": "lens.confidence-calibration",
-      "aliases": [
-        "lens.confidence-calibration"
-      ],
-      "title": "Confidence Calibration",
-      "summary": "Apply when a plan, argument, or claim rests on confident assertions that have not been examined for whether the expressed certainty is warranted.",
-      "tags": [
-        "statistics",
-        "epistemics",
-        "critical thinking"
-      ],
-      "copy": "Audit the confidence levels in this work for calibration.\n\nFor each major claim or estimate:\n- state the current implied confidence level (high / medium / low or a rough probability)\n- identify what would need to be true for that confidence level to be justified\n- flag claims where confidence exceeds the available evidence\n- flag claims where false modesty is blocking useful commitment\n- suggest the well-calibrated version of each problematic claim\n\nThen give an overall verdict: overconfident, underconfident, or well-calibrated —\nand name the single claim whose confidence most deserves scrutiny.\n\nWork to audit:\n{paste plan, argument, forecast, or set of claims}",
-      "body": [
-        [
-          "Use when",
-          "Apply when a plan, argument, or claim rests on confident assertions that have not been examined for whether the expressed certainty is warranted."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.uncertainty, lens.base-rate-check"
-        ]
-      ],
-      "family": "",
-      "group": "Statistics",
-      "sourcePath": "prompts/concepts/statistics/confidence-calibration.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Apply when designing a study, survey, poll, or experiment where the quality of the sample determines whether conclusions can be generalised.",
-        "pairsWith": [
-          "frame.experiment-design",
-          "frame.research-questions",
-          "frame.data-quality-check"
-        ]
-      },
-      "key": "lens.sample-design",
-      "aliases": [
-        "lens.statistics-sample-design"
-      ],
-      "title": "Sample Design",
-      "summary": "Apply when designing a study, survey, poll, or experiment where the quality of the sample determines whether conclusions can be generalised.",
-      "tags": [
-        "statistics",
-        "research",
-        "epistemics"
-      ],
-      "copy": "Evaluate or design the sample for this study or analysis.\n\nCover:\n- target population: what group are we trying to draw conclusions about?\n- sampling frame: what group are we actually sampling from, and how does it differ from the target?\n- sampling method: random, stratified, cluster, or convenience — and what biases does it introduce?\n- sample size: is it sufficient to detect the effect size that would matter for the decision? (rough power calculation)\n- non-response and attrition: who is least likely to respond or remain in the sample, and does that bias the result?\n- external validity: to what extent can results be generalised beyond the sample?\n\nIdentify the single biggest threat to the validity of conclusions from this sample.\n\nStudy or analysis:\n{paste description of what is being studied and how the sample is or will be collected}",
-      "body": [
-        [
-          "Use when",
-          "Apply when designing a study, survey, poll, or experiment where the quality of the sample determines whether conclusions can be generalised."
-        ],
-        [
-          "Pairs with",
-          "frame.experiment-design, frame.research-questions, frame.data-quality-check"
-        ]
-      ],
-      "family": "",
-      "group": "Statistics",
-      "sourcePath": "prompts/concepts/statistics/sample-design.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "critique",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Apply when drawing conclusions from a sample that may only contain successes, completions, or survivors — and the excluded cases would change the conclusion.",
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.disconfirming-evidence",
-          "lens.base-rate-check"
-        ]
-      },
-      "key": "lens.survivorship-bias",
-      "aliases": [
-        "lens.statistics-survivorship-bias"
-      ],
-      "title": "Survivorship Bias",
-      "summary": "Apply when drawing conclusions from a sample that may only contain successes, completions, or survivors — and the excluded cases would change the conclusion.",
-      "tags": [
-        "statistics",
-        "epistemics",
-        "research"
-      ],
-      "copy": "Check this analysis for survivorship bias.\n\nAsk:\n- what cases are present in the sample? (what made it in)\n- what cases are absent? (what was filtered out before observation)\n- why were the absent cases excluded? (failure, dropout, inaccessibility, or selection)\n- if the absent cases were included, how would the pattern change?\n- is the conclusion being drawn only valid for the observed subset, or is it\n  being generalised to a broader population?\n\nIdentify: what would we need to examine to correct for this?\n\nAnalysis or claim:\n{paste the study, argument, case, or pattern you are reviewing}",
-      "body": [
-        [
-          "Use when",
-          "Apply when drawing conclusions from a sample that may only contain successes, completions, or survivors — and the excluded cases would change the conclusion."
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.disconfirming-evidence, lens.base-rate-check"
-        ]
-      ],
-      "family": "",
-      "group": "Statistics",
-      "sourcePath": "prompts/concepts/statistics/survivorship-bias.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "frame",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Apply when designing a solution to surface all constraints, distinguish hard limits from soft ones, and find room for creative moves that are being blocked by unexamined assumptions.",
-        "pairsWith": [
-          "mode.explore",
-          "lens.jobs-to-be-done",
-          "frame.scope"
-        ]
-      },
-      "key": "lens.constraint-mapping",
-      "aliases": [
-        "lens.constraint-mapping"
-      ],
-      "title": "Constraint Mapping",
-      "summary": "Apply when designing a solution to surface all constraints, distinguish hard limits from soft ones, and find room for creative moves that are being blocked by unexamined assumptions.",
-      "tags": [
-        "design",
-        "creative thinking",
-        "systems thinking"
-      ],
-      "copy": "Map the constraints acting on this design problem.\n\nCategorise each constraint:\n- hard constraints: non-negotiable (legal, physical, safety, contractual)\n- soft constraints: preferences or norms that could be relaxed with justification\n- assumed constraints: things being treated as fixed without having been explicitly tested\n\nFor each soft and assumed constraint:\n- who imposed it and what was the original intent?\n- what would actually happen if it were relaxed or removed?\n- is there a version of the solution that is better precisely because it challenges\n  this constraint?\n\nIdentify the one constraint that, if removed, would unlock the most design freedom.\nIdentify the one assumed constraint most likely to be wrong.\n\nDesign problem or situation:\n{paste problem description and any stated constraints}",
-      "body": [
-        [
-          "Use when",
-          "Apply when designing a solution to surface all constraints, distinguish hard limits from soft ones, and find room for creative moves that are being blocked by unexamined assumptions."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, lens.jobs-to-be-done, frame.scope"
-        ]
-      ],
-      "family": "",
-      "group": "Design",
-      "sourcePath": "prompts/concepts/design/constraint-mapping.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "frame",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Apply when designing or improving a product, service, or intervention to surface the underlying progress users are trying to make — not just what they do or ask for.",
-        "pairsWith": [
-          "mode.explore",
-          "frame.stakeholder-map",
-          "frame.task"
-        ]
-      },
-      "key": "lens.jobs-to-be-done",
-      "aliases": [
-        "lens.design-jobs-to-be-done"
-      ],
-      "title": "Jobs to Be Done",
-      "summary": "Apply when designing or improving a product, service, or intervention to surface the underlying progress users are trying to make — not just what they do or ask for.",
-      "tags": [
-        "design",
-        "behavioral science",
-        "strategic thinking"
-      ],
-      "copy": "Apply jobs-to-be-done analysis to this product, feature, or user behaviour.\n\nIdentify the job:\n- what progress is the user trying to make in their life or work?\n- what is being hired to do this job now (the current solution, workaround, or non-consumption)?\n- what functional job are they trying to accomplish?\n- what emotional job are they trying to accomplish? (how do they want to feel?)\n- what social job are they trying to accomplish? (how do they want to be seen?)\n\nExamine the context (the \"when\" and \"where\"):\n- what situation triggers the hire?\n- what pushes them away from the current solution?\n- what pulls them toward a new solution?\n- what anxieties and habits are holding them in place?\n\nImplication:\n- what does a solution look like that does this job better than the current alternative?\n\nProduct, feature, or behaviour:\n{paste what you are analysing}",
-      "body": [
-        [
-          "Use when",
-          "Apply when designing or improving a product, service, or intervention to surface the underlying progress users are trying to make — not just what they do or ask for."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, frame.stakeholder-map, frame.task"
-        ]
-      ],
-      "family": "",
-      "group": "Design",
-      "sourcePath": "prompts/concepts/design/jobs-to-be-done.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "lens",
-      "blockType": "lens",
-      "form": "concept",
-      "sourceKind": "Lens",
-      "stage": "explore",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Apply when designing or improving a product, communication, or system for human use, to surface the gap between how users think and how the system actually works.",
-        "pairsWith": [
-          "mode.explore",
-          "lens.jobs-to-be-done",
-          "lens.constraint-mapping"
-        ]
-      },
-      "key": "lens.user-mental-model",
-      "aliases": [
-        "lens.user-mental-model"
-      ],
-      "title": "User Mental Model",
-      "summary": "Apply when designing or improving a product, communication, or system for human use, to surface the gap between how users think and how the system actually works.",
-      "tags": [
-        "design",
-        "behavioral science",
-        "communication"
-      ],
-      "copy": "Map the user mental model and its gaps for this system or communication.\n\nCover:\n- how users most likely conceptualise this system (their internal working model)\n- where that mental model differs from how the system actually works\n- which mismatches will cause the most friction, errors, or abandonment\n- what vocabulary, metaphors, or analogies users are likely to bring in\n- what prior experience shapes their expectations\n\nThen suggest:\n- the two or three design or communication changes most likely to close the most\n  damaging gaps\n- any terminology that is creating silent confusion and should be changed\n\nSystem or communication to analyse:\n{paste product, interface, message, process, or feature description}",
-      "body": [
-        [
-          "Use when",
-          "Apply when designing or improving a product, communication, or system for human use, to surface the gap between how users think and how the system actually works."
-        ],
-        [
-          "Pairs with",
-          "mode.explore, lens.jobs-to-be-done, lens.constraint-mapping"
-        ]
-      ],
-      "family": "",
-      "group": "Design",
-      "sourcePath": "prompts/concepts/design/user-mental-model.md"
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.plan-next-actions/prompt.md"
     },
     {
       "section": "Block",
@@ -6291,60 +1983,6 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/rubric.argument-quality/README.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "rubric",
-      "blockType": "rubric",
-      "form": "rubric",
-      "sourceKind": "Rubric",
-      "stage": "critique",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "Use this checklist after drafting a strategy or strategic recommendation.",
-        "returns": [
-          "Is the actual strategic choice explicit — what we will do and what we will not do?",
-          "Are the assumptions underlying the strategy named and testable?",
-          "Does the strategy address the key uncertainties, or does it assume them away?",
-          "Is there a clear theory of how inputs lead to the desired outcome?",
-          "Are the trade-offs acknowledged rather than buried?",
-          "Is the strategy differentiated enough to matter, or is it generic enough to apply to anyone?",
-          "Is there a clear signal that would tell us the strategy is working or failing?"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "guardrail.assumption-audit",
-          "strategy.inversion"
-        ]
-      },
-      "key": "rubric.strategy-quality",
-      "aliases": [
-        "rubric.strategy-quality"
-      ],
-      "title": "rubric.strategy-quality",
-      "summary": "Use this checklist after drafting a strategy or strategic recommendation.",
-      "tags": [
-        "rubric",
-        "quality"
-      ],
-      "copy": "rubric.strategy-quality\n\nUse this checklist after drafting a strategy or strategic recommendation.\n\n- Is the actual strategic choice explicit — what we will do and what we will not do?\n- Are the assumptions underlying the strategy named and testable?\n- Does the strategy address the key uncertainties, or does it assume them away?\n- Is there a clear theory of how inputs lead to the desired outcome?\n- Are the trade-offs acknowledged rather than buried?\n- Is the strategy differentiated enough to matter, or is it generic enough to apply to anyone?\n- Is there a clear signal that would tell us the strategy is working or failing?",
-      "body": [
-        [
-          "Use when",
-          "Use this checklist after drafting a strategy or strategic recommendation."
-        ],
-        [
-          "Questions",
-          "Is the actual strategic choice explicit — what we will do and what we will not do?, Are the assumptions underlying the strategy named and testable?, Does the strategy address the key uncertainties, or does it assume them away?, Is there a clear theory of how inputs lead to the desired outcome?, Are the trade-offs acknowledged rather than buried?, Is the strategy differentiated enough to matter, or is it generic enough to apply to anyone?, Is there a clear signal that would tell us the strategy is working or failing?"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, guardrail.assumption-audit, strategy.inversion"
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/rubric.strategy-quality/README.md"
     },
     {
       "section": "Block",
@@ -6509,267 +2147,112 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/rubric.writing-quality/README.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "rubric",
-      "blockType": "rubric",
-      "form": "rubric",
-      "sourceKind": "Rubric",
-      "stage": "conclude",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use this checklist after a review or retrospective.",
-        "returns": [
-          "Did this go beyond recap?",
-          "Is there at least one reusable lesson?",
-          "Is there at least one concrete change to make?",
-          "Did it identify what actually caused the outcome?",
-          "Did it avoid blame theater?",
-          "Will this make a future decision or workflow better?"
-        ],
-        "pairsWith": [
-          "mode.reflect",
-          "frame.cause-mapping",
-          "frame.extract-insights"
-        ]
-      },
-      "key": "rubric.reflection-quality",
-      "aliases": [
-        "rubric.reflection-quality"
-      ],
-      "title": "rubric.reflection-quality",
-      "summary": "Use this checklist after a review or retrospective.",
-      "tags": [
-        "rubric",
-        "reflection",
-        "quality"
-      ],
-      "copy": "rubric.reflection-quality\n\nUse this checklist after a review or retrospective.\n\n- Did this go beyond recap?\n- Is there at least one reusable lesson?\n- Is there at least one concrete change to make?\n- Did it identify what actually caused the outcome?\n- Did it avoid blame theater?\n- Will this make a future decision or workflow better?",
-      "body": [
-        [
-          "Use when",
-          "Use this checklist after a review or retrospective."
-        ],
-        [
-          "Questions",
-          "Did this go beyond recap?, Is there at least one reusable lesson?, Is there at least one concrete change to make?, Did it identify what actually caused the outcome?, Did it avoid blame theater?, Will this make a future decision or workflow better?"
-        ],
-        [
-          "Pairs with",
-          "mode.reflect, frame.cause-mapping, frame.extract-insights"
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/rubric.reflection-quality/README.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "rubric",
-      "blockType": "rubric",
-      "form": "rubric",
-      "sourceKind": "Rubric",
-      "stage": "critique",
-      "strength": "light",
-      "contract": {
-        "useWhen": "Use this checklist after drafting or revising a prompt.",
-        "returns": [
-          "Is the task specific?",
-          "Is the output shape explicit?",
-          "Are constraints and non-goals visible?",
-          "Is the model likely to misread the request?",
-          "Is there enough context to solve it without guessing?",
-          "Does the prompt invite explicit reasoning, or does it only ask for a final answer?",
-          "Would a cleaner version of this prompt be easier to use?"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "frame.prompt-critique",
-          "frame.prompt-rewrite"
-        ]
-      },
-      "key": "rubric.prompt-quality",
-      "aliases": [
-        "rubric.prompt-quality"
-      ],
-      "title": "rubric.prompt-quality",
-      "summary": "Use this checklist after drafting or revising a prompt.",
-      "tags": [
-        "rubric",
-        "quality"
-      ],
-      "copy": "rubric.prompt-quality\n\nUse this checklist after drafting or revising a prompt.\n\n- Is the task specific?\n- Is the output shape explicit?\n- Are constraints and non-goals visible?\n- Is the model likely to misread the request?\n- Is there enough context to solve it without guessing?\n- Would a cleaner version of this prompt be easier to use?",
-      "body": [
-        [
-          "Use when",
-          "Use this checklist after drafting or revising a prompt."
-        ],
-        [
-          "Questions",
-          "Is the task specific?, Is the output shape explicit?, Are constraints and non-goals visible?, Is the model likely to misread the request?, Is there enough context to solve it without guessing?, Does the prompt invite explicit reasoning, or does it only ask for a final answer?, Would a cleaner version of this prompt be easier to use?"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, frame.prompt-critique, frame.prompt-rewrite"
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/rubric.prompt-quality/README.md"
     }
   ],
   "stacks": [
     {
       "section": "Stack",
-      "key": "stack.quick-sense-check",
-      "title": "Quick Sense-Check",
-      "family": "Critique & Review",
-      "job": "quick-sense-check",
-      "useWhen": "Use when you have a plan, draft, or decision and want a fast sanity check before committing further time to it.",
-      "stage": "critique",
-      "outputKind": "critique",
-      "effort": "quick",
+      "key": "stack.frame-problem",
+      "title": "frame-problem",
+      "family": "Thinking & Framing",
+      "job": "frame-problem",
+      "useWhen": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
+      "stage": "frame",
+      "outputKind": "clarity",
+      "effort": "standard",
       "stakes": "low",
-      "summary": "Use when you have a plan, draft, or decision and want a fast sanity check before committing further time to it.",
+      "summary": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "tags": [
-        "critical thinking",
-        "risk management",
-        "planning"
+        "frame",
+        "problem"
       ],
       "contract": {
-        "job": "quick-sense-check",
-        "useWhen": "Use when you have a plan, draft, or decision and want a fast sanity check before committing further time to it.",
-        "minimumBlocks": [
-          "mode.critique",
-          "guardrail.uncertainty"
-        ],
+        "job": "frame-problem",
+        "useWhen": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.critique`",
+          "`mode.explore`",
+          "`frame.task`",
+          "`frame.scope`",
+          "`frame.success-criteria`",
           "`guardrail.uncertainty`"
         ],
-        "blockOrderRationale": "Two blocks only. Critique mode sets the adversarial stance. Uncertainty guardrail forces the key assumption into the open. More blocks defeat the purpose of a quick check.",
-        "commonSwaps": "Swap `guardrail.uncertainty` for `guardrail.disconfirming-evidence` when the risk is confirmation bias rather than hidden uncertainty. Add `strategy.premortem` when the thing being checked is a plan rather than a draft or decision.",
-        "commonFailureMode": "Adding more blocks. A sense-check with five blocks is no longer a quick sense-check — it is a full critique. Keep it to two."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the plan, decision, or draft — even rough notes",
-          "the key assumption or bet it rests on"
-        ],
-        "expectedOutputs": [
-          "the weakest point in the current thinking named clearly",
-          "the key assumption laid bare and assessed for fragility",
-          "a clear steer on whether to proceed, revise, or pause"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "quick-sense-check"
+          "frame-problem"
         ],
         [
           "Use when",
-          "Use when you have a plan, draft, or decision and want a fast sanity check before committing further time to it."
+          "Structure an underspecified request before acting so neither the question nor the answer drifts."
         ],
         [
           "Stage",
-          "critique"
+          "frame"
         ],
         [
           "Output kind",
-          "critique"
+          "clarity"
         ],
         [
           "Effort",
-          "quick"
+          "standard"
         ],
         [
           "Stakes",
           "low"
         ],
         [
-          "Useful inputs",
-          "the plan, decision, or draft — even rough notes, the key assumption or bet it rests on"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, guardrail.uncertainty"
-        ],
-        [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Two blocks only. Critique mode sets the adversarial stance. Uncertainty guardrail forces the key assumption into the open. More blocks defeat the purpose of a quick check."
-        ],
-        [
-          "Common swaps",
-          "Swap `guardrail.uncertainty` for `guardrail.disconfirming-evidence` when the risk is confirmation bias rather than hidden uncertainty. Add `strategy.premortem` when the thing being checked is a plan rather than a draft or decision."
-        ],
-        [
-          "Common failure mode",
-          "Adding more blocks. A sense-check with five blocks is no longer a quick sense-check — it is a full critique. Keep it to two."
-        ],
-        [
-          "Expected outcome",
-          "the weakest point in the current thinking named clearly, the key assumption laid bare and assessed for fragility, a clear steer on whether to proceed, revise, or pause"
+          "`mode.explore` -> `frame.task` -> `frame.scope` -> `frame.success-criteria` -> `guardrail.uncertainty`"
         ]
       ],
-      "sourcePath": "stacks/quick-sense-check.md"
+      "sourcePath": "stacks/frame-problem.md"
     },
     {
       "section": "Stack",
-      "key": "stack.fast-ideation",
-      "title": "Fast Ideation",
+      "key": "stack.branch-select",
+      "title": "branch-select",
       "family": "Thinking & Framing",
-      "job": "fast-ideation",
-      "useWhen": "Use when you need a broad set of ideas quickly and want to defer judgment until after the generation phase.",
+      "job": "branch-select",
+      "useWhen": "Generate competing paths, select the best one, and discard the rest before refining.",
       "stage": "explore",
       "outputKind": "options",
-      "effort": "quick",
-      "stakes": "low",
-      "summary": "Use when you need a broad set of ideas quickly and want to defer judgment until after the generation phase.",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Generate competing paths, select the best one, and discard the rest before refining.",
       "tags": [
-        "creative thinking",
-        "ideation",
-        "decision theory"
+        "branch",
+        "select"
       ],
       "contract": {
-        "job": "fast-ideation",
-        "useWhen": "Use when you need a broad set of ideas quickly and want to defer judgment until after the generation phase.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.brainstorm-angles"
-        ],
+        "job": "branch-select",
+        "useWhen": "Generate competing paths, select the best one, and discard the rest before refining.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.explore`",
-          "`frame.brainstorm-angles`"
+          "`recurse.branch-prune`",
+          "`recurse.evaluate`",
+          "`recurse.refine`",
+          "`guardrail.bounded-recursion`"
         ],
-        "blockOrderRationale": "Explore mode sets the breadth-first stance and explicitly suppresses premature judgment. Brainstorm-angles provides the generative structure. The stack is intentionally minimal — adding strategy or guardrail blocks defeats the purpose by reintroducing the analytical frame that fast ideation is trying to suspend.",
-        "commonSwaps": "Swap `frame.brainstorm-angles` for `frame.generate-options` when the task is option generation for a specific decision rather than open ideation. Add `strategy.reframe-the-problem` if the ideation is stalled and a new frame would unlock it.",
-        "commonFailureMode": "Adding critique or analysis blocks during ideation. Evaluation during generation collapses the option set before it has real breadth."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the problem, question, or opportunity in one or two sentences",
-          "any constraints worth knowing (timing, resources, non-starters)"
-        ],
-        "expectedOutputs": [
-          "a diverse spread of ideas across different approaches or framings",
-          "at least one unexpected option that would not have surfaced from standard thinking",
-          "enough raw material for a second pass of evaluation or prioritisation"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "fast-ideation"
+          "branch-select"
         ],
         [
           "Use when",
-          "Use when you need a broad set of ideas quickly and want to defer judgment until after the generation phase."
+          "Generate competing paths, select the best one, and discard the rest before refining."
         ],
         [
           "Stage",
@@ -6781,705 +2264,58 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "the problem, question, or opportunity in one or two sentences, any constraints worth knowing (timing, resources, non-starters)"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.brainstorm-angles"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.brainstorm-angles`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode sets the breadth-first stance and explicitly suppresses premature judgment. Brainstorm-angles provides the generative structure. The stack is intentionally minimal — adding strategy or guardrail blocks defeats the purpose by reintroducing the analytical frame that fast ideation is trying to suspend."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.brainstorm-angles` for `frame.generate-options` when the task is option generation for a specific decision rather than open ideation. Add `strategy.reframe-the-problem` if the ideation is stalled and a new frame would unlock it."
-        ],
-        [
-          "Common failure mode",
-          "Adding critique or analysis blocks during ideation. Evaluation during generation collapses the option set before it has real breadth."
-        ],
-        [
-          "Expected outcome",
-          "a diverse spread of ideas across different approaches or framings, at least one unexpected option that would not have surfaced from standard thinking, enough raw material for a second pass of evaluation or prioritisation"
-        ]
-      ],
-      "sourcePath": "stacks/fast-ideation.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.frame-the-ask",
-      "title": "Frame the Ask",
-      "family": "Thinking & Framing",
-      "job": "frame-the-ask",
-      "useWhen": "Use when you have received a brief, request, or problem statement and need to understand what is really being asked before doing any work.",
-      "stage": "frame",
-      "outputKind": "clarity",
-      "effort": "quick",
-      "stakes": "low",
-      "summary": "Use when you have received a brief, request, or problem statement and need to understand what is really being asked before doing any work.",
-      "tags": [
-        "planning",
-        "communication",
-        "strategic thinking"
-      ],
-      "contract": {
-        "job": "frame-the-ask",
-        "useWhen": "Use when you have received a brief, request, or problem statement and need to understand what is really being asked before doing any work.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.clarify-task"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.clarify-task`",
-          "`frame.success-criteria`"
-        ],
-        "blockOrderRationale": "Explore mode prevents premature narrowing before the real job is understood. Clarify-task separates the stated ask from the likely objective. Success-criteria makes done concrete — without it, the session ends with understanding but no test of whether a response was right.",
-        "commonSwaps": "Swap `frame.success-criteria` for `lens.jobs-to-be-done` when the emotional and social dimensions of the ask matter. Add `frame.scope` when the real problem is boundaries rather than intent.",
-        "commonFailureMode": "Answering the stated question without checking what job is behind it. The stated ask is often a proxy for the real need."
-      },
-      "io": {
-        "usefulInputs": [
-          "the request as stated — verbatim if possible",
-          "any context about who is asking and why"
-        ],
-        "expectedOutputs": [
-          "the actual job behind the stated request made explicit",
-          "the criteria by which a good response will be judged",
-          "any ambiguities resolved or surfaced as explicit questions to ask back"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "frame-the-ask"
-        ],
-        [
-          "Use when",
-          "Use when you have received a brief, request, or problem statement and need to understand what is really being asked before doing any work."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "clarity"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "the request as stated — verbatim if possible, any context about who is asking and why"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.clarify-task"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.clarify-task` -> `frame.success-criteria`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode prevents premature narrowing before the real job is understood. Clarify-task separates the stated ask from the likely objective. Success-criteria makes done concrete — without it, the session ends with understanding but no test of whether a response was right."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.success-criteria` for `lens.jobs-to-be-done` when the emotional and social dimensions of the ask matter. Add `frame.scope` when the real problem is boundaries rather than intent."
-        ],
-        [
-          "Common failure mode",
-          "Answering the stated question without checking what job is behind it. The stated ask is often a proxy for the real need."
-        ],
-        [
-          "Expected outcome",
-          "the actual job behind the stated request made explicit, the criteria by which a good response will be judged, any ambiguities resolved or surfaced as explicit questions to ask back"
-        ]
-      ],
-      "sourcePath": "stacks/frame-the-ask.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.capture-and-act",
-      "title": "Capture and Act",
-      "family": "Reflection & Learning",
-      "job": "capture-and-act",
-      "useWhen": "Use after a meeting, conversation, piece of reading, or experience when you want to turn raw observations into something actionable before the signal decays.",
-      "stage": "conclude",
-      "outputKind": "plan",
-      "effort": "quick",
-      "stakes": "low",
-      "summary": "Use after a meeting, conversation, piece of reading, or experience when you want to turn raw observations into something actionable before the signal decays.",
-      "tags": [
-        "reflection",
-        "knowledge management",
-        "planning"
-      ],
-      "contract": {
-        "job": "capture-and-act",
-        "useWhen": "Use after a meeting, conversation, piece of reading, or experience when you want to turn raw observations into something actionable before the signal decays.",
-        "minimumBlocks": [
-          "mode.reflect",
-          "frame.extract-insights",
-          "schema.plan-next-actions"
-        ],
-        "fullSequence": [
-          "`mode.reflect`",
-          "`frame.extract-insights`",
-          "`schema.plan-next-actions`"
-        ],
-        "blockOrderRationale": "Reflect mode shifts from passive consumption to active extraction. Extract-insights follows immediately while the signal is fresh. Plan-next-actions closes the session with specific, actionable commitments so insight does not decay into vague intention.",
-        "commonSwaps": "Swap `mode.reflect` for `mode.explore` if the content raised new questions more than it produced conclusions. Add `frame.cause-mapping` between insights and actions when a failure or regret is the thing being reviewed.",
-        "commonFailureMode": "Jumping straight to plan-next-actions without extracting the actual insight. The result is actions that are loosely connected to the content rather than driven by it."
-      },
-      "io": {
-        "usefulInputs": [
-          "rough notes, transcript, or key moments from the experience",
-          "the question or goal the experience was meant to serve"
-        ],
-        "expectedOutputs": [
-          "the two or three highest-leverage insights extracted from the experience",
-          "next actions defined with enough specificity to remove ambiguity",
-          "the decision or commitment surfaced, if any, that the experience implies"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "capture-and-act"
-        ],
-        [
-          "Use when",
-          "Use after a meeting, conversation, piece of reading, or experience when you want to turn raw observations into something actionable before the signal decays."
-        ],
-        [
-          "Stage",
-          "conclude"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "rough notes, transcript, or key moments from the experience, the question or goal the experience was meant to serve"
-        ],
-        [
-          "Minimum blocks",
-          "mode.reflect, frame.extract-insights, schema.plan-next-actions"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.reflect` -> `frame.extract-insights` -> `schema.plan-next-actions`"
-        ],
-        [
-          "Why this order works",
-          "Reflect mode shifts from passive consumption to active extraction. Extract-insights follows immediately while the signal is fresh. Plan-next-actions closes the session with specific, actionable commitments so insight does not decay into vague intention."
-        ],
-        [
-          "Common swaps",
-          "Swap `mode.reflect` for `mode.explore` if the content raised new questions more than it produced conclusions. Add `frame.cause-mapping` between insights and actions when a failure or regret is the thing being reviewed."
-        ],
-        [
-          "Common failure mode",
-          "Jumping straight to plan-next-actions without extracting the actual insight. The result is actions that are loosely connected to the content rather than driven by it."
-        ],
-        [
-          "Expected outcome",
-          "the two or three highest-leverage insights extracted from the experience, next actions defined with enough specificity to remove ambiguity, the decision or commitment surfaced, if any, that the experience implies"
-        ]
-      ],
-      "sourcePath": "stacks/capture-and-act.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.audit-the-argument",
-      "title": "Audit the Argument",
-      "family": "Critique & Review",
-      "job": "audit-the-argument",
-      "useWhen": "Use when you want to evaluate whether an argument or position holds before accepting, rejecting, or acting on it.",
-      "stage": "critique",
-      "outputKind": "critique",
-      "effort": "quick",
-      "stakes": "medium",
-      "summary": "Use when you want to evaluate whether an argument or position holds before accepting, rejecting, or acting on it.",
-      "tags": [
-        "critical thinking",
-        "argumentation",
-        "epistemics"
-      ],
-      "contract": {
-        "job": "audit-the-argument",
-        "useWhen": "Use when you want to evaluate whether an argument or position holds before accepting, rejecting, or acting on it.",
-        "minimumBlocks": [
-          "mode.critique",
-          "frame.argument-structure"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`frame.argument-structure`",
-          "`lens.confidence-calibration`"
-        ],
-        "blockOrderRationale": "Critique mode sets the adversarial stance before structure mapping begins. Without that stance, argument-structure becomes descriptive rather than evaluative. Confidence-calibration adds the epistemic check — is the claim being asserted at proportionate strength to the evidence?",
-        "commonSwaps": "Swap `lens.confidence-calibration` for `rubric.argument-quality` when you want a checklist verdict rather than a calibration analysis. Add `strategy.steelman` before critiquing if there is a risk you are evaluating a weak version of the argument.",
-        "commonFailureMode": "Mapping the structure without setting a critical stance first. The result is a description of the argument, not an evaluation of it."
-      },
-      "io": {
-        "usefulInputs": [
-          "the argument, thesis, or position in full",
-          "the context in which it was made (optional, but useful)"
-        ],
-        "expectedOutputs": [
-          "the premises and conclusion of the argument mapped clearly",
-          "the hidden assumptions named and assessed",
-          "the gap between evidence strength and claimed confidence identified",
-          "a verdict: does the argument hold, partially hold, or fail — and why"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "audit-the-argument"
-        ],
-        [
-          "Use when",
-          "Use when you want to evaluate whether an argument or position holds before accepting, rejecting, or acting on it."
-        ],
-        [
-          "Stage",
-          "critique"
-        ],
-        [
-          "Output kind",
-          "critique"
-        ],
-        [
-          "Effort",
-          "quick"
+          "standard"
         ],
         [
           "Stakes",
           "medium"
         ],
         [
-          "Useful inputs",
-          "the argument, thesis, or position in full, the context in which it was made (optional, but useful)"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, frame.argument-structure"
-        ],
-        [
           "Suggested blocks",
-          "`mode.critique` -> `frame.argument-structure` -> `lens.confidence-calibration`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the adversarial stance before structure mapping begins. Without that stance, argument-structure becomes descriptive rather than evaluative. Confidence-calibration adds the epistemic check — is the claim being asserted at proportionate strength to the evidence?"
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.confidence-calibration` for `rubric.argument-quality` when you want a checklist verdict rather than a calibration analysis. Add `strategy.steelman` before critiquing if there is a risk you are evaluating a weak version of the argument."
-        ],
-        [
-          "Common failure mode",
-          "Mapping the structure without setting a critical stance first. The result is a description of the argument, not an evaluation of it."
-        ],
-        [
-          "Expected outcome",
-          "the premises and conclusion of the argument mapped clearly, the hidden assumptions named and assessed, the gap between evidence strength and claimed confidence identified, a verdict: does the argument hold, partially hold, or fail — and why"
+          "`recurse.branch-prune` -> `recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
         ]
       ],
-      "sourcePath": "stacks/audit-the-argument.md"
+      "sourcePath": "stacks/branch-select.md"
     },
     {
       "section": "Stack",
-      "key": "stack.orient-before-acting",
-      "title": "Orient Before Acting",
+      "key": "stack.decompose-solve",
+      "title": "decompose-solve",
       "family": "Thinking & Framing",
-      "job": "orient-before-acting",
-      "useWhen": "Use before starting any task where context is thin or the goal is loosely defined. A fast forcing function to avoid doing the wrong thing well.",
-      "stage": "frame",
-      "outputKind": "clarity",
-      "effort": "quick",
-      "stakes": "low",
-      "summary": "Use before starting any task where context is thin or the goal is loosely defined. A fast forcing function to avoid doing the wrong thing well.",
-      "tags": [
-        "planning",
-        "scoping",
-        "execution readiness"
-      ],
-      "contract": {
-        "job": "orient-before-acting",
-        "useWhen": "Use before starting any task where context is thin or the goal is loosely defined. A fast forcing function to avoid doing the wrong thing well.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.clarify-task"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.clarify-task`",
-          "`frame.scope`"
-        ],
-        "blockOrderRationale": "Explore mode prevents the 'do first, understand later' trap. Clarify-task separates the stated request from the actual task. Scope-frame closes with explicit in/out-of-scope boundaries so the work that begins is the right work.",
-        "commonSwaps": "Swap `frame.scope` for `frame.task` when the primary uncertainty is about the task itself rather than its boundaries. Add `guardrail.uncertainty` when significant unknowns should be named before action begins.",
-        "commonFailureMode": "Skipping orientation when the task feels familiar. Tasks that feel familiar are the ones most likely to hide important framing differences."
-      },
-      "io": {
-        "usefulInputs": [
-          "the task or request as stated",
-          "what you know about the situation so far",
-          "any deadline or constraint"
-        ],
-        "expectedOutputs": [
-          "what the task actually is",
-          "what's in scope and what's not",
-          "the one thing most likely to move this forward",
-          "what you'd need to know to be confident you're on the right track"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "orient-before-acting"
-        ],
-        [
-          "Use when",
-          "Use before starting any task where context is thin or the goal is loosely defined. A fast forcing function to avoid doing the wrong thing well."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "clarity"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "the task or request as stated, what you know about the situation so far, any deadline or constraint"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.clarify-task"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.clarify-task` -> `frame.scope`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode prevents the 'do first, understand later' trap. Clarify-task separates the stated request from the actual task. Scope-frame closes with explicit in/out-of-scope boundaries so the work that begins is the right work."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.scope` for `frame.task` when the primary uncertainty is about the task itself rather than its boundaries. Add `guardrail.uncertainty` when significant unknowns should be named before action begins."
-        ],
-        [
-          "Common failure mode",
-          "Skipping orientation when the task feels familiar. Tasks that feel familiar are the ones most likely to hide important framing differences."
-        ],
-        [
-          "Expected outcome",
-          "what the task actually is, what's in scope and what's not, the one thing most likely to move this forward, what you'd need to know to be confident you're on the right track"
-        ]
-      ],
-      "sourcePath": "stacks/orient-before-acting.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.clarify-the-real-job",
-      "title": "Clarify The Real Job",
-      "family": "Thinking & Framing",
-      "job": "clarify-the-real-job",
-      "useWhen": "Use when you have a stated request but aren't sure what the person actually needs to accomplish.",
-      "stage": "frame",
-      "outputKind": "clarity",
-      "effort": "quick",
-      "stakes": "low",
-      "summary": "Use when you have a stated request but aren't sure what the person actually needs to accomplish.",
-      "tags": [
-        "product thinking",
-        "customer understanding",
-        "requirements"
-      ],
-      "contract": {
-        "job": "clarify-the-real-job",
-        "useWhen": "Use when you have a stated request but aren't sure what the person actually needs to accomplish.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.clarify-task"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.clarify-task`",
-          "`frame.success-criteria`"
-        ],
-        "blockOrderRationale": "Explore mode prevents premature narrowing onto the surface request. Clarify-task separates the stated ask from the underlying job. Success-criteria makes done concrete enough to evaluate — without it the session ends with understanding but no test of whether the answer was right.",
-        "commonSwaps": "Swap `frame.success-criteria` for `lens.jobs-to-be-done` when the emotional and social job dimensions matter as much as the functional job. Add `frame.scope` when the job is clear but boundaries are the problem.",
-        "commonFailureMode": "Accepting the stated request as the real job. The surface request almost always omits context that would change the approach."
-      },
-      "io": {
-        "usefulInputs": [
-          "the raw request or task as given",
-          "any context about who asked and why",
-          "any stated constraints or deadlines"
-        ],
-        "expectedOutputs": [
-          "the functional job (what they need done)",
-          "the emotional job (how they want to feel after)",
-          "the social job (how they want to appear to others)",
-          "a working definition of done",
-          "the real question to answer"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "clarify-the-real-job"
-        ],
-        [
-          "Use when",
-          "Use when you have a stated request but aren't sure what the person actually needs to accomplish."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "clarity"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "the raw request or task as given, any context about who asked and why, any stated constraints or deadlines"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.clarify-task"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.clarify-task` -> `frame.success-criteria`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode prevents premature narrowing onto the surface request. Clarify-task separates the stated ask from the underlying job. Success-criteria makes done concrete enough to evaluate — without it the session ends with understanding but no test of whether the answer was right."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.success-criteria` for `lens.jobs-to-be-done` when the emotional and social job dimensions matter as much as the functional job. Add `frame.scope` when the job is clear but boundaries are the problem."
-        ],
-        [
-          "Common failure mode",
-          "Accepting the stated request as the real job. The surface request almost always omits context that would change the approach."
-        ],
-        [
-          "Expected outcome",
-          "the functional job (what they need done), the emotional job (how they want to feel after), the social job (how they want to appear to others), a working definition of done, the real question to answer"
-        ]
-      ],
-      "sourcePath": "stacks/clarify-the-real-job.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.design-for-outcomes",
-      "title": "Design For Outcomes",
-      "family": "Planning & Execution",
-      "job": "design-for-outcomes",
-      "useWhen": "Use when building, writing, or planning something and you want to anchor on what the person on the receiving end actually needs, not just what was requested.",
-      "stage": "frame",
-      "outputKind": "plan",
-      "effort": "quick",
-      "stakes": "medium",
-      "summary": "Use when building, writing, or planning something and you want to anchor on what the person on the receiving end actually needs, not just what was requested.",
-      "tags": [
-        "design",
-        "outcomes"
-      ],
-      "contract": {
-        "job": "design-for-outcomes",
-        "useWhen": "Use when building, writing, or planning something and you want to anchor on what the person on the receiving end actually needs, not just what was requested.",
-        "minimumBlocks": [
-          "frame.success-criteria",
-          "guardrail.assumption-audit"
-        ],
-        "fullSequence": [
-          "`mode.decide`",
-          "`frame.success-criteria`",
-          "`guardrail.assumption-audit`"
-        ],
-        "blockOrderRationale": "Success-criteria anchors the design on what the person on the receiving end actually needs, not what was requested. Assumption-audit surfaces the implicit bets before any design commitment. Without these two, the most common output is an elegant solution to a slightly wrong problem.",
-        "commonSwaps": "Swap `guardrail.assumption-audit` for `lens.jobs-to-be-done` when the user's underlying job is the primary unknown. Add `frame.compare-options` when multiple design approaches need to be evaluated against the success criteria.",
-        "commonFailureMode": "Defining success after the design is done. Retroactive success criteria tend to match what was already built rather than what the person actually needed."
-      },
-      "io": {
-        "usefulInputs": [
-          "what you're building or creating",
-          "who will use it and in what situation",
-          "any assumptions you're carrying about what good looks like"
-        ],
-        "expectedOutputs": [
-          "outcome-oriented definition of success",
-          "explicit assumptions surfaced and ranked by risk",
-          "the version most likely to actually do the job"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "design-for-outcomes"
-        ],
-        [
-          "Use when",
-          "Use when building, writing, or planning something and you want to anchor on what the person on the receiving end actually needs, not just what was requested."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "what you're building or creating, who will use it and in what situation, any assumptions you're carrying about what good looks like"
-        ],
-        [
-          "Minimum blocks",
-          "frame.success-criteria, guardrail.assumption-audit"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit`"
-        ],
-        [
-          "Why this order works",
-          "Success-criteria anchors the design on what the person on the receiving end actually needs, not what was requested. Assumption-audit surfaces the implicit bets before any design commitment. Without these two, the most common output is an elegant solution to a slightly wrong problem."
-        ],
-        [
-          "Common swaps",
-          "Swap `guardrail.assumption-audit` for `lens.jobs-to-be-done` when the user's underlying job is the primary unknown. Add `frame.compare-options` when multiple design approaches need to be evaluated against the success criteria."
-        ],
-        [
-          "Common failure mode",
-          "Defining success after the design is done. Retroactive success criteria tend to match what was already built rather than what the person actually needed."
-        ],
-        [
-          "Expected outcome",
-          "outcome-oriented definition of success, explicit assumptions surfaced and ranked by risk, the version most likely to actually do the job"
-        ]
-      ],
-      "sourcePath": "stacks/design-for-outcomes.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.map-adoption-blockers",
-      "title": "Map Adoption Blockers",
-      "family": "Research & Analysis",
-      "job": "map-adoption-blockers",
-      "useWhen": "Use when something exists — a product, idea, plan, or process — but people aren't picking it up or using it.",
+      "job": "decompose-solve",
+      "useWhen": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
       "stage": "analyze",
-      "outputKind": "brief",
-      "effort": "quick",
+      "outputKind": "plan",
+      "effort": "standard",
       "stakes": "medium",
-      "summary": "Use when something exists — a product, idea, plan, or process — but people aren't picking it up or using it.",
+      "summary": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
       "tags": [
-        "change management",
-        "behavioral analysis",
-        "adoption"
+        "decompose",
+        "solve"
       ],
       "contract": {
-        "job": "map-adoption-blockers",
-        "useWhen": "Use when something exists — a product, idea, plan, or process — but people aren't picking it up or using it.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.cause-mapping",
-          "lens.incentive-audit"
-        ],
+        "job": "decompose-solve",
+        "useWhen": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.explore`",
-          "`frame.cause-mapping`",
-          "`lens.incentive-audit`"
+          "`frame.task`",
+          "`recurse.decompose`",
+          "`recurse.evaluate`",
+          "`guardrail.bounded-recursion`"
         ],
-        "blockOrderRationale": "Explore mode opens the diagnosis before any intervention is considered. Cause-mapping traces the causal chain from the adoption gap back to its roots — surface friction, switching cost, and loop dynamics. Incentive-audit adds the behavioral layer: who benefits from the current arrangement and what would need to change for adoption to be worth switching to?",
-        "commonSwaps": "Swap `lens.incentive-audit` for `lens.jobs-to-be-done` when the primary unknown is what job people are hiring their current solution to do. Add `guardrail.stress-test-assumptions` when existing beliefs about adoption barriers need to be pressure-tested.",
-        "commonFailureMode": "Diagnosing the adoption problem without the incentive layer. Most adoption failures are not usability problems — they are incentive problems that look like usability problems."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "what the thing is and what it's supposed to do",
-          "who the intended users are",
-          "what you already know about why adoption is low"
-        ],
-        "expectedOutputs": [
-          "what job people are currently hiring their existing solution to do",
-          "friction and anxiety points blocking the switch",
-          "what would need to be true for someone to hire this instead",
-          "highest-leverage intervention to try first"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "map-adoption-blockers"
+          "decompose-solve"
         ],
         [
           "Use when",
-          "Use when something exists — a product, idea, plan, or process — but people aren't picking it up or using it."
+          "Recursively decompose a complex problem into leaf-level solutions, then synthesize."
         ],
         [
           "Stage",
@@ -7487,216 +2323,6 @@ globalThis.SITE_DATA = {
         ],
         [
           "Output kind",
-          "brief"
-        ],
-        [
-          "Effort",
-          "quick"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "what the thing is and what it's supposed to do, who the intended users are, what you already know about why adoption is low"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.cause-mapping, lens.incentive-audit"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.cause-mapping` -> `lens.incentive-audit`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode opens the diagnosis before any intervention is considered. Cause-mapping traces the causal chain from the adoption gap back to its roots — surface friction, switching cost, and loop dynamics. Incentive-audit adds the behavioral layer: who benefits from the current arrangement and what would need to change for adoption to be worth switching to?"
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.incentive-audit` for `lens.jobs-to-be-done` when the primary unknown is what job people are hiring their current solution to do. Add `guardrail.stress-test-assumptions` when existing beliefs about adoption barriers need to be pressure-tested."
-        ],
-        [
-          "Common failure mode",
-          "Diagnosing the adoption problem without the incentive layer. Most adoption failures are not usability problems — they are incentive problems that look like usability problems."
-        ],
-        [
-          "Expected outcome",
-          "what job people are currently hiring their existing solution to do, friction and anxiety points blocking the switch, what would need to be true for someone to hire this instead, highest-leverage intervention to try first"
-        ]
-      ],
-      "sourcePath": "stacks/map-adoption-blockers.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.problem-framing",
-      "title": "Problem Framing",
-      "family": "Thinking & Framing",
-      "job": "problem-framing",
-      "useWhen": "Use when the task is vague and you need a clean starting point.",
-      "stage": "frame",
-      "outputKind": "clarity",
-      "effort": "standard",
-      "stakes": "low",
-      "summary": "Use when the task is vague and you need a clean starting point.",
-      "tags": [
-        "strategic thinking",
-        "problem definition",
-        "planning"
-      ],
-      "contract": {
-        "job": "problem-framing",
-        "useWhen": "Use when the task is vague and you need a clean starting point.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.task"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.task`",
-          "`strategy.problem-split`",
-          "`frame.scope`",
-          "`guardrail.uncertainty`"
-        ],
-        "blockOrderRationale": "Explore mode opens the problem space before any structure is imposed. Frame.task separates the stated ask from the underlying objective. Problem-split decomposes the tangled task into distinct subproblems. Scope-frame defines the boundaries. Uncertainty guardrail closes by surfacing what is not yet known so the next step is aimed at the right thing.",
-        "commonSwaps": "Swap `strategy.problem-split` for `frame.second-order-effects` when the task is about consequences rather than decomposition. Swap `guardrail.uncertainty` for `frame.research-questions` when open questions need to be pursued rather than just named.",
-        "commonFailureMode": "Jumping from the stated request directly to a solution frame. The problem frame and the solution frame are not the same. Working on the wrong frame produces a well-executed answer to the wrong question."
-      },
-      "io": {
-        "usefulInputs": [
-          "the raw request, problem statement, or situation",
-          "any visible constraints or deadlines",
-          "any facts you already know versus what still feels unclear"
-        ],
-        "expectedOutputs": [
-          "clear problem frame",
-          "subproblems",
-          "open questions",
-          "best next step"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "problem-framing"
-        ],
-        [
-          "Use when",
-          "Use when the task is vague and you need a clean starting point."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "clarity"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "the raw request, problem statement, or situation, any visible constraints or deadlines, any facts you already know versus what still feels unclear"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.task"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `strategy.problem-split` -> `frame.scope` -> `guardrail.uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode opens the problem space before any structure is imposed. Frame.task separates the stated ask from the underlying objective. Problem-split decomposes the tangled task into distinct subproblems. Scope-frame defines the boundaries. Uncertainty guardrail closes by surfacing what is not yet known so the next step is aimed at the right thing."
-        ],
-        [
-          "Common swaps",
-          "Swap `strategy.problem-split` for `frame.second-order-effects` when the task is about consequences rather than decomposition. Swap `guardrail.uncertainty` for `frame.research-questions` when open questions need to be pursued rather than just named."
-        ],
-        [
-          "Common failure mode",
-          "Jumping from the stated request directly to a solution frame. The problem frame and the solution frame are not the same. Working on the wrong frame produces a well-executed answer to the wrong question."
-        ],
-        [
-          "Expected outcome",
-          "clear problem frame, subproblems, open questions, best next step"
-        ]
-      ],
-      "sourcePath": "stacks/problem-framing.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.define-and-measure",
-      "title": "Define and Measure",
-      "family": "Planning & Execution",
-      "job": "define-and-measure",
-      "useWhen": "Use when a goal or objective is vague and needs to be turned into something concrete enough to act on and track.",
-      "stage": "frame",
-      "outputKind": "plan",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when a goal or objective is vague and needs to be turned into something concrete enough to act on and track.",
-      "tags": [
-        "goal setting",
-        "measurement",
-        "strategy execution",
-        "planning"
-      ],
-      "contract": {
-        "job": "define-and-measure",
-        "useWhen": "Use when a goal or objective is vague and needs to be turned into something concrete enough to act on and track.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.success-criteria",
-          "frame.define-success-metrics"
-        ],
-        "fullSequence": [
-          "`mode.decide`",
-          "`frame.success-criteria`",
-          "`frame.define-success-metrics`",
-          "`frame.design-cheap-test`",
-          "`rubric.plan-quality`"
-        ],
-        "blockOrderRationale": "Decide mode prevents the session from drifting into exploration. Success-criteria defines the qualitative picture of done before any metric is designed — this prevents the metric from becoming the target. Define-success-metrics then builds the measurement instrument around the criteria. Design-cheap-test names the earliest leading indicator that would confirm the goal is reachable. The plan-quality rubric closes by checking whether the measurement plan can be gamed without also achieving the real outcome.",
-        "commonSwaps": "Swap `frame.design-cheap-test` for `frame.experiment-design` when a formal test is needed. Swap `rubric.plan-quality` for `rubric.strategy-quality` when the goal-setting is part of a larger strategic planning exercise.",
-        "commonFailureMode": "Designing metrics before defining what success looks like. Metrics without qualitative success criteria tend to drift toward what is measurable rather than what matters."
-      },
-      "io": {
-        "usefulInputs": [
-          "the stated goal or desired outcome",
-          "any current attempts to measure progress",
-          "the stakeholders who will judge success"
-        ],
-        "expectedOutputs": [
-          "success defined in terms of specific, observable outcomes (not activity)",
-          "leading and lagging indicators identified",
-          "the cheapest early test named that would confirm the goal is reachable",
-          "a measurement plan that cannot be gamed without also achieving the real outcome"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "define-and-measure"
-        ],
-        [
-          "Use when",
-          "Use when a goal or objective is vague and needs to be turned into something concrete enough to act on and track."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
           "plan"
         ],
         [
@@ -7708,402 +2334,178 @@ globalThis.SITE_DATA = {
           "medium"
         ],
         [
-          "Useful inputs",
-          "the stated goal or desired outcome, any current attempts to measure progress, the stakeholders who will judge success"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.success-criteria, frame.define-success-metrics"
-        ],
-        [
           "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `frame.define-success-metrics` -> `frame.design-cheap-test` -> `rubric.plan-quality`"
-        ],
-        [
-          "Why this order works",
-          "Decide mode prevents the session from drifting into exploration. Success-criteria defines the qualitative picture of done before any metric is designed — this prevents the metric from becoming the target. Define-success-metrics then builds the measurement instrument around the criteria. Design-cheap-test names the earliest leading indicator that would confirm the goal is reachable. The plan-quality rubric closes by checking whether the measurement plan can be gamed without also achieving the real outcome."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.design-cheap-test` for `frame.experiment-design` when a formal test is needed. Swap `rubric.plan-quality` for `rubric.strategy-quality` when the goal-setting is part of a larger strategic planning exercise."
-        ],
-        [
-          "Common failure mode",
-          "Designing metrics before defining what success looks like. Metrics without qualitative success criteria tend to drift toward what is measurable rather than what matters."
-        ],
-        [
-          "Expected outcome",
-          "success defined in terms of specific, observable outcomes (not activity), leading and lagging indicators identified, the cheapest early test named that would confirm the goal is reachable, a measurement plan that cannot be gamed without also achieving the real outcome"
+          "`frame.task` -> `recurse.decompose` -> `recurse.evaluate` -> `guardrail.bounded-recursion`"
         ]
       ],
-      "sourcePath": "stacks/define-and-measure.md"
+      "sourcePath": "stacks/decompose-solve.md"
     },
     {
       "section": "Stack",
-      "key": "stack.unblock-a-stuck-problem",
-      "title": "Unblock a Stuck Problem",
+      "key": "stack.refine-loop",
+      "title": "refine-loop",
       "family": "Thinking & Framing",
-      "job": "unblock-stuck-problem",
-      "useWhen": "Use when a problem keeps resisting solution and the current framing is part of the problem.",
-      "stage": "explore",
-      "outputKind": "options",
-      "effort": "standard",
-      "stakes": "low",
-      "summary": "Use when a problem keeps resisting solution and the current framing is part of the problem.",
-      "tags": [
-        "problem solving",
-        "creative thinking",
-        "ideation",
-        "lateral thinking"
-      ],
-      "contract": {
-        "job": "unblock-stuck-problem",
-        "useWhen": "Use when a problem keeps resisting solution and the current framing is part of the problem.",
-        "minimumBlocks": [
-          "mode.explore",
-          "strategy.reframe-the-problem"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`strategy.reframe-the-problem`",
-          "`strategy.analogical-reasoning`",
-          "`frame.generate-options`"
-        ],
-        "blockOrderRationale": "Explore mode opens the problem space before any solution is considered. Reframe-the-problem dissolves the constraints that made the original frame stuck. Analogical-reasoning then imports solutions from structurally similar problems in other domains. Generate-options produces a fresh option set from the new frame.",
-        "commonSwaps": "Swap `strategy.analogical-reasoning` for `strategy.inversion` when the problem is best approached by defining what a failed version looks like. Add `strategy.problem-split` after reframing when the problem is now clear but still large.",
-        "commonFailureMode": "Applying the same solution approaches to a stuck problem. A problem that has been stuck under the same frame will not unlock with more effort under the same frame."
-      },
-      "io": {
-        "usefulInputs": [
-          "the problem statement as currently understood",
-          "what has already been tried",
-          "any constraints that feel immovable"
-        ],
-        "expectedOutputs": [
-          "at least one reframe that dissolves or transforms the original problem",
-          "a structurally similar problem from another domain with a tested solution",
-          "fresh option set not available before the reframe"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "unblock-stuck-problem"
-        ],
-        [
-          "Use when",
-          "Use when a problem keeps resisting solution and the current framing is part of the problem."
-        ],
-        [
-          "Stage",
-          "explore"
-        ],
-        [
-          "Output kind",
-          "options"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "the problem statement as currently understood, what has already been tried, any constraints that feel immovable"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, strategy.reframe-the-problem"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `strategy.reframe-the-problem` -> `strategy.analogical-reasoning` -> `frame.generate-options`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode opens the problem space before any solution is considered. Reframe-the-problem dissolves the constraints that made the original frame stuck. Analogical-reasoning then imports solutions from structurally similar problems in other domains. Generate-options produces a fresh option set from the new frame."
-        ],
-        [
-          "Common swaps",
-          "Swap `strategy.analogical-reasoning` for `strategy.inversion` when the problem is best approached by defining what a failed version looks like. Add `strategy.problem-split` after reframing when the problem is now clear but still large."
-        ],
-        [
-          "Common failure mode",
-          "Applying the same solution approaches to a stuck problem. A problem that has been stuck under the same frame will not unlock with more effort under the same frame."
-        ],
-        [
-          "Expected outcome",
-          "at least one reframe that dissolves or transforms the original problem, a structurally similar problem from another domain with a tested solution, fresh option set not available before the reframe"
-        ]
-      ],
-      "sourcePath": "stacks/unblock-stuck-problem.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.scenario-futures",
-      "title": "Scenario Futures",
-      "family": "Thinking & Framing",
-      "job": "scenario-futures",
-      "useWhen": "Use when a decision depends on how the future unfolds and committing to one path is premature.",
-      "stage": "explore",
-      "outputKind": "options",
-      "effort": "standard",
+      "job": "refine-loop",
+      "useWhen": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
+      "stage": "refine",
+      "outputKind": "plan",
+      "effort": "quick",
       "stakes": "medium",
-      "summary": "Use when a decision depends on how the future unfolds and committing to one path is premature.",
+      "summary": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
       "tags": [
-        "strategic thinking",
-        "foresight",
-        "risk management"
+        "refine",
+        "loop"
       ],
       "contract": {
-        "job": "scenario-futures",
-        "useWhen": "Use when a decision depends on how the future unfolds and committing to one path is premature.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.scenario-planning"
-        ],
+        "job": "refine-loop",
+        "useWhen": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.explore`",
-          "`frame.scenario-planning`",
-          "`frame.second-order-effects`",
-          "`guardrail.uncertainty`"
+          "`recurse.evaluate`",
+          "`recurse.refine`",
+          "`guardrail.bounded-recursion`"
         ],
-        "blockOrderRationale": "Explore mode opens the futures space before any scenario is privileged. Scenario-planning builds the distinct futures rather than variations on the most likely one. Second-order-effects traces the consequences of each scenario beyond the obvious first-order impacts. Uncertainty guardrail closes by naming the residual unknowns and what to watch for as each scenario develops.",
-        "commonSwaps": "Swap `frame.second-order-effects` for `strategy.inversion` when the goal is finding the scenario where the current strategy fails most catastrophically. Add `frame.forecast` when probability estimates are needed rather than just scenario identification.",
-        "commonFailureMode": "Generating variations on the most likely scenario rather than genuinely distinct futures. Scenario planning that produces minor variations of the expected future provides no new strategic insight."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the decision or strategy under consideration",
-          "the main external forces that are uncertain",
-          "the time horizon that matters"
-        ],
-        "expectedOutputs": [
-          "three or four distinct futures mapped",
-          "second-order consequences of each traced",
-          "residual uncertainties named",
-          "what to watch for as each scenario forms"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "scenario-futures"
+          "refine-loop"
         ],
         [
           "Use when",
-          "Use when a decision depends on how the future unfolds and committing to one path is premature."
+          "Iteratively improve output against explicit criteria until all pass or iteration limit is reached."
         ],
         [
           "Stage",
-          "explore"
+          "refine"
         ],
         [
           "Output kind",
-          "options"
+          "plan"
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
           "medium"
         ],
         [
-          "Useful inputs",
-          "the decision or strategy under consideration, the main external forces that are uncertain, the time horizon that matters"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.scenario-planning"
-        ],
-        [
           "Suggested blocks",
-          "`mode.explore` -> `frame.scenario-planning` -> `frame.second-order-effects` -> `guardrail.uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode opens the futures space before any scenario is privileged. Scenario-planning builds the distinct futures rather than variations on the most likely one. Second-order-effects traces the consequences of each scenario beyond the obvious first-order impacts. Uncertainty guardrail closes by naming the residual unknowns and what to watch for as each scenario develops."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.second-order-effects` for `strategy.inversion` when the goal is finding the scenario where the current strategy fails most catastrophically. Add `frame.forecast` when probability estimates are needed rather than just scenario identification."
-        ],
-        [
-          "Common failure mode",
-          "Generating variations on the most likely scenario rather than genuinely distinct futures. Scenario planning that produces minor variations of the expected future provides no new strategic insight."
-        ],
-        [
-          "Expected outcome",
-          "three or four distinct futures mapped, second-order consequences of each traced, residual uncertainties named, what to watch for as each scenario forms"
+          "`recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
         ]
       ],
-      "sourcePath": "stacks/scenario-futures.md"
+      "sourcePath": "stacks/refine-loop.md"
     },
     {
       "section": "Stack",
-      "key": "stack.ethical-review",
-      "title": "Ethical Review",
-      "family": "Critique & Review",
-      "job": "ethical-review",
-      "useWhen": "Use when a decision, product, or plan may have ethical dimensions that have not been examined.",
-      "stage": "critique",
-      "outputKind": "critique",
-      "effort": "standard",
+      "key": "stack.decide",
+      "title": "decide",
+      "family": "Deciding & Prioritising",
+      "job": "decide",
+      "useWhen": "Move from a set of options to a committed, traceable choice.",
+      "stage": "decide",
+      "outputKind": "decision",
+      "effort": "deep",
       "stakes": "high",
-      "summary": "Use when a decision, product, or plan may have ethical dimensions that have not been examined.",
+      "summary": "Move from a set of options to a committed, traceable choice.",
       "tags": [
-        "ethics",
-        "critical thinking",
-        "responsible decision making",
-        "value trade-offs"
+        "decide"
       ],
       "contract": {
-        "job": "ethical-review",
-        "useWhen": "Use when a decision, product, or plan may have ethical dimensions that have not been examined.",
-        "minimumBlocks": [
-          "mode.critique",
-          "lens.ethical-tradeoffs"
-        ],
+        "job": "decide",
+        "useWhen": "Move from a set of options to a committed, traceable choice.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.critique`",
-          "`lens.ethical-tradeoffs`",
-          "`frame.second-order-effects`",
-          "`guardrail.disconfirming-evidence`"
+          "`mode.explore`",
+          "`frame.success-criteria`",
+          "`guardrail.disconfirming-evidence`",
+          "`guardrail.assumption-audit`",
+          "`mode.decide`",
+          "`schema.decision-memo`"
         ],
-        "blockOrderRationale": "Critique mode sets the adversarial lens before ethical frameworks are applied. Ethical-tradeoffs maps the competing values and duties explicitly before any conclusion. Second-order-effects surfaces harms that are not immediately visible. Disconfirming-evidence is the strongest guardrail in this stack — it forces the reviewer to name and address the most uncomfortable objection honestly rather than building toward a pre-formed conclusion.",
-        "commonSwaps": "Swap `frame.second-order-effects` for `strategy.inversion` when the main concern is potential harms rather than competing values. Add `lens.incentive-audit` when organizational incentives may be shaping the ethical framing.",
-        "commonFailureMode": "Running an ethical review without setting a critical stance. Without `mode.critique`, ethical reviews tend to confirm the ethics of a decision rather than examine them."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the decision, plan, or artifact under review",
-          "affected parties and what is at stake for each",
-          "any ethical concerns already in view"
-        ],
-        "expectedOutputs": [
-          "competing values and duties made explicit",
-          "what each ethical framework recommends and where they diverge",
-          "second-order harms surfaced that were not initially visible",
-          "the most uncomfortable objection named and addressed honestly"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "ethical-review"
+          "decide"
         ],
         [
           "Use when",
-          "Use when a decision, product, or plan may have ethical dimensions that have not been examined."
+          "Move from a set of options to a committed, traceable choice."
         ],
         [
           "Stage",
-          "critique"
+          "decide"
         ],
         [
           "Output kind",
-          "critique"
+          "decision"
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
           "high"
         ],
         [
-          "Useful inputs",
-          "the decision, plan, or artifact under review, affected parties and what is at stake for each, any ethical concerns already in view"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, lens.ethical-tradeoffs"
-        ],
-        [
           "Suggested blocks",
-          "`mode.critique` -> `lens.ethical-tradeoffs` -> `frame.second-order-effects` -> `guardrail.disconfirming-evidence`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the adversarial lens before ethical frameworks are applied. Ethical-tradeoffs maps the competing values and duties explicitly before any conclusion. Second-order-effects surfaces harms that are not immediately visible. Disconfirming-evidence is the strongest guardrail in this stack — it forces the reviewer to name and address the most uncomfortable objection honestly rather than building toward a pre-formed conclusion."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.second-order-effects` for `strategy.inversion` when the main concern is potential harms rather than competing values. Add `lens.incentive-audit` when organizational incentives may be shaping the ethical framing."
-        ],
-        [
-          "Common failure mode",
-          "Running an ethical review without setting a critical stance. Without `mode.critique`, ethical reviews tend to confirm the ethics of a decision rather than examine them."
-        ],
-        [
-          "Expected outcome",
-          "competing values and duties made explicit, what each ethical framework recommends and where they diverge, second-order harms surfaced that were not initially visible, the most uncomfortable objection named and addressed honestly"
+          "`mode.explore` -> `frame.success-criteria` -> `guardrail.disconfirming-evidence` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.decision-memo`"
         ]
       ],
-      "sourcePath": "stacks/ethical-review.md"
+      "sourcePath": "stacks/decide.md"
     },
     {
       "section": "Stack",
-      "key": "stack.communicate-a-change",
-      "title": "Communicate a Change",
-      "family": "Writing & Communication",
-      "job": "communicate-a-change",
-      "useWhen": "Use when a significant decision, change, or announcement needs to land with its audience rather than just reach them.",
+      "key": "stack.review-decision",
+      "title": "review-decision",
+      "family": "Deciding & Prioritising",
+      "job": "review-decision",
+      "useWhen": "Evaluate a past decision fairly by separating decision quality from outcome quality.",
       "stage": "conclude",
-      "outputKind": "brief",
+      "outputKind": "retrospective",
       "effort": "standard",
       "stakes": "medium",
-      "summary": "Use when a significant decision, change, or announcement needs to land with its audience rather than just reach them.",
+      "summary": "Evaluate a past decision fairly by separating decision quality from outcome quality.",
       "tags": [
-        "change management",
-        "communication",
-        "stakeholder management",
-        "influence"
+        "review",
+        "decision"
       ],
       "contract": {
-        "job": "communicate-a-change",
-        "useWhen": "Use when a significant decision, change, or announcement needs to land with its audience rather than just reach them.",
-        "minimumBlocks": [
-          "frame.stakeholder-map",
-          "schema.communication-brief"
-        ],
+        "job": "review-decision",
+        "useWhen": "Evaluate a past decision fairly by separating decision quality from outcome quality.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.decide`",
-          "`frame.stakeholder-map`",
-          "`lens.signaling-check`",
-          "`schema.communication-brief`"
+          "`guardrail.assumption-audit`",
+          "`guardrail.disconfirming-evidence`",
+          "`frame.cause-mapping`",
+          "`frame.extract-insights`",
+          "`rubric.decision-quality`"
         ],
-        "blockOrderRationale": "Stakeholder mapping comes first because different audiences need different messages — a single announcement rarely lands with all of them. Signaling-check surfaces how the message will actually be read, not how it is intended. Communication-brief structures the sequencing and channel plan after the message is calibrated.",
-        "commonSwaps": "Swap `lens.signaling-check` for `lens.coordination-plan` when the challenge is coordination rather than message framing. Add `frame.alignment-conversation-plan` when significant resistance is expected.",
-        "commonFailureMode": "Sending one message to all audiences. Without stakeholder differentiation, the announcement lands as noise for most and risks misreading by the ones whose reaction matters most."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the change, decision, or news to communicate",
-          "the audiences involved and their current state of information",
-          "any known concerns, resistance, or political dynamics"
-        ],
-        "expectedOutputs": [
-          "each audience mapped with what they specifically need to hear",
-          "signals checked so the message is read as intended",
-          "sequencing and channel plan",
-          "prepared responses to likely objections"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "communicate-a-change"
+          "review-decision"
         ],
         [
           "Use when",
-          "Use when a significant decision, change, or announcement needs to land with its audience rather than just reach them."
+          "Evaluate a past decision fairly by separating decision quality from outcome quality."
         ],
         [
           "Stage",
@@ -8111,7 +2513,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Output kind",
-          "brief"
+          "retrospective"
         ],
         [
           "Effort",
@@ -8122,85 +2524,109 @@ globalThis.SITE_DATA = {
           "medium"
         ],
         [
-          "Useful inputs",
-          "the change, decision, or news to communicate, the audiences involved and their current state of information, any known concerns, resistance, or political dynamics"
+          "Suggested blocks",
+          "`guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `frame.extract-insights` -> `rubric.decision-quality`"
+        ]
+      ],
+      "sourcePath": "stacks/review-decision.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.risk-decision",
+      "title": "risk-decision",
+      "family": "Deciding & Prioritising",
+      "job": "risk-decision",
+      "useWhen": "Decide under material risk or uncertain futures where failure would be costly.",
+      "stage": "decide",
+      "outputKind": "decision",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Decide under material risk or uncertain futures where failure would be costly.",
+      "tags": [
+        "risk",
+        "decision"
+      ],
+      "contract": {
+        "job": "risk-decision",
+        "useWhen": "Decide under material risk or uncertain futures where failure would be costly.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.cause-mapping`",
+          "`strategy.inversion`",
+          "`strategy.premortem`",
+          "`guardrail.assumption-audit`",
+          "`schema.decision-memo`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "risk-decision"
         ],
         [
-          "Minimum blocks",
-          "frame.stakeholder-map, schema.communication-brief"
+          "Use when",
+          "Decide under material risk or uncertain futures where failure would be costly."
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "decision"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `frame.stakeholder-map` -> `lens.signaling-check` -> `schema.communication-brief`"
-        ],
-        [
-          "Why this order works",
-          "Stakeholder mapping comes first because different audiences need different messages — a single announcement rarely lands with all of them. Signaling-check surfaces how the message will actually be read, not how it is intended. Communication-brief structures the sequencing and channel plan after the message is calibrated."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.signaling-check` for `lens.coordination-plan` when the challenge is coordination rather than message framing. Add `frame.alignment-conversation-plan` when significant resistance is expected."
-        ],
-        [
-          "Common failure mode",
-          "Sending one message to all audiences. Without stakeholder differentiation, the announcement lands as noise for most and risks misreading by the ones whose reaction matters most."
-        ],
-        [
-          "Expected outcome",
-          "each audience mapped with what they specifically need to hear, signals checked so the message is read as intended, sequencing and channel plan, prepared responses to likely objections"
+          "`frame.task` -> `frame.cause-mapping` -> `strategy.inversion` -> `strategy.premortem` -> `guardrail.assumption-audit` -> `schema.decision-memo`"
         ]
       ],
-      "sourcePath": "stacks/communicate-a-change.md"
+      "sourcePath": "stacks/risk-decision.md"
     },
     {
       "section": "Stack",
       "key": "stack.explore-vs-exploit",
-      "title": "Explore Vs Exploit",
+      "title": "explore-vs-exploit",
       "family": "Deciding & Prioritising",
       "job": "explore-vs-exploit",
-      "useWhen": "Use when you are unsure whether to keep searching or to commit to the best current option.",
+      "useWhen": "Decide whether to keep searching for a better option or commit to the current one.",
       "stage": "decide",
       "outputKind": "decision",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when you are unsure whether to keep searching or to commit to the best current option.",
+      "summary": "Decide whether to keep searching for a better option or commit to the current one.",
       "tags": [
-        "decision theory",
-        "resource allocation",
-        "timing"
+        "explore",
+        "exploit"
       ],
       "contract": {
         "job": "explore-vs-exploit",
-        "useWhen": "Use when you are unsure whether to keep searching or to commit to the best current option.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.success-criteria",
-          "frame.explore-exploit-decision"
-        ],
+        "useWhen": "Decide whether to keep searching for a better option or commit to the current one.",
+        "minimumBlocks": [],
         "fullSequence": [
           "`mode.decide`",
           "`frame.success-criteria`",
-          "`frame.explore-exploit-decision`",
           "`guardrail.uncertainty`",
+          "`guardrail.disconfirming-evidence`",
           "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Decide mode commits to making a choice rather than generating more options. Success-criteria defines the stakes and the value of the best current option before the explore/exploit analysis. Explore-exploit-decision applies the structured reasoning. Uncertainty guardrail prevents the decision from being treated as more certain than it is. Execution-brief closes with a handoff-ready action plan.",
-        "commonSwaps": "Swap `guardrail.uncertainty` for `guardrail.disconfirming-evidence` when there is a strong pull toward one answer. Add `frame.design-cheap-test` when the decision is to explore and a bounded test is the right instrument.",
-        "commonFailureMode": "Treating this as an exploration question rather than a decision question. The explore/exploit frame only works when you are committed to making a choice — framing it as 'let us keep thinking' defeats the purpose."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the current path or best known option",
-          "alternative options or search space, if any",
-          "the cost of delay, reversibility, or learning opportunity"
-        ],
-        "expectedOutputs": [
-          "clear recommendation to explore, exploit, or run a bounded test",
-          "explicit rationale",
-          "trigger that would change the call",
-          "immediate next action"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
@@ -8208,7 +2634,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Use when",
-          "Use when you are unsure whether to keep searching or to commit to the best current option."
+          "Decide whether to keep searching for a better option or commit to the current one."
         ],
         [
           "Stage",
@@ -8227,302 +2653,50 @@ globalThis.SITE_DATA = {
           "high"
         ],
         [
-          "Useful inputs",
-          "the current path or best known option, alternative options or search space, if any, the cost of delay, reversibility, or learning opportunity"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.success-criteria, frame.explore-exploit-decision"
-        ],
-        [
           "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `frame.explore-exploit-decision` -> `guardrail.uncertainty` -> `schema.execution-brief`"
-        ],
-        [
-          "Why this order works",
-          "Decide mode commits to making a choice rather than generating more options. Success-criteria defines the stakes and the value of the best current option before the explore/exploit analysis. Explore-exploit-decision applies the structured reasoning. Uncertainty guardrail prevents the decision from being treated as more certain than it is. Execution-brief closes with a handoff-ready action plan."
-        ],
-        [
-          "Common swaps",
-          "Swap `guardrail.uncertainty` for `guardrail.disconfirming-evidence` when there is a strong pull toward one answer. Add `frame.design-cheap-test` when the decision is to explore and a bounded test is the right instrument."
-        ],
-        [
-          "Common failure mode",
-          "Treating this as an exploration question rather than a decision question. The explore/exploit frame only works when you are committed to making a choice — framing it as 'let us keep thinking' defeats the purpose."
-        ],
-        [
-          "Expected outcome",
-          "clear recommendation to explore, exploit, or run a bounded test, explicit rationale, trigger that would change the call, immediate next action"
+          "`mode.decide` -> `frame.success-criteria` -> `guardrail.uncertainty` -> `guardrail.disconfirming-evidence` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/explore-vs-exploit.md"
     },
     {
       "section": "Stack",
-      "key": "stack.de-risk-with-test",
-      "title": "De-Risk With Test",
+      "key": "stack.prioritize",
+      "title": "prioritize",
       "family": "Deciding & Prioritising",
-      "job": "de-risk-with-test",
-      "useWhen": "Use when uncertainty is too high for full commitment but low enough to test.",
-      "stage": "decide",
-      "outputKind": "plan",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when uncertainty is too high for full commitment but low enough to test.",
-      "tags": [
-        "experimentation",
-        "risk management",
-        "lean methodology"
-      ],
-      "contract": {
-        "job": "de-risk-with-test",
-        "useWhen": "Use when uncertainty is too high for full commitment but low enough to test.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.success-criteria",
-          "frame.design-cheap-test"
-        ],
-        "fullSequence": [
-          "`mode.decide`",
-          "`frame.success-criteria`",
-          "`frame.design-cheap-test`",
-          "`schema.execution-brief`",
-          "`guardrail.uncertainty`"
-        ],
-        "blockOrderRationale": "Decide mode sets the commitment stance — this is about choosing the right test, not exploring more. Success-criteria defines what a positive test result would look like before designing the test, preventing Goodhart-style tests. Design-cheap-test constrains the test to the minimum viable evidence. Execution-brief closes with a handoff-ready action plan. Uncertainty guardrail prevents the test from being misread as more conclusive than it is.",
-        "commonSwaps": "Swap `schema.execution-brief` for `schema.decision-memo` when the decision is made and the test is confirmatory. Swap `frame.design-cheap-test` for `frame.experiment-design` when statistical rigor is required.",
-        "commonFailureMode": "Designing a test without first defining what a positive result looks like. The test runs but the team disagrees about whether the results are good enough to proceed."
-      },
-      "io": {
-        "usefulInputs": [
-          "the current idea, plan, or decision under consideration",
-          "the main uncertainty blocking commitment",
-          "any real budget, time, or effort ceiling for a test"
-        ],
-        "expectedOutputs": [
-          "core uncertainty",
-          "cheapest credible test",
-          "success and failure signals",
-          "next action with checkpoint"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "de-risk-with-test"
-        ],
-        [
-          "Use when",
-          "Use when uncertainty is too high for full commitment but low enough to test."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the current idea, plan, or decision under consideration, the main uncertainty blocking commitment, any real budget, time, or effort ceiling for a test"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.success-criteria, frame.design-cheap-test"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `frame.design-cheap-test` -> `schema.execution-brief` -> `guardrail.uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Decide mode sets the commitment stance — this is about choosing the right test, not exploring more. Success-criteria defines what a positive test result would look like before designing the test, preventing Goodhart-style tests. Design-cheap-test constrains the test to the minimum viable evidence. Execution-brief closes with a handoff-ready action plan. Uncertainty guardrail prevents the test from being misread as more conclusive than it is."
-        ],
-        [
-          "Common swaps",
-          "Swap `schema.execution-brief` for `schema.decision-memo` when the decision is made and the test is confirmatory. Swap `frame.design-cheap-test` for `frame.experiment-design` when statistical rigor is required."
-        ],
-        [
-          "Common failure mode",
-          "Designing a test without first defining what a positive result looks like. The test runs but the team disagrees about whether the results are good enough to proceed."
-        ],
-        [
-          "Expected outcome",
-          "core uncertainty, cheapest credible test, success and failure signals, next action with checkpoint"
-        ]
-      ],
-      "sourcePath": "stacks/de-risk-with-test.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.pressure-test-plan",
-      "title": "Pressure Test Plan",
-      "family": "Critique & Review",
-      "job": "pressure-test-plan",
-      "useWhen": "Use when you have a plan and want to stress it before committing.",
-      "stage": "critique",
-      "outputKind": "critique",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when you have a plan and want to stress it before committing.",
-      "tags": [
-        "risk management",
-        "critical thinking",
-        "planning"
-      ],
-      "contract": {
-        "job": "pressure-test-plan",
-        "useWhen": "Use when you have a plan and want to stress it before committing.",
-        "minimumBlocks": [
-          "mode.critique",
-          "strategy.premortem"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`strategy.premortem`",
-          "`strategy.red-team`",
-          "`guardrail.assumption-audit`",
-          "`guardrail.stress-test-assumptions`"
-        ],
-        "blockOrderRationale": "Critique mode sets the adversarial stance before any structured attack begins. Premortem generates the most plausible failure causes by assuming failure has already happened. Red-team argues against the plan as a hostile opponent. Assumption-audit surfaces the hidden premises. Stress-test-assumptions closes by testing the premises that would most damage the plan if false.",
-        "commonSwaps": "Swap `strategy.red-team` for `strategy.inversion` when the goal is finding structural failure modes rather than credible attacks. Swap `guardrail.assumption-audit` for `guardrail.disconfirming-evidence` when the plan is built around a preferred conclusion.",
-        "commonFailureMode": "Running a premortem without setting a critical stance first. Without `mode.critique`, premortem exercises tend to generate a list of risks rather than a genuine adversarial challenge."
-      },
-      "io": {
-        "usefulInputs": [
-          "the current plan, recommendation, or proposal",
-          "the intended outcome and constraints",
-          "any assumptions that already feel shaky"
-        ],
-        "expectedOutputs": [
-          "prioritized risks",
-          "exposed assumptions",
-          "hardest-to-dismiss objections",
-          "concrete mitigations"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "pressure-test-plan"
-        ],
-        [
-          "Use when",
-          "Use when you have a plan and want to stress it before committing."
-        ],
-        [
-          "Stage",
-          "critique"
-        ],
-        [
-          "Output kind",
-          "critique"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the current plan, recommendation, or proposal, the intended outcome and constraints, any assumptions that already feel shaky"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, strategy.premortem"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.stress-test-assumptions`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the adversarial stance before any structured attack begins. Premortem generates the most plausible failure causes by assuming failure has already happened. Red-team argues against the plan as a hostile opponent. Assumption-audit surfaces the hidden premises. Stress-test-assumptions closes by testing the premises that would most damage the plan if false."
-        ],
-        [
-          "Common swaps",
-          "Swap `strategy.red-team` for `strategy.inversion` when the goal is finding structural failure modes rather than credible attacks. Swap `guardrail.assumption-audit` for `guardrail.disconfirming-evidence` when the plan is built around a preferred conclusion."
-        ],
-        [
-          "Common failure mode",
-          "Running a premortem without setting a critical stance first. Without `mode.critique`, premortem exercises tend to generate a list of risks rather than a genuine adversarial challenge."
-        ],
-        [
-          "Expected outcome",
-          "prioritized risks, exposed assumptions, hardest-to-dismiss objections, concrete mitigations"
-        ]
-      ],
-      "sourcePath": "stacks/pressure-test-plan.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.prioritize-portfolio",
-      "title": "Prioritize Portfolio",
-      "family": "Deciding & Prioritising",
-      "job": "prioritize-portfolio",
-      "useWhen": "Use when several plausible bets compete for limited time, money, or attention.",
+      "job": "prioritize",
+      "useWhen": "Rank options under real constraints and commit to a sequenced execution order.",
       "stage": "decide",
       "outputKind": "decision",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when several plausible bets compete for limited time, money, or attention.",
+      "summary": "Rank options under real constraints and commit to a sequenced execution order.",
       "tags": [
-        "resource allocation",
-        "portfolio management",
-        "prioritization"
+        "prioritize"
       ],
       "contract": {
-        "job": "prioritize-portfolio",
-        "useWhen": "Use when several plausible bets compete for limited time, money, or attention.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.success-criteria",
-          "frame.prioritize-opportunities"
-        ],
+        "job": "prioritize",
+        "useWhen": "Rank options under real constraints and commit to a sequenced execution order.",
+        "minimumBlocks": [],
         "fullSequence": [
           "`mode.decide`",
           "`frame.success-criteria`",
-          "`frame.prioritize-opportunities`",
-          "`schema.execution-brief`",
-          "`guardrail.uncertainty`"
+          "`guardrail.assumption-audit`",
+          "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Decide mode commits to making a choice rather than generating more options. Success-criteria defines the optimization target before any bet is evaluated — without it, prioritization defaults to whoever advocates loudest. Prioritize-opportunities scores against the defined criteria. Execution-brief closes with a handoff-ready plan for the top priority. Uncertainty guardrail prevents the ranking from being treated as more reliable than it is.",
-        "commonSwaps": "Swap `schema.execution-brief` for `schema.decision-memo` when a documented rationale is more important than a handoff document. Swap `guardrail.uncertainty` for `guardrail.assumption-audit` when the rankings rest on important unverified assumptions.",
-        "commonFailureMode": "Prioritizing without defining success criteria first. Priority rankings without explicit criteria are politics in analytical clothing."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the list of candidate bets, projects, or tasks",
-          "resource constraints such as time, budget, or attention",
-          "any explicit success criteria or strategic priorities"
-        ],
-        "expectedOutputs": [
-          "ranked bets",
-          "now versus later cuts",
-          "execution brief for the top priority",
-          "visible uncertainty"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "prioritize-portfolio"
+          "prioritize"
         ],
         [
           "Use when",
-          "Use when several plausible bets compete for limited time, money, or attention."
+          "Rank options under real constraints and commit to a sequenced execution order."
         ],
         [
           "Stage",
@@ -8541,734 +2715,55 @@ globalThis.SITE_DATA = {
           "high"
         ],
         [
-          "Useful inputs",
-          "the list of candidate bets, projects, or tasks, resource constraints such as time, budget, or attention, any explicit success criteria or strategic priorities"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.success-criteria, frame.prioritize-opportunities"
-        ],
-        [
           "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `frame.prioritize-opportunities` -> `schema.execution-brief` -> `guardrail.uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Decide mode commits to making a choice rather than generating more options. Success-criteria defines the optimization target before any bet is evaluated — without it, prioritization defaults to whoever advocates loudest. Prioritize-opportunities scores against the defined criteria. Execution-brief closes with a handoff-ready plan for the top priority. Uncertainty guardrail prevents the ranking from being treated as more reliable than it is."
-        ],
-        [
-          "Common swaps",
-          "Swap `schema.execution-brief` for `schema.decision-memo` when a documented rationale is more important than a handoff document. Swap `guardrail.uncertainty` for `guardrail.assumption-audit` when the rankings rest on important unverified assumptions."
-        ],
-        [
-          "Common failure mode",
-          "Prioritizing without defining success criteria first. Priority rankings without explicit criteria are politics in analytical clothing."
-        ],
-        [
-          "Expected outcome",
-          "ranked bets, now versus later cuts, execution brief for the top priority, visible uncertainty"
+          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
         ]
       ],
-      "sourcePath": "stacks/prioritize-portfolio.md"
+      "sourcePath": "stacks/prioritize.md"
     },
     {
       "section": "Stack",
-      "key": "stack.code-review",
-      "title": "Code Review",
-      "family": "Developer Workflows",
-      "job": "code-review",
-      "useWhen": "Use when reviewing a pull request or piece of code and you want thorough, structured feedback that covers correctness, security, and maintainability.",
-      "stage": "critique",
-      "outputKind": "critique",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when reviewing a pull request or piece of code and you want thorough, structured feedback that covers correctness, security, and maintainability.",
-      "tags": [
-        "software engineering",
-        "critical thinking",
-        "quality"
-      ],
-      "contract": {
-        "job": "code-review",
-        "useWhen": "Use when reviewing a pull request or piece of code and you want thorough, structured feedback that covers correctness, security, and maintainability.",
-        "minimumBlocks": [
-          "mode.critique",
-          "frame.code-review",
-          "lens.invariant-check"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`frame.code-review`",
-          "`guardrail.change-impact-review`",
-          "`lens.invariant-check`",
-          "`lens.interface-contract-review`"
-        ],
-        "blockOrderRationale": "Critique mode sets the defect-finding stance first so the review is adversarial rather than confirmatory. Code-review provides the structured inspection surface. Change-impact-review widens the blast radius assessment before edge cases are evaluated. Invariant-check and interface-contract-review catch the class of bugs that basic code review misses — things that are locally correct but globally broken.",
-        "commonSwaps": "Swap `lens.interface-contract-review` for `lens.failure-mode-analysis` when the code has complex failure paths or external integrations. Add `guardrail.assumption-audit` when the review involves a significant design decision embedded in the diff.",
-        "commonFailureMode": "Reviewing the diff without mapping the change impact first. Small-looking edits regularly have disproportionate blast radii that are invisible without the change-impact check."
-      },
-      "io": {
-        "usefulInputs": [
-          "the code diff or full file under review",
-          "the language, framework, and context",
-          "any specific concerns already in mind"
-        ],
-        "expectedOutputs": [
-          "correctness, security, and maintainability issues identified and localised",
-          "change blast radius made explicit before small-looking edits are approved",
-          "invariants that the code must preserve — and whether they hold — made explicit",
-          "boundary contracts checked for leaks or violations",
-          "a prioritised list of issues and suggested fixes"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "code-review"
-        ],
-        [
-          "Use when",
-          "Use when reviewing a pull request or piece of code and you want thorough, structured feedback that covers correctness, security, and maintainability."
-        ],
-        [
-          "Stage",
-          "critique"
-        ],
-        [
-          "Output kind",
-          "critique"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the code diff or full file under review, the language, framework, and context, any specific concerns already in mind"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, frame.code-review, lens.invariant-check"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `frame.code-review` -> `guardrail.change-impact-review` -> `lens.invariant-check` -> `lens.interface-contract-review`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the defect-finding stance first so the review is adversarial rather than confirmatory. Code-review provides the structured inspection surface. Change-impact-review widens the blast radius assessment before edge cases are evaluated. Invariant-check and interface-contract-review catch the class of bugs that basic code review misses — things that are locally correct but globally broken."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.interface-contract-review` for `lens.failure-mode-analysis` when the code has complex failure paths or external integrations. Add `guardrail.assumption-audit` when the review involves a significant design decision embedded in the diff."
-        ],
-        [
-          "Common failure mode",
-          "Reviewing the diff without mapping the change impact first. Small-looking edits regularly have disproportionate blast radii that are invisible without the change-impact check."
-        ],
-        [
-          "Expected outcome",
-          "correctness, security, and maintainability issues identified and localised, change blast radius made explicit before small-looking edits are approved, invariants that the code must preserve — and whether they hold — made explicit, boundary contracts checked for leaks or violations, a prioritised list of issues and suggested fixes"
-        ]
-      ],
-      "sourcePath": "stacks/code-review.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.debug-a-failure",
-      "title": "Debug A Failure",
-      "family": "Developer Workflows",
-      "job": "debug-a-failure",
-      "useWhen": "Use when a bug, incident, or broken workflow needs a structured diagnosis instead of random guessing.",
-      "stage": "analyze",
-      "outputKind": "diagnosis",
-      "effort": "deep",
-      "stakes": "high",
-      "summary": "Use when a bug, incident, or broken workflow needs a structured diagnosis instead of random guessing.",
-      "tags": [
-        "diagnostics",
-        "root cause analysis",
-        "engineering"
-      ],
-      "contract": {
-        "job": "debug-a-failure",
-        "useWhen": "Use when a bug, incident, or broken workflow needs a structured diagnosis instead of random guessing.",
-        "minimumBlocks": [
-          "mode.critique",
-          "frame.bug-reproduction-brief",
-          "lens.debugger-loop"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`frame.bug-reproduction-brief`",
-          "`lens.debugger-loop`",
-          "`lens.interface-contract-review`",
-          "`lens.invariant-check`",
-          "`schema.plan-next-actions`"
-        ],
-        "blockOrderRationale": "Critique mode sets the defect-finding stance before investigation begins. Bug-reproduction-brief forces a precise failure target before any debugging steps — this is the single biggest lever for debugging efficiency. Debugger-loop then provides the iterative measurement structure. Interface-contract-review and invariant-check cover the categories of bugs most likely to cause the kind of failure being investigated. Plan-next-actions closes with a concrete fix path.",
-        "commonSwaps": "Swap `lens.interface-contract-review` for `guardrail.change-impact-review` when a recent deployment is the suspected cause. Swap `lens.invariant-check` for `lens.failure-mode-analysis` when the failure is in an external integration.",
-        "commonFailureMode": "Skipping the reproduction brief and going directly to hypothesis. Without a reliable reproduction target, debugging devolves into random experiments that confirm or rule out nothing systematically."
-      },
-      "io": {
-        "usefulInputs": [
-          "expected behavior versus actual behavior",
-          "reproduction steps, logs, or error evidence",
-          "the system boundary or component most likely involved"
-        ],
-        "expectedOutputs": [
-          "a reproducible investigation target",
-          "a tighter failure hypothesis",
-          "the highest-value next experiment",
-          "likely boundary or invariant break",
-          "a practical next-step plan"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "debug-a-failure"
-        ],
-        [
-          "Use when",
-          "Use when a bug, incident, or broken workflow needs a structured diagnosis instead of random guessing."
-        ],
-        [
-          "Stage",
-          "analyze"
-        ],
-        [
-          "Output kind",
-          "diagnosis"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "expected behavior versus actual behavior, reproduction steps, logs, or error evidence, the system boundary or component most likely involved"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, frame.bug-reproduction-brief, lens.debugger-loop"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `frame.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `schema.plan-next-actions`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the defect-finding stance before investigation begins. Bug-reproduction-brief forces a precise failure target before any debugging steps — this is the single biggest lever for debugging efficiency. Debugger-loop then provides the iterative measurement structure. Interface-contract-review and invariant-check cover the categories of bugs most likely to cause the kind of failure being investigated. Plan-next-actions closes with a concrete fix path."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.interface-contract-review` for `guardrail.change-impact-review` when a recent deployment is the suspected cause. Swap `lens.invariant-check` for `lens.failure-mode-analysis` when the failure is in an external integration."
-        ],
-        [
-          "Common failure mode",
-          "Skipping the reproduction brief and going directly to hypothesis. Without a reliable reproduction target, debugging devolves into random experiments that confirm or rule out nothing systematically."
-        ],
-        [
-          "Expected outcome",
-          "a reproducible investigation target, a tighter failure hypothesis, the highest-value next experiment, likely boundary or invariant break, a practical next-step plan"
-        ]
-      ],
-      "sourcePath": "stacks/debug-a-failure.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.debug-a-system",
-      "title": "Debug a System",
-      "family": "Developer Workflows",
-      "job": "debug-a-system",
-      "useWhen": "Use when a system, service, or integration is behaving unexpectedly and you need to isolate the fault before attempting a fix.",
-      "stage": "analyze",
-      "outputKind": "diagnosis",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when a system, service, or integration is behaving unexpectedly and you need to isolate the fault before attempting a fix.",
-      "tags": [
-        "software engineering",
-        "causal reasoning",
-        "systems thinking"
-      ],
-      "contract": {
-        "job": "debug-a-system",
-        "useWhen": "Use when a system, service, or integration is behaving unexpectedly and you need to isolate the fault before attempting a fix.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.hypothesis-generation",
-          "lens.debugger-loop"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.hypothesis-generation`",
-          "`lens.debugger-loop`",
-          "`lens.failure-mode-analysis`",
-          "`frame.cause-mapping`"
-        ],
-        "blockOrderRationale": "Explore mode prevents premature convergence on a single hypothesis before the failure space has been mapped. Hypothesis-generation creates multiple competing candidates to test in parallel. Debugger-loop provides the iterative isolation structure. Failure-mode-analysis covers component-level failure modes that hypothesis generation might miss. Cause-mapping closes by distinguishing root cause from contributing factors.",
-        "commonSwaps": "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when boundary failures are more likely than internal logic failures. Add `frame.log-triage` before the debugger loop when telemetry is available.",
-        "commonFailureMode": "Beginning with a single hypothesis and building an investigation around confirming it. The single-hypothesis approach is fast when the guess is correct and catastrophically slow when it is not."
-      },
-      "io": {
-        "usefulInputs": [
-          "the symptom and the conditions under which it appears",
-          "what changed recently (deployment, config, traffic pattern)",
-          "system architecture or service dependencies"
-        ],
-        "expectedOutputs": [
-          "competing hypotheses for the cause generated before investigation begins",
-          "systematic isolation steps defined to confirm or rule out each hypothesis",
-          "failure mode of each component in the call chain assessed",
-          "root cause identified and distinguished from contributing factors",
-          "fix confirmed as addressing cause, not symptom"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "debug-a-system"
-        ],
-        [
-          "Use when",
-          "Use when a system, service, or integration is behaving unexpectedly and you need to isolate the fault before attempting a fix."
-        ],
-        [
-          "Stage",
-          "analyze"
-        ],
-        [
-          "Output kind",
-          "diagnosis"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the symptom and the conditions under which it appears, what changed recently (deployment, config, traffic pattern), system architecture or service dependencies"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.hypothesis-generation, lens.debugger-loop"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.hypothesis-generation` -> `lens.debugger-loop` -> `lens.failure-mode-analysis` -> `frame.cause-mapping`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode prevents premature convergence on a single hypothesis before the failure space has been mapped. Hypothesis-generation creates multiple competing candidates to test in parallel. Debugger-loop provides the iterative isolation structure. Failure-mode-analysis covers component-level failure modes that hypothesis generation might miss. Cause-mapping closes by distinguishing root cause from contributing factors."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when boundary failures are more likely than internal logic failures. Add `frame.log-triage` before the debugger loop when telemetry is available."
-        ],
-        [
-          "Common failure mode",
-          "Beginning with a single hypothesis and building an investigation around confirming it. The single-hypothesis approach is fast when the guess is correct and catastrophically slow when it is not."
-        ],
-        [
-          "Expected outcome",
-          "competing hypotheses for the cause generated before investigation begins, systematic isolation steps defined to confirm or rule out each hypothesis, failure mode of each component in the call chain assessed, root cause identified and distinguished from contributing factors, fix confirmed as addressing cause, not symptom"
-        ]
-      ],
-      "sourcePath": "stacks/debug-a-system.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.interpret-an-experiment",
-      "title": "Interpret an Experiment",
+      "key": "stack.research",
+      "title": "research",
       "family": "Research & Analysis",
-      "job": "interpret-an-experiment",
-      "useWhen": "Use when you have results from an A/B test, controlled experiment, or data analysis and need to decide whether to act on them.",
-      "stage": "critique",
+      "job": "research",
+      "useWhen": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
+      "stage": "analyze",
       "outputKind": "summary",
       "effort": "standard",
       "stakes": "medium",
-      "summary": "Use when you have results from an A/B test, controlled experiment, or data analysis and need to decide whether to act on them.",
+      "summary": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "tags": [
-        "statistics",
-        "decision theory",
-        "epistemics"
-      ],
-      "contract": {
-        "job": "interpret-an-experiment",
-        "useWhen": "Use when you have results from an A/B test, controlled experiment, or data analysis and need to decide whether to act on them.",
-        "minimumBlocks": [
-          "mode.critique",
-          "guardrail.statistical-significance-check",
-          "guardrail.disconfirming-evidence"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`guardrail.statistical-significance-check`",
-          "`lens.survivorship-bias`",
-          "`lens.base-rate-check`",
-          "`guardrail.disconfirming-evidence`"
-        ],
-        "blockOrderRationale": "Critique mode sets the skeptical stance before any statistical interpretation. Significance-check distinguishes statistical from practical significance. Survivorship-bias surfaces selection effects in the sample. Base-rate-check prevents overreaction to a result that is unsurprising given prior evidence. Disconfirming-evidence guardrail closes by forcing the strongest reason not to act on the result.",
-        "commonSwaps": "Swap `lens.survivorship-bias` for `guardrail.correlation-vs-causation` when the experiment was observational rather than controlled. Swap `guardrail.disconfirming-evidence` for `rubric.research-quality` when a formal quality assessment is needed.",
-        "commonFailureMode": "Acting on statistical significance alone. A result can be statistically significant, practically irrelevant, and based on a biased sample simultaneously."
-      },
-      "io": {
-        "usefulInputs": [
-          "the test results: metric, p-value, confidence interval, sample size, duration",
-          "the hypothesis that was being tested",
-          "what decision depends on this result"
-        ],
-        "expectedOutputs": [
-          "statistical and practical significance distinguished",
-          "sample quality and bias sources examined",
-          "base rate context applied: is this result surprising given prior evidence?",
-          "the strongest reason not to act on the result named honestly",
-          "a clear recommendation: act, replicate, or discard"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "interpret-an-experiment"
-        ],
-        [
-          "Use when",
-          "Use when you have results from an A/B test, controlled experiment, or data analysis and need to decide whether to act on them."
-        ],
-        [
-          "Stage",
-          "critique"
-        ],
-        [
-          "Output kind",
-          "summary"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the test results: metric, p-value, confidence interval, sample size, duration, the hypothesis that was being tested, what decision depends on this result"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, guardrail.statistical-significance-check, guardrail.disconfirming-evidence"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `guardrail.statistical-significance-check` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `guardrail.disconfirming-evidence`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the skeptical stance before any statistical interpretation. Significance-check distinguishes statistical from practical significance. Survivorship-bias surfaces selection effects in the sample. Base-rate-check prevents overreaction to a result that is unsurprising given prior evidence. Disconfirming-evidence guardrail closes by forcing the strongest reason not to act on the result."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.survivorship-bias` for `guardrail.correlation-vs-causation` when the experiment was observational rather than controlled. Swap `guardrail.disconfirming-evidence` for `rubric.research-quality` when a formal quality assessment is needed."
-        ],
-        [
-          "Common failure mode",
-          "Acting on statistical significance alone. A result can be statistically significant, practically irrelevant, and based on a biased sample simultaneously."
-        ],
-        [
-          "Expected outcome",
-          "statistical and practical significance distinguished, sample quality and bias sources examined, base rate context applied: is this result surprising given prior evidence?, the strongest reason not to act on the result named honestly, a clear recommendation: act, replicate, or discard"
-        ]
-      ],
-      "sourcePath": "stacks/interpret-an-experiment.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.technical-architecture-review",
-      "title": "Technical Architecture Review",
-      "family": "Developer Workflows",
-      "job": "technical-architecture-review",
-      "useWhen": "Use when a software design, system architecture, or technical approach needs rigorous pre-commit review.",
-      "stage": "critique",
-      "outputKind": "critique",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when a software design, system architecture, or technical approach needs rigorous pre-commit review.",
-      "tags": [
-        "software engineering",
-        "systems design",
-        "technical review",
-        "architecture"
-      ],
-      "contract": {
-        "job": "technical-architecture-review",
-        "useWhen": "Use when a software design, system architecture, or technical approach needs rigorous pre-commit review.",
-        "minimumBlocks": [
-          "mode.critique",
-          "lens.interface-contract-review",
-          "lens.invariant-check"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`lens.interface-contract-review`",
-          "`lens.invariant-check`",
-          "`lens.complexity-tradeoff`",
-          "`rubric.decision-quality`"
-        ],
-        "blockOrderRationale": "Critique mode sets the adversarial stance for the review. Interface-contract-review maps boundary assumptions and potential contract violations. Invariant-check surfaces correctness properties that the design must maintain. Complexity-tradeoff evaluates the maintainability and cognitive cost of the design. Decision-quality rubric closes by assessing whether the architectural choice is defensible and documented.",
-        "commonSwaps": "Swap `lens.complexity-tradeoff` for `lens.abstraction-boundary` when the review is focused on modularity and boundary design. Add `strategy.premortem` when the design is complex enough that anticipating failure modes is valuable.",
-        "commonFailureMode": "Reviewing architecture for elegance rather than correctness. Elegant architectures that violate invariants or leave contract assumptions unverified fail in production in ways that are hard to diagnose."
-      },
-      "io": {
-        "usefulInputs": [
-          "the architecture diagram, design doc, or technical proposal",
-          "the intended behaviour and scale requirements",
-          "the main technical risks or open questions"
-        ],
-        "expectedOutputs": [
-          "boundary and contract weaknesses exposed",
-          "invariants and correctness risks surfaced",
-          "complexity and maintainability costs assessed",
-          "clear decision on whether to proceed, revise, or reject"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "technical-architecture-review"
-        ],
-        [
-          "Use when",
-          "Use when a software design, system architecture, or technical approach needs rigorous pre-commit review."
-        ],
-        [
-          "Stage",
-          "critique"
-        ],
-        [
-          "Output kind",
-          "critique"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the architecture diagram, design doc, or technical proposal, the intended behaviour and scale requirements, the main technical risks or open questions"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, lens.interface-contract-review, lens.invariant-check"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `lens.interface-contract-review` -> `lens.invariant-check` -> `lens.complexity-tradeoff` -> `rubric.decision-quality`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the adversarial stance for the review. Interface-contract-review maps boundary assumptions and potential contract violations. Invariant-check surfaces correctness properties that the design must maintain. Complexity-tradeoff evaluates the maintainability and cognitive cost of the design. Decision-quality rubric closes by assessing whether the architectural choice is defensible and documented."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.complexity-tradeoff` for `lens.abstraction-boundary` when the review is focused on modularity and boundary design. Add `strategy.premortem` when the design is complex enough that anticipating failure modes is valuable."
-        ],
-        [
-          "Common failure mode",
-          "Reviewing architecture for elegance rather than correctness. Elegant architectures that violate invariants or leave contract assumptions unverified fail in production in ways that are hard to diagnose."
-        ],
-        [
-          "Expected outcome",
-          "boundary and contract weaknesses exposed, invariants and correctness risks surfaced, complexity and maintainability costs assessed, clear decision on whether to proceed, revise, or reject"
-        ]
-      ],
-      "sourcePath": "stacks/technical-architecture-review.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.source-to-brief",
-      "title": "Source To Brief",
-      "family": "Research & Analysis",
-      "job": "source-to-brief",
-      "useWhen": "Use when a dense source needs to become something decision-useful quickly.",
-      "stage": "analyze",
-      "outputKind": "brief",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when a dense source needs to become something decision-useful quickly.",
-      "tags": [
-        "synthesis",
-        "knowledge management",
         "research"
       ],
       "contract": {
-        "job": "source-to-brief",
-        "useWhen": "Use when a dense source needs to become something decision-useful quickly.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.summarize-source",
-          "frame.extract-insights"
-        ],
+        "job": "research",
+        "useWhen": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
+        "minimumBlocks": [],
         "fullSequence": [
           "`mode.explore`",
-          "`frame.summarize-source`",
           "`frame.extract-insights`",
-          "`frame.research-questions`",
-          "`schema.plan-next-actions`"
+          "`guardrail.disconfirming-evidence`",
+          "`frame.cause-mapping`",
+          "`rubric.research-quality`"
         ],
-        "blockOrderRationale": "Explore mode prevents the brief from being shaped by the first impression of the source. Summarize-source compresses the core argument. Extract-insights identifies what is relevant to the specific decision or question driving the brief. Research-questions surfaces the open questions the source raises but does not answer. Plan-next-actions closes with specific next steps based on the extracted insights.",
-        "commonSwaps": "Swap `frame.research-questions` for `frame.synthesize-sources` when multiple sources are being integrated into one brief. Swap `schema.plan-next-actions` for `schema.executive-summary` when the output is a document rather than an action list.",
-        "commonFailureMode": "Summarizing without extracting insights tied to the driving question. A summary without extraction produces a compressed version of the source rather than a decision-useful brief."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the source material or notes",
-          "the purpose, audience, or decision this should support",
-          "any known gaps or questions that still matter"
-        ],
-        "expectedOutputs": [
-          "a compressed source summary",
-          "the most decision-relevant insights",
-          "the most useful open questions",
-          "clear next actions"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "source-to-brief"
+          "research"
         ],
         [
           "Use when",
-          "Use when a dense source needs to become something decision-useful quickly."
+          "Build a well-grounded view from a body of evidence before deciding or writing a position."
         ],
         [
           "Stage",
           "analyze"
-        ],
-        [
-          "Output kind",
-          "brief"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the source material or notes, the purpose, audience, or decision this should support, any known gaps or questions that still matter"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.summarize-source, frame.extract-insights"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.summarize-source` -> `frame.extract-insights` -> `frame.research-questions` -> `schema.plan-next-actions`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode prevents the brief from being shaped by the first impression of the source. Summarize-source compresses the core argument. Extract-insights identifies what is relevant to the specific decision or question driving the brief. Research-questions surfaces the open questions the source raises but does not answer. Plan-next-actions closes with specific next steps based on the extracted insights."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.research-questions` for `frame.synthesize-sources` when multiple sources are being integrated into one brief. Swap `schema.plan-next-actions` for `schema.executive-summary` when the output is a document rather than an action list."
-        ],
-        [
-          "Common failure mode",
-          "Summarizing without extracting insights tied to the driving question. A summary without extraction produces a compressed version of the source rather than a decision-useful brief."
-        ],
-        [
-          "Expected outcome",
-          "a compressed source summary, the most decision-relevant insights, the most useful open questions, clear next actions"
-        ]
-      ],
-      "sourcePath": "stacks/source-to-brief.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.learn-from-content",
-      "title": "Learn From Content",
-      "family": "Research & Analysis",
-      "job": "learn-from-content",
-      "useWhen": "Use when you have consumed a source — book, paper, transcript, or talk — and want to retain and use it.",
-      "stage": "conclude",
-      "outputKind": "summary",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when you have consumed a source — book, paper, transcript, or talk — and want to retain and use it.",
-      "tags": [
-        "learning",
-        "knowledge management",
-        "synthesis",
-        "epistemic practice"
-      ],
-      "contract": {
-        "job": "learn-from-content",
-        "useWhen": "Use when you have consumed a source — book, paper, transcript, or talk — and want to retain and use it.",
-        "minimumBlocks": [
-          "mode.reflect",
-          "frame.summarize-source",
-          "frame.extract-insights"
-        ],
-        "fullSequence": [
-          "`mode.reflect`",
-          "`frame.summarize-source`",
-          "`frame.extract-insights`",
-          "`frame.second-order-effects`",
-          "`frame.research-questions`"
-        ],
-        "blockOrderRationale": "Reflect mode shifts from consumption to active extraction. Summarize-source compresses the core argument before it is integrated with existing knowledge. Extract-insights distills what is actually relevant given the current question. Second-order-effects traces implications beyond the obvious takeaways. Research-questions closes with the open questions the content raises but does not answer.",
-        "commonSwaps": "Swap `frame.second-order-effects` for `frame.cause-mapping` when the content is about a specific failure or outcome. Swap `frame.research-questions` for `schema.plan-next-actions` when the content implies a specific action rather than further investigation.",
-        "commonFailureMode": "Summarizing without extracting insights. A summary recaps what the source said; an extraction identifies what it means for the current question or decision."
-      },
-      "io": {
-        "usefulInputs": [
-          "the source material or your notes from it",
-          "the decision, project, or question the source should inform",
-          "any existing beliefs or frameworks the source challenges"
-        ],
-        "expectedOutputs": [
-          "compressed summary with the core argument and key evidence",
-          "highest-leverage insights extracted and named",
-          "second-order implications traced beyond the obvious takeaways",
-          "open questions that would sharpen or challenge the material"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "learn-from-content"
-        ],
-        [
-          "Use when",
-          "Use when you have consumed a source — book, paper, transcript, or talk — and want to retain and use it."
-        ],
-        [
-          "Stage",
-          "conclude"
         ],
         [
           "Output kind",
@@ -9283,1599 +2778,52 @@ globalThis.SITE_DATA = {
           "medium"
         ],
         [
-          "Useful inputs",
-          "the source material or your notes from it, the decision, project, or question the source should inform, any existing beliefs or frameworks the source challenges"
-        ],
-        [
-          "Minimum blocks",
-          "mode.reflect, frame.summarize-source, frame.extract-insights"
-        ],
-        [
           "Suggested blocks",
-          "`mode.reflect` -> `frame.summarize-source` -> `frame.extract-insights` -> `frame.second-order-effects` -> `frame.research-questions`"
-        ],
-        [
-          "Why this order works",
-          "Reflect mode shifts from consumption to active extraction. Summarize-source compresses the core argument before it is integrated with existing knowledge. Extract-insights distills what is actually relevant given the current question. Second-order-effects traces implications beyond the obvious takeaways. Research-questions closes with the open questions the content raises but does not answer."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.second-order-effects` for `frame.cause-mapping` when the content is about a specific failure or outcome. Swap `frame.research-questions` for `schema.plan-next-actions` when the content implies a specific action rather than further investigation."
-        ],
-        [
-          "Common failure mode",
-          "Summarizing without extracting insights. A summary recaps what the source said; an extraction identifies what it means for the current question or decision."
-        ],
-        [
-          "Expected outcome",
-          "compressed summary with the core argument and key evidence, highest-leverage insights extracted and named, second-order implications traced beyond the obvious takeaways, open questions that would sharpen or challenge the material"
+          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `rubric.research-quality`"
         ]
       ],
-      "sourcePath": "stacks/learn-from-content.md"
+      "sourcePath": "stacks/research.md"
     },
     {
       "section": "Stack",
-      "key": "stack.after-action-review",
-      "title": "After-Action Review",
-      "family": "Reflection & Learning",
-      "job": "after-action-review",
-      "useWhen": "Use when a project, sprint, incident, or significant event has ended and the team needs to extract learning before moving on.",
-      "stage": "conclude",
-      "outputKind": "retrospective",
-      "effort": "standard",
-      "stakes": "low",
-      "summary": "Use when a project, sprint, incident, or significant event has ended and the team needs to extract learning before moving on.",
-      "tags": [
-        "retrospective",
-        "organizational learning",
-        "continuous improvement",
-        "reflection"
-      ],
-      "contract": {
-        "job": "after-action-review",
-        "useWhen": "Use when a project, sprint, incident, or significant event has ended and the team needs to extract learning before moving on.",
-        "minimumBlocks": [
-          "mode.reflect",
-          "frame.extract-insights",
-          "schema.plan-next-actions"
-        ],
-        "fullSequence": [
-          "`mode.reflect`",
-          "`frame.cause-mapping`",
-          "`frame.extract-insights`",
-          "`schema.plan-next-actions`",
-          "`rubric.reflection-quality`"
-        ],
-        "blockOrderRationale": "Reflect first sets the lesson-extraction stance before cause-mapping digs into the why. Extract-insights follows because root causes become actionable only once patterns are visible. Plan-next-actions closes the loop so learning transfers to future work rather than staying as commentary. The rubric is the final gate — it prevents the review from stopping at recap.",
-        "commonSwaps": "Swap `frame.cause-mapping` for `strategy.premortem` if the incident is still fresh and you want forward-looking mitigations. Swap `rubric.reflection-quality` for `rubric.strategy-quality` when the review is focused on a decision rather than an event.",
-        "commonFailureMode": "Stopping at description. The review recounts what happened without tracing causes or naming lessons. Adding `frame.cause-mapping` before `frame.extract-insights` forces at least one step deeper."
-      },
-      "io": {
-        "usefulInputs": [
-          "what was attempted and what actually happened",
-          "who was involved and what each person observed",
-          "the original goal and the actual outcome"
-        ],
-        "expectedOutputs": [
-          "clear account of what happened versus what was expected",
-          "root causes identified beneath the surface narrative",
-          "highest-leverage lessons named explicitly",
-          "concrete actions assigned so learning transfers to future work"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "after-action-review"
-        ],
-        [
-          "Use when",
-          "Use when a project, sprint, incident, or significant event has ended and the team needs to extract learning before moving on."
-        ],
-        [
-          "Stage",
-          "conclude"
-        ],
-        [
-          "Output kind",
-          "retrospective"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "what was attempted and what actually happened, who was involved and what each person observed, the original goal and the actual outcome"
-        ],
-        [
-          "Minimum blocks",
-          "mode.reflect, frame.extract-insights, schema.plan-next-actions"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.reflect` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.plan-next-actions` -> `rubric.reflection-quality`"
-        ],
-        [
-          "Why this order works",
-          "Reflect first sets the lesson-extraction stance before cause-mapping digs into the why. Extract-insights follows because root causes become actionable only once patterns are visible. Plan-next-actions closes the loop so learning transfers to future work rather than staying as commentary. The rubric is the final gate — it prevents the review from stopping at recap."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.cause-mapping` for `strategy.premortem` if the incident is still fresh and you want forward-looking mitigations. Swap `rubric.reflection-quality` for `rubric.strategy-quality` when the review is focused on a decision rather than an event."
-        ],
-        [
-          "Common failure mode",
-          "Stopping at description. The review recounts what happened without tracing causes or naming lessons. Adding `frame.cause-mapping` before `frame.extract-insights` forces at least one step deeper."
-        ],
-        [
-          "Expected outcome",
-          "clear account of what happened versus what was expected, root causes identified beneath the surface narrative, highest-leverage lessons named explicitly, concrete actions assigned so learning transfers to future work"
-        ]
-      ],
-      "sourcePath": "stacks/after-action-review.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.negotiate-a-deal",
-      "title": "Negotiate a Deal",
-      "family": "Writing & Communication",
-      "job": "negotiate-a-deal",
-      "useWhen": "Use when preparing for a negotiation, high-stakes conversation, or situation where multiple parties have interests that need to be aligned.",
-      "stage": "decide",
+      "key": "stack.hypothesis-test",
+      "title": "hypothesis-test",
+      "family": "Research & Analysis",
+      "job": "hypothesis-test",
+      "useWhen": "Design, run, or evaluate a test of a causal claim before acting on it.",
+      "stage": "analyze",
       "outputKind": "brief",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when preparing for a negotiation, high-stakes conversation, or situation where multiple parties have interests that need to be aligned.",
+      "summary": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "tags": [
-        "negotiation",
-        "influence",
-        "stakeholder management",
-        "conflict resolution"
+        "hypothesis",
+        "test"
       ],
       "contract": {
-        "job": "negotiate-a-deal",
-        "useWhen": "Use when preparing for a negotiation, high-stakes conversation, or situation where multiple parties have interests that need to be aligned.",
-        "minimumBlocks": [
-          "frame.stakeholder-map",
-          "frame.negotiation-prep",
-          "lens.incentive-audit"
-        ],
+        "job": "hypothesis-test",
+        "useWhen": "Design, run, or evaluate a test of a causal claim before acting on it.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.decide`",
-          "`frame.stakeholder-map`",
-          "`frame.negotiation-prep`",
-          "`lens.incentive-audit`",
-          "`lens.signaling-check`"
-        ],
-        "blockOrderRationale": "Stakeholder mapping separates interests from positions before any strategy is formed. Negotiation-prep builds the BATNA and ZOPA analysis. Incentive-audit surfaces the hidden rewards that are actually driving behavior. Signaling-check adds the communication layer — how will each move be read by the other party?",
-        "commonSwaps": "Swap `lens.signaling-check` for `lens.coordination-plan` when the challenge is coordination across multiple parties rather than bilateral negotiation. Add `guardrail.disconfirming-evidence` when there is a strong preferred outcome that may be shaping the analysis.",
-        "commonFailureMode": "Negotiating from positions rather than interests. Position-based negotiation leaves value on the table and makes agreement harder than necessary."
-      },
-      "io": {
-        "usefulInputs": [
-          "context on both parties and their relationship",
-          "the stated positions on each side",
-          "what a deal or no-deal would mean for each party"
-        ],
-        "expectedOutputs": [
-          "interests separated from positions on both sides",
-          "BATNA and ZOPA made explicit",
-          "value-creating trades identified",
-          "a clear opening strategy with considered anchoring"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "negotiate-a-deal"
-        ],
-        [
-          "Use when",
-          "Use when preparing for a negotiation, high-stakes conversation, or situation where multiple parties have interests that need to be aligned."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "brief"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "context on both parties and their relationship, the stated positions on each side, what a deal or no-deal would mean for each party"
-        ],
-        [
-          "Minimum blocks",
-          "frame.stakeholder-map, frame.negotiation-prep, lens.incentive-audit"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.decide` -> `frame.stakeholder-map` -> `frame.negotiation-prep` -> `lens.incentive-audit` -> `lens.signaling-check`"
-        ],
-        [
-          "Why this order works",
-          "Stakeholder mapping separates interests from positions before any strategy is formed. Negotiation-prep builds the BATNA and ZOPA analysis. Incentive-audit surfaces the hidden rewards that are actually driving behavior. Signaling-check adds the communication layer — how will each move be read by the other party?"
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.signaling-check` for `lens.coordination-plan` when the challenge is coordination across multiple parties rather than bilateral negotiation. Add `guardrail.disconfirming-evidence` when there is a strong preferred outcome that may be shaping the analysis."
-        ],
-        [
-          "Common failure mode",
-          "Negotiating from positions rather than interests. Position-based negotiation leaves value on the table and makes agreement harder than necessary."
-        ],
-        [
-          "Expected outcome",
-          "interests separated from positions on both sides, BATNA and ZOPA made explicit, value-creating trades identified, a clear opening strategy with considered anchoring"
-        ]
-      ],
-      "sourcePath": "stacks/negotiate-a-deal.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.write-critique-rewrite",
-      "title": "Write, Critique, Rewrite",
-      "family": "Writing & Communication",
-      "job": "write-critique-rewrite",
-      "useWhen": "Use when the first draft should be fast but the final draft should be sharp.",
-      "stage": "refine",
-      "outputKind": "draft",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when the first draft should be fast but the final draft should be sharp.",
-      "tags": [
-        "writing",
-        "editorial process",
-        "quality improvement"
-      ],
-      "contract": {
-        "job": "write-critique-rewrite",
-        "useWhen": "Use when the first draft should be fast but the final draft should be sharp.",
-        "minimumBlocks": [
-          "frame.brief-to-draft",
-          "mode.critique",
-          "frame.rewrite-for-clarity"
-        ],
-        "fullSequence": [
-          "`frame.brief-to-draft`",
-          "`mode.critique`",
-          "`frame.critique-argument`",
-          "`frame.rewrite-for-clarity`",
-          "`rubric.writing-quality`"
-        ],
-        "blockOrderRationale": "Brief-to-draft produces a first draft fast. Critique mode then shifts the stance adversarially before any evaluation. Critique-argument provides the structured evaluation surface. Rewrite-for-clarity addresses the specific weaknesses identified. Writing-quality rubric is the final gate before the draft is considered done.",
-        "commonSwaps": "Swap `frame.critique-argument` for `frame.prompt-critique` when the artifact being written is a prompt rather than natural language. Swap `rubric.writing-quality` for `rubric.argument-quality` when the writing is argumentative rather than expository.",
-        "commonFailureMode": "Critiquing without setting the adversarial stance first. A critique without `mode.critique` active tends to produce a gentle improvement list rather than a rigorous evaluation."
-      },
-      "io": {
-        "usefulInputs": [
-          "the intended audience and goal",
-          "source points, notes, or a rough draft",
-          "any constraints on length, tone, or format"
-        ],
-        "expectedOutputs": [
-          "first draft",
-          "prioritized critique",
-          "stronger revision"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "write-critique-rewrite"
-        ],
-        [
-          "Use when",
-          "Use when the first draft should be fast but the final draft should be sharp."
-        ],
-        [
-          "Stage",
-          "refine"
-        ],
-        [
-          "Output kind",
-          "draft"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the intended audience and goal, source points, notes, or a rough draft, any constraints on length, tone, or format"
-        ],
-        [
-          "Minimum blocks",
-          "frame.brief-to-draft, mode.critique, frame.rewrite-for-clarity"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.brief-to-draft` -> `mode.critique` -> `frame.critique-argument` -> `frame.rewrite-for-clarity` -> `rubric.writing-quality`"
-        ],
-        [
-          "Why this order works",
-          "Brief-to-draft produces a first draft fast. Critique mode then shifts the stance adversarially before any evaluation. Critique-argument provides the structured evaluation surface. Rewrite-for-clarity addresses the specific weaknesses identified. Writing-quality rubric is the final gate before the draft is considered done."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.critique-argument` for `frame.prompt-critique` when the artifact being written is a prompt rather than natural language. Swap `rubric.writing-quality` for `rubric.argument-quality` when the writing is argumentative rather than expository."
-        ],
-        [
-          "Common failure mode",
-          "Critiquing without setting the adversarial stance first. A critique without `mode.critique` active tends to produce a gentle improvement list rather than a rigorous evaluation."
-        ],
-        [
-          "Expected outcome",
-          "first draft, prioritized critique, stronger revision"
-        ]
-      ],
-      "sourcePath": "stacks/write-critique-rewrite.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.weekly-review",
-      "title": "Weekly Review",
-      "family": "Reflection & Learning",
-      "job": "weekly-review",
-      "useWhen": "Use when you want to learn from a week without creating a huge ritual.",
-      "stage": "conclude",
-      "outputKind": "retrospective",
-      "effort": "standard",
-      "stakes": "low",
-      "summary": "Use when you want to learn from a week without creating a huge ritual.",
-      "tags": [
-        "reflection",
-        "personal effectiveness",
-        "learning"
-      ],
-      "contract": {
-        "job": "weekly-review",
-        "useWhen": "Use when you want to learn from a week without creating a huge ritual.",
-        "minimumBlocks": [
-          "mode.reflect",
-          "frame.weekly-review"
-        ],
-        "fullSequence": [
-          "`mode.reflect`",
-          "`frame.weekly-review`",
-          "`frame.cause-mapping` for key failures",
-          "`schema.decision-journal-entry` for any major decision worth revisiting",
-          "`rubric.reflection-quality`"
-        ],
-        "blockOrderRationale": "Reflect mode shifts from living the week to learning from it. Weekly-review provides the structured introspection surface. Cause-mapping is added conditionally for specific failures worth tracing. Decision-journal-entry records decisions worth tracking over time. Reflection-quality rubric closes as a quality gate against surface-level recap.",
-        "commonSwaps": "Swap `rubric.reflection-quality` for just the mental check if this is a personal review without accountability. Skip `frame.cause-mapping` for weeks without significant failures or surprises.",
-        "commonFailureMode": "Letting the review collapse into a task list for next week. A weekly review that produces only a new todo list extracts no learning."
-      },
-      "io": {
-        "usefulInputs": [
-          "weekly notes, outcomes, or calendar fragments",
-          "key wins, failures, or stuck points",
-          "any major decisions worth revisiting"
-        ],
-        "expectedOutputs": [
-          "lessons",
-          "repeated frictions",
-          "next-week focus",
-          "decisions worth tracking"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "weekly-review"
-        ],
-        [
-          "Use when",
-          "Use when you want to learn from a week without creating a huge ritual."
-        ],
-        [
-          "Stage",
-          "conclude"
-        ],
-        [
-          "Output kind",
-          "retrospective"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "weekly notes, outcomes, or calendar fragments, key wins, failures, or stuck points, any major decisions worth revisiting"
-        ],
-        [
-          "Minimum blocks",
-          "mode.reflect, frame.weekly-review"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.reflect` -> `frame.weekly-review` -> `frame.cause-mapping` for key failures -> `schema.decision-journal-entry` for any major decision worth revisiting -> `rubric.reflection-quality`"
-        ],
-        [
-          "Why this order works",
-          "Reflect mode shifts from living the week to learning from it. Weekly-review provides the structured introspection surface. Cause-mapping is added conditionally for specific failures worth tracing. Decision-journal-entry records decisions worth tracking over time. Reflection-quality rubric closes as a quality gate against surface-level recap."
-        ],
-        [
-          "Common swaps",
-          "Swap `rubric.reflection-quality` for just the mental check if this is a personal review without accountability. Skip `frame.cause-mapping` for weeks without significant failures or surprises."
-        ],
-        [
-          "Common failure mode",
-          "Letting the review collapse into a task list for next week. A weekly review that produces only a new todo list extracts no learning."
-        ],
-        [
-          "Expected outcome",
-          "lessons, repeated frictions, next-week focus, decisions worth tracking"
-        ]
-      ],
-      "sourcePath": "stacks/weekly-review.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.ship-a-feature",
-      "title": "Ship a Feature",
-      "family": "Planning & Execution",
-      "job": "ship-a-feature",
-      "useWhen": "Use when a feature is ready for design-to-delivery and you want to move from requirement to rollout without skipping safety steps.",
-      "stage": "decide",
-      "outputKind": "plan",
-      "effort": "deep",
-      "stakes": "high",
-      "summary": "Use when a feature is ready for design-to-delivery and you want to move from requirement to rollout without skipping safety steps.",
-      "tags": [
-        "software engineering",
-        "planning",
-        "risk management"
-      ],
-      "contract": {
-        "job": "ship-a-feature",
-        "useWhen": "Use when a feature is ready for design-to-delivery and you want to move from requirement to rollout without skipping safety steps.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.requirements-decomposition",
-          "frame.test-strategy"
-        ],
-        "fullSequence": [
-          "`mode.decide`",
-          "`frame.requirements-decomposition`",
-          "`frame.success-criteria`",
-          "`frame.test-strategy`",
-          "`lens.failure-mode-analysis`",
-          "`guardrail.release-readiness`",
-          "`schema.rollout-plan`",
-          "`rubric.plan-quality`"
-        ],
-        "blockOrderRationale": "Decide mode commits to the shipping path rather than continuing to explore design options. Requirements-decomposition produces independently testable stories. Success-criteria defines done before implementation begins. Test-strategy covers risk-weighted gaps. Failure-mode-analysis surfaces resilience requirements. Release-readiness makes the ship/no-ship verdict explicit. Rollout-plan stages deployment with go/no-go criteria. Plan-quality rubric is the final gate.",
-        "commonSwaps": "Swap `frame.requirements-decomposition` for `frame.clarify-task` when the feature brief is still fuzzy. Swap `schema.rollout-plan` for `schema.plan-next-actions` for internal tooling where staged rollout is unnecessary.",
-        "commonFailureMode": "Beginning implementation before success criteria and test strategy are defined. Features without upfront success criteria are tested retroactively against criteria that were reverse-engineered to match what was built."
-      },
-      "io": {
-        "usefulInputs": [
-          "the feature brief or user need",
-          "the existing system it will be built into",
-          "any hard deadlines or constraints"
-        ],
-        "expectedOutputs": [
-          "feature decomposed into independently testable stories with acceptance criteria",
-          "success criteria set before implementation begins",
-          "test strategy covering risk-weighted coverage gaps",
-          "failure modes identified and resilience gaps flagged",
-          "release verdict made explicit: ship now, ship behind guardrails, or fix before ship",
-          "rollout sequenced with go/no-go criteria and a rollback path",
-          "plan quality assessed before committing"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "ship-a-feature"
-        ],
-        [
-          "Use when",
-          "Use when a feature is ready for design-to-delivery and you want to move from requirement to rollout without skipping safety steps."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the feature brief or user need, the existing system it will be built into, any hard deadlines or constraints"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.requirements-decomposition, frame.test-strategy"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.decide` -> `frame.requirements-decomposition` -> `frame.success-criteria` -> `frame.test-strategy` -> `lens.failure-mode-analysis` -> `guardrail.release-readiness` -> `schema.rollout-plan` -> `rubric.plan-quality`"
-        ],
-        [
-          "Why this order works",
-          "Decide mode commits to the shipping path rather than continuing to explore design options. Requirements-decomposition produces independently testable stories. Success-criteria defines done before implementation begins. Test-strategy covers risk-weighted gaps. Failure-mode-analysis surfaces resilience requirements. Release-readiness makes the ship/no-ship verdict explicit. Rollout-plan stages deployment with go/no-go criteria. Plan-quality rubric is the final gate."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.requirements-decomposition` for `frame.clarify-task` when the feature brief is still fuzzy. Swap `schema.rollout-plan` for `schema.plan-next-actions` for internal tooling where staged rollout is unnecessary."
-        ],
-        [
-          "Common failure mode",
-          "Beginning implementation before success criteria and test strategy are defined. Features without upfront success criteria are tested retroactively against criteria that were reverse-engineered to match what was built."
-        ],
-        [
-          "Expected outcome",
-          "feature decomposed into independently testable stories with acceptance criteria, success criteria set before implementation begins, test strategy covering risk-weighted coverage gaps, failure modes identified and resilience gaps flagged, release verdict made explicit: ship now, ship behind guardrails, or fix before ship, rollout sequenced with go/no-go criteria and a rollback path, plan quality assessed before committing"
-        ]
-      ],
-      "sourcePath": "stacks/ship-a-feature.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.full-decision-process",
-      "title": "Full Decision Process",
-      "family": "Deciding & Prioritising",
-      "job": "full-decision-process",
-      "useWhen": "Use for high-stakes decisions where the cost of a poor choice justifies a rigorous, end-to-end deliberation.",
-      "stage": "decide",
-      "outputKind": "decision",
-      "effort": "deep",
-      "stakes": "high",
-      "summary": "Use for high-stakes decisions where the cost of a poor choice justifies a rigorous, end-to-end deliberation.",
-      "tags": [
-        "decision theory",
-        "critical thinking",
-        "strategic thinking"
-      ],
-      "contract": {
-        "job": "full-decision-process",
-        "useWhen": "Use for high-stakes decisions where the cost of a poor choice justifies a rigorous, end-to-end deliberation.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.success-criteria",
-          "frame.compare-options"
-        ],
-        "fullSequence": [
-          "`mode.decide`",
-          "`frame.success-criteria`",
-          "`frame.compare-options`",
+          "`mode.explore`",
           "`guardrail.assumption-audit`",
-          "`guardrail.disconfirming-evidence`",
-          "`schema.decision-memo`",
-          "`rubric.decision-quality`"
-        ],
-        "blockOrderRationale": "Decide mode first locks in the convergent stance. Success-criteria before options prevents the criteria from being reverse-engineered to favor the preferred option. Compare-options evaluates against shared criteria. Assumption-audit surfaces the implicit bets behind the leading option. Disconfirming-evidence guardrail forces the strongest counter-argument an honest hearing. Decision-memo captures the reasoning. The rubric is the final quality gate before committing.",
-        "commonSwaps": "Swap `guardrail.disconfirming-evidence` for `strategy.red-team` when the decision needs an adversarial challenge rather than a structured counter-argument. Skip `frame.assumption-audit` for lower-stakes decisions where speed matters more than rigor.",
-        "commonFailureMode": "Setting success criteria after options are evaluated. Post-hoc criteria tend to match the preferred option rather than the actual goal, turning comparison into rationalization."
-      },
-      "io": {
-        "usefulInputs": [
-          "the decision to be made and the deadline",
-          "the options currently on the table (even if incomplete)",
-          "the stakeholders who will be affected or who must live with the outcome"
-        ],
-        "expectedOutputs": [
-          "success criteria defined before evaluating options",
-          "options compared against shared criteria, not general impressions",
-          "the key assumptions behind the preferred option surfaced and stress-tested",
-          "the strongest counterargument to the preferred option given an honest hearing",
-          "a decision memo that documents the reasoning and is readable after the fact",
-          "quality of the decision process assessed before committing"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "full-decision-process"
-        ],
-        [
-          "Use when",
-          "Use for high-stakes decisions where the cost of a poor choice justifies a rigorous, end-to-end deliberation."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "decision"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the decision to be made and the deadline, the options currently on the table (even if incomplete), the stakeholders who will be affected or who must live with the outcome"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.success-criteria, frame.compare-options"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `frame.compare-options` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `schema.decision-memo` -> `rubric.decision-quality`"
-        ],
-        [
-          "Why this order works",
-          "Decide mode first locks in the convergent stance. Success-criteria before options prevents the criteria from being reverse-engineered to favor the preferred option. Compare-options evaluates against shared criteria. Assumption-audit surfaces the implicit bets behind the leading option. Disconfirming-evidence guardrail forces the strongest counter-argument an honest hearing. Decision-memo captures the reasoning. The rubric is the final quality gate before committing."
-        ],
-        [
-          "Common swaps",
-          "Swap `guardrail.disconfirming-evidence` for `strategy.red-team` when the decision needs an adversarial challenge rather than a structured counter-argument. Skip `frame.assumption-audit` for lower-stakes decisions where speed matters more than rigor."
-        ],
-        [
-          "Common failure mode",
-          "Setting success criteria after options are evaluated. Post-hoc criteria tend to match the preferred option rather than the actual goal, turning comparison into rationalization."
-        ],
-        [
-          "Expected outcome",
-          "success criteria defined before evaluating options, options compared against shared criteria, not general impressions, the key assumptions behind the preferred option surfaced and stress-tested, the strongest counterargument to the preferred option given an honest hearing, a decision memo that documents the reasoning and is readable after the fact, quality of the decision process assessed before committing"
-        ]
-      ],
-      "sourcePath": "stacks/full-decision-process.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.product-design-sprint",
-      "title": "Product Design Sprint",
-      "family": "Planning & Execution",
-      "job": "product-design-sprint",
-      "useWhen": "Use when designing a new product, feature, or intervention from scratch and you want to move from user understanding to a testable concept without skipping steps.",
-      "stage": "decide",
-      "outputKind": "plan",
-      "effort": "deep",
-      "stakes": "medium",
-      "summary": "Use when designing a new product, feature, or intervention from scratch and you want to move from user understanding to a testable concept without skipping steps.",
-      "tags": [
-        "design",
-        "strategic thinking",
-        "planning"
-      ],
-      "contract": {
-        "job": "product-design-sprint",
-        "useWhen": "Use when designing a new product, feature, or intervention from scratch and you want to move from user understanding to a testable concept without skipping steps.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.success-criteria",
-          "lens.jobs-to-be-done"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.success-criteria`",
-          "`lens.jobs-to-be-done`",
-          "`lens.user-mental-model`",
-          "`lens.constraint-mapping`",
-          "`frame.generate-options`",
-          "`frame.design-cheap-test`",
-          "`rubric.plan-quality`"
-        ],
-        "blockOrderRationale": "Success-criteria before solution work prevents designing for the wrong outcome. Jobs-to-be-done maps the user's hiring context before any solution is considered. User-mental-model surfaces the gap between how users think about the problem and how the system works. Constraint-mapping separates hard limits from assumed ones. Generate-options widens the solution space before narrowing. Design-cheap-test names the earliest validation before committing to build. Plan-quality rubric checks execution readiness.",
-        "commonSwaps": "Swap `lens.user-mental-model` for `frame.stakeholder-map` when multiple user types have conflicting needs. Swap `frame.design-cheap-test` for `frame.hypothesis-generation` when the design involves a specific testable bet.",
-        "commonFailureMode": "Jumping to solution generation before the user's job is understood. Design solutions built on an assumed user need fail when the actual need turns out to be different."
-      },
-      "io": {
-        "usefulInputs": [
-          "the opportunity or problem being addressed",
-          "what is known about the user and their current behaviour",
-          "any hard constraints on the solution space"
-        ],
-        "expectedOutputs": [
-          "success criteria set before solution work begins",
-          "the job the user is trying to get done and the hiring context made explicit",
-          "the gap between user mental model and system behaviour surfaced",
-          "hard constraints separated from soft ones; assumed constraints examined",
-          "multiple design directions generated before narrowing",
-          "the cheapest test identified that would validate or invalidate the concept",
-          "plan quality assessed before committing to build"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "product-design-sprint"
-        ],
-        [
-          "Use when",
-          "Use when designing a new product, feature, or intervention from scratch and you want to move from user understanding to a testable concept without skipping steps."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the opportunity or problem being addressed, what is known about the user and their current behaviour, any hard constraints on the solution space"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.success-criteria, lens.jobs-to-be-done"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.success-criteria` -> `lens.jobs-to-be-done` -> `lens.user-mental-model` -> `lens.constraint-mapping` -> `frame.generate-options` -> `frame.design-cheap-test` -> `rubric.plan-quality`"
-        ],
-        [
-          "Why this order works",
-          "Success-criteria before solution work prevents designing for the wrong outcome. Jobs-to-be-done maps the user's hiring context before any solution is considered. User-mental-model surfaces the gap between how users think about the problem and how the system works. Constraint-mapping separates hard limits from assumed ones. Generate-options widens the solution space before narrowing. Design-cheap-test names the earliest validation before committing to build. Plan-quality rubric checks execution readiness."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.user-mental-model` for `frame.stakeholder-map` when multiple user types have conflicting needs. Swap `frame.design-cheap-test` for `frame.hypothesis-generation` when the design involves a specific testable bet."
-        ],
-        [
-          "Common failure mode",
-          "Jumping to solution generation before the user's job is understood. Design solutions built on an assumed user need fail when the actual need turns out to be different."
-        ],
-        [
-          "Expected outcome",
-          "success criteria set before solution work begins, the job the user is trying to get done and the hiring context made explicit, the gap between user mental model and system behaviour surfaced, hard constraints separated from soft ones; assumed constraints examined, multiple design directions generated before narrowing, the cheapest test identified that would validate or invalidate the concept, plan quality assessed before committing to build"
-        ]
-      ],
-      "sourcePath": "stacks/product-design-sprint.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.deep-research-synthesis",
-      "title": "Deep Research Synthesis",
-      "family": "Research & Analysis",
-      "job": "deep-research-synthesis",
-      "useWhen": "Use when you need to build a well-grounded view from a body of evidence before making a high-stakes decision or writing a position.",
-      "stage": "analyze",
-      "outputKind": "summary",
-      "effort": "deep",
-      "stakes": "medium",
-      "summary": "Use when you need to build a well-grounded view from a body of evidence before making a high-stakes decision or writing a position.",
-      "tags": [
-        "research",
-        "epistemics",
-        "knowledge management"
-      ],
-      "contract": {
-        "job": "deep-research-synthesis",
-        "useWhen": "Use when you need to build a well-grounded view from a body of evidence before making a high-stakes decision or writing a position.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.hypothesis-generation",
-          "frame.synthesize-sources"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.hypothesis-generation`",
-          "`frame.summarize-source`",
-          "`lens.survivorship-bias`",
-          "`lens.base-rate-check`",
-          "`frame.synthesize-sources`",
+          "`guardrail.uncertainty`",
           "`frame.extract-insights`",
           "`rubric.research-quality`"
         ],
-        "blockOrderRationale": "Hypothesis-generation before source-reading reduces confirmation bias — you enter the evidence with competing explanations rather than one preferred answer. Each source is summarized independently before synthesis to prevent early sources from anchoring interpretation of later ones. Survivorship-bias and base-rate checks guard against patterns in the visible evidence that do not reflect the full distribution. Synthesize-sources then integrates across the evidence. Extract-insights distills the actionable conclusions. The research-quality rubric is the final gate before acting.",
-        "commonSwaps": "Swap `frame.summarize-source` for `frame.synthesize-sources` alone if you have fewer than three or four sources. Swap `rubric.research-quality` for `rubric.decision-quality` when the synthesis is directly feeding a specific decision.",
-        "commonFailureMode": "Reading sources before generating hypotheses. Evidence without prior hypotheses tends to confirm whatever the first source suggests and suppress alternatives that would have been visible with a more open search frame."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the central question you are trying to answer",
-          "the sources, studies, or evidence you have gathered",
-          "any existing beliefs or hypotheses to test against the evidence"
-        ],
-        "expectedOutputs": [
-          "competing hypotheses generated before diving into sources (reduces confirmation bias)",
-          "each source summarised independently before synthesis",
-          "survivorship bias checked: are the absent cases changing the picture?",
-          "base rates checked: does the evidence reflect historical frequencies?",
-          "sources integrated into a unified position that names points of disagreement",
-          "the highest-leverage insights extracted",
-          "research quality assessed for gaps and overconfidence before acting"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "deep-research-synthesis"
+          "hypothesis-test"
         ],
         [
           "Use when",
-          "Use when you need to build a well-grounded view from a body of evidence before making a high-stakes decision or writing a position."
-        ],
-        [
-          "Stage",
-          "analyze"
-        ],
-        [
-          "Output kind",
-          "summary"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the central question you are trying to answer, the sources, studies, or evidence you have gathered, any existing beliefs or hypotheses to test against the evidence"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.hypothesis-generation, frame.synthesize-sources"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.hypothesis-generation` -> `frame.summarize-source` -> `lens.survivorship-bias` -> `lens.base-rate-check` -> `frame.synthesize-sources` -> `frame.extract-insights` -> `rubric.research-quality`"
-        ],
-        [
-          "Why this order works",
-          "Hypothesis-generation before source-reading reduces confirmation bias — you enter the evidence with competing explanations rather than one preferred answer. Each source is summarized independently before synthesis to prevent early sources from anchoring interpretation of later ones. Survivorship-bias and base-rate checks guard against patterns in the visible evidence that do not reflect the full distribution. Synthesize-sources then integrates across the evidence. Extract-insights distills the actionable conclusions. The research-quality rubric is the final gate before acting."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.summarize-source` for `frame.synthesize-sources` alone if you have fewer than three or four sources. Swap `rubric.research-quality` for `rubric.decision-quality` when the synthesis is directly feeding a specific decision."
-        ],
-        [
-          "Common failure mode",
-          "Reading sources before generating hypotheses. Evidence without prior hypotheses tends to confirm whatever the first source suggests and suppress alternatives that would have been visible with a more open search frame."
-        ],
-        [
-          "Expected outcome",
-          "competing hypotheses generated before diving into sources (reduces confirmation bias), each source summarised independently before synthesis, survivorship bias checked: are the absent cases changing the picture?, base rates checked: does the evidence reflect historical frequencies?, sources integrated into a unified position that names points of disagreement, the highest-leverage insights extracted, research quality assessed for gaps and overconfidence before acting"
-        ]
-      ],
-      "sourcePath": "stacks/deep-research-synthesis.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.stakeholder-alignment",
-      "title": "Stakeholder Alignment",
-      "family": "Writing & Communication",
-      "job": "stakeholder-alignment",
-      "useWhen": "Use when the right answer is not enough because coordination and buy-in are the real bottlenecks.",
-      "stage": "decide",
-      "outputKind": "plan",
-      "effort": "deep",
-      "stakes": "medium",
-      "summary": "Use when the right answer is not enough because coordination and buy-in are the real bottlenecks.",
-      "tags": [
-        "change management",
-        "communication",
-        "influence"
-      ],
-      "contract": {
-        "job": "stakeholder-alignment",
-        "useWhen": "Use when the right answer is not enough because coordination and buy-in are the real bottlenecks.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.stakeholder-map",
-          "lens.coordination-plan"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.stakeholder-map`",
-          "`lens.coordination-plan`",
-          "`lens.signaling-check`",
-          "`frame.alignment-conversation-plan`",
-          "`schema.execution-brief`"
-        ],
-        "blockOrderRationale": "Explore mode prevents premature commitment to a single alignment strategy. Stakeholder-map identifies who needs what before any conversation is planned. Coordination-plan designs the alignment approach for groups with conflicting interests. Signaling-check calibrates how each move will be read. Alignment-conversation-plan closes with a specific conversation design. Execution-brief makes it handoff-ready.",
-        "commonSwaps": "Swap `lens.signaling-check` for `lens.incentive-audit` when the alignment challenge is driven by misaligned incentives rather than misaligned understanding. Swap `schema.execution-brief` for `schema.communication-brief` when the deliverable is a message rather than an action plan.",
-        "commonFailureMode": "Trying to align everyone at once with a single message. Stakeholder alignment fails when different audiences receive the same communication without differentiation."
-      },
-      "io": {
-        "usefulInputs": [
-          "the project, decision, or change you want to move forward",
-          "the key people or groups involved",
-          "current support, resistance, or tension signals"
-        ],
-        "expectedOutputs": [
-          "a clearer stakeholder map",
-          "the main alignment risk",
-          "the most important next conversation",
-          "an execution-ready coordination plan"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "stakeholder-alignment"
-        ],
-        [
-          "Use when",
-          "Use when the right answer is not enough because coordination and buy-in are the real bottlenecks."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the project, decision, or change you want to move forward, the key people or groups involved, current support, resistance, or tension signals"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.stakeholder-map, lens.coordination-plan"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.stakeholder-map` -> `lens.coordination-plan` -> `lens.signaling-check` -> `frame.alignment-conversation-plan` -> `schema.execution-brief`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode prevents premature commitment to a single alignment strategy. Stakeholder-map identifies who needs what before any conversation is planned. Coordination-plan designs the alignment approach for groups with conflicting interests. Signaling-check calibrates how each move will be read. Alignment-conversation-plan closes with a specific conversation design. Execution-brief makes it handoff-ready."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.signaling-check` for `lens.incentive-audit` when the alignment challenge is driven by misaligned incentives rather than misaligned understanding. Swap `schema.execution-brief` for `schema.communication-brief` when the deliverable is a message rather than an action plan."
-        ],
-        [
-          "Common failure mode",
-          "Trying to align everyone at once with a single message. Stakeholder alignment fails when different audiences receive the same communication without differentiation."
-        ],
-        [
-          "Expected outcome",
-          "a clearer stakeholder map, the main alignment risk, the most important next conversation, an execution-ready coordination plan"
-        ]
-      ],
-      "sourcePath": "stacks/stakeholder-alignment.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.prompt-repair",
-      "title": "Prompt Repair",
-      "family": "Prompt Craft",
-      "job": "prompt-repair",
-      "useWhen": "Use when a prompt is the thing you are trying to improve.",
-      "stage": "refine",
-      "outputKind": "prompt",
-      "effort": "deep",
-      "stakes": "medium",
-      "summary": "Use when a prompt is the thing you are trying to improve.",
-      "tags": [
-        "prompt engineering",
-        "quality improvement",
-        "iteration"
-      ],
-      "contract": {
-        "job": "prompt-repair",
-        "useWhen": "Use when a prompt is the thing you are trying to improve.",
-        "minimumBlocks": [
-          "mode.critique",
-          "frame.prompt-critique",
-          "frame.prompt-rewrite"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`frame.clarify-task`",
-          "`frame.prompt-critique`",
-          "`frame.prompt-rewrite`",
-          "`frame.prompt-compare`",
-          "`rubric.prompt-quality`"
-        ],
-        "blockOrderRationale": "Critique mode sets the defect-finding stance before any analysis begins. Clarify-task surfaces whether the prompt's job is actually clear before diagnosing what is wrong with it. Prompt-critique identifies specific failure modes. Prompt-rewrite addresses them. Prompt-compare calibrates the revision. The rubric closes with a quality gate before the repaired prompt is reused.",
-        "commonSwaps": "Swap `frame.clarify-task` for `frame.frame.task` when the task needs to be fully reframed rather than clarified. Skip `frame.prompt-compare` for rapid iteration cycles where the improvement is obvious.",
-        "commonFailureMode": "Rewriting a prompt without diagnosing the failure mode first. Rewrites without a diagnosis tend to change the style while leaving the structural problem intact."
-      },
-      "io": {
-        "usefulInputs": [
-          "the current prompt",
-          "the job the prompt should do",
-          "examples of failure, ambiguity, or weak output if available"
-        ],
-        "expectedOutputs": [
-          "clearer prompt intent",
-          "fewer failure modes",
-          "a tighter revision",
-          "a prompt that is easier to test and reuse"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "prompt-repair"
-        ],
-        [
-          "Use when",
-          "Use when a prompt is the thing you are trying to improve."
-        ],
-        [
-          "Stage",
-          "refine"
-        ],
-        [
-          "Output kind",
-          "prompt"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the current prompt, the job the prompt should do, examples of failure, ambiguity, or weak output if available"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, frame.prompt-critique, frame.prompt-rewrite"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `frame.clarify-task` -> `frame.prompt-critique` -> `frame.prompt-rewrite` -> `frame.prompt-compare` -> `rubric.prompt-quality`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the defect-finding stance before any analysis begins. Clarify-task surfaces whether the prompt's job is actually clear before diagnosing what is wrong with it. Prompt-critique identifies specific failure modes. Prompt-rewrite addresses them. Prompt-compare calibrates the revision. The rubric closes with a quality gate before the repaired prompt is reused."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.clarify-task` for `frame.frame.task` when the task needs to be fully reframed rather than clarified. Skip `frame.prompt-compare` for rapid iteration cycles where the improvement is obvious."
-        ],
-        [
-          "Common failure mode",
-          "Rewriting a prompt without diagnosing the failure mode first. Rewrites without a diagnosis tend to change the style while leaving the structural problem intact."
-        ],
-        [
-          "Expected outcome",
-          "clearer prompt intent, fewer failure modes, a tighter revision, a prompt that is easier to test and reuse"
-        ]
-      ],
-      "sourcePath": "stacks/prompt-repair.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.explore-to-decision",
-      "title": "Explore To Decision",
-      "family": "Deciding & Prioritising",
-      "job": "explore-to-decision",
-      "useWhen": "Use when you need options first and a choice second.",
-      "stage": "decide",
-      "outputKind": "decision",
-      "effort": "deep",
-      "stakes": "medium",
-      "summary": "Use when you need options first and a choice second.",
-      "tags": [
-        "decision making",
-        "option generation",
-        "evaluation"
-      ],
-      "contract": {
-        "job": "explore-to-decision",
-        "useWhen": "Use when you need options first and a choice second.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.generate-options",
-          "mode.decide"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.generate-options`",
-          "`frame.brainstorm-angles`",
-          "`frame.success-criteria`",
-          "`mode.decide`",
-          "`frame.compare-options`",
-          "`frame.choose-under-uncertainty`",
-          "`schema.decision-memo`"
-        ],
-        "blockOrderRationale": "Explore mode opens the search space before any option is privileged. Generate-options and brainstorm-angles ensure the shortlist has real breadth before criteria are applied. Success-criteria defines the evaluation standard before options are compared — setting criteria after seeing options invites rationalization. Decide mode then shifts the cognitive stance to convergence. Compare-options evaluates against criteria. Choose-under-uncertainty and decision-memo close the decision loop.",
-        "commonSwaps": "Swap `frame.brainstorm-angles` for `strategy.problem-split` when the options space is tangled rather than narrow. Skip the full version and use `mode.explore` + `frame.success-criteria` + `mode.decide` + `schema.decision-memo` as the minimum for simpler decisions.",
-        "commonFailureMode": "Switching to decide mode before the option set has real breadth. The most common failure is converging on the first plausible option before genuinely wider alternatives have been surfaced."
-      },
-      "io": {
-        "usefulInputs": [
-          "the decision context or problem to solve",
-          "any candidate options already on the table",
-          "any known criteria, constraints, or deadline"
-        ],
-        "expectedOutputs": [
-          "option set",
-          "explicit criteria",
-          "comparison",
-          "chosen direction",
-          "rationale",
-          "next action"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "explore-to-decision"
-        ],
-        [
-          "Use when",
-          "Use when you need options first and a choice second."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "decision"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the decision context or problem to solve, any candidate options already on the table, any known criteria, constraints, or deadline"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.generate-options, mode.decide"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.generate-options` -> `frame.brainstorm-angles` -> `frame.success-criteria` -> `mode.decide` -> `frame.compare-options` -> `frame.choose-under-uncertainty` -> `schema.decision-memo`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode opens the search space before any option is privileged. Generate-options and brainstorm-angles ensure the shortlist has real breadth before criteria are applied. Success-criteria defines the evaluation standard before options are compared — setting criteria after seeing options invites rationalization. Decide mode then shifts the cognitive stance to convergence. Compare-options evaluates against criteria. Choose-under-uncertainty and decision-memo close the decision loop."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.brainstorm-angles` for `strategy.problem-split` when the options space is tangled rather than narrow. Skip the full version and use `mode.explore` + `frame.success-criteria` + `mode.decide` + `schema.decision-memo` as the minimum for simpler decisions."
-        ],
-        [
-          "Common failure mode",
-          "Switching to decide mode before the option set has real breadth. The most common failure is converging on the first plausible option before genuinely wider alternatives have been surfaced."
-        ],
-        [
-          "Expected outcome",
-          "option set, explicit criteria, comparison, chosen direction, rationale, next action"
-        ]
-      ],
-      "sourcePath": "stacks/explore-to-decision.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.ai-workflow-design",
-      "title": "AI Workflow Design",
-      "family": "Prompt Craft",
-      "job": "ai-workflow-design",
-      "useWhen": "Use when you need to design a reliable, multi-step AI-assisted workflow for a repeatable task — one that will be used by others or run regularly.",
-      "stage": "frame",
-      "outputKind": "plan",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when you need to design a reliable, multi-step AI-assisted workflow for a repeatable task — one that will be used by others or run regularly.",
-      "tags": [
-        "prompt engineering",
-        "AI workflow",
-        "planning",
-        "systems design"
-      ],
-      "contract": {
-        "job": "ai-workflow-design",
-        "useWhen": "Use when you need to design a reliable, multi-step AI-assisted workflow for a repeatable task — one that will be used by others or run regularly.",
-        "minimumBlocks": [
-          "frame.clarify-task",
-          "frame.prompt-chain-design",
-          "frame.test-strategy"
-        ],
-        "fullSequence": [
-          "`frame.clarify-task`",
-          "`frame.requirements-decomposition`",
-          "`frame.prompt-chain-design`",
-          "`frame.test-strategy`",
-          "`schema.rollout-plan`"
-        ],
-        "blockOrderRationale": "Task clarity comes first because workflow design without a clear job creates elegant machinery for the wrong purpose. Requirements decomposition follows to surface what the workflow must handle independently. Prompt chain design then shapes the step sequence with handoff risks named. Test strategy closes the design phase — it is cheaper to name the highest-risk steps before build than after.",
-        "commonSwaps": "Swap `frame.requirements-decomposition` for `strategy.problem-split` when the job is still tangled. Swap `schema.rollout-plan` for `frame.design-cheap-test` if you want a staged pilot rather than a full rollout plan.",
-        "commonFailureMode": "Designing the workflow before clarifying the job. Prompt chains built on a fuzzy task tend to fail at the seams, not the steps."
-      },
-      "io": {
-        "usefulInputs": [
-          "the task the workflow needs to accomplish",
-          "who will use it and how often",
-          "tools and models available"
-        ],
-        "expectedOutputs": [
-          "task purpose and success criteria defined before any workflow is designed",
-          "requirements decomposed into stories: what must the workflow do independently and reliably?",
-          "workflow designed step-by-step with inputs, outputs, and handoff risks named for each step",
-          "test strategy covering the highest-risk steps: where is the workflow most likely to fail?",
-          "rollout plan with a staged deployment and go/no-go criteria before full use"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "ai-workflow-design"
-        ],
-        [
-          "Use when",
-          "Use when you need to design a reliable, multi-step AI-assisted workflow for a repeatable task — one that will be used by others or run regularly."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the task the workflow needs to accomplish, who will use it and how often, tools and models available"
-        ],
-        [
-          "Minimum blocks",
-          "frame.clarify-task, frame.prompt-chain-design, frame.test-strategy"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.clarify-task` -> `frame.requirements-decomposition` -> `frame.prompt-chain-design` -> `frame.test-strategy` -> `schema.rollout-plan`"
-        ],
-        [
-          "Why this order works",
-          "Task clarity comes first because workflow design without a clear job creates elegant machinery for the wrong purpose. Requirements decomposition follows to surface what the workflow must handle independently. Prompt chain design then shapes the step sequence with handoff risks named. Test strategy closes the design phase — it is cheaper to name the highest-risk steps before build than after."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.requirements-decomposition` for `strategy.problem-split` when the job is still tangled. Swap `schema.rollout-plan` for `frame.design-cheap-test` if you want a staged pilot rather than a full rollout plan."
-        ],
-        [
-          "Common failure mode",
-          "Designing the workflow before clarifying the job. Prompt chains built on a fuzzy task tend to fail at the seams, not the steps."
-        ],
-        [
-          "Expected outcome",
-          "task purpose and success criteria defined before any workflow is designed, requirements decomposed into stories: what must the workflow do independently and reliably?, workflow designed step-by-step with inputs, outputs, and handoff risks named for each step, test strategy covering the highest-risk steps: where is the workflow most likely to fail?, rollout plan with a staged deployment and go/no-go criteria before full use"
-        ]
-      ],
-      "sourcePath": "stacks/ai-workflow-design.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.break-a-recurring-incident",
-      "title": "Break a Recurring Incident",
-      "family": "Developer Workflows",
-      "job": "break-a-recurring-incident",
-      "useWhen": "Use when the same class of incident keeps resurfacing and the root problem is likely socio-technical, not just a single buggy line of code.",
-      "stage": "conclude",
-      "outputKind": "plan",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when the same class of incident keeps resurfacing and the root problem is likely socio-technical, not just a single buggy line of code.",
-      "tags": [
-        "software engineering",
-        "incident management",
-        "systems thinking",
-        "reliability"
-      ],
-      "contract": {
-        "job": "break-a-recurring-incident",
-        "useWhen": "Use when the same class of incident keeps resurfacing and the root problem is likely socio-technical, not just a single buggy line of code.",
-        "minimumBlocks": [
-          "mode.reflect",
-          "schema.incident-postmortem",
-          "lens.feedback-loops"
-        ],
-        "fullSequence": [
-          "`mode.reflect`",
-          "`schema.incident-postmortem`",
-          "`lens.feedback-loops`",
-          "`lens.incentive-audit`",
-          "`schema.plan-next-actions`"
-        ],
-        "blockOrderRationale": "Reflect mode prevents the postmortem from becoming a blame session. Incident-postmortem captures the timeline while it is still fresh. Feedback-loops then reframes the incident as a systemic pattern rather than a single failure. Incentive-audit adds the socio-technical layer — what rewards or ownership gaps are quietly sustaining the recurrence? Plan-next-actions closes with changes aimed at breaking the loop, not patching the latest failure.",
-        "commonSwaps": "Swap `lens.incentive-audit` for `lens.leverage-points` if the systemic view is already clear and you need to identify where to intervene. Swap `schema.plan-next-actions` for `schema.execution-brief` when the next steps need to be handed off.",
-        "commonFailureMode": "Treating the recurring incident as a new isolated event. Without `lens.feedback-loops`, the postmortem produces tactical fixes that leave the underlying reinforcing loop intact."
-      },
-      "io": {
-        "usefulInputs": [
-          "a short history of the recurring incident pattern",
-          "what has already been fixed or changed after previous occurrences",
-          "who gets paged, who owns the system, and where work tends to stall"
-        ],
-        "expectedOutputs": [
-          "incident pattern captured as a repeatable loop, not just an isolated event",
-          "reinforcing and balancing loops exposed: what keeps recreating the problem?",
-          "incentives or ownership gaps identified that quietly reward recurrence or delay prevention",
-          "action plan focused on breaking the loop, not merely cleaning up the latest failure"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "break-a-recurring-incident"
-        ],
-        [
-          "Use when",
-          "Use when the same class of incident keeps resurfacing and the root problem is likely socio-technical, not just a single buggy line of code."
-        ],
-        [
-          "Stage",
-          "conclude"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "a short history of the recurring incident pattern, what has already been fixed or changed after previous occurrences, who gets paged, who owns the system, and where work tends to stall"
-        ],
-        [
-          "Minimum blocks",
-          "mode.reflect, schema.incident-postmortem, lens.feedback-loops"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.reflect` -> `schema.incident-postmortem` -> `lens.feedback-loops` -> `lens.incentive-audit` -> `schema.plan-next-actions`"
-        ],
-        [
-          "Why this order works",
-          "Reflect mode prevents the postmortem from becoming a blame session. Incident-postmortem captures the timeline while it is still fresh. Feedback-loops then reframes the incident as a systemic pattern rather than a single failure. Incentive-audit adds the socio-technical layer — what rewards or ownership gaps are quietly sustaining the recurrence? Plan-next-actions closes with changes aimed at breaking the loop, not patching the latest failure."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.incentive-audit` for `lens.leverage-points` if the systemic view is already clear and you need to identify where to intervene. Swap `schema.plan-next-actions` for `schema.execution-brief` when the next steps need to be handed off."
-        ],
-        [
-          "Common failure mode",
-          "Treating the recurring incident as a new isolated event. Without `lens.feedback-loops`, the postmortem produces tactical fixes that leave the underlying reinforcing loop intact."
-        ],
-        [
-          "Expected outcome",
-          "incident pattern captured as a repeatable loop, not just an isolated event, reinforcing and balancing loops exposed: what keeps recreating the problem?, incentives or ownership gaps identified that quietly reward recurrence or delay prevention, action plan focused on breaking the loop, not merely cleaning up the latest failure"
-        ]
-      ],
-      "sourcePath": "stacks/break-a-recurring-incident.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.build-a-system-prompt",
-      "title": "Build a System Prompt",
-      "family": "Prompt Craft",
-      "job": "build-a-system-prompt",
-      "useWhen": "Use when you need to design a system prompt or persistent instruction set for an AI assistant, agent, or workflow.",
-      "stage": "frame",
-      "outputKind": "prompt",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when you need to design a system prompt or persistent instruction set for an AI assistant, agent, or workflow.",
-      "tags": [
-        "prompt engineering",
-        "system prompt",
-        "AI workflow",
-        "design"
-      ],
-      "contract": {
-        "job": "build-a-system-prompt",
-        "useWhen": "Use when you need to design a system prompt or persistent instruction set for an AI assistant, agent, or workflow.",
-        "minimumBlocks": [
-          "frame.clarify-task",
-          "frame.prompt-decompose",
-          "frame.prompt-rewrite"
-        ],
-        "fullSequence": [
-          "`frame.clarify-task`",
-          "`lens.jobs-to-be-done`",
-          "`frame.prompt-chain-design`",
-          "`frame.prompt-decompose`",
-          "`frame.prompt-rewrite`"
-        ],
-        "blockOrderRationale": "Task clarity first — a system prompt without a clear job produces inconsistent, overfitted behaviour. Jobs-to-be-done maps the real hiring context: what will someone use this assistant to accomplish and in what situations? Prompt-chain design follows for multi-step tasks. Prompt-decompose takes any draft apart to expose structural weaknesses before rewriting. The revised prompt is always compared to the original so regressions are visible.",
-        "commonSwaps": "Swap `frame.prompt-chain-design` for `frame.prompt-critique` if there is already a draft and the job is iterating rather than designing from scratch. Swap `lens.jobs-to-be-done` for `frame.frame.task` for simpler, single-job assistants.",
-        "commonFailureMode": "Designing the prompt before the job is clear. System prompts designed around a fuzzy task become catch-all prompts that handle nothing well."
-      },
-      "io": {
-        "usefulInputs": [
-          "what the assistant should do and for whom",
-          "constraints on behaviour, tone, or scope",
-          "any existing prompt draft"
-        ],
-        "expectedOutputs": [
-          "task and user need clarified: what job is this assistant actually being hired to do?",
-          "core job mapped with contexts, triggers, and what a successful interaction looks like",
-          "workflow designed for multi-step tasks the assistant must handle reliably",
-          "existing or draft prompt decomposed into components with structural weaknesses identified",
-          "revised system prompt with clear task, context, constraints, format, and guardrails"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "build-a-system-prompt"
-        ],
-        [
-          "Use when",
-          "Use when you need to design a system prompt or persistent instruction set for an AI assistant, agent, or workflow."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "prompt"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "what the assistant should do and for whom, constraints on behaviour, tone, or scope, any existing prompt draft"
-        ],
-        [
-          "Minimum blocks",
-          "frame.clarify-task, frame.prompt-decompose, frame.prompt-rewrite"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.clarify-task` -> `lens.jobs-to-be-done` -> `frame.prompt-chain-design` -> `frame.prompt-decompose` -> `frame.prompt-rewrite`"
-        ],
-        [
-          "Why this order works",
-          "Task clarity first — a system prompt without a clear job produces inconsistent, overfitted behaviour. Jobs-to-be-done maps the real hiring context: what will someone use this assistant to accomplish and in what situations? Prompt-chain design follows for multi-step tasks. Prompt-decompose takes any draft apart to expose structural weaknesses before rewriting. The revised prompt is always compared to the original so regressions are visible."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.prompt-chain-design` for `frame.prompt-critique` if there is already a draft and the job is iterating rather than designing from scratch. Swap `lens.jobs-to-be-done` for `frame.frame.task` for simpler, single-job assistants."
-        ],
-        [
-          "Common failure mode",
-          "Designing the prompt before the job is clear. System prompts designed around a fuzzy task become catch-all prompts that handle nothing well."
-        ],
-        [
-          "Expected outcome",
-          "task and user need clarified: what job is this assistant actually being hired to do?, core job mapped with contexts, triggers, and what a successful interaction looks like, workflow designed for multi-step tasks the assistant must handle reliably, existing or draft prompt decomposed into components with structural weaknesses identified, revised system prompt with clear task, context, constraints, format, and guardrails"
-        ]
-      ],
-      "sourcePath": "stacks/build-a-system-prompt.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.causal-inference",
-      "title": "Causal Inference",
-      "family": "Research & Analysis",
-      "job": "causal-inference",
-      "useWhen": "Use when you need to establish whether a relationship is causal — not just correlated — before acting on a finding or making a recommendation.",
-      "stage": "analyze",
-      "outputKind": "brief",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when you need to establish whether a relationship is causal — not just correlated — before acting on a finding or making a recommendation.",
-      "tags": [
-        "statistics",
-        "causal inference",
-        "research design",
-        "epistemics"
-      ],
-      "contract": {
-        "job": "causal-inference",
-        "useWhen": "Use when you need to establish whether a relationship is causal — not just correlated — before acting on a finding or making a recommendation.",
-        "minimumBlocks": [
-          "guardrail.correlation-vs-causation",
-          "frame.research-questions",
-          "frame.experiment-design"
-        ],
-        "fullSequence": [
-          "`guardrail.correlation-vs-causation`",
-          "`frame.research-questions`",
-          "`lens.base-rate-check`",
-          "`frame.experiment-design`",
-          "`guardrail.stress-test-assumptions`"
-        ],
-        "blockOrderRationale": "Correlation-vs-causation first surfaces the specific confounds and alternative explanations before any research is designed — otherwise you risk designing the wrong study. Research-questions sharpens the causal claim into something testable. Base-rate-check prevents overreaction to a finding that is unsurprising given prior knowledge. Experiment-design follows after the question is precise. Stress-test-assumptions closes by pressure-testing the bridge from experiment to causal conclusion.",
-        "commonSwaps": "Swap `frame.experiment-design` for `frame.design-cheap-test` when a quick observational test is feasible before committing to a full study. Swap `lens.base-rate-check` for `lens.survivorship-bias` when the data has a selection problem.",
-        "commonFailureMode": "Designing the study before the causal question is precise. An imprecisely framed causal question produces a study that answers a slightly different question, and the conclusions fail to transfer."
-      },
-      "io": {
-        "usefulInputs": [
-          "the observed relationship or correlation you want to evaluate",
-          "data or evidence available",
-          "the action or decision that hinges on whether causation holds"
-        ],
-        "expectedOutputs": [
-          "correlation distinguished from causation: specific confounds and alternative explanations named",
-          "precise causal question formulated: what exactly needs to be established for the action to be justified?",
-          "base rates applied: is this relationship surprising given prior knowledge of the domain?",
-          "strongest feasible study designed to establish causation, with trade-offs acknowledged",
-          "assumptions underlying the causal claim stress-tested: what would falsify it?"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "causal-inference"
-        ],
-        [
-          "Use when",
-          "Use when you need to establish whether a relationship is causal — not just correlated — before acting on a finding or making a recommendation."
+          "Design, run, or evaluate a test of a causal claim before acting on it."
         ],
         [
           "Stage",
@@ -10894,87 +2842,42 @@ globalThis.SITE_DATA = {
           "high"
         ],
         [
-          "Useful inputs",
-          "the observed relationship or correlation you want to evaluate, data or evidence available, the action or decision that hinges on whether causation holds"
-        ],
-        [
-          "Minimum blocks",
-          "guardrail.correlation-vs-causation, frame.research-questions, frame.experiment-design"
-        ],
-        [
           "Suggested blocks",
-          "`guardrail.correlation-vs-causation` -> `frame.research-questions` -> `lens.base-rate-check` -> `frame.experiment-design` -> `guardrail.stress-test-assumptions`"
-        ],
-        [
-          "Why this order works",
-          "Correlation-vs-causation first surfaces the specific confounds and alternative explanations before any research is designed — otherwise you risk designing the wrong study. Research-questions sharpens the causal claim into something testable. Base-rate-check prevents overreaction to a finding that is unsurprising given prior knowledge. Experiment-design follows after the question is precise. Stress-test-assumptions closes by pressure-testing the bridge from experiment to causal conclusion."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.experiment-design` for `frame.design-cheap-test` when a quick observational test is feasible before committing to a full study. Swap `lens.base-rate-check` for `lens.survivorship-bias` when the data has a selection problem."
-        ],
-        [
-          "Common failure mode",
-          "Designing the study before the causal question is precise. An imprecisely framed causal question produces a study that answers a slightly different question, and the conclusions fail to transfer."
-        ],
-        [
-          "Expected outcome",
-          "correlation distinguished from causation: specific confounds and alternative explanations named, precise causal question formulated: what exactly needs to be established for the action to be justified?, base rates applied: is this relationship surprising given prior knowledge of the domain?, strongest feasible study designed to establish causation, with trade-offs acknowledged, assumptions underlying the causal claim stress-tested: what would falsify it?"
+          "`mode.explore` -> `guardrail.assumption-audit` -> `guardrail.uncertainty` -> `frame.extract-insights` -> `rubric.research-quality`"
         ]
       ],
-      "sourcePath": "stacks/causal-inference.md"
+      "sourcePath": "stacks/hypothesis-test.md"
     },
     {
       "section": "Stack",
       "key": "stack.data-to-story",
-      "title": "Data to Story",
+      "title": "data-to-story",
       "family": "Research & Analysis",
       "job": "data-to-story",
-      "useWhen": "Use when you have data, analysis, or statistical findings and need to translate them into a compelling narrative for a non-technical audience.",
+      "useWhen": "Translate statistics or findings into a decision-useful narrative for a non-technical audience.",
       "stage": "conclude",
       "outputKind": "draft",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
-      "summary": "Use when you have data, analysis, or statistical findings and need to translate them into a compelling narrative for a non-technical audience.",
+      "summary": "Translate statistics or findings into a decision-useful narrative for a non-technical audience.",
       "tags": [
-        "statistics",
-        "writing",
-        "communication",
-        "data storytelling"
+        "data",
+        "story"
       ],
       "contract": {
         "job": "data-to-story",
-        "useWhen": "Use when you have data, analysis, or statistical findings and need to translate them into a compelling narrative for a non-technical audience.",
-        "minimumBlocks": [
-          "frame.interpret-regression",
-          "frame.extract-insights",
-          "schema.executive-summary"
-        ],
+        "useWhen": "Translate statistics or findings into a decision-useful narrative for a non-technical audience.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`frame.interpret-regression`",
           "`frame.extract-insights`",
-          "`lens.survivorship-bias`",
-          "`schema.executive-summary`",
-          "`frame.rewrite-for-clarity`"
+          "`guardrail.uncertainty`",
+          "`rubric.writing-quality`"
         ],
-        "blockOrderRationale": "Statistical interpretation comes first to prevent narrative from outrunning the evidence. Extract-insights separates the real signal from noise. Survivorship-bias check guards against stories built on the visible data while ignoring what is absent. Executive summary drafts the narrative only after the evidence is accurately understood. Rewrite-for-clarity is the final pass to make the result accessible without losing accuracy.",
-        "commonSwaps": "Swap `frame.interpret-regression` for `guardrail.statistical-significance-check` when the task is evaluating an experiment rather than interpreting a model. Swap `schema.executive-summary` for `frame.brief-to-draft` when the output is a longer document rather than a summary.",
-        "commonFailureMode": "Writing the narrative before interpreting the statistics. The most common error is building a story around a finding without checking whether the finding is statistically or practically significant."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the analysis, data, or statistical output",
-          "the audience and what decision they need to make",
-          "the key finding you want to communicate"
-        ],
-        "expectedOutputs": [
-          "statistical output interpreted accurately: significance, effect size, and causation claims kept distinct",
-          "key insights separated from noise: what does the data actually show?",
-          "survivorship and selection bias in the data named before the narrative is written",
-          "executive summary drafted with the finding, recommendation, and key caveat front-loaded",
-          "language revised for the audience: technical qualifications preserved but made accessible"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
@@ -10982,7 +2885,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Use when",
-          "Use when you have data, analysis, or statistical findings and need to translate them into a compelling narrative for a non-technical audience."
+          "Translate statistics or findings into a decision-useful narrative for a non-technical audience."
         ],
         [
           "Stage",
@@ -10994,107 +2897,67 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
           "medium"
         ],
         [
-          "Useful inputs",
-          "the analysis, data, or statistical output, the audience and what decision they need to make, the key finding you want to communicate"
-        ],
-        [
-          "Minimum blocks",
-          "frame.interpret-regression, frame.extract-insights, schema.executive-summary"
-        ],
-        [
           "Suggested blocks",
-          "`frame.interpret-regression` -> `frame.extract-insights` -> `lens.survivorship-bias` -> `schema.executive-summary` -> `frame.rewrite-for-clarity`"
-        ],
-        [
-          "Why this order works",
-          "Statistical interpretation comes first to prevent narrative from outrunning the evidence. Extract-insights separates the real signal from noise. Survivorship-bias check guards against stories built on the visible data while ignoring what is absent. Executive summary drafts the narrative only after the evidence is accurately understood. Rewrite-for-clarity is the final pass to make the result accessible without losing accuracy."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.interpret-regression` for `guardrail.statistical-significance-check` when the task is evaluating an experiment rather than interpreting a model. Swap `schema.executive-summary` for `frame.brief-to-draft` when the output is a longer document rather than a summary."
-        ],
-        [
-          "Common failure mode",
-          "Writing the narrative before interpreting the statistics. The most common error is building a story around a finding without checking whether the finding is statistically or practically significant."
-        ],
-        [
-          "Expected outcome",
-          "statistical output interpreted accurately: significance, effect size, and causation claims kept distinct, key insights separated from noise: what does the data actually show?, survivorship and selection bias in the data named before the narrative is written, executive summary drafted with the finding, recommendation, and key caveat front-loaded, language revised for the audience: technical qualifications preserved but made accessible"
+          "`frame.extract-insights` -> `guardrail.uncertainty` -> `rubric.writing-quality`"
         ]
       ],
       "sourcePath": "stacks/data-to-story.md"
     },
     {
       "section": "Stack",
-      "key": "stack.decision-review",
-      "title": "Decision Review",
-      "family": "Reflection & Learning",
-      "job": "decision-review",
-      "useWhen": "Use when you want to evaluate a past decision fairly — separating decision quality from outcome quality.",
-      "stage": "conclude",
-      "outputKind": "retrospective",
+      "key": "stack.align-stakeholders",
+      "title": "align-stakeholders",
+      "family": "Writing & Communication",
+      "job": "align-stakeholders",
+      "useWhen": "Map audiences and land a change or decision so it is understood and acted on, not just received.",
+      "stage": "decide",
+      "outputKind": "plan",
       "effort": "standard",
       "stakes": "medium",
-      "summary": "Use when you want to evaluate a past decision fairly — separating decision quality from outcome quality.",
+      "summary": "Map audiences and land a change or decision so it is understood and acted on, not just received.",
       "tags": [
-        "decision quality",
-        "reflection",
-        "learning",
-        "epistemics"
+        "align",
+        "stakeholders"
       ],
       "contract": {
-        "job": "decision-review",
-        "useWhen": "Use when you want to evaluate a past decision fairly — separating decision quality from outcome quality.",
-        "minimumBlocks": [
-          "guardrail.triage-the-unknown",
-          "guardrail.stress-test-assumptions"
-        ],
+        "job": "align-stakeholders",
+        "useWhen": "Map audiences and land a change or decision so it is understood and acted on, not just received.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`guardrail.triage-the-unknown`",
-          "`guardrail.stress-test-assumptions`",
-          "`frame.second-order-effects`",
-          "`frame.extract-insights`"
+          "`mode.explore`",
+          "`frame.task`",
+          "`guardrail.assumption-audit`",
+          "`mode.decide`",
+          "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Triage-the-unknown reconstructs what was actually knowable at decision time — this prevents hindsight bias from distorting the review. Stress-test-assumptions evaluates the premises that drove the choice. Second-order-effects maps consequences that were visible in principle but missed in practice. Extract-insights closes with lessons that apply to future decisions of a similar shape.",
-        "commonSwaps": "Swap `frame.second-order-effects` for `frame.cause-mapping` when there is a causal chain to reconstruct. Add `rubric.decision-quality` as a final gate if the review is meant to evaluate decision process quality explicitly.",
-        "commonFailureMode": "Evaluating a decision using information that was not available at the time. Without triage-the-unknown, the review becomes a hindsight-biased verdict rather than a process improvement."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "description of the decision made and the options that were available",
-          "information that was available at the time the decision was made",
-          "what actually happened since"
-        ],
-        "expectedOutputs": [
-          "the decision context reconstructed clearly before any evaluation begins",
-          "assumptions that underpinned the choice identified and tested against what was actually knowable",
-          "second-order consequences — anticipated and missed — mapped out",
-          "specific lessons extracted that apply to future decisions of a similar type"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "decision-review"
+          "align-stakeholders"
         ],
         [
           "Use when",
-          "Use when you want to evaluate a past decision fairly — separating decision quality from outcome quality."
+          "Map audiences and land a change or decision so it is understood and acted on, not just received."
         ],
         [
           "Stage",
-          "conclude"
+          "decide"
         ],
         [
           "Output kind",
-          "retrospective"
+          "plan"
         ],
         [
           "Effort",
@@ -11105,84 +2968,42 @@ globalThis.SITE_DATA = {
           "medium"
         ],
         [
-          "Useful inputs",
-          "description of the decision made and the options that were available, information that was available at the time the decision was made, what actually happened since"
-        ],
-        [
-          "Minimum blocks",
-          "guardrail.triage-the-unknown, guardrail.stress-test-assumptions"
-        ],
-        [
           "Suggested blocks",
-          "`guardrail.triage-the-unknown` -> `guardrail.stress-test-assumptions` -> `frame.second-order-effects` -> `frame.extract-insights`"
-        ],
-        [
-          "Why this order works",
-          "Triage-the-unknown reconstructs what was actually knowable at decision time — this prevents hindsight bias from distorting the review. Stress-test-assumptions evaluates the premises that drove the choice. Second-order-effects maps consequences that were visible in principle but missed in practice. Extract-insights closes with lessons that apply to future decisions of a similar shape."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.second-order-effects` for `frame.cause-mapping` when there is a causal chain to reconstruct. Add `rubric.decision-quality` as a final gate if the review is meant to evaluate decision process quality explicitly."
-        ],
-        [
-          "Common failure mode",
-          "Evaluating a decision using information that was not available at the time. Without triage-the-unknown, the review becomes a hindsight-biased verdict rather than a process improvement."
-        ],
-        [
-          "Expected outcome",
-          "the decision context reconstructed clearly before any evaluation begins, assumptions that underpinned the choice identified and tested against what was actually knowable, second-order consequences — anticipated and missed — mapped out, specific lessons extracted that apply to future decisions of a similar type"
+          "`mode.explore` -> `frame.task` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
         ]
       ],
-      "sourcePath": "stacks/decision-review.md"
+      "sourcePath": "stacks/align-stakeholders.md"
     },
     {
       "section": "Stack",
       "key": "stack.deliver-feedback",
-      "title": "Deliver Feedback",
+      "title": "deliver-feedback",
       "family": "Writing & Communication",
       "job": "deliver-feedback",
-      "useWhen": "Use when you need to prepare and structure substantive feedback — on work, a decision, a proposal, or a performance — so it is specific, fair, and actionable.",
+      "useWhen": "Give honest, actionable feedback without diluting the signal.",
       "stage": "refine",
       "outputKind": "draft",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "low",
-      "summary": "Use when you need to prepare and structure substantive feedback — on work, a decision, a proposal, or a performance — so it is specific, fair, and actionable.",
+      "summary": "Give honest, actionable feedback without diluting the signal.",
       "tags": [
-        "writing",
-        "feedback",
-        "communication",
-        "development"
+        "deliver",
+        "feedback"
       ],
       "contract": {
         "job": "deliver-feedback",
-        "useWhen": "Use when you need to prepare and structure substantive feedback — on work, a decision, a proposal, or a performance — so it is specific, fair, and actionable.",
-        "minimumBlocks": [
-          "guardrail.blind-spot-check",
-          "frame.critique-argument"
-        ],
+        "useWhen": "Give honest, actionable feedback without diluting the signal.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`guardrail.blind-spot-check`",
-          "`frame.feedback-request`",
-          "`frame.critique-argument`",
-          "`frame.rewrite-for-clarity`"
+          "`mode.critique`",
+          "`guardrail.disconfirming-evidence`",
+          "`rubric.writing-quality`"
         ],
-        "blockOrderRationale": "Blind-spot-check comes first because the quality of feedback depends on whether the giver's own biases have been named. Feedback-request then structures exactly what the recipient should focus on. Critique-argument provides the substantive evaluation surface. Rewrite-for-clarity is the final pass — feedback that is accurate but unclear or vague fails at the delivery stage.",
-        "commonSwaps": "Swap `frame.critique-argument` for `mode.critique` + `frame.code-review` for software feedback specifically. Swap `frame.rewrite-for-clarity` for `rubric.writing-quality` when the feedback is written and will be read without a follow-up conversation.",
-        "commonFailureMode": "Skipping the blind-spot check. Feedback without giver self-awareness tends to address the giver's preferences rather than the recipient's actual development needs."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the work, output, or situation you are giving feedback on",
-          "the person receiving the feedback and your relationship to them",
-          "the goal: improvement, decision, or development"
-        ],
-        "expectedOutputs": [
-          "your own blind spots and potential biases named before structuring the feedback",
-          "feedback request structured: what specifically should the recipient focus on?",
-          "substance critiqued: specific strengths and weaknesses identified with evidence, not impressions",
-          "feedback rewritten for clarity: plain, specific, and constructive — no vague qualifiers"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
@@ -11190,7 +3011,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Use when",
-          "Use when you need to prepare and structure substantive feedback — on work, a decision, a proposal, or a performance — so it is specific, fair, and actionable."
+          "Give honest, actionable feedback without diluting the signal."
         ],
         [
           "Stage",
@@ -11202,209 +3023,59 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
           "low"
         ],
         [
-          "Useful inputs",
-          "the work, output, or situation you are giving feedback on, the person receiving the feedback and your relationship to them, the goal: improvement, decision, or development"
-        ],
-        [
-          "Minimum blocks",
-          "guardrail.blind-spot-check, frame.critique-argument"
-        ],
-        [
           "Suggested blocks",
-          "`guardrail.blind-spot-check` -> `frame.feedback-request` -> `frame.critique-argument` -> `frame.rewrite-for-clarity`"
-        ],
-        [
-          "Why this order works",
-          "Blind-spot-check comes first because the quality of feedback depends on whether the giver's own biases have been named. Feedback-request then structures exactly what the recipient should focus on. Critique-argument provides the substantive evaluation surface. Rewrite-for-clarity is the final pass — feedback that is accurate but unclear or vague fails at the delivery stage."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.critique-argument` for `mode.critique` + `frame.code-review` for software feedback specifically. Swap `frame.rewrite-for-clarity` for `rubric.writing-quality` when the feedback is written and will be read without a follow-up conversation."
-        ],
-        [
-          "Common failure mode",
-          "Skipping the blind-spot check. Feedback without giver self-awareness tends to address the giver's preferences rather than the recipient's actual development needs."
-        ],
-        [
-          "Expected outcome",
-          "your own blind spots and potential biases named before structuring the feedback, feedback request structured: what specifically should the recipient focus on?, substance critiqued: specific strengths and weaknesses identified with evidence, not impressions, feedback rewritten for clarity: plain, specific, and constructive — no vague qualifiers"
+          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `rubric.writing-quality`"
         ]
       ],
       "sourcePath": "stacks/deliver-feedback.md"
     },
     {
       "section": "Stack",
-      "key": "stack.design-a-study",
-      "title": "Design a Study",
-      "family": "Research & Analysis",
-      "job": "design-a-study",
-      "useWhen": "Use when you need to design a rigorous study, survey, or data collection effort before any data is gathered.",
-      "stage": "frame",
-      "outputKind": "plan",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when you need to design a rigorous study, survey, or data collection effort before any data is gathered.",
-      "tags": [
-        "statistics",
-        "research design",
-        "measurement",
-        "methodology"
-      ],
-      "contract": {
-        "job": "design-a-study",
-        "useWhen": "Use when you need to design a rigorous study, survey, or data collection effort before any data is gathered.",
-        "minimumBlocks": [
-          "frame.research-questions",
-          "frame.experiment-design",
-          "lens.sample-design"
-        ],
-        "fullSequence": [
-          "`frame.research-questions`",
-          "`frame.metric-design`",
-          "`frame.experiment-design`",
-          "`guardrail.data-quality-check`",
-          "`lens.sample-design`"
-        ],
-        "blockOrderRationale": "Research-questions first sharpens the study to only what needs to be established for the decision — studies designed around vague questions collect data that cannot answer them. Metric-design builds the measurement instrument before data collection begins. Experiment-design structures the study with sample, treatment, duration, and decision rule explicit. Data-quality-check surfaces collection risks before instruments are fielded. Sample-design assesses representativeness and minimum viable size.",
-        "commonSwaps": "Swap `frame.experiment-design` for `frame.design-cheap-test` when a low-cost observational study is sufficient. Swap `lens.sample-design` for `lens.survivorship-bias` when the main risk is selection bias in existing data.",
-        "commonFailureMode": "Designing the study before the research question is precise. An imprecise question produces a study that technically runs but cannot answer the question that actually drives the decision."
-      },
-      "io": {
-        "usefulInputs": [
-          "the question you are trying to answer",
-          "the decision or action the study will inform",
-          "constraints on data collection (budget, timeline, available population)"
-        ],
-        "expectedOutputs": [
-          "research questions sharpened to what the study can actually answer",
-          "primary and counter-metrics specified with Goodhart risk named",
-          "study designed with sample, treatment/control, duration, and decision rule defined before collection begins",
-          "data quality risks identified so collection instruments can address them in advance",
-          "sampling strategy assessed for representativeness, bias, and minimum viable size"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "design-a-study"
-        ],
-        [
-          "Use when",
-          "Use when you need to design a rigorous study, survey, or data collection effort before any data is gathered."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the question you are trying to answer, the decision or action the study will inform, constraints on data collection (budget, timeline, available population)"
-        ],
-        [
-          "Minimum blocks",
-          "frame.research-questions, frame.experiment-design, lens.sample-design"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.research-questions` -> `frame.metric-design` -> `frame.experiment-design` -> `guardrail.data-quality-check` -> `lens.sample-design`"
-        ],
-        [
-          "Why this order works",
-          "Research-questions first sharpens the study to only what needs to be established for the decision — studies designed around vague questions collect data that cannot answer them. Metric-design builds the measurement instrument before data collection begins. Experiment-design structures the study with sample, treatment, duration, and decision rule explicit. Data-quality-check surfaces collection risks before instruments are fielded. Sample-design assesses representativeness and minimum viable size."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.experiment-design` for `frame.design-cheap-test` when a low-cost observational study is sufficient. Swap `lens.sample-design` for `lens.survivorship-bias` when the main risk is selection bias in existing data."
-        ],
-        [
-          "Common failure mode",
-          "Designing the study before the research question is precise. An imprecise question produces a study that technically runs but cannot answer the question that actually drives the decision."
-        ],
-        [
-          "Expected outcome",
-          "research questions sharpened to what the study can actually answer, primary and counter-metrics specified with Goodhart risk named, study designed with sample, treatment/control, duration, and decision rule defined before collection begins, data quality risks identified so collection instruments can address them in advance, sampling strategy assessed for representativeness, bias, and minimum viable size"
-        ]
-      ],
-      "sourcePath": "stacks/design-a-study.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.develop-a-position",
-      "title": "Develop a Position",
+      "key": "stack.develop-position",
+      "title": "develop-position",
       "family": "Writing & Communication",
-      "job": "develop-a-position",
-      "useWhen": "Use when you need to move from a question or topic to a well-argued, defensible position supported by evidence and reasoning.",
+      "job": "develop-position",
+      "useWhen": "Build and harden a defensible position from evidence.",
       "stage": "refine",
       "outputKind": "draft",
       "effort": "standard",
       "stakes": "medium",
-      "summary": "Use when you need to move from a question or topic to a well-argued, defensible position supported by evidence and reasoning.",
+      "summary": "Build and harden a defensible position from evidence.",
       "tags": [
-        "writing",
-        "argumentation",
-        "research",
-        "critical thinking"
+        "develop",
+        "position"
       ],
       "contract": {
-        "job": "develop-a-position",
-        "useWhen": "Use when you need to move from a question or topic to a well-argued, defensible position supported by evidence and reasoning.",
-        "minimumBlocks": [
-          "frame.research-questions",
-          "frame.synthesize-sources",
-          "frame.argument-structure"
-        ],
+        "job": "develop-position",
+        "useWhen": "Build and harden a defensible position from evidence.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`frame.research-questions`",
-          "`frame.synthesize-sources`",
-          "`frame.argument-structure`",
-          "`frame.position-draft`",
-          "`frame.critique-argument`"
+          "`mode.explore`",
+          "`frame.task`",
+          "`strategy.steelman`",
+          "`frame.extract-insights`",
+          "`rubric.argument-quality`"
         ],
-        "blockOrderRationale": "Research-questions focus the investigation on only what is required to justify the position — without this, synthesis becomes comprehensive rather than purposeful. Synthesize-sources integrates evidence before any draft is written. Argument-structure maps the logical form before the prose is composed. Position-draft then follows the map. Critique-argument closes with the strongest counter-position to find the weakest links before the position is published.",
-        "commonSwaps": "Swap `frame.critique-argument` for `strategy.steelman` when the main risk is that the counter-position has not been taken seriously enough. Add `rubric.argument-quality` as a final gate before publishing.",
-        "commonFailureMode": "Writing the position before the argument structure is mapped. Positions drafted without a prior structure tend to be asserted rather than argued — they read as opinion rather than conclusion."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the question or issue you need to take a position on",
-          "relevant sources, data, or evidence available",
-          "the audience who will read or hear the position"
-        ],
-        "expectedOutputs": [
-          "research questions sharpened to focus only what must be established",
-          "sources synthesised into a coherent evidential picture",
-          "argument structure mapped before any draft is written",
-          "position stated clearly with claim, evidence, and reasoning in sequence",
-          "argument critiqued from the strongest counter-position: where is it weakest?"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "develop-a-position"
+          "develop-position"
         ],
         [
           "Use when",
-          "Use when you need to move from a question or topic to a well-argued, defensible position supported by evidence and reasoning."
+          "Build and harden a defensible position from evidence."
         ],
         [
           "Stage",
@@ -11423,743 +3094,55 @@ globalThis.SITE_DATA = {
           "medium"
         ],
         [
-          "Useful inputs",
-          "the question or issue you need to take a position on, relevant sources, data, or evidence available, the audience who will read or hear the position"
-        ],
-        [
-          "Minimum blocks",
-          "frame.research-questions, frame.synthesize-sources, frame.argument-structure"
-        ],
-        [
           "Suggested blocks",
-          "`frame.research-questions` -> `frame.synthesize-sources` -> `frame.argument-structure` -> `frame.position-draft` -> `frame.critique-argument`"
-        ],
-        [
-          "Why this order works",
-          "Research-questions focus the investigation on only what is required to justify the position — without this, synthesis becomes comprehensive rather than purposeful. Synthesize-sources integrates evidence before any draft is written. Argument-structure maps the logical form before the prose is composed. Position-draft then follows the map. Critique-argument closes with the strongest counter-position to find the weakest links before the position is published."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.critique-argument` for `strategy.steelman` when the main risk is that the counter-position has not been taken seriously enough. Add `rubric.argument-quality` as a final gate before publishing."
-        ],
-        [
-          "Common failure mode",
-          "Writing the position before the argument structure is mapped. Positions drafted without a prior structure tend to be asserted rather than argued — they read as opinion rather than conclusion."
-        ],
-        [
-          "Expected outcome",
-          "research questions sharpened to focus only what must be established, sources synthesised into a coherent evidential picture, argument structure mapped before any draft is written, position stated clearly with claim, evidence, and reasoning in sequence, argument critiqued from the strongest counter-position: where is it weakest?"
+          "`mode.explore` -> `frame.task` -> `strategy.steelman` -> `frame.extract-insights` -> `rubric.argument-quality`"
         ]
       ],
-      "sourcePath": "stacks/develop-a-position.md"
+      "sourcePath": "stacks/develop-position.md"
     },
     {
       "section": "Stack",
-      "key": "stack.evaluate-model-output",
-      "title": "Evaluate Model Output",
-      "family": "Prompt Craft",
-      "job": "evaluate-model-output",
-      "useWhen": "Use when you need to assess whether AI-generated output is actually good — catching errors, hallucinations, bias, or reasoning failures before acting on it.",
-      "stage": "critique",
-      "outputKind": "critique",
-      "effort": "standard",
-      "stakes": "medium",
-      "summary": "Use when you need to assess whether AI-generated output is actually good — catching errors, hallucinations, bias, or reasoning failures before acting on it.",
-      "tags": [
-        "prompt engineering",
-        "evaluation",
-        "AI quality",
-        "critical thinking"
-      ],
-      "contract": {
-        "job": "evaluate-model-output",
-        "useWhen": "Use when you need to assess whether AI-generated output is actually good — catching errors, hallucinations, bias, or reasoning failures before acting on it.",
-        "minimumBlocks": [
-          "frame.prompt-decompose",
-          "frame.prompt-critique"
-        ],
-        "fullSequence": [
-          "`frame.prompt-decompose`",
-          "`guardrail.blind-spot-check`",
-          "`frame.prompt-critique`",
-          "`frame.extract-insights`",
-          "`frame.prompt-compare`"
-        ],
-        "blockOrderRationale": "Prompt-decompose comes first because output quality cannot be evaluated without understanding what was actually asked. Blind-spot-check surfaces the evaluator's biases before assessment begins. Prompt-critique then evaluates the output against the decomposed prompt. Extract-insights separates genuine content from plausible-sounding but unsupported claims. Prompt-compare provides the calibration reference — how would a better prompt have changed the output?",
-        "commonSwaps": "Swap `frame.prompt-compare` for `rubric.prompt-quality` when you want a checklist verdict rather than a comparative analysis. Skip `guardrail.blind-spot-check` for routine low-stakes output evaluation.",
-        "commonFailureMode": "Evaluating output without first understanding the prompt. Output from a weak prompt will be judged as the model's failure rather than a prompt engineering problem."
-      },
-      "io": {
-        "usefulInputs": [
-          "the model output to evaluate",
-          "the prompt that produced it",
-          "the intended purpose or decision the output will inform"
-        ],
-        "expectedOutputs": [
-          "prompt decomposed to understand what was actually asked and whether the output is responsive to it",
-          "blind spots in the evaluation named: what biases might affect how you assess the output?",
-          "output critiqued against the prompt: specific failure modes, errors, or gaps identified",
-          "genuine insights separated from plausible-sounding but unsupported claims",
-          "comparison of output quality against what a better prompt would likely have produced"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "evaluate-model-output"
-        ],
-        [
-          "Use when",
-          "Use when you need to assess whether AI-generated output is actually good — catching errors, hallucinations, bias, or reasoning failures before acting on it."
-        ],
-        [
-          "Stage",
-          "critique"
-        ],
-        [
-          "Output kind",
-          "critique"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the model output to evaluate, the prompt that produced it, the intended purpose or decision the output will inform"
-        ],
-        [
-          "Minimum blocks",
-          "frame.prompt-decompose, frame.prompt-critique"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.prompt-decompose` -> `guardrail.blind-spot-check` -> `frame.prompt-critique` -> `frame.extract-insights` -> `frame.prompt-compare`"
-        ],
-        [
-          "Why this order works",
-          "Prompt-decompose comes first because output quality cannot be evaluated without understanding what was actually asked. Blind-spot-check surfaces the evaluator's biases before assessment begins. Prompt-critique then evaluates the output against the decomposed prompt. Extract-insights separates genuine content from plausible-sounding but unsupported claims. Prompt-compare provides the calibration reference — how would a better prompt have changed the output?"
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.prompt-compare` for `rubric.prompt-quality` when you want a checklist verdict rather than a comparative analysis. Skip `guardrail.blind-spot-check` for routine low-stakes output evaluation."
-        ],
-        [
-          "Common failure mode",
-          "Evaluating output without first understanding the prompt. Output from a weak prompt will be judged as the model's failure rather than a prompt engineering problem."
-        ],
-        [
-          "Expected outcome",
-          "prompt decomposed to understand what was actually asked and whether the output is responsive to it, blind spots in the evaluation named: what biases might affect how you assess the output?, output critiqued against the prompt: specific failure modes, errors, or gaps identified, genuine insights separated from plausible-sounding but unsupported claims, comparison of output quality against what a better prompt would likely have produced"
-        ]
-      ],
-      "sourcePath": "stacks/evaluate-model-output.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.evidence-to-decision",
-      "title": "Evidence to Decision",
-      "family": "Deciding & Prioritising",
-      "job": "evidence-to-decision",
-      "useWhen": "Use when you have research, data, or analysis in hand and need to move from evidence to a defensible decision.",
+      "key": "stack.negotiate",
+      "title": "negotiate",
+      "family": "Writing & Communication",
+      "job": "negotiate",
+      "useWhen": "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy.",
       "stage": "decide",
-      "outputKind": "decision",
+      "outputKind": "brief",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when you have research, data, or analysis in hand and need to move from evidence to a defensible decision.",
+      "summary": "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy.",
       "tags": [
-        "research",
-        "decision making",
-        "epistemics",
-        "synthesis"
+        "negotiate"
       ],
       "contract": {
-        "job": "evidence-to-decision",
-        "useWhen": "Use when you have research, data, or analysis in hand and need to move from evidence to a defensible decision.",
-        "minimumBlocks": [
-          "frame.synthesize-sources",
-          "frame.extract-insights",
-          "frame.choose-under-uncertainty"
-        ],
+        "job": "negotiate",
+        "useWhen": "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`frame.synthesize-sources`",
-          "`frame.extract-insights`",
-          "`lens.base-rate-check`",
-          "`guardrail.stress-test-assumptions`",
-          "`frame.choose-under-uncertainty`"
-        ],
-        "blockOrderRationale": "Synthesis before insight extraction — sources must be integrated before conclusions can be drawn from them reliably. Base-rate-check prevents overreaction to findings that are unsurprising given prior knowledge. Stress-test-assumptions identifies the bridge assumptions between evidence and decision. Choose-under-uncertainty closes by making the decision explicit with the reasoning documented.",
-        "commonSwaps": "Swap `guardrail.stress-test-assumptions` for `guardrail.disconfirming-evidence` when there is a strong prior conclusion that the evidence might be confirming rather than testing. Add `rubric.decision-quality` when the decision is high-stakes.",
-        "commonFailureMode": "Moving directly from evidence to conclusion without stress-testing the bridge assumptions. Evidence never speaks for itself — the assumptions about what the evidence implies are where decision errors hide."
-      },
-      "io": {
-        "usefulInputs": [
-          "the evidence or analysis: research, data, reports, or expert input",
-          "the decision you are facing and its options",
-          "constraints or stakes involved"
-        ],
-        "expectedOutputs": [
-          "evidence synthesised across sources into a coherent picture with contradictions noted",
-          "insights extracted and separated from noise: what does the evidence actually show?",
-          "base rates applied to test whether findings are surprising or predictable given prior knowledge",
-          "assumptions that bridge from evidence to decision identified and stress-tested",
-          "decision made under uncertainty with explicit reasoning about what would change the conclusion"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "evidence-to-decision"
-        ],
-        [
-          "Use when",
-          "Use when you have research, data, or analysis in hand and need to move from evidence to a defensible decision."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "decision"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the evidence or analysis: research, data, reports, or expert input, the decision you are facing and its options, constraints or stakes involved"
-        ],
-        [
-          "Minimum blocks",
-          "frame.synthesize-sources, frame.extract-insights, frame.choose-under-uncertainty"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.synthesize-sources` -> `frame.extract-insights` -> `lens.base-rate-check` -> `guardrail.stress-test-assumptions` -> `frame.choose-under-uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Synthesis before insight extraction — sources must be integrated before conclusions can be drawn from them reliably. Base-rate-check prevents overreaction to findings that are unsurprising given prior knowledge. Stress-test-assumptions identifies the bridge assumptions between evidence and decision. Choose-under-uncertainty closes by making the decision explicit with the reasoning documented."
-        ],
-        [
-          "Common swaps",
-          "Swap `guardrail.stress-test-assumptions` for `guardrail.disconfirming-evidence` when there is a strong prior conclusion that the evidence might be confirming rather than testing. Add `rubric.decision-quality` when the decision is high-stakes."
-        ],
-        [
-          "Common failure mode",
-          "Moving directly from evidence to conclusion without stress-testing the bridge assumptions. Evidence never speaks for itself — the assumptions about what the evidence implies are where decision errors hide."
-        ],
-        [
-          "Expected outcome",
-          "evidence synthesised across sources into a coherent picture with contradictions noted, insights extracted and separated from noise: what does the evidence actually show?, base rates applied to test whether findings are surprising or predictable given prior knowledge, assumptions that bridge from evidence to decision identified and stress-tested, decision made under uncertainty with explicit reasoning about what would change the conclusion"
-        ]
-      ],
-      "sourcePath": "stacks/evidence-to-decision.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.feature-design",
-      "title": "Feature Design",
-      "family": "Developer Workflows",
-      "job": "feature-design",
-      "useWhen": "Use when you need to take a user need or product requirement from fuzzy idea to a well-specified, buildable design.",
-      "stage": "frame",
-      "outputKind": "plan",
-      "effort": "deep",
-      "stakes": "high",
-      "summary": "Use when you need to take a user need or product requirement from fuzzy idea to a well-specified, buildable design.",
-      "tags": [
-        "software engineering",
-        "feature design",
-        "requirements",
-        "API"
-      ],
-      "contract": {
-        "job": "feature-design",
-        "useWhen": "Use when you need to take a user need or product requirement from fuzzy idea to a well-specified, buildable design.",
-        "minimumBlocks": [
-          "frame.clarify-task",
-          "frame.requirements-decomposition",
-          "frame.define-success-metrics"
-        ],
-        "fullSequence": [
-          "`frame.clarify-task`",
-          "`frame.requirements-decomposition`",
-          "`frame.define-success-metrics`",
-          "`frame.api-design`",
-          "`lens.failure-mode-analysis`",
-          "`frame.test-strategy`"
-        ],
-        "blockOrderRationale": "Clarity before decomposition — requirements that decompose a fuzzy task produce fuzzy stories. Requirements-decomposition follows with acceptance criteria per story. Success-metrics are defined before API or implementation design begins, preventing the design from optimizing for the wrong thing. API-design then specifies the interface contract with edge cases named. Failure-mode-analysis ensures resilience requirements are surfaced. Test-strategy closes with risk-weighted coverage.",
-        "commonSwaps": "Swap `frame.api-design` for `frame.database-design` for data-layer features. Swap `lens.failure-mode-analysis` for `lens.invariant-check` when correctness is the primary concern rather than resilience.",
-        "commonFailureMode": "Designing the API before success criteria are defined. API contracts designed without clear success criteria optimize for engineering elegance over user outcomes."
-      },
-      "io": {
-        "usefulInputs": [
-          "the user need or product requirement in rough form",
-          "the system it will be built into",
-          "any known constraints (performance, security, compatibility)"
-        ],
-        "expectedOutputs": [
-          "task and scope clarified before any design decisions are made",
-          "feature decomposed into independently testable stories with acceptance criteria",
-          "success criteria defined up front so the team knows what done looks like",
-          "API or interface contract specified with edge cases and errors named",
-          "failure modes surfaced and resilience requirements identified",
-          "test strategy covering the highest-risk behaviour"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "feature-design"
-        ],
-        [
-          "Use when",
-          "Use when you need to take a user need or product requirement from fuzzy idea to a well-specified, buildable design."
-        ],
-        [
-          "Stage",
-          "frame"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the user need or product requirement in rough form, the system it will be built into, any known constraints (performance, security, compatibility)"
-        ],
-        [
-          "Minimum blocks",
-          "frame.clarify-task, frame.requirements-decomposition, frame.define-success-metrics"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.clarify-task` -> `frame.requirements-decomposition` -> `frame.define-success-metrics` -> `frame.api-design` -> `lens.failure-mode-analysis` -> `frame.test-strategy`"
-        ],
-        [
-          "Why this order works",
-          "Clarity before decomposition — requirements that decompose a fuzzy task produce fuzzy stories. Requirements-decomposition follows with acceptance criteria per story. Success-metrics are defined before API or implementation design begins, preventing the design from optimizing for the wrong thing. API-design then specifies the interface contract with edge cases named. Failure-mode-analysis ensures resilience requirements are surfaced. Test-strategy closes with risk-weighted coverage."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.api-design` for `frame.database-design` for data-layer features. Swap `lens.failure-mode-analysis` for `lens.invariant-check` when correctness is the primary concern rather than resilience."
-        ],
-        [
-          "Common failure mode",
-          "Designing the API before success criteria are defined. API contracts designed without clear success criteria optimize for engineering elegance over user outcomes."
-        ],
-        [
-          "Expected outcome",
-          "task and scope clarified before any design decisions are made, feature decomposed into independently testable stories with acceptance criteria, success criteria defined up front so the team knows what done looks like, API or interface contract specified with edge cases and errors named, failure modes surfaced and resilience requirements identified, test strategy covering the highest-risk behaviour"
-        ]
-      ],
-      "sourcePath": "stacks/feature-design.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.forecast-and-decide",
-      "title": "Forecast and Decide",
-      "family": "Deciding & Prioritising",
-      "job": "forecast-and-decide",
-      "useWhen": "Use when you face a decision that depends on an uncertain future outcome and want to reason about it rigorously before committing.",
-      "stage": "decide",
-      "outputKind": "decision",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when you face a decision that depends on an uncertain future outcome and want to reason about it rigorously before committing.",
-      "tags": [
-        "statistics",
-        "decision making",
-        "forecasting",
-        "uncertainty"
-      ],
-      "contract": {
-        "job": "forecast-and-decide",
-        "useWhen": "Use when you face a decision that depends on an uncertain future outcome and want to reason about it rigorously before committing.",
-        "minimumBlocks": [
-          "frame.clarify-task",
-          "frame.forecast",
-          "frame.choose-under-uncertainty"
-        ],
-        "fullSequence": [
-          "`frame.clarify-task`",
-          "`frame.forecast`",
-          "`lens.base-rate-check`",
-          "`frame.scenario-planning`",
-          "`frame.choose-under-uncertainty`"
-        ],
-        "blockOrderRationale": "Task clarity before forecasting — a forecast without a well-defined question answers the wrong thing. Forecast builds the probability estimate. Base-rate-check grounds it against historical frequencies to prevent overconfidence in specific evidence. Scenario-planning maps the range of futures the decision must be robust to. Choose-under-uncertainty closes by making the decision explicit with the reasoning documented.",
-        "commonSwaps": "Swap `frame.scenario-planning` for `frame.second-order-effects` when the forecast is about consequences rather than futures. Swap `frame.choose-under-uncertainty` for `schema.decision-memo` when the decision is made and needs to be recorded.",
-        "commonFailureMode": "Building the forecast before clarifying the decision it is meant to inform. A forecast that is not anchored to a specific decision tends to be more precise than necessary and less useful than expected."
-      },
-      "io": {
-        "usefulInputs": [
-          "the decision you are facing and the options available",
-          "relevant context, prior data, or comparable situations",
-          "the time horizon for the forecast"
-        ],
-        "expectedOutputs": [
-          "decision and options clarified before forecasting begins",
-          "structured probability estimate built from base rates and specific evidence",
-          "base rate grounded: does this forecast look surprising given historical frequencies?",
-          "scenarios mapped: what plausible futures does the decision need to be robust to?",
-          "decision made explicitly under uncertainty, with the reasoning that would change the conclusion named"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "forecast-and-decide"
-        ],
-        [
-          "Use when",
-          "Use when you face a decision that depends on an uncertain future outcome and want to reason about it rigorously before committing."
-        ],
-        [
-          "Stage",
-          "decide"
-        ],
-        [
-          "Output kind",
-          "decision"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the decision you are facing and the options available, relevant context, prior data, or comparable situations, the time horizon for the forecast"
-        ],
-        [
-          "Minimum blocks",
-          "frame.clarify-task, frame.forecast, frame.choose-under-uncertainty"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.clarify-task` -> `frame.forecast` -> `lens.base-rate-check` -> `frame.scenario-planning` -> `frame.choose-under-uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Task clarity before forecasting — a forecast without a well-defined question answers the wrong thing. Forecast builds the probability estimate. Base-rate-check grounds it against historical frequencies to prevent overconfidence in specific evidence. Scenario-planning maps the range of futures the decision must be robust to. Choose-under-uncertainty closes by making the decision explicit with the reasoning documented."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.scenario-planning` for `frame.second-order-effects` when the forecast is about consequences rather than futures. Swap `frame.choose-under-uncertainty` for `schema.decision-memo` when the decision is made and needs to be recorded."
-        ],
-        [
-          "Common failure mode",
-          "Building the forecast before clarifying the decision it is meant to inform. A forecast that is not anchored to a specific decision tends to be more precise than necessary and less useful than expected."
-        ],
-        [
-          "Expected outcome",
-          "decision and options clarified before forecasting begins, structured probability estimate built from base rates and specific evidence, base rate grounded: does this forecast look surprising given historical frequencies?, scenarios mapped: what plausible futures does the decision need to be robust to?, decision made explicitly under uncertainty, with the reasoning that would change the conclusion named"
-        ]
-      ],
-      "sourcePath": "stacks/forecast-and-decide.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.hypothesis-driven-development",
-      "title": "Hypothesis-Driven Development",
-      "family": "Developer Workflows",
-      "job": "hypothesis-driven-development",
-      "useWhen": "Use when you want to validate a technical or product assumption with a lightweight experiment before committing to a full build.",
-      "stage": "analyze",
-      "outputKind": "plan",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when you want to validate a technical or product assumption with a lightweight experiment before committing to a full build.",
-      "tags": [
-        "software engineering",
-        "statistics",
-        "experimentation",
-        "validation"
-      ],
-      "contract": {
-        "job": "hypothesis-driven-development",
-        "useWhen": "Use when you want to validate a technical or product assumption with a lightweight experiment before committing to a full build.",
-        "minimumBlocks": [
-          "frame.hypothesis-generation",
-          "frame.experiment-design",
-          "guardrail.statistical-significance-check"
-        ],
-        "fullSequence": [
-          "`frame.hypothesis-generation`",
-          "`frame.experiment-design`",
-          "`frame.test-strategy`",
-          "`guardrail.statistical-significance-check`",
-          "`frame.extract-insights`"
-        ],
-        "blockOrderRationale": "Hypothesis-generation makes the assumption explicit and falsifiable before any design work. Experiment-design specifies the test with all decisions made upfront — sample size, decision rule, metrics — before results are observed. Test-strategy covers the correctness of the experiment itself. Statistical-significance-check enforces the pre-specified decision rule. Extract-insights closes by naming what the experiment does and does not tell you.",
-        "commonSwaps": "Swap `frame.experiment-design` for `frame.design-cheap-test` for lightweight qualitative validation. Swap `guardrail.statistical-significance-check` for `guardrail.correlation-vs-causation` when the experiment produces correlational rather than causal evidence.",
-        "commonFailureMode": "Running the experiment and then deciding how to interpret the results. HDD fails when decisions about what counts as significance are made after seeing the data."
-      },
-      "io": {
-        "usefulInputs": [
-          "the assumption or bet you want to test",
-          "the system or context the experiment will run in",
-          "acceptable confidence threshold and available sample size"
-        ],
-        "expectedOutputs": [
-          "assumption made explicit as a falsifiable hypothesis with a named null hypothesis",
-          "experiment designed with treatment, control, metrics, sample size, and decision rule defined up front",
-          "test strategy covering correctness of the experiment itself, not just the feature",
-          "results interpreted with appropriate statistical rigour: significance, effect size, and practical relevance separated",
-          "transferable insights extracted, including what the experiment does not tell you"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "hypothesis-driven-development"
-        ],
-        [
-          "Use when",
-          "Use when you want to validate a technical or product assumption with a lightweight experiment before committing to a full build."
-        ],
-        [
-          "Stage",
-          "analyze"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "the assumption or bet you want to test, the system or context the experiment will run in, acceptable confidence threshold and available sample size"
-        ],
-        [
-          "Minimum blocks",
-          "frame.hypothesis-generation, frame.experiment-design, guardrail.statistical-significance-check"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.hypothesis-generation` -> `frame.experiment-design` -> `frame.test-strategy` -> `guardrail.statistical-significance-check` -> `frame.extract-insights`"
-        ],
-        [
-          "Why this order works",
-          "Hypothesis-generation makes the assumption explicit and falsifiable before any design work. Experiment-design specifies the test with all decisions made upfront — sample size, decision rule, metrics — before results are observed. Test-strategy covers the correctness of the experiment itself. Statistical-significance-check enforces the pre-specified decision rule. Extract-insights closes by naming what the experiment does and does not tell you."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.experiment-design` for `frame.design-cheap-test` for lightweight qualitative validation. Swap `guardrail.statistical-significance-check` for `guardrail.correlation-vs-causation` when the experiment produces correlational rather than causal evidence."
-        ],
-        [
-          "Common failure mode",
-          "Running the experiment and then deciding how to interpret the results. HDD fails when decisions about what counts as significance are made after seeing the data."
-        ],
-        [
-          "Expected outcome",
-          "assumption made explicit as a falsifiable hypothesis with a named null hypothesis, experiment designed with treatment, control, metrics, sample size, and decision rule defined up front, test strategy covering correctness of the experiment itself, not just the feature, results interpreted with appropriate statistical rigour: significance, effect size, and practical relevance separated, transferable insights extracted, including what the experiment does not tell you"
-        ]
-      ],
-      "sourcePath": "stacks/hypothesis-driven-development.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.incident-response",
-      "title": "Incident Response",
-      "family": "Developer Workflows",
-      "job": "incident-response",
-      "useWhen": "Use when a system incident or significant failure is being diagnosed, or has just been resolved and needs a structured debrief.",
-      "stage": "analyze",
-      "outputKind": "plan",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when a system incident or significant failure is being diagnosed, or has just been resolved and needs a structured debrief.",
-      "tags": [
-        "software engineering",
-        "incident management",
-        "debugging",
-        "reliability"
-      ],
-      "contract": {
-        "job": "incident-response",
-        "useWhen": "Use when a system incident or significant failure is being diagnosed, or has just been resolved and needs a structured debrief.",
-        "minimumBlocks": [
-          "guardrail.triage-the-unknown",
-          "frame.log-triage",
-          "frame.cause-mapping"
-        ],
-        "fullSequence": [
-          "`guardrail.triage-the-unknown`",
-          "`frame.log-triage`",
-          "`frame.cause-mapping`",
-          "`schema.incident-postmortem`",
+          "`mode.explore`",
+          "`frame.task`",
+          "`strategy.steelman`",
+          "`mode.decide`",
           "`schema.plan-next-actions`"
         ],
-        "blockOrderRationale": "Triage-the-unknown clears confusion about what is actually happening before investigation begins — it is the fastest path to a shared understanding under pressure. Log-triage then separates symptoms from causes and identifies missing telemetry. Cause-mapping traces the causal chain from symptom to root cause. Incident-postmortem structures the full debrief. Plan-next-actions closes with owners and urgency for follow-through.",
-        "commonSwaps": "Swap `frame.cause-mapping` for `frame.hypothesis-generation` when the failure has multiple plausible root causes that need to be distinguished before investigation. Swap `schema.incident-postmortem` for `frame.extract-insights` for a lighter debrief on smaller incidents.",
-        "commonFailureMode": "Jumping to fix before the failure is understood. The fastest path to a correct fix is a clear reproduction target and a confident root cause, not the first plausible intervention."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "timeline of events and observed symptoms",
-          "affected systems and impact scope",
-          "any initial hypotheses about cause"
-        ],
-        "expectedOutputs": [
-          "confusion about what is happening cleared before deeper investigation begins",
-          "logs or traces separated into symptoms, causes, and missing telemetry",
-          "causal chain traced from symptom back to root cause",
-          "structured post-mortem capturing timeline, contributing factors, and remediation",
-          "concrete action plan with owners and urgency for follow-through"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "incident-response"
+          "negotiate"
         ],
         [
           "Use when",
-          "Use when a system incident or significant failure is being diagnosed, or has just been resolved and needs a structured debrief."
+          "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy."
         ],
         [
           "Stage",
-          "analyze"
-        ],
-        [
-          "Output kind",
-          "plan"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "timeline of events and observed symptoms, affected systems and impact scope, any initial hypotheses about cause"
-        ],
-        [
-          "Minimum blocks",
-          "guardrail.triage-the-unknown, frame.log-triage, frame.cause-mapping"
-        ],
-        [
-          "Suggested blocks",
-          "`guardrail.triage-the-unknown` -> `frame.log-triage` -> `frame.cause-mapping` -> `schema.incident-postmortem` -> `schema.plan-next-actions`"
-        ],
-        [
-          "Why this order works",
-          "Triage-the-unknown clears confusion about what is actually happening before investigation begins — it is the fastest path to a shared understanding under pressure. Log-triage then separates symptoms from causes and identifies missing telemetry. Cause-mapping traces the causal chain from symptom to root cause. Incident-postmortem structures the full debrief. Plan-next-actions closes with owners and urgency for follow-through."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.cause-mapping` for `frame.hypothesis-generation` when the failure has multiple plausible root causes that need to be distinguished before investigation. Swap `schema.incident-postmortem` for `frame.extract-insights` for a lighter debrief on smaller incidents."
-        ],
-        [
-          "Common failure mode",
-          "Jumping to fix before the failure is understood. The fastest path to a correct fix is a clear reproduction target and a confident root cause, not the first plausible intervention."
-        ],
-        [
-          "Expected outcome",
-          "confusion about what is happening cleared before deeper investigation begins, logs or traces separated into symptoms, causes, and missing telemetry, causal chain traced from symptom back to root cause, structured post-mortem capturing timeline, contributing factors, and remediation, concrete action plan with owners and urgency for follow-through"
-        ]
-      ],
-      "sourcePath": "stacks/incident-response.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.measure-feature-impact",
-      "title": "Measure Feature Impact",
-      "family": "Research & Analysis",
-      "job": "measure-feature-impact",
-      "useWhen": "Use when a feature has shipped and you need to measure whether it worked — separating genuine effect from noise.",
-      "stage": "analyze",
-      "outputKind": "brief",
-      "effort": "deep",
-      "stakes": "medium",
-      "summary": "Use when a feature has shipped and you need to measure whether it worked — separating genuine effect from noise.",
-      "tags": [
-        "statistics",
-        "product measurement",
-        "feature evaluation",
-        "causal inference"
-      ],
-      "contract": {
-        "job": "measure-feature-impact",
-        "useWhen": "Use when a feature has shipped and you need to measure whether it worked — separating genuine effect from noise.",
-        "minimumBlocks": [
-          "frame.define-success-metrics",
-          "guardrail.statistical-significance-check"
-        ],
-        "fullSequence": [
-          "`frame.define-success-metrics`",
-          "`frame.metric-design`",
-          "`lens.survivorship-bias`",
-          "`guardrail.statistical-significance-check`",
-          "`guardrail.correlation-vs-causation`",
-          "`frame.extract-insights`"
-        ],
-        "blockOrderRationale": "Success-metrics are defined first to prevent Goodhart's Law from operating retroactively. Metric-design builds the measurement instrument with counter-metrics to prevent gaming. Survivorship-bias check guards against selection effects in the exposed population. Statistical-significance-check separates statistical from practical significance. Correlation-vs-causation check prevents the feature from claiming credit for exogenous changes. Extract-insights closes by naming what the data does and does not support.",
-        "commonSwaps": "Swap `guardrail.statistical-significance-check` for `frame.experiment-design` when the impact analysis requires a more formal study design. Swap `guardrail.correlation-vs-causation` for `guardrail.stress-test-assumptions` when the causal claim is embedded in a set of broader assumptions.",
-        "commonFailureMode": "Interpreting metrics defined after the feature shipped. Post-hoc metrics are almost always selected to confirm the feature worked."
-      },
-      "io": {
-        "usefulInputs": [
-          "the feature that shipped and its intended user impact",
-          "available metrics: engagement, conversion, performance, or business data",
-          "the timeframe since shipping"
-        ],
-        "expectedOutputs": [
-          "success criteria clarified: what counts as the feature working?",
-          "measurement instrument specified with Goodhart risk and counter-metrics named",
-          "survivorship bias and selection effects in the data identified before any interpretation",
-          "statistical significance and practical effect size assessed separately",
-          "causation claim examined: is the observed change attributable to the feature or to confounds?",
-          "transferable insights about what the data does and does not support"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "measure-feature-impact"
-        ],
-        [
-          "Use when",
-          "Use when a feature has shipped and you need to measure whether it worked — separating genuine effect from noise."
-        ],
-        [
-          "Stage",
-          "analyze"
+          "decide"
         ],
         [
           "Output kind",
@@ -12167,110 +3150,66 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the feature that shipped and its intended user impact, available metrics: engagement, conversion, performance, or business data, the timeframe since shipping"
-        ],
-        [
-          "Minimum blocks",
-          "frame.define-success-metrics, guardrail.statistical-significance-check"
+          "high"
         ],
         [
           "Suggested blocks",
-          "`frame.define-success-metrics` -> `frame.metric-design` -> `lens.survivorship-bias` -> `guardrail.statistical-significance-check` -> `guardrail.correlation-vs-causation` -> `frame.extract-insights`"
-        ],
-        [
-          "Why this order works",
-          "Success-metrics are defined first to prevent Goodhart's Law from operating retroactively. Metric-design builds the measurement instrument with counter-metrics to prevent gaming. Survivorship-bias check guards against selection effects in the exposed population. Statistical-significance-check separates statistical from practical significance. Correlation-vs-causation check prevents the feature from claiming credit for exogenous changes. Extract-insights closes by naming what the data does and does not support."
-        ],
-        [
-          "Common swaps",
-          "Swap `guardrail.statistical-significance-check` for `frame.experiment-design` when the impact analysis requires a more formal study design. Swap `guardrail.correlation-vs-causation` for `guardrail.stress-test-assumptions` when the causal claim is embedded in a set of broader assumptions."
-        ],
-        [
-          "Common failure mode",
-          "Interpreting metrics defined after the feature shipped. Post-hoc metrics are almost always selected to confirm the feature worked."
-        ],
-        [
-          "Expected outcome",
-          "success criteria clarified: what counts as the feature working?, measurement instrument specified with Goodhart risk and counter-metrics named, survivorship bias and selection effects in the data identified before any interpretation, statistical significance and practical effect size assessed separately, causation claim examined: is the observed change attributable to the feature or to confounds?, transferable insights about what the data does and does not support"
+          "`mode.explore` -> `frame.task` -> `strategy.steelman` -> `mode.decide` -> `schema.plan-next-actions`"
         ]
       ],
-      "sourcePath": "stacks/measure-feature-impact.md"
+      "sourcePath": "stacks/negotiate.md"
     },
     {
       "section": "Stack",
-      "key": "stack.performance-investigation",
-      "title": "Performance Investigation",
-      "family": "Developer Workflows",
-      "job": "performance-investigation",
-      "useWhen": "Use when a system is slow or resource-constrained and you need to move from symptom to root cause before reaching for optimisations.",
-      "stage": "analyze",
-      "outputKind": "diagnosis",
+      "key": "stack.feature-design",
+      "title": "feature-design",
+      "family": "Planning & Execution",
+      "job": "feature-design",
+      "useWhen": "Define requirements, success criteria, and failure modes for a feature before building it.",
+      "stage": "frame",
+      "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when a system is slow or resource-constrained and you need to move from symptom to root cause before reaching for optimisations.",
+      "summary": "Define requirements, success criteria, and failure modes for a feature before building it.",
       "tags": [
-        "software engineering",
-        "performance",
-        "debugging",
-        "systems"
+        "feature",
+        "design"
       ],
       "contract": {
-        "job": "performance-investigation",
-        "useWhen": "Use when a system is slow or resource-constrained and you need to move from symptom to root cause before reaching for optimisations.",
-        "minimumBlocks": [
-          "guardrail.triage-the-unknown",
-          "frame.codepath-walkthrough",
-          "lens.debugger-loop"
-        ],
+        "job": "feature-design",
+        "useWhen": "Define requirements, success criteria, and failure modes for a feature before building it.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`guardrail.triage-the-unknown`",
-          "`frame.codepath-walkthrough`",
-          "`lens.debugger-loop`",
-          "`frame.performance-analysis`",
-          "`frame.refactor-plan`"
+          "`frame.task`",
+          "`frame.success-criteria`",
+          "`guardrail.assumption-audit`",
+          "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Triage-the-unknown prevents optimization in the wrong place. Codepath-walkthrough maps the live execution path so profiling happens at the right location. Debugger-loop provides the iterative measurement structure. Performance-analysis characterizes the bottleneck fully. Refactor-plan scopes the fix to the confirmed root cause.",
-        "commonSwaps": "Swap `frame.codepath-walkthrough` for `frame.log-triage` when profiler data is available upfront. Swap `frame.refactor-plan` for `schema.plan-next-actions` for smaller, more targeted fixes.",
-        "commonFailureMode": "Optimizing without profiling. Intuition-based performance optimization almost always targets the wrong bottleneck."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "description of the performance symptoms (latency, throughput, memory, CPU)",
-          "available data: profiler output, metrics, traces, or logs",
-          "the system under investigation"
-        ],
-        "expectedOutputs": [
-          "ambiguity about what is actually slow cleared before any optimisation",
-          "the live code path mapped so measurement happens in the right place",
-          "systematic measurement cycle applied to isolate the real bottleneck",
-          "performance problem fully characterised: location, cause, and why it exists",
-          "targeted refactor or optimisation plan addressing the confirmed root cause"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "performance-investigation"
+          "feature-design"
         ],
         [
           "Use when",
-          "Use when a system is slow or resource-constrained and you need to move from symptom to root cause before reaching for optimisations."
+          "Define requirements, success criteria, and failure modes for a feature before building it."
         ],
         [
           "Stage",
-          "analyze"
+          "frame"
         ],
         [
           "Output kind",
-          "diagnosis"
+          "plan"
         ],
         [
           "Effort",
@@ -12281,94 +3220,52 @@ globalThis.SITE_DATA = {
           "high"
         ],
         [
-          "Useful inputs",
-          "description of the performance symptoms (latency, throughput, memory, CPU), available data: profiler output, metrics, traces, or logs, the system under investigation"
-        ],
-        [
-          "Minimum blocks",
-          "guardrail.triage-the-unknown, frame.codepath-walkthrough, lens.debugger-loop"
-        ],
-        [
           "Suggested blocks",
-          "`guardrail.triage-the-unknown` -> `frame.codepath-walkthrough` -> `lens.debugger-loop` -> `frame.performance-analysis` -> `frame.refactor-plan`"
-        ],
-        [
-          "Why this order works",
-          "Triage-the-unknown prevents optimization in the wrong place. Codepath-walkthrough maps the live execution path so profiling happens at the right location. Debugger-loop provides the iterative measurement structure. Performance-analysis characterizes the bottleneck fully. Refactor-plan scopes the fix to the confirmed root cause."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.codepath-walkthrough` for `frame.log-triage` when profiler data is available upfront. Swap `frame.refactor-plan` for `schema.plan-next-actions` for smaller, more targeted fixes."
-        ],
-        [
-          "Common failure mode",
-          "Optimizing without profiling. Intuition-based performance optimization almost always targets the wrong bottleneck."
-        ],
-        [
-          "Expected outcome",
-          "ambiguity about what is actually slow cleared before any optimisation, the live code path mapped so measurement happens in the right place, systematic measurement cycle applied to isolate the real bottleneck, performance problem fully characterised: location, cause, and why it exists, targeted refactor or optimisation plan addressing the confirmed root cause"
+          "`frame.task` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
         ]
       ],
-      "sourcePath": "stacks/performance-investigation.md"
+      "sourcePath": "stacks/feature-design.md"
     },
     {
       "section": "Stack",
-      "key": "stack.prioritise-under-constraints",
-      "title": "Prioritise Under Constraints",
-      "family": "Deciding & Prioritising",
-      "job": "prioritise-under-constraints",
-      "useWhen": "Use when you have more to do than capacity allows and need a principled, defensible way to sequence or cut work.",
+      "key": "stack.ship-feature",
+      "title": "ship-feature",
+      "family": "Planning & Execution",
+      "job": "ship-feature",
+      "useWhen": "Move a feature from defined to shipped with quality gates at each step.",
       "stage": "decide",
-      "outputKind": "decision",
+      "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when you have more to do than capacity allows and need a principled, defensible way to sequence or cut work.",
+      "summary": "Move a feature from defined to shipped with quality gates at each step.",
       "tags": [
-        "deciding",
-        "prioritisation",
-        "planning",
-        "constraints"
+        "ship",
+        "feature"
       ],
       "contract": {
-        "job": "prioritise-under-constraints",
-        "useWhen": "Use when you have more to do than capacity allows and need a principled, defensible way to sequence or cut work.",
-        "minimumBlocks": [
-          "frame.dependency-map",
-          "frame.prioritize-opportunities"
-        ],
+        "job": "ship-feature",
+        "useWhen": "Move a feature from defined to shipped with quality gates at each step.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`frame.dependency-map`",
-          "`frame.risk-register`",
-          "`frame.prioritize-opportunities`",
-          "`frame.compare-options`",
-          "`schema.rollout-plan`"
+          "`mode.decide`",
+          "`frame.success-criteria`",
+          "`guardrail.assumption-audit`",
+          "`strategy.premortem`",
+          "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Dependencies before priorities — sequencing decisions that ignore dependencies produce plans that cannot execute in the proposed order. Risk-register adds the downside view: which items carry the most risk if deprioritized? Prioritize-opportunities evaluates against the actual goal. Compare-options provides the head-to-head comparison for the closest calls. Rollout-plan closes with explicit rationale for what was cut or deferred.",
-        "commonSwaps": "Swap `frame.compare-options` for `schema.decision-memo` when a documented decision is needed. Swap `schema.rollout-plan` for `schema.execution-brief` for a shorter handoff document.",
-        "commonFailureMode": "Prioritizing without mapping dependencies first. A priority list that ignores dependencies produces an execution order that looks logical but cannot actually run."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the backlog of work, initiatives, or options to prioritise",
-          "constraints: time, budget, headcount, or dependencies",
-          "the goal or outcome that prioritisation should optimise for"
-        ],
-        "expectedOutputs": [
-          "dependencies mapped so sequencing decisions reflect what actually must come first",
-          "risks registered: which items are high-risk if deprioritised, and which are merely painful?",
-          "opportunities scored against the goal: value, urgency, feasibility, and strategic fit",
-          "options compared on the dimensions that matter: not just effort vs impact",
-          "sequenced rollout plan with explicit rationale for what was cut or deferred"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "prioritise-under-constraints"
+          "ship-feature"
         ],
         [
           "Use when",
-          "Use when you have more to do than capacity allows and need a principled, defensible way to sequence or cut work."
+          "Move a feature from defined to shipped with quality gates at each step."
         ],
         [
           "Stage",
@@ -12376,7 +3273,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Output kind",
-          "decision"
+          "plan"
         ],
         [
           "Effort",
@@ -12387,103 +3284,58 @@ globalThis.SITE_DATA = {
           "high"
         ],
         [
-          "Useful inputs",
-          "the backlog of work, initiatives, or options to prioritise, constraints: time, budget, headcount, or dependencies, the goal or outcome that prioritisation should optimise for"
-        ],
-        [
-          "Minimum blocks",
-          "frame.dependency-map, frame.prioritize-opportunities"
-        ],
-        [
           "Suggested blocks",
-          "`frame.dependency-map` -> `frame.risk-register` -> `frame.prioritize-opportunities` -> `frame.compare-options` -> `schema.rollout-plan`"
-        ],
-        [
-          "Why this order works",
-          "Dependencies before priorities — sequencing decisions that ignore dependencies produce plans that cannot execute in the proposed order. Risk-register adds the downside view: which items carry the most risk if deprioritized? Prioritize-opportunities evaluates against the actual goal. Compare-options provides the head-to-head comparison for the closest calls. Rollout-plan closes with explicit rationale for what was cut or deferred."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.compare-options` for `schema.decision-memo` when a documented decision is needed. Swap `schema.rollout-plan` for `schema.execution-brief` for a shorter handoff document."
-        ],
-        [
-          "Common failure mode",
-          "Prioritizing without mapping dependencies first. A priority list that ignores dependencies produces an execution order that looks logical but cannot actually run."
-        ],
-        [
-          "Expected outcome",
-          "dependencies mapped so sequencing decisions reflect what actually must come first, risks registered: which items are high-risk if deprioritised, and which are merely painful?, opportunities scored against the goal: value, urgency, feasibility, and strategic fit, options compared on the dimensions that matter: not just effort vs impact, sequenced rollout plan with explicit rationale for what was cut or deferred"
+          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.execution-brief`"
         ]
       ],
-      "sourcePath": "stacks/prioritise-under-constraints.md"
+      "sourcePath": "stacks/ship-feature.md"
     },
     {
       "section": "Stack",
-      "key": "stack.project-retrospective",
-      "title": "Project Retrospective",
-      "family": "Reflection & Learning",
-      "job": "project-retrospective",
-      "useWhen": "Use when a project, sprint, or significant effort has concluded and you want to extract transferable learning.",
-      "stage": "conclude",
-      "outputKind": "retrospective",
+      "key": "stack.critique",
+      "title": "critique",
+      "family": "Critique & Review",
+      "job": "critique",
+      "useWhen": "Surface weaknesses, blind spots, and revision targets in any artifact.",
+      "stage": "critique",
+      "outputKind": "critique",
       "effort": "standard",
-      "stakes": "low",
-      "summary": "Use when a project, sprint, or significant effort has concluded and you want to extract transferable learning.",
+      "stakes": "medium",
+      "summary": "Surface weaknesses, blind spots, and revision targets in any artifact.",
       "tags": [
-        "reflection",
-        "retrospective",
-        "learning",
-        "project management"
+        "critique"
       ],
       "contract": {
-        "job": "project-retrospective",
-        "useWhen": "Use when a project, sprint, or significant effort has concluded and you want to extract transferable learning.",
-        "minimumBlocks": [
-          "guardrail.blind-spot-check",
-          "frame.cause-mapping",
-          "frame.extract-insights"
-        ],
+        "job": "critique",
+        "useWhen": "Surface weaknesses, blind spots, and revision targets in any artifact.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`guardrail.blind-spot-check`",
-          "`frame.cause-mapping`",
-          "`frame.extract-insights`",
-          "`schema.decision-journal-entry`",
-          "`schema.plan-next-actions`"
+          "`mode.critique`",
+          "`guardrail.assumption-audit`",
+          "`guardrail.disconfirming-evidence`",
+          "`rubric.argument-quality`"
         ],
-        "blockOrderRationale": "Blind-spot-check before cause-mapping prevents the retrospective from rationalizing outcomes through the lens of what was hoped for. Cause-mapping traces root causes rather than surface symptoms. Extract-insights distills the reusable lessons. Decision-journal-entry creates a permanent record of what was decided and why. Plan-next-actions closes with specific changes so the learning transfers.",
-        "commonSwaps": "Swap `frame.cause-mapping` for `schema.incident-postmortem` when the project included a significant failure requiring formal documentation. Swap `rubric.reflection-quality` check (implicit) for explicit `rubric.reflection-quality` when the retrospective will be shared with stakeholders.",
-        "commonFailureMode": "Retrospectives that stop at events rather than causes. Describing what happened is not a retrospective — tracing why it happened and what should change is."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "brief description of the project and its outcome",
-          "what was planned versus what actually happened",
-          "any major decision points or turning moments"
-        ],
-        "expectedOutputs": [
-          "hidden assumptions and blind spots surfaced before patterns are rationalised away",
-          "root causes of key outcomes traced, not just surface symptoms",
-          "transferable insights extracted and separated from one-off artefacts",
-          "structured record of what happened and what was decided",
-          "concrete actions to carry learning forward"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "project-retrospective"
+          "critique"
         ],
         [
           "Use when",
-          "Use when a project, sprint, or significant effort has concluded and you want to extract transferable learning."
+          "Surface weaknesses, blind spots, and revision targets in any artifact."
         ],
         [
           "Stage",
-          "conclude"
+          "critique"
         ],
         [
           "Output kind",
-          "retrospective"
+          "critique"
         ],
         [
           "Effort",
@@ -12491,98 +3343,180 @@ globalThis.SITE_DATA = {
         ],
         [
           "Stakes",
-          "low"
-        ],
-        [
-          "Useful inputs",
-          "brief description of the project and its outcome, what was planned versus what actually happened, any major decision points or turning moments"
-        ],
-        [
-          "Minimum blocks",
-          "guardrail.blind-spot-check, frame.cause-mapping, frame.extract-insights"
+          "medium"
         ],
         [
           "Suggested blocks",
-          "`guardrail.blind-spot-check` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.decision-journal-entry` -> `schema.plan-next-actions`"
-        ],
-        [
-          "Why this order works",
-          "Blind-spot-check before cause-mapping prevents the retrospective from rationalizing outcomes through the lens of what was hoped for. Cause-mapping traces root causes rather than surface symptoms. Extract-insights distills the reusable lessons. Decision-journal-entry creates a permanent record of what was decided and why. Plan-next-actions closes with specific changes so the learning transfers."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.cause-mapping` for `schema.incident-postmortem` when the project included a significant failure requiring formal documentation. Swap `rubric.reflection-quality` check (implicit) for explicit `rubric.reflection-quality` when the retrospective will be shared with stakeholders."
-        ],
-        [
-          "Common failure mode",
-          "Retrospectives that stop at events rather than causes. Describing what happened is not a retrospective — tracing why it happened and what should change is."
-        ],
-        [
-          "Expected outcome",
-          "hidden assumptions and blind spots surfaced before patterns are rationalised away, root causes of key outcomes traced, not just surface symptoms, transferable insights extracted and separated from one-off artefacts, structured record of what happened and what was decided, concrete actions to carry learning forward"
+          "`mode.critique` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `rubric.argument-quality`"
         ]
       ],
-      "sourcePath": "stacks/project-retrospective.md"
+      "sourcePath": "stacks/critique.md"
     },
     {
       "section": "Stack",
-      "key": "stack.prompt-engineering-sprint",
-      "title": "Prompt Engineering Sprint",
+      "key": "stack.ethical-review",
+      "title": "ethical-review",
+      "family": "Critique & Review",
+      "job": "ethical-review",
+      "useWhen": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
+      "stage": "critique",
+      "outputKind": "critique",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
+      "tags": [
+        "ethical",
+        "review"
+      ],
+      "contract": {
+        "job": "ethical-review",
+        "useWhen": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.critique`",
+          "`guardrail.disconfirming-evidence`",
+          "`strategy.inversion`",
+          "`rubric.argument-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "ethical-review"
+        ],
+        [
+          "Use when",
+          "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design."
+        ],
+        [
+          "Stage",
+          "critique"
+        ],
+        [
+          "Output kind",
+          "critique"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.inversion` -> `rubric.argument-quality`"
+        ]
+      ],
+      "sourcePath": "stacks/ethical-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.pressure-test",
+      "title": "pressure-test",
+      "family": "Critique & Review",
+      "job": "pressure-test",
+      "useWhen": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
+      "stage": "critique",
+      "outputKind": "critique",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
+      "tags": [
+        "pressure",
+        "test"
+      ],
+      "contract": {
+        "job": "pressure-test",
+        "useWhen": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.critique`",
+          "`strategy.premortem`",
+          "`strategy.red-team`",
+          "`guardrail.assumption-audit`",
+          "`guardrail.disconfirming-evidence`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "pressure-test"
+        ],
+        [
+          "Use when",
+          "Stress-test a plan before committing to find failure modes optimism may be obscuring."
+        ],
+        [
+          "Stage",
+          "critique"
+        ],
+        [
+          "Output kind",
+          "critique"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence`"
+        ]
+      ],
+      "sourcePath": "stacks/pressure-test.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.improve-prompt",
+      "title": "improve-prompt",
       "family": "Prompt Craft",
-      "job": "prompt-engineering-sprint",
-      "useWhen": "Use when you need to design, critique, and systematically improve a high-stakes prompt.",
+      "job": "improve-prompt",
+      "useWhen": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
       "stage": "refine",
       "outputKind": "prompt",
       "effort": "standard",
       "stakes": "medium",
-      "summary": "Use when you need to design, critique, and systematically improve a high-stakes prompt.",
+      "summary": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
       "tags": [
-        "prompt engineering",
-        "iteration",
-        "critique",
-        "quality"
+        "improve"
       ],
       "contract": {
-        "job": "prompt-engineering-sprint",
-        "useWhen": "Use when you need to design, critique, and systematically improve a high-stakes prompt.",
-        "minimumBlocks": [
-          "frame.clarify-task",
-          "frame.prompt-critique",
-          "frame.prompt-rewrite"
-        ],
+        "job": "improve-prompt",
+        "useWhen": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`frame.clarify-task`",
-          "`frame.prompt-decompose`",
-          "`frame.prompt-critique`",
-          "`frame.prompt-rewrite`",
-          "`frame.prompt-compare`"
+          "`frame.task`",
+          "`mode.critique`",
+          "`guardrail.uncertainty`",
+          "`rubric.writing-quality`"
         ],
-        "blockOrderRationale": "Task clarity before any prompt work — rewriting a prompt without a clear task definition produces a more polished version of the wrong thing. Prompt-decompose takes the existing prompt apart structurally before any evaluation. Prompt-critique identifies specific failure modes. Prompt-rewrite addresses the identified weaknesses. Prompt-compare provides the calibration check between versions.",
-        "commonSwaps": "Swap `frame.prompt-decompose` for `frame.clarify-task` alone when there is no existing prompt and the work is design from scratch. Add `rubric.prompt-quality` as the final gate when the prompt will be used in production.",
-        "commonFailureMode": "Critiquing a prompt without first decomposing it. Prompt critique without structure produces impressionistic feedback rather than specific, addressable failure modes."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the task you want the prompt to accomplish",
-          "an existing prompt draft, if you have one",
-          "the quality bar or failure modes you are trying to address"
-        ],
-        "expectedOutputs": [
-          "task and success criteria clearly defined before any rewriting begins",
-          "existing prompt decomposed into components with structural weaknesses identified",
-          "specific failure modes named and evidenced",
-          "revised prompt addressing the identified weaknesses",
-          "direct comparison between original and revised versions with a clear verdict"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "prompt-engineering-sprint"
+          "improve-prompt"
         ],
         [
           "Use when",
-          "Use when you need to design, critique, and systematically improve a high-stakes prompt."
+          "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output."
         ],
         [
           "Stage",
@@ -12601,95 +3535,115 @@ globalThis.SITE_DATA = {
           "medium"
         ],
         [
-          "Useful inputs",
-          "the task you want the prompt to accomplish, an existing prompt draft, if you have one, the quality bar or failure modes you are trying to address"
-        ],
-        [
-          "Minimum blocks",
-          "frame.clarify-task, frame.prompt-critique, frame.prompt-rewrite"
-        ],
-        [
           "Suggested blocks",
-          "`frame.clarify-task` -> `frame.prompt-decompose` -> `frame.prompt-critique` -> `frame.prompt-rewrite` -> `frame.prompt-compare`"
-        ],
-        [
-          "Why this order works",
-          "Task clarity before any prompt work — rewriting a prompt without a clear task definition produces a more polished version of the wrong thing. Prompt-decompose takes the existing prompt apart structurally before any evaluation. Prompt-critique identifies specific failure modes. Prompt-rewrite addresses the identified weaknesses. Prompt-compare provides the calibration check between versions."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.prompt-decompose` for `frame.clarify-task` alone when there is no existing prompt and the work is design from scratch. Add `rubric.prompt-quality` as the final gate when the prompt will be used in production."
-        ],
-        [
-          "Common failure mode",
-          "Critiquing a prompt without first decomposing it. Prompt critique without structure produces impressionistic feedback rather than specific, addressable failure modes."
-        ],
-        [
-          "Expected outcome",
-          "task and success criteria clearly defined before any rewriting begins, existing prompt decomposed into components with structural weaknesses identified, specific failure modes named and evidenced, revised prompt addressing the identified weaknesses, direct comparison between original and revised versions with a clear verdict"
+          "`frame.task` -> `mode.critique` -> `guardrail.uncertainty` -> `rubric.writing-quality`"
         ]
       ],
-      "sourcePath": "stacks/prompt-engineering-sprint.md"
+      "sourcePath": "stacks/improve-prompt.md"
     },
     {
       "section": "Stack",
-      "key": "stack.read-before-change",
-      "title": "Read Before Change",
-      "family": "Developer Workflows",
-      "job": "read-before-change",
-      "useWhen": "Use when you need to modify unfamiliar code and want to understand the safest place to intervene before making edits.",
-      "stage": "analyze",
-      "outputKind": "diagnosis",
-      "effort": "deep",
-      "stakes": "high",
-      "summary": "Use when you need to modify unfamiliar code and want to understand the safest place to intervene before making edits.",
+      "key": "stack.build-system-prompt",
+      "title": "build-system-prompt",
+      "family": "Prompt Craft",
+      "job": "build-system-prompt",
+      "useWhen": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
+      "stage": "frame",
+      "outputKind": "prompt",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
       "tags": [
-        "software engineering",
-        "code comprehension",
-        "debugging",
-        "change safety"
+        "build",
+        "system"
       ],
       "contract": {
-        "job": "read-before-change",
-        "useWhen": "Use when you need to modify unfamiliar code and want to understand the safest place to intervene before making edits.",
-        "minimumBlocks": [
-          "mode.explore",
-          "frame.codepath-walkthrough",
-          "lens.invariant-check"
-        ],
+        "job": "build-system-prompt",
+        "useWhen": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.explore`",
-          "`frame.codepath-walkthrough`",
-          "`lens.invariant-check`",
-          "`lens.interface-contract-review`",
-          "`guardrail.change-impact-review`",
-          "`frame.test-case-design`"
+          "`frame.task`",
+          "`frame.success-criteria`",
+          "`mode.critique`",
+          "`rubric.writing-quality`",
+          "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Explore mode prevents the assumption that the code does what it looks like it does. Codepath-walkthrough maps the live execution path before any change plan is formed. Invariant-check surfaces the correctness properties the code must preserve. Interface-contract-review catches boundary violations. Change-impact-review assesses blast radius. Test-case-design closes by designing the right tests around the actual risk of the change.",
-        "commonSwaps": "Swap `lens.interface-contract-review` for `lens.failure-mode-analysis` when the change touches external integrations. Swap `frame.test-case-design` for `frame.test-strategy` for larger changes that need a full test plan.",
-        "commonFailureMode": "Making the change before understanding the impact. The most common source of regressions is a change whose blast radius was underestimated."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the behavior you need to change or the bug you need to fix",
-          "any known file paths, services, or recent changes nearby",
-          "the risk profile of getting the change wrong"
-        ],
-        "expectedOutputs": [
-          "the active code path mapped before any edits are made",
-          "invariants and boundary contracts surfaced so the change does not accidentally break them",
-          "blast radius reviewed: which callers, workers, or state transitions are riskier than they first appear?",
-          "minimal, high-value test set designed around the actual risk of the change"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "read-before-change"
+          "build-system-prompt"
         ],
         [
           "Use when",
-          "Use when you need to modify unfamiliar code and want to understand the safest place to intervene before making edits."
+          "Design a system prompt or persistent instruction set for an AI agent or workflow."
+        ],
+        [
+          "Stage",
+          "frame"
+        ],
+        [
+          "Output kind",
+          "prompt"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.success-criteria` -> `mode.critique` -> `rubric.writing-quality` -> `schema.execution-brief`"
+        ]
+      ],
+      "sourcePath": "stacks/build-system-prompt.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.debug",
+      "title": "debug",
+      "family": "Developer Workflows",
+      "job": "debug",
+      "useWhen": "Diagnose a fault systematically before attempting a fix.",
+      "stage": "analyze",
+      "outputKind": "diagnosis",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Diagnose a fault systematically before attempting a fix.",
+      "tags": [
+        "debug"
+      ],
+      "contract": {
+        "job": "debug",
+        "useWhen": "Diagnose a fault systematically before attempting a fix.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.explore`",
+          "`frame.task`",
+          "`mode.critique`",
+          "`frame.cause-mapping`",
+          "`schema.plan-next-actions`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "debug"
+        ],
+        [
+          "Use when",
+          "Diagnose a fault systematically before attempting a fix."
         ],
         [
           "Stage",
@@ -12701,101 +3655,185 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
           "high"
         ],
         [
-          "Useful inputs",
-          "the behavior you need to change or the bug you need to fix, any known file paths, services, or recent changes nearby, the risk profile of getting the change wrong"
-        ],
-        [
-          "Minimum blocks",
-          "mode.explore, frame.codepath-walkthrough, lens.invariant-check"
-        ],
-        [
           "Suggested blocks",
-          "`mode.explore` -> `frame.codepath-walkthrough` -> `lens.invariant-check` -> `lens.interface-contract-review` -> `guardrail.change-impact-review` -> `frame.test-case-design`"
-        ],
-        [
-          "Why this order works",
-          "Explore mode prevents the assumption that the code does what it looks like it does. Codepath-walkthrough maps the live execution path before any change plan is formed. Invariant-check surfaces the correctness properties the code must preserve. Interface-contract-review catches boundary violations. Change-impact-review assesses blast radius. Test-case-design closes by designing the right tests around the actual risk of the change."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.interface-contract-review` for `lens.failure-mode-analysis` when the change touches external integrations. Swap `frame.test-case-design` for `frame.test-strategy` for larger changes that need a full test plan."
-        ],
-        [
-          "Common failure mode",
-          "Making the change before understanding the impact. The most common source of regressions is a change whose blast radius was underestimated."
-        ],
-        [
-          "Expected outcome",
-          "the active code path mapped before any edits are made, invariants and boundary contracts surfaced so the change does not accidentally break them, blast radius reviewed: which callers, workers, or state transitions are riskier than they first appear?, minimal, high-value test set designed around the actual risk of the change"
+          "`mode.explore` -> `frame.task` -> `mode.critique` -> `frame.cause-mapping` -> `schema.plan-next-actions`"
         ]
       ],
-      "sourcePath": "stacks/read-before-change.md"
+      "sourcePath": "stacks/debug.md"
     },
     {
       "section": "Stack",
-      "key": "stack.risk-informed-decision",
-      "title": "Risk-Informed Decision",
-      "family": "Deciding & Prioritising",
-      "job": "risk-informed-decision",
-      "useWhen": "Use when the stakes of a decision are high enough that you need to systematically work through what could go wrong before committing.",
+      "key": "stack.review-code",
+      "title": "review-code",
+      "family": "Developer Workflows",
+      "job": "review-code",
+      "useWhen": "Review code for correctness, contracts, and blast radius before approving it.",
+      "stage": "critique",
+      "outputKind": "critique",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Review code for correctness, contracts, and blast radius before approving it.",
+      "tags": [
+        "review",
+        "code"
+      ],
+      "contract": {
+        "job": "review-code",
+        "useWhen": "Review code for correctness, contracts, and blast radius before approving it.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.explore`",
+          "`mode.critique`",
+          "`guardrail.assumption-audit`",
+          "`schema.plan-next-actions`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "review-code"
+        ],
+        [
+          "Use when",
+          "Review code for correctness, contracts, and blast radius before approving it."
+        ],
+        [
+          "Stage",
+          "critique"
+        ],
+        [
+          "Output kind",
+          "critique"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.plan-next-actions`"
+        ]
+      ],
+      "sourcePath": "stacks/review-code.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.architecture-review",
+      "title": "architecture-review",
+      "family": "Developer Workflows",
+      "job": "architecture-review",
+      "useWhen": "Evaluate a system design for structural soundness before committing to it.",
+      "stage": "critique",
+      "outputKind": "critique",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Evaluate a system design for structural soundness before committing to it.",
+      "tags": [
+        "architecture",
+        "review"
+      ],
+      "contract": {
+        "job": "architecture-review",
+        "useWhen": "Evaluate a system design for structural soundness before committing to it.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.critique`",
+          "`guardrail.assumption-audit`",
+          "`strategy.premortem`",
+          "`rubric.decision-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "architecture-review"
+        ],
+        [
+          "Use when",
+          "Evaluate a system design for structural soundness before committing to it."
+        ],
+        [
+          "Stage",
+          "critique"
+        ],
+        [
+          "Output kind",
+          "critique"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.critique` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.decision-quality`"
+        ]
+      ],
+      "sourcePath": "stacks/architecture-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.tech-debt-triage",
+      "title": "tech-debt-triage",
+      "family": "Developer Workflows",
+      "job": "tech-debt-triage",
+      "useWhen": "Prioritize technical debt by risk and leverage so the right debt gets paid first.",
       "stage": "decide",
       "outputKind": "decision",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when the stakes of a decision are high enough that you need to systematically work through what could go wrong before committing.",
+      "summary": "Prioritize technical debt by risk and leverage so the right debt gets paid first.",
       "tags": [
-        "decision making",
-        "risk",
-        "uncertainty",
-        "critical thinking"
+        "tech",
+        "debt",
+        "triage"
       ],
       "contract": {
-        "job": "risk-informed-decision",
-        "useWhen": "Use when the stakes of a decision are high enough that you need to systematically work through what could go wrong before committing.",
-        "minimumBlocks": [
-          "frame.risk-register",
-          "guardrail.stress-test-assumptions"
-        ],
+        "job": "tech-debt-triage",
+        "useWhen": "Prioritize technical debt by risk and leverage so the right debt gets paid first.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`frame.risk-register`",
-          "`frame.second-order-effects`",
-          "`guardrail.stress-test-assumptions`",
-          "`frame.scenario-planning`",
-          "`frame.choose-under-uncertainty`"
+          "`mode.critique`",
+          "`guardrail.assumption-audit`",
+          "`mode.decide`",
+          "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Risk-register before decisions — naming risks systematically prevents the most dangerous ones from staying invisible. Second-order-effects maps consequences beyond the first-order impact. Stress-test-assumptions identifies the bridge assumptions between evidence and decision. Scenario-planning maps the range of futures the decision must be robust to. Choose-under-uncertainty closes by making the decision explicit with the reasoning documented.",
-        "commonSwaps": "Swap `frame.scenario-planning` for `strategy.premortem` when the decision is about a plan rather than a general direction. Swap `guardrail.stress-test-assumptions` for `guardrail.assumption-audit` for a more structured assumption inventory.",
-        "commonFailureMode": "Treating risk-register as a compliance step rather than a reasoning tool. A risk register that is not connected to the decision criteria does not change the decision."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the decision you are facing and the leading option",
-          "known risks or concerns already in mind",
-          "the downside you most want to avoid"
-        ],
-        "expectedOutputs": [
-          "risks registered systematically: likelihood, impact, and mitigation for each",
-          "second-order effects mapped: what follows from the leading option that isn't immediately obvious?",
-          "key assumptions bridging from evidence to decision identified and stress-tested",
-          "scenarios reviewed: what range of futures must this decision be robust to?",
-          "decision made with explicit acknowledgement of what is being risked and what would prompt a reversal"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "risk-informed-decision"
+          "tech-debt-triage"
         ],
         [
           "Use when",
-          "Use when the stakes of a decision are high enough that you need to systematically work through what could go wrong before committing."
+          "Prioritize technical debt by risk and leverage so the right debt gets paid first."
         ],
         [
           "Stage",
@@ -12814,89 +3852,235 @@ globalThis.SITE_DATA = {
           "high"
         ],
         [
-          "Useful inputs",
-          "the decision you are facing and the leading option, known risks or concerns already in mind, the downside you most want to avoid"
+          "Suggested blocks",
+          "`mode.critique` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+        ]
+      ],
+      "sourcePath": "stacks/tech-debt-triage.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.incident-response",
+      "title": "incident-response",
+      "family": "Developer Workflows",
+      "job": "incident-response",
+      "useWhen": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
+      "stage": "analyze",
+      "outputKind": "plan",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
+      "tags": [
+        "incident",
+        "response"
+      ],
+      "contract": {
+        "job": "incident-response",
+        "useWhen": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.explore`",
+          "`frame.cause-mapping`",
+          "`mode.decide`",
+          "`schema.incident-postmortem`",
+          "`schema.plan-next-actions`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "incident-response"
         ],
         [
-          "Minimum blocks",
-          "frame.risk-register, guardrail.stress-test-assumptions"
+          "Use when",
+          "Contain and diagnose an active incident, then close with a written post-mortem and action plan."
+        ],
+        [
+          "Stage",
+          "analyze"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "high"
         ],
         [
           "Suggested blocks",
-          "`frame.risk-register` -> `frame.second-order-effects` -> `guardrail.stress-test-assumptions` -> `frame.scenario-planning` -> `frame.choose-under-uncertainty`"
-        ],
-        [
-          "Why this order works",
-          "Risk-register before decisions — naming risks systematically prevents the most dangerous ones from staying invisible. Second-order-effects maps consequences beyond the first-order impact. Stress-test-assumptions identifies the bridge assumptions between evidence and decision. Scenario-planning maps the range of futures the decision must be robust to. Choose-under-uncertainty closes by making the decision explicit with the reasoning documented."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.scenario-planning` for `strategy.premortem` when the decision is about a plan rather than a general direction. Swap `guardrail.stress-test-assumptions` for `guardrail.assumption-audit` for a more structured assumption inventory."
-        ],
-        [
-          "Common failure mode",
-          "Treating risk-register as a compliance step rather than a reasoning tool. A risk register that is not connected to the decision criteria does not change the decision."
-        ],
-        [
-          "Expected outcome",
-          "risks registered systematically: likelihood, impact, and mitigation for each, second-order effects mapped: what follows from the leading option that isn't immediately obvious?, key assumptions bridging from evidence to decision identified and stress-tested, scenarios reviewed: what range of futures must this decision be robust to?, decision made with explicit acknowledgement of what is being risked and what would prompt a reversal"
+          "`mode.explore` -> `frame.cause-mapping` -> `mode.decide` -> `schema.incident-postmortem` -> `schema.plan-next-actions`"
         ]
       ],
-      "sourcePath": "stacks/risk-informed-decision.md"
+      "sourcePath": "stacks/incident-response.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.break-recurring-incident",
+      "title": "break-recurring-incident",
+      "family": "Developer Workflows",
+      "job": "break-recurring-incident",
+      "useWhen": "Break a socio-technical loop that keeps recreating the same class of incident.",
+      "stage": "conclude",
+      "outputKind": "plan",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Break a socio-technical loop that keeps recreating the same class of incident.",
+      "tags": [
+        "break",
+        "recurring",
+        "incident"
+      ],
+      "contract": {
+        "job": "break-recurring-incident",
+        "useWhen": "Break a socio-technical loop that keeps recreating the same class of incident.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.reflect`",
+          "`frame.cause-mapping`",
+          "`strategy.inversion`",
+          "`schema.plan-next-actions`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "break-recurring-incident"
+        ],
+        [
+          "Use when",
+          "Break a socio-technical loop that keeps recreating the same class of incident."
+        ],
+        [
+          "Stage",
+          "conclude"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.reflect` -> `frame.cause-mapping` -> `strategy.inversion` -> `schema.plan-next-actions`"
+        ]
+      ],
+      "sourcePath": "stacks/break-recurring-incident.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.performance-fix",
+      "title": "performance-fix",
+      "family": "Developer Workflows",
+      "job": "performance-fix",
+      "useWhen": "Isolate a performance bottleneck and prescribe the highest-leverage fix.",
+      "stage": "analyze",
+      "outputKind": "diagnosis",
+      "effort": "standard",
+      "stakes": "high",
+      "summary": "Isolate a performance bottleneck and prescribe the highest-leverage fix.",
+      "tags": [
+        "performance",
+        "fix"
+      ],
+      "contract": {
+        "job": "performance-fix",
+        "useWhen": "Isolate a performance bottleneck and prescribe the highest-leverage fix.",
+        "minimumBlocks": [],
+        "fullSequence": [
+          "`mode.explore`",
+          "`frame.cause-mapping`",
+          "`mode.critique`",
+          "`schema.plan-next-actions`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
+      },
+      "io": {},
+      "body": [
+        [
+          "Job",
+          "performance-fix"
+        ],
+        [
+          "Use when",
+          "Isolate a performance bottleneck and prescribe the highest-leverage fix."
+        ],
+        [
+          "Stage",
+          "analyze"
+        ],
+        [
+          "Output kind",
+          "diagnosis"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `frame.cause-mapping` -> `mode.critique` -> `schema.plan-next-actions`"
+        ]
+      ],
+      "sourcePath": "stacks/performance-fix.md"
     },
     {
       "section": "Stack",
       "key": "stack.safe-migration",
-      "title": "Safe Migration",
+      "title": "safe-migration",
       "family": "Developer Workflows",
       "job": "safe-migration",
-      "useWhen": "Use when a schema, API, config, or state model needs to change in production without downtime, corruption, or one-way mistakes.",
+      "useWhen": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "high",
-      "summary": "Use when a schema, API, config, or state model needs to change in production without downtime, corruption, or one-way mistakes.",
+      "summary": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "tags": [
-        "software engineering",
-        "migration",
-        "rollout",
-        "risk management"
+        "safe",
+        "migration"
       ],
       "contract": {
         "job": "safe-migration",
-        "useWhen": "Use when a schema, API, config, or state model needs to change in production without downtime, corruption, or one-way mistakes.",
-        "minimumBlocks": [
-          "mode.decide",
-          "frame.codepath-walkthrough",
-          "frame.migration-plan"
-        ],
+        "useWhen": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`mode.decide`",
-          "`frame.codepath-walkthrough`",
-          "`frame.migration-plan`",
-          "`lens.abstraction-boundary`",
-          "`lens.failure-mode-analysis`",
-          "`guardrail.release-readiness`",
-          "`schema.rollout-plan`"
+          "`mode.explore`",
+          "`frame.task`",
+          "`guardrail.assumption-audit`",
+          "`strategy.premortem`",
+          "`schema.execution-brief`"
         ],
-        "blockOrderRationale": "Decide mode commits to a migration strategy rather than exploring alternatives mid-migration. Codepath-walkthrough maps all read and write paths before the migration is designed — unexpected consumers cause the most migration failures. Migration-plan selects the strategy explicitly. Abstraction-boundary surfaces boundary leaks and hidden couplings. Failure-mode-analysis reviews partial-deploy and rollback risks. Release-readiness and rollout-plan close with a staged deployment and stop conditions.",
-        "commonSwaps": "Swap `lens.abstraction-boundary` for `lens.interface-contract-review` when the migration involves API or protocol changes. Swap `schema.rollout-plan` for `schema.plan-next-actions` for smaller, lower-risk migrations.",
-        "commonFailureMode": "Discovering consumers during the migration. Unmapped consumers cause mid-migration rollbacks that are more disruptive than the migration itself."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "the current and target state",
-          "traffic shape, rollout constraints, and data sensitivity",
-          "known dependencies, consumers, and rollback limitations"
-        ],
-        "expectedOutputs": [
-          "all major read and write paths mapped before migration design begins",
-          "migration strategy chosen explicitly rather than implied",
-          "boundary leaks and hidden consumers surfaced before rollout",
-          "failure modes reviewed for partial deploys, stale readers, and rollback attempts",
-          "release verdict and staged rollout plan defined with stop conditions"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
@@ -12904,7 +4088,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Use when",
-          "Use when a schema, API, config, or state model needs to change in production without downtime, corruption, or one-way mistakes."
+          "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently."
         ],
         [
           "Stage",
@@ -12916,39 +4100,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
           "high"
         ],
         [
-          "Useful inputs",
-          "the current and target state, traffic shape, rollout constraints, and data sensitivity, known dependencies, consumers, and rollback limitations"
-        ],
-        [
-          "Minimum blocks",
-          "mode.decide, frame.codepath-walkthrough, frame.migration-plan"
-        ],
-        [
           "Suggested blocks",
-          "`mode.decide` -> `frame.codepath-walkthrough` -> `frame.migration-plan` -> `lens.abstraction-boundary` -> `lens.failure-mode-analysis` -> `guardrail.release-readiness` -> `schema.rollout-plan`"
-        ],
-        [
-          "Why this order works",
-          "Decide mode commits to a migration strategy rather than exploring alternatives mid-migration. Codepath-walkthrough maps all read and write paths before the migration is designed — unexpected consumers cause the most migration failures. Migration-plan selects the strategy explicitly. Abstraction-boundary surfaces boundary leaks and hidden couplings. Failure-mode-analysis reviews partial-deploy and rollback risks. Release-readiness and rollout-plan close with a staged deployment and stop conditions."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.abstraction-boundary` for `lens.interface-contract-review` when the migration involves API or protocol changes. Swap `schema.rollout-plan` for `schema.plan-next-actions` for smaller, lower-risk migrations."
-        ],
-        [
-          "Common failure mode",
-          "Discovering consumers during the migration. Unmapped consumers cause mid-migration rollbacks that are more disruptive than the migration itself."
-        ],
-        [
-          "Expected outcome",
-          "all major read and write paths mapped before migration design begins, migration strategy chosen explicitly rather than implied, boundary leaks and hidden consumers surfaced before rollout, failure modes reviewed for partial deploys, stale readers, and rollback attempts, release verdict and staged rollout plan defined with stop conditions"
+          "`mode.explore` -> `frame.task` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/safe-migration.md"
@@ -12956,54 +4116,35 @@ globalThis.SITE_DATA = {
     {
       "section": "Stack",
       "key": "stack.security-threat-model",
-      "title": "Security Threat Model",
+      "title": "security-threat-model",
       "family": "Developer Workflows",
       "job": "security-threat-model",
-      "useWhen": "Use when a feature, service, or system design needs a structured security review before it is built or shipped.",
+      "useWhen": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
       "stage": "critique",
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
-      "summary": "Use when a feature, service, or system design needs a structured security review before it is built or shipped.",
+      "summary": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
       "tags": [
-        "software engineering",
         "security",
-        "risk",
-        "threat modelling"
+        "threat",
+        "model"
       ],
       "contract": {
         "job": "security-threat-model",
-        "useWhen": "Use when a feature, service, or system design needs a structured security review before it is built or shipped.",
-        "minimumBlocks": [
-          "mode.critique",
-          "frame.security-review",
-          "frame.risk-register"
-        ],
+        "useWhen": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
+        "minimumBlocks": [],
         "fullSequence": [
           "`mode.critique`",
-          "`frame.security-review`",
-          "`lens.failure-mode-analysis`",
-          "`frame.risk-register`",
-          "`guardrail.stress-test-assumptions`"
+          "`guardrail.assumption-audit`",
+          "`strategy.red-team`",
+          "`schema.plan-next-actions`"
         ],
-        "blockOrderRationale": "Critique mode sets the adversarial stance before the threat surface is mapped. Security-review maps the attack surface systematically. Failure-mode-analysis examines each trust boundary for exploitable failure modes. Risk-register ranks threats by severity and exploitability. Stress-test-assumptions closes by surfacing the security assumptions that are trusted but not verified.",
-        "commonSwaps": "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when the security model depends heavily on correct boundary enforcement. Add `strategy.red-team` when an adversarial challenge from a hostile-actor perspective is needed rather than a structured review.",
-        "commonFailureMode": "Threat modeling from first principles on every feature. The most common security failures come from documented threat categories that were not applied — OWASP and similar taxonomies exist for this reason."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "system or feature description",
-          "trust boundaries (who sends data, what it does, where it goes)",
-          "any known sensitive data or privileged operations"
-        ],
-        "expectedOutputs": [
-          "attack surface mapped systematically against OWASP categories",
-          "failure modes for each trust boundary named and localised",
-          "risks ranked by severity and exploitability",
-          "assumptions about security (e.g. \"callers will always validate input\") surfaced and stress-tested",
-          "prioritised list of mitigations with rationale"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
@@ -13011,7 +4152,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Use when",
-          "Use when a feature, service, or system design needs a structured security review before it is built or shipped."
+          "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes."
         ],
         [
           "Stage",
@@ -13030,103 +4171,59 @@ globalThis.SITE_DATA = {
           "high"
         ],
         [
-          "Useful inputs",
-          "system or feature description, trust boundaries (who sends data, what it does, where it goes), any known sensitive data or privileged operations"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, frame.security-review, frame.risk-register"
-        ],
-        [
           "Suggested blocks",
-          "`mode.critique` -> `frame.security-review` -> `lens.failure-mode-analysis` -> `frame.risk-register` -> `guardrail.stress-test-assumptions`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the adversarial stance before the threat surface is mapped. Security-review maps the attack surface systematically. Failure-mode-analysis examines each trust boundary for exploitable failure modes. Risk-register ranks threats by severity and exploitability. Stress-test-assumptions closes by surfacing the security assumptions that are trusted but not verified."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.failure-mode-analysis` for `lens.interface-contract-review` when the security model depends heavily on correct boundary enforcement. Add `strategy.red-team` when an adversarial challenge from a hostile-actor perspective is needed rather than a structured review."
-        ],
-        [
-          "Common failure mode",
-          "Threat modeling from first principles on every feature. The most common security failures come from documented threat categories that were not applied — OWASP and similar taxonomies exist for this reason."
-        ],
-        [
-          "Expected outcome",
-          "attack surface mapped systematically against OWASP categories, failure modes for each trust boundary named and localised, risks ranked by severity and exploitability, assumptions about security (e.g. \"callers will always validate input\") surfaced and stress-tested, prioritised list of mitigations with rationale"
+          "`mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.plan-next-actions`"
         ]
       ],
       "sourcePath": "stacks/security-threat-model.md"
     },
     {
       "section": "Stack",
-      "key": "stack.technical-debt-triage",
-      "title": "Technical Debt Triage",
-      "family": "Developer Workflows",
-      "job": "technical-debt-triage",
-      "useWhen": "Use when a codebase has accumulated debt and you need a defensible, prioritised decision about what to address and in what order.",
-      "stage": "decide",
-      "outputKind": "decision",
+      "key": "stack.reflect-act",
+      "title": "reflect-act",
+      "family": "Reflection & Learning",
+      "job": "reflect-act",
+      "useWhen": "Extract reusable lessons from any outcome and assign concrete follow-on actions.",
+      "stage": "conclude",
+      "outputKind": "retrospective",
       "effort": "standard",
-      "stakes": "high",
-      "summary": "Use when a codebase has accumulated debt and you need a defensible, prioritised decision about what to address and in what order.",
+      "stakes": "low",
+      "summary": "Extract reusable lessons from any outcome and assign concrete follow-on actions.",
       "tags": [
-        "software engineering",
-        "technical debt",
-        "refactoring",
-        "prioritisation"
+        "reflect",
+        "act"
       ],
       "contract": {
-        "job": "technical-debt-triage",
-        "useWhen": "Use when a codebase has accumulated debt and you need a defensible, prioritised decision about what to address and in what order.",
-        "minimumBlocks": [
-          "frame.process-audit",
-          "lens.complexity-tradeoff",
-          "frame.risk-register"
-        ],
+        "job": "reflect-act",
+        "useWhen": "Extract reusable lessons from any outcome and assign concrete follow-on actions.",
+        "minimumBlocks": [],
         "fullSequence": [
-          "`frame.process-audit`",
-          "`lens.complexity-tradeoff`",
-          "`frame.risk-register`",
-          "`frame.prioritize-opportunities`",
-          "`frame.refactor-plan`"
+          "`mode.reflect`",
+          "`frame.cause-mapping`",
+          "`frame.extract-insights`",
+          "`schema.plan-next-actions`"
         ],
-        "blockOrderRationale": "Process-audit first identifies where debt actually causes delay or defects in the current development workflow — not all debt is equally painful. Complexity-tradeoff distinguishes structural risk from cosmetic ugliness. Risk-register builds the ranked portfolio view. Prioritize-opportunities evaluates value-to-effort. Refactor-plan scopes the highest-priority item with clear exit criteria.",
-        "commonSwaps": "Swap `frame.process-audit` for `frame.cause-mapping` when a recent incident or quality regression is the entry point. Swap `frame.refactor-plan` for `schema.execution-brief` when the output needs to be handed off to another team.",
-        "commonFailureMode": "Addressing the most visible debt rather than the most impactful. Visible debt is noticed by the team; impactful debt is measured against delivery velocity and incident rate."
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": ""
       },
-      "io": {
-        "usefulInputs": [
-          "description of the codebase and the areas of concern",
-          "known pain points: slow delivery, frequent bugs, risky areas",
-          "any recent incident or quality signals"
-        ],
-        "expectedOutputs": [
-          "current development process audited to identify where debt actually causes delay or defects",
-          "complexity tradeoffs surfaced: which debt is structural risk versus which is merely ugly",
-          "risks registered with likelihood and impact, giving a ranked view of the debt portfolio",
-          "opportunities prioritised by value-to-effort: what to fix now, what to schedule, what to tolerate",
-          "refactor plan for the highest-priority item with clear scope and exit criteria"
-        ]
-      },
+      "io": {},
       "body": [
         [
           "Job",
-          "technical-debt-triage"
+          "reflect-act"
         ],
         [
           "Use when",
-          "Use when a codebase has accumulated debt and you need a defensible, prioritised decision about what to address and in what order."
+          "Extract reusable lessons from any outcome and assign concrete follow-on actions."
         ],
         [
           "Stage",
-          "decide"
+          "conclude"
         ],
         [
           "Output kind",
-          "decision"
+          "retrospective"
         ],
         [
           "Effort",
@@ -13134,256 +4231,14 @@ globalThis.SITE_DATA = {
         ],
         [
           "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "description of the codebase and the areas of concern, known pain points: slow delivery, frequent bugs, risky areas, any recent incident or quality signals"
-        ],
-        [
-          "Minimum blocks",
-          "frame.process-audit, lens.complexity-tradeoff, frame.risk-register"
+          "low"
         ],
         [
           "Suggested blocks",
-          "`frame.process-audit` -> `lens.complexity-tradeoff` -> `frame.risk-register` -> `frame.prioritize-opportunities` -> `frame.refactor-plan`"
-        ],
-        [
-          "Why this order works",
-          "Process-audit first identifies where debt actually causes delay or defects in the current development workflow — not all debt is equally painful. Complexity-tradeoff distinguishes structural risk from cosmetic ugliness. Risk-register builds the ranked portfolio view. Prioritize-opportunities evaluates value-to-effort. Refactor-plan scopes the highest-priority item with clear exit criteria."
-        ],
-        [
-          "Common swaps",
-          "Swap `frame.process-audit` for `frame.cause-mapping` when a recent incident or quality regression is the entry point. Swap `frame.refactor-plan` for `schema.execution-brief` when the output needs to be handed off to another team."
-        ],
-        [
-          "Common failure mode",
-          "Addressing the most visible debt rather than the most impactful. Visible debt is noticed by the team; impactful debt is measured against delivery velocity and incident rate."
-        ],
-        [
-          "Expected outcome",
-          "current development process audited to identify where debt actually causes delay or defects, complexity tradeoffs surfaced: which debt is structural risk versus which is merely ugly, risks registered with likelihood and impact, giving a ranked view of the debt portfolio, opportunities prioritised by value-to-effort: what to fix now, what to schedule, what to tolerate, refactor plan for the highest-priority item with clear scope and exit criteria"
+          "`mode.reflect` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.plan-next-actions`"
         ]
       ],
-      "sourcePath": "stacks/technical-debt-triage.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.trace-to-fix",
-      "title": "Trace To Fix",
-      "family": "Developer Workflows",
-      "job": "trace-to-fix",
-      "useWhen": "Use when you have logs, traces, or a production symptom and need to move from noisy signals to a high-confidence fix path.",
-      "stage": "analyze",
-      "outputKind": "diagnosis",
-      "effort": "deep",
-      "stakes": "high",
-      "summary": "Use when you have logs, traces, or a production symptom and need to move from noisy signals to a high-confidence fix path.",
-      "tags": [
-        "software engineering",
-        "debugging",
-        "observability",
-        "incident response"
-      ],
-      "contract": {
-        "job": "trace-to-fix",
-        "useWhen": "Use when you have logs, traces, or a production symptom and need to move from noisy signals to a high-confidence fix path.",
-        "minimumBlocks": [
-          "mode.critique",
-          "guardrail.triage-the-unknown",
-          "frame.bug-reproduction-brief"
-        ],
-        "fullSequence": [
-          "`mode.critique`",
-          "`guardrail.triage-the-unknown`",
-          "`frame.log-triage`",
-          "`frame.bug-reproduction-brief`",
-          "`lens.debugger-loop`",
-          "`lens.interface-contract-review`",
-          "`guardrail.change-impact-review`"
-        ],
-        "blockOrderRationale": "Critique mode sets the skeptical stance before any log is read. Triage-the-unknown clears noise and confusion before deeper investigation. Log-triage separates symptoms from causes in the available telemetry. Bug-reproduction-brief converts the most likely hypothesis into a tight reproduction target. Debugger-loop provides the systematic isolation cycle. Interface-contract-review checks boundary failures. Change-impact-review scopes the fix safely.",
-        "commonSwaps": "Swap `lens.debugger-loop` for `lens.failure-mode-analysis` when the failure is in an integration boundary rather than internal logic. Swap `guardrail.change-impact-review` for `guardrail.release-readiness` when the fix needs formal release gates.",
-        "commonFailureMode": "Jumping to a fix before the failure is reproduced. Fixes without a reliable reproduction target often address symptoms rather than causes."
-      },
-      "io": {
-        "usefulInputs": [
-          "logs, traces, metrics, or error events tied to the failure",
-          "expected versus actual behavior",
-          "any recent deploys, config changes, or incident notes"
-        ],
-        "expectedOutputs": [
-          "ambiguity reduced before anyone reaches for a fix",
-          "earliest anomalous signal and strongest hypotheses separated from noise",
-          "smallest reliable reproduction target identified",
-          "boundary failures checked before blaming internal logic",
-          "blast radius reviewed so the eventual fix can be scoped and released safely"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "trace-to-fix"
-        ],
-        [
-          "Use when",
-          "Use when you have logs, traces, or a production symptom and need to move from noisy signals to a high-confidence fix path."
-        ],
-        [
-          "Stage",
-          "analyze"
-        ],
-        [
-          "Output kind",
-          "diagnosis"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Useful inputs",
-          "logs, traces, metrics, or error events tied to the failure, expected versus actual behavior, any recent deploys, config changes, or incident notes"
-        ],
-        [
-          "Minimum blocks",
-          "mode.critique, guardrail.triage-the-unknown, frame.bug-reproduction-brief"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.critique` -> `guardrail.triage-the-unknown` -> `frame.log-triage` -> `frame.bug-reproduction-brief` -> `lens.debugger-loop` -> `lens.interface-contract-review` -> `guardrail.change-impact-review`"
-        ],
-        [
-          "Why this order works",
-          "Critique mode sets the skeptical stance before any log is read. Triage-the-unknown clears noise and confusion before deeper investigation. Log-triage separates symptoms from causes in the available telemetry. Bug-reproduction-brief converts the most likely hypothesis into a tight reproduction target. Debugger-loop provides the systematic isolation cycle. Interface-contract-review checks boundary failures. Change-impact-review scopes the fix safely."
-        ],
-        [
-          "Common swaps",
-          "Swap `lens.debugger-loop` for `lens.failure-mode-analysis` when the failure is in an integration boundary rather than internal logic. Swap `guardrail.change-impact-review` for `guardrail.release-readiness` when the fix needs formal release gates."
-        ],
-        [
-          "Common failure mode",
-          "Jumping to a fix before the failure is reproduced. Fixes without a reliable reproduction target often address symptoms rather than causes."
-        ],
-        [
-          "Expected outcome",
-          "ambiguity reduced before anyone reaches for a fix, earliest anomalous signal and strongest hypotheses separated from noise, smallest reliable reproduction target identified, boundary failures checked before blaming internal logic, blast radius reviewed so the eventual fix can be scoped and released safely"
-        ]
-      ],
-      "sourcePath": "stacks/trace-to-fix.md"
-    },
-    {
-      "section": "Stack",
-      "key": "stack.write-a-proposal",
-      "title": "Write a Proposal",
-      "family": "Writing & Communication",
-      "job": "write-a-proposal",
-      "useWhen": "Use when you need to produce a proposal — for a project, initiative, investment, or change — that secures approval or buy-in.",
-      "stage": "refine",
-      "outputKind": "draft",
-      "effort": "deep",
-      "stakes": "medium",
-      "summary": "Use when you need to produce a proposal — for a project, initiative, investment, or change — that secures approval or buy-in.",
-      "tags": [
-        "writing",
-        "proposals",
-        "planning",
-        "communication"
-      ],
-      "contract": {
-        "job": "write-a-proposal",
-        "useWhen": "Use when you need to produce a proposal — for a project, initiative, investment, or change — that secures approval or buy-in.",
-        "minimumBlocks": [
-          "frame.clarify-task",
-          "frame.define-success-metrics",
-          "schema.executive-summary"
-        ],
-        "fullSequence": [
-          "`frame.clarify-task`",
-          "`frame.define-success-metrics`",
-          "`frame.dependency-map`",
-          "`frame.risk-register`",
-          "`schema.executive-summary`",
-          "`guardrail.persuasion-audit`"
-        ],
-        "blockOrderRationale": "Task clarity before writing ensures the proposal addresses the actual ask rather than a slightly different version of it. Success-metrics define the evaluation criteria up front so the proposal can be assessed against them. Dependency-map makes the plan credible. Risk-register prevents the proposal from looking naive by acknowledging what could go wrong. Executive-summary leads with the ask and rationale. Persuasion-audit closes by checking whether a skeptical reviewer would be convinced.",
-        "commonSwaps": "Swap `guardrail.persuasion-audit` for `rubric.writing-quality` when the proposal is primarily a written document rather than a pitch. Add `lens.incentive-audit` when the proposal needs to be calibrated to the approver's motivations.",
-        "commonFailureMode": "Writing the proposal before defining success criteria. Proposals without upfront success criteria optimize for approval rather than for the outcome the proposal claims to pursue."
-      },
-      "io": {
-        "usefulInputs": [
-          "the initiative or request being proposed",
-          "the audience who will approve or fund it",
-          "constraints, budget, or timelines involved"
-        ],
-        "expectedOutputs": [
-          "proposal scope and ask clarified before writing begins",
-          "success criteria defined up front so the proposal can be evaluated against them",
-          "dependencies and sequencing mapped so the plan is credible",
-          "risks identified and acknowledged in the proposal, with mitigations named",
-          "executive summary drafted that leads with the ask and supporting rationale",
-          "persuasive strength assessed: is the proposal likely to convince a sceptical reviewer?"
-        ]
-      },
-      "body": [
-        [
-          "Job",
-          "write-a-proposal"
-        ],
-        [
-          "Use when",
-          "Use when you need to produce a proposal — for a project, initiative, investment, or change — that secures approval or buy-in."
-        ],
-        [
-          "Stage",
-          "refine"
-        ],
-        [
-          "Output kind",
-          "draft"
-        ],
-        [
-          "Effort",
-          "deep"
-        ],
-        [
-          "Stakes",
-          "medium"
-        ],
-        [
-          "Useful inputs",
-          "the initiative or request being proposed, the audience who will approve or fund it, constraints, budget, or timelines involved"
-        ],
-        [
-          "Minimum blocks",
-          "frame.clarify-task, frame.define-success-metrics, schema.executive-summary"
-        ],
-        [
-          "Suggested blocks",
-          "`frame.clarify-task` -> `frame.define-success-metrics` -> `frame.dependency-map` -> `frame.risk-register` -> `schema.executive-summary` -> `guardrail.persuasion-audit`"
-        ],
-        [
-          "Why this order works",
-          "Task clarity before writing ensures the proposal addresses the actual ask rather than a slightly different version of it. Success-metrics define the evaluation criteria up front so the proposal can be assessed against them. Dependency-map makes the plan credible. Risk-register prevents the proposal from looking naive by acknowledging what could go wrong. Executive-summary leads with the ask and rationale. Persuasion-audit closes by checking whether a skeptical reviewer would be convinced."
-        ],
-        [
-          "Common swaps",
-          "Swap `guardrail.persuasion-audit` for `rubric.writing-quality` when the proposal is primarily a written document rather than a pitch. Add `lens.incentive-audit` when the proposal needs to be calibrated to the approver's motivations."
-        ],
-        [
-          "Common failure mode",
-          "Writing the proposal before defining success criteria. Proposals without upfront success criteria optimize for approval rather than for the outcome the proposal claims to pursue."
-        ],
-        [
-          "Expected outcome",
-          "proposal scope and ask clarified before writing begins, success criteria defined up front so the proposal can be evaluated against them, dependencies and sequencing mapped so the plan is credible, risks identified and acknowledged in the proposal, with mitigations named, executive summary drafted that leads with the ask and supporting rationale, persuasive strength assessed: is the proposal likely to convince a sceptical reviewer?"
-        ]
-      ],
-      "sourcePath": "stacks/write-a-proposal.md"
+      "sourcePath": "stacks/reflect-act.md"
     }
   ],
   "featuredStacks": [
@@ -13421,7 +4276,7 @@ globalThis.SITE_DATA = {
     },
     {
       "title": "Explore or Exploit",
-      "description": "When the real question is whether to keep searching or commit now. Forces the tradeoff between additional information and the cost of delay, then turns the answer into an immediate move.",
+      "description": "When the real question is whether to keep searching or commit now. Forces the tradeoff between additional information and the cost of delay.",
       "tags": [
         "decision",
         "exploration",
@@ -13430,13 +4285,13 @@ globalThis.SITE_DATA = {
       "refs": [
         "mode.decide",
         "frame.success-criteria",
-        "frame.explore-exploit-decision",
         "guardrail.uncertainty",
+        "guardrail.disconfirming-evidence",
         "schema.execution-brief"
       ]
     },
     {
-      "title": "Prioritize a Portfolio",
+      "title": "Prioritize and Execute",
       "description": "When several good-looking bets compete for scarce resources. Defines criteria, ranks the field, and turns the winner into an execution brief.",
       "tags": [
         "prioritization",
@@ -13446,30 +4301,13 @@ globalThis.SITE_DATA = {
       "refs": [
         "mode.decide",
         "frame.success-criteria",
-        "frame.prioritize-opportunities",
-        "schema.execution-brief",
-        "guardrail.uncertainty"
-      ]
-    },
-    {
-      "title": "De-Risk Before Committing",
-      "description": "When a direction looks promising but the real blocker is uncertainty. Designs the cheapest credible test and makes the next checkpoint explicit.",
-      "tags": [
-        "experiment",
-        "de-risk",
-        "execution"
-      ],
-      "refs": [
-        "mode.decide",
-        "frame.success-criteria",
-        "frame.design-cheap-test",
-        "schema.execution-brief",
-        "guardrail.uncertainty"
+        "guardrail.assumption-audit",
+        "schema.execution-brief"
       ]
     },
     {
       "title": "Pressure Test a Plan",
-      "description": "Before committing to execution. Runs adversarial critique, premortem, and stress test to surface the plan's biggest vulnerabilities.",
+      "description": "Before committing to execution. Runs adversarial critique, premortem, and red-team to surface the plan's biggest vulnerabilities.",
       "tags": [
         "critique",
         "risk",
@@ -13480,45 +4318,28 @@ globalThis.SITE_DATA = {
         "strategy.premortem",
         "strategy.red-team",
         "guardrail.assumption-audit",
-        "guardrail.stress-test-assumptions"
+        "guardrail.disconfirming-evidence"
       ]
     },
     {
       "title": "Debug a Failure",
-      "description": "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with a reproducible target, checks the boundary, and turns the next move into a concrete debug plan.",
+      "description": "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with task framing, critiques likely causes, maps causal chain, and turns the next move into a concrete plan.",
       "tags": [
         "debugging",
         "incident",
         "diagnosis"
       ],
       "refs": [
+        "mode.explore",
+        "frame.task",
         "mode.critique",
-        "frame.bug-reproduction-brief",
-        "lens.debugger-loop",
-        "lens.interface-contract-review",
-        "lens.invariant-check",
+        "frame.cause-mapping",
         "schema.plan-next-actions"
       ]
     },
     {
-      "title": "Write and Sharpen",
-      "description": "For content that needs to be good, not just done. Turns a brief into a real draft, critiques it rigorously, then rewrites for clarity.",
-      "tags": [
-        "writing",
-        "critique",
-        "revision"
-      ],
-      "refs": [
-        "frame.brief-to-draft",
-        "mode.critique",
-        "frame.critique-argument",
-        "frame.rewrite-for-clarity",
-        "rubric.writing-quality"
-      ]
-    },
-    {
       "title": "After-Action Review",
-      "description": "When an outcome exists and the risk is repeating the same mistake. Maps causes, records the decision, and checks that reflection was actually useful.",
+      "description": "When an outcome exists and the risk is repeating the same mistake. Maps causes, extracts reusable lessons, and assigns follow-on actions.",
       "tags": [
         "reflect",
         "learning",
@@ -13527,77 +4348,43 @@ globalThis.SITE_DATA = {
       "refs": [
         "mode.reflect",
         "frame.cause-mapping",
-        "schema.decision-journal-entry",
-        "rubric.reflection-quality"
+        "frame.extract-insights",
+        "schema.plan-next-actions"
       ]
     },
     {
       "title": "Improve a Prompt",
-      "description": "When a prompt is underperforming. Critiques the current version, rewrites it, compares variants, and checks against a quality rubric.",
+      "description": "When a prompt is underperforming. Frames the task, critiques the current version, audits for uncertainty, and rewrites against a quality rubric.",
       "tags": [
         "prompting",
         "iteration",
         "repair"
       ],
       "refs": [
+        "frame.task",
         "mode.critique",
-        "frame.prompt-critique",
-        "frame.prompt-rewrite",
-        "frame.prompt-compare",
-        "rubric.prompt-quality"
+        "guardrail.uncertainty",
+        "rubric.writing-quality"
       ]
     },
     {
-      "title": "Map Incentives",
-      "description": "When behavior is not making sense or you are designing for a multi-player situation. Audits incentives, checks signals, and captures the analysis.",
+      "title": "Decompose and Solve",
+      "description": "When a problem is too large to solve directly. Breaks it recursively into leaf-level problems, evaluates each answer, and synthesizes the result.",
       "tags": [
-        "game theory",
-        "incentives",
-        "analysis"
+        "recursion",
+        "decomposition",
+        "problem-solving"
       ],
       "refs": [
-        "mode.explore",
-        "lens.incentive-audit",
-        "lens.signaling-check",
-        "schema.decision-memo"
+        "frame.task",
+        "recurse.decompose",
+        "recurse.evaluate",
+        "guardrail.bounded-recursion"
       ]
     },
     {
-      "title": "Align Stakeholders",
-      "description": "When the technical answer is not enough and alignment is the actual bottleneck. Maps stakeholders, checks coordination dynamics, and prepares the next conversation.",
-      "tags": [
-        "alignment",
-        "stakeholders",
-        "coordination"
-      ],
-      "refs": [
-        "mode.explore",
-        "frame.stakeholder-map",
-        "lens.coordination-plan",
-        "lens.signaling-check",
-        "frame.alignment-conversation-plan",
-        "schema.execution-brief"
-      ]
-    },
-    {
-      "title": "Read Before Changing",
-      "description": "When a change looks simple but the surrounding codebase is unfamiliar. Maps the active code path, surfaces invariants, and checks blast radius before editing.",
-      "tags": [
-        "software engineering",
-        "code reading",
-        "change safety"
-      ],
-      "refs": [
-        "mode.explore",
-        "frame.codepath-walkthrough",
-        "lens.invariant-check",
-        "lens.interface-contract-review",
-        "guardrail.change-impact-review"
-      ]
-    },
-    {
-      "title": "Turn Sources Into Action",
-      "description": "When notes, transcripts, or dense source material need to become something decision-useful quickly. Distills the source, extracts what matters, and maps the next investigation or action.",
+      "title": "Research to Decision",
+      "description": "When you need a well-grounded view before deciding. Extracts insights, forces disconfirmation, maps causes, and checks research quality.",
       "tags": [
         "research",
         "synthesis",
@@ -13605,26 +4392,10 @@ globalThis.SITE_DATA = {
       ],
       "refs": [
         "mode.explore",
-        "frame.summarize-source",
         "frame.extract-insights",
-        "frame.research-questions",
-        "schema.plan-next-actions"
-      ]
-    },
-    {
-      "title": "Check for Bias",
-      "description": "When a judgment or decision may be distorted. Reviews cognitive biases, steelmans alternatives, and guardrails against false certainty.",
-      "tags": [
-        "psychology",
-        "bias",
-        "rigor"
-      ],
-      "refs": [
-        "mode.critique",
-        "lens.bias-check",
-        "strategy.steelman",
         "guardrail.disconfirming-evidence",
-        "guardrail.uncertainty"
+        "frame.cause-mapping",
+        "rubric.research-quality"
       ]
     }
   ]
