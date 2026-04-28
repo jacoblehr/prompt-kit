@@ -44,6 +44,7 @@ function syncAddButtons() {
 
 const BUILDER_WIDTH_STORAGE_KEY = "prompt-kit-builder-width";
 const BUILDER_EXECUTION_HEIGHT_STORAGE_KEY = "prompt-kit-builder-execution-height";
+const BUILDER_EXECUTION_COLLAPSED_STORAGE_KEY = "prompt-kit-builder-execution-collapsed";
 let draggedBuilderKey = "";
 let draggedLibraryRef = "";
 let builderToastTimer = 0;
@@ -575,6 +576,37 @@ function applyStoredBuilderExecutionHeight() {
   }
   const clampedHeight = Math.max(minHeight, Math.min(maxHeight, storedHeight));
   execution.style.height = `${clampedHeight}px`;
+}
+
+function toggleBuilderExecutionCollapsed() {
+  const execution = getBuilderExecutionElement();
+  if (!(execution instanceof HTMLElement)) return;
+  const isCollapsed = execution.classList.contains("is-collapsed");
+  if (isCollapsed) {
+    // Expand: restore from storage or use default
+    execution.classList.remove("is-collapsed");
+    const DEFAULT_HEIGHT = "min(48vh, 560px)";
+    const stored = window.localStorage.getItem(BUILDER_EXECUTION_HEIGHT_STORAGE_KEY);
+    if (stored && Number.isFinite(Number(stored))) {
+      execution.style.height = `${stored}px`;
+    } else {
+      execution.style.removeProperty("height");
+    }
+    window.localStorage.setItem(BUILDER_EXECUTION_COLLAPSED_STORAGE_KEY, "false");
+  } else {
+    // Collapse
+    execution.classList.add("is-collapsed");
+    window.localStorage.setItem(BUILDER_EXECUTION_COLLAPSED_STORAGE_KEY, "true");
+  }
+}
+
+function applyStoredBuilderExecutionCollapsedState() {
+  const execution = getBuilderExecutionElement();
+  if (!(execution instanceof HTMLElement)) return;
+  const stored = window.localStorage.getItem(BUILDER_EXECUTION_COLLAPSED_STORAGE_KEY);
+  if (stored === "true") {
+    execution.classList.add("is-collapsed");
+  }
 }
 
 function handoffBuilderTextareaWheel(event) {
@@ -1152,23 +1184,41 @@ if (builderResizeHandle) {
 }
 
 if (builderExecutionResizeHandle) {
+  let executionResizeStartTime = 0;
+
   builderExecutionResizeHandle.addEventListener("mousedown", (event) => {
     const execution = getBuilderExecutionElement();
     if (!(execution instanceof HTMLElement)) return;
     isResizingBuilderExecution = true;
     resizeExecutionStartY = event.clientY;
     resizeExecutionStartHeight = execution.offsetHeight;
+    executionResizeStartTime = Date.now();
     builderExecutionResizeHandle.classList.add("dragging");
     document.body.style.cursor = "row-resize";
     document.body.style.userSelect = "none";
     event.preventDefault();
   });
 
+  builderExecutionResizeHandle.addEventListener("click", (event) => {
+    // If it was a quick click (not a drag), toggle collapse
+    if (Date.now() - executionResizeStartTime < 200) {
+      const execution = getBuilderExecutionElement();
+      if (!(execution instanceof HTMLElement)) return;
+      // Don't toggle if we just dragged
+      if (execution.offsetHeight !== resizeExecutionStartHeight) return;
+      
+      toggleBuilderExecutionCollapsed();
+      event.stopPropagation();
+    }
+  });
+
   builderExecutionResizeHandle.addEventListener("dblclick", () => {
     const execution = getBuilderExecutionElement();
     if (!(execution instanceof HTMLElement)) return;
     execution.style.removeProperty("height");
+    execution.classList.remove("is-collapsed");
     window.localStorage.removeItem(BUILDER_EXECUTION_HEIGHT_STORAGE_KEY);
+    window.localStorage.removeItem(BUILDER_EXECUTION_COLLAPSED_STORAGE_KEY);
   });
 }
 
@@ -1206,7 +1256,10 @@ document.addEventListener("mouseup", () => {
   if (!isResizingBuilderExecution) return;
   const execution = getBuilderExecutionElement();
   if (execution instanceof HTMLElement) {
-    window.localStorage.setItem(BUILDER_EXECUTION_HEIGHT_STORAGE_KEY, String(execution.offsetHeight));
+    // Only save height if not collapsed
+    if (!execution.classList.contains("is-collapsed")) {
+      window.localStorage.setItem(BUILDER_EXECUTION_HEIGHT_STORAGE_KEY, String(execution.offsetHeight));
+    }
   }
   isResizingBuilderExecution = false;
   builderExecutionResizeHandle?.classList.remove("dragging");
@@ -1216,6 +1269,7 @@ document.addEventListener("mouseup", () => {
 
 applyStoredBuilderWidth();
 applyStoredBuilderExecutionHeight();
+applyStoredBuilderExecutionCollapsedState();
 
 window.addEventListener("resize", () => {
   if (window.innerWidth > 980) applyStoredBuilderWidth();

@@ -2237,6 +2237,25 @@ kbd.search-hint {
   backdrop-filter: blur(20px);
   flex-shrink: 0;
   overflow: hidden;
+  transition: height 0.2s ease, min-height 0.2s ease;
+}
+
+.builder-execution.is-collapsed {
+  min-height: 0;
+  height: 0;
+  padding: 0;
+  gap: 0;
+  overflow: visible;
+}
+
+.builder-execution.is-collapsed .builder-execution-panels,
+.builder-execution.is-collapsed .builder-footer {
+  display: none;
+}
+
+.builder-execution.is-collapsed .builder-execution-resize-handle {
+  margin: 8px 0;
+  cursor: pointer;
 }
 
 .builder-execution-resize-handle {
