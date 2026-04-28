@@ -757,9 +757,9 @@ kbd.search-hint {
     overflow: visible;
     border-right: 0;
     border-bottom: 1px solid var(--line);
-    background: rgba(15, 16, 18, 0.97);
+    background: rgba(15, 16, 18, 0.98);
     backdrop-filter: blur(20px);
-    padding: 10px 16px;
+    padding: 10px 14px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -792,6 +792,7 @@ kbd.search-hint {
     background: var(--panel-2);
     border-radius: 999px;
     justify-content: center;
+    min-height: 42px;
   }
 
   .builder-kbd-hint {
@@ -807,10 +808,12 @@ kbd.search-hint {
     min-width: 0;
     width: auto;
     padding: 9px 12px;
+    min-height: 42px;
   }
 
   .sidebar-filter-toggle {
     display: inline-flex;
+    min-height: 42px;
   }
 
   .filter-count {
@@ -820,6 +823,7 @@ kbd.search-hint {
   .active-filters {
     flex: 0 0 100%;
     margin: 0;
+    gap: 6px;
   }
 
   .filter-groups {
@@ -829,11 +833,11 @@ kbd.search-hint {
     right: 0;
     top: 100%;
     z-index: 300;
-    padding: 14px 16px 18px;
+    padding: 12px 14px 16px;
     background: rgba(15, 16, 18, 0.98);
     border-bottom: 1px solid var(--line);
     backdrop-filter: blur(20px);
-    max-height: 62vh;
+    max-height: 65vh;
     overflow-y: auto;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   }
@@ -845,19 +849,35 @@ kbd.search-hint {
   /* ─── Main content ─── */
 
   .main {
-    padding: 22px;
+    padding: 20px 16px;
+  }
+
+  .hero {
+    gap: 18px;
+    margin-bottom: 32px;
   }
 
   .hero-panels {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .section-head {
     display: grid;
+    gap: 12px;
+  }
+
+  .section-head h2 {
+    font-size: 1.6rem;
   }
 
   .block-type-head {
     display: grid;
+    gap: 14px;
+  }
+
+  .mini-panel {
+    padding: 16px 18px;
   }
 
   /* ─── Touch targets ─── */
@@ -868,12 +888,33 @@ kbd.search-hint {
   .sidebar-filter-toggle,
   .builder-toggle-btn,
   .filter-chip {
-    min-height: 44px;
+    min-height: 42px;
   }
 
   .sidebar .search-wrap input[type="search"],
   .filter-chip {
-    min-height: 44px;
+    min-height: 42px;
+  }
+}
+
+/* ─── Tablet breakpoint (481px–980px) ──────────────────────────────────────── */
+
+@media (min-width: 481px) and (max-width: 980px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: 12px;
+  }
+
+  .main {
+    padding: 24px 18px;
+  }
+
+  .section {
+    margin-top: 40px;
+  }
+
+  .hero-panels {
+    gap: 14px;
   }
 }
 
@@ -881,32 +922,87 @@ kbd.search-hint {
 
 @media (max-width: 480px) {
   .main {
-    padding: 16px 14px;
+    padding: 14px 12px;
   }
 
   .section {
-    margin-top: 32px;
+    margin-top: 28px;
+  }
+
+  .section-head {
+    flex-direction: column;
+    gap: 12px;
   }
 
   .section-head h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .section-head p {
+    font-size: 0.85rem;
   }
 
   .hero h2 {
-    font-size: clamp(1.8rem, 9vw, 2.6rem);
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+  }
+
+  .hero-copy p {
+    font-size: 0.95rem;
   }
 
   .card-grid {
     grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .card {
+    padding: 14px;
     gap: 10px;
+  }
+
+  .card h3 {
+    font-size: 0.96rem;
+  }
+
+  .card-summary {
+    font-size: 0.8rem;
+  }
+
+  .card-meta {
+    font-size: 0.68rem;
+  }
+
+  .card-actions {
+    gap: 5px;
+  }
+
+  .add-btn,
+  .details-btn {
+    font-size: 0.7rem;
+    padding: 5px 8px;
+    min-height: 36px;
+    flex: 1 1 auto;
   }
 
   .docs-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .doc-link {
+    padding: 14px;
   }
 
   .hero-panels {
-    gap: 12px;
+    gap: 10px;
+  }
+
+  .mini-panel {
+    padding: 14px 16px;
+  }
+
+  .mini-panel h3 {
+    font-size: 0.95rem;
   }
 
   .builder-execution {
@@ -917,16 +1013,63 @@ kbd.search-hint {
   .sidebar {
     flex-wrap: nowrap;
     padding: 8px 12px;
-    gap: 6px;
+    gap: 5px;
   }
 
   .builder-toggle-btn {
-    padding: 8px 10px;
-    font-size: 0.76rem;
+    padding: 8px 9px;
+    font-size: 0.74rem;
+    min-height: 36px;
   }
 
   .builder-toggle-right {
     display: none;
+  }
+
+  .sidebar .search-wrap input[type="search"] {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .sidebar-filter-toggle {
+    padding: 8px 12px;
+    font-size: 0.76rem;
+    min-height: 36px;
+  }
+
+  .filter-chip {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    min-height: 32px;
+  }
+
+  .nav a {
+    min-height: 40px;
+  }
+
+  .block-type-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .block-type-count {
+    order: -1;
+  }
+
+  .stack-size-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+
+  .meta-pill {
+    font-size: 0.65rem;
+    padding: 3px 7px;
+  }
+
+  .tag {
+    font-size: 0.67rem;
+    padding: 3px 7px;
   }
 }
 
@@ -1182,6 +1325,24 @@ kbd.search-hint {
     min-height: 200px;
     flex: 1 1 auto;
     height: auto;
+  }
+
+  /* Improve button sizing on small screens */
+  .builder-action-btn {
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+
+  .builder-shortcut-btn {
+    min-height: 38px;
+    padding: 7px 11px;
+    font-size: 0.74rem;
+  }
+
+  .add-btn,
+  .details-btn {
+    min-height: 40px;
   }
 }
 
@@ -2644,6 +2805,65 @@ kbd.search-hint {
   .builder-execution {
     min-height: 300px;
     height: var(--builder-execution-height, min(50vh, 440px));
+  }
+
+  .builder-action-btn {
+    min-height: 38px;
+    padding: 7px 10px;
+    font-size: 0.74rem;
+  }
+
+  .builder-shortcut-btn {
+    min-height: 36px;
+    padding: 6px 10px;
+    font-size: 0.7rem;
+  }
+
+  .builder-pane {
+    padding: 12px;
+    min-height: 120px;
+  }
+
+  .pb-block-compact {
+    gap: 8px;
+    padding: 9px 10px;
+  }
+
+  .pb-block-drag,
+  .pb-block-remove {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .pb-block-title {
+    font-size: 0.85rem;
+  }
+
+  .pb-block-meta {
+    font-size: 0.72rem;
+  }
+
+  .pb-section-title {
+    font-size: 0.95rem;
+  }
+
+  .pb-add-block,
+  .pb-section-browse,
+  .pb-starter-chip {
+    padding: 8px 12px;
+    font-size: 0.76rem;
+  }
+
+  .pb-block-textarea,
+  .builder-run-input {
+    min-height: 100px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .filter-groups {
+    max-height: 60vh;
   }
 }
 
