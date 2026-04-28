@@ -916,18 +916,6 @@ kbd.search-hint {
   .hero-panels {
     gap: 14px;
   }
-
-  /* ─── Execution resize handle: make touch-friendly on tablet ─── */
-  .builder-execution-resize-handle {
-    height: 18px;
-    margin: -2px 0 0 0;
-    padding: 8px 0;
-  }
-
-  .builder-execution-resize-handle::before {
-    width: 80px;
-    height: 4px;
-  }
 }
 
 /* ─── Small phone breakpoint (≤ 480px) ─────────────────────────────────────── */
@@ -1313,26 +1301,24 @@ kbd.search-hint {
 @media (max-width: 980px) {
   .shell.builder-open {
     grid-template-columns: 1fr;
+    overflow: hidden;
+  }
+
+  .builder-resize-handle {
+    display: none;
   }
 
   .builder-scroll {
-    max-height: 40vh;
-    flex: none;
-  }
-
-  .builder-footer {
-    flex: none;
-    overflow: visible;
-  }
-
-  .builder-footer-meta {
-    align-items: flex-start;
-  }
-
-  .builder-output {
-    min-height: 200px;
     flex: 1 1 auto;
-    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .builder-execution {
+    flex: none;
+    overflow: hidden;
   }
 
   /* Improve button sizing on small screens */
@@ -1351,18 +1337,6 @@ kbd.search-hint {
   .add-btn,
   .details-btn {
     min-height: 40px;
-  }
-
-  /* ─── Execution resize handle: make properly sized for touch ─── */
-  .builder-execution-resize-handle {
-    height: 18px;
-    margin: -2px 0 0 0;
-    pointer-events: auto;
-  }
-
-  .builder-execution-resize-handle::before {
-    width: 72px;
-    height: 4px;
   }
 }
 
@@ -2226,7 +2200,7 @@ kbd.search-hint {
   bottom: 0;
   z-index: 5;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   gap: 12px;
   padding: 14px 16px 16px;
   min-height: 300px;
@@ -2237,25 +2211,6 @@ kbd.search-hint {
   backdrop-filter: blur(20px);
   flex-shrink: 0;
   overflow: hidden;
-  transition: height 0.2s ease, min-height 0.2s ease;
-}
-
-.builder-execution.is-collapsed {
-  min-height: 0;
-  height: 0;
-  padding: 0;
-  gap: 0;
-  overflow: visible;
-}
-
-.builder-execution.is-collapsed .builder-execution-panels,
-.builder-execution.is-collapsed .builder-footer {
-  display: none;
-}
-
-.builder-execution.is-collapsed .builder-execution-resize-handle {
-  margin: 8px 0;
-  cursor: pointer;
 }
 
 .builder-execution-resize-handle {
@@ -2791,6 +2746,14 @@ kbd.search-hint {
     justify-content: center;
   }
 
+  /* ─── Execution resize handle is not usable on touch ─── */
+  .builder-execution-resize-handle {
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    pointer-events: none;
+  }
+
   /* ─── Stacked pane height distribution ─── */
   .builder-execution-panels {
     grid-template-rows: 1fr 1fr;
@@ -2801,18 +2764,7 @@ kbd.search-hint {
   }
 
   .builder-pane {
-    min-height: 130px;
-  }
-
-  /* ─── Execution resize handle: make touch-friendly on mobile ─── */
-  .builder-execution-resize-handle {
-    height: 20px;
-    margin: -5px 0 -1px 0;
-    padding: 8px 0;
-  }
-
-  .builder-execution-resize-handle::before {
-    height: 3px;
+    min-height: 100px;
   }
 
   /* ─── Copy Prompt button: full-width with safe-area support ─── */
@@ -2849,17 +2801,6 @@ kbd.search-hint {
     height: var(--builder-execution-height, min(50vh, 440px));
   }
 
-  .builder-execution-resize-handle {
-    height: 18px;
-    margin: -2px 0 0 0;
-    padding: 8px 0;
-  }
-
-  .builder-execution-resize-handle::before {
-    width: 64px;
-    height: 3px;
-  }
-
   .builder-action-btn {
     min-height: 38px;
     padding: 7px 10px;
@@ -2874,7 +2815,23 @@ kbd.search-hint {
 
   .builder-pane {
     padding: 12px;
-    min-height: 120px;
+    min-height: 80px;
+  }
+
+  .builder-pane--inputs {
+    min-height: 0;
+  }
+
+  .builder-pane--inputs .builder-pane-copy {
+    display: none;
+  }
+
+  .builder-execution-panels {
+    grid-template-rows: 2fr 3fr;
+  }
+
+  .builder-execution-panels:has(.builder-pane--inputs[hidden]) {
+    grid-template-rows: 1fr;
   }
 
   .pb-block-compact {
