@@ -10,6 +10,13 @@ Date: 2026-04-28
 
 Ruthless audit pass: redundant blocks merged, thin stacks deleted, inputs standardized, I/O contract defined.
 
+### performance-fix — merged into debug variant
+
+**Asset:** `stacks/performance-fix.md` (deleted)
+**Issue:** `performance-fix` was a specialized subset of `debug`: both used `mode.explore`, `frame.cause-mapping`, `mode.critique`, and `schema.execution-brief`, with `debug` adding `frame.task` only when the failure still needed scoping. Keeping both created catalog duplication without adding a distinct composition mechanic.
+**Change:** Deleted `stacks/performance-fix.md`. Added a performance-focused variant note to `stacks/debug.md` explaining when to drop `frame.task` and use the bottleneck-specific sequence. Removed `performance-fix` from stack metadata and ordering in `scripts/build-site-data.mjs`.
+**Impact:** Medium
+
 ---
 
 ### frame.scope — merged into frame.task

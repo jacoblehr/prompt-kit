@@ -7,54 +7,53 @@
 | `frame`     | Unclear task, need to define scope | `frame.task`, `frame.success-criteria`                |
 | `mode`      | Set cognitive stance               | `mode.explore`, `mode.critique`, `mode.decide`        |
 | `strategy`  | Need specific reasoning approach   | `strategy.problem-split`, `strategy.premortem`        |
-| `lens`      | Apply conceptual perspective       | `lens.psychology`, `lens.economics`                   |
 | `guardrail` | Prevent known failure modes        | `guardrail.uncertainty`, `guardrail.assumption-audit` |
 | `schema`    | Require structured output          | `schema.decision-memo`, `schema.execution-brief`      |
-| `rubric`    | Need evaluation criteria           | `rubric.decision-quality`, `rubric.prompt-quality`    |
+| `rubric`    | Need evaluation criteria           | `rubric.decision-quality`, `rubric.plan-quality`      |
 
 ## Stack Selection Guide
 
 | Need                | Recommended Stack                                                            |
 | ------------------- | ---------------------------------------------------------------------------- |
 | Quick gut check     | `mode.critique` + `guardrail.uncertainty`                                    |
-| Generate ideas      | `mode.explore` + `frame.brainstorm-angles`                                   |
-| Debug issue         | `mode.critique` + `frame.codepath-walkthrough` + `lens.invariant-check`      |
-| Make decision       | `mode.decide` + `frame.compare-options` + `guardrail.assumption-audit`       |
-| Learn from work     | `mode.reflect` + `frame.extract-insights` + `schema.plan-next-actions`       |
-| Research topic      | `mode.explore` → `mode.analyze` → `mode.decide`                              |
-| Ship feature safely | `mode.explore` + `frame.success-criteria` + `guardrail.change-impact-review` |
+| Generate ideas      | `frame.task` + `mode.explore`                                                |
+| Debug issue         | `mode.explore` + `frame.task` + `frame.cause-mapping`                        |
+| Make decision       | `frame.success-criteria` + `guardrail.assumption-audit` + `mode.decide`     |
+| Learn from work     | `mode.reflect` + `frame.extract-insights` + `schema.execution-brief`         |
+| Research topic      | `mode.explore` + `frame.extract-insights` + `rubric.research-quality`        |
+| Ship feature safely | `frame.task` + `frame.success-criteria` + `guardrail.assumption-audit`       |
 
 ## Common Block Pairs
 
 ```
 frame.task + mode.explore        → Define and explore the problem
-mode.explore + strategy.split    → Generate many options
-mode.critique + guardrail.bias   → Find and address bias
+mode.explore + strategy.problem-split → Break a large problem into tractable pieces
+mode.critique + guardrail.disconfirming-evidence → Find and pressure-test weak spots
 frame.success-criteria + schema  → Define and structure output
-mode.decide + rubric.quality     → Make and evaluate decisions
+mode.decide + rubric.decision-quality → Make and evaluate decisions
 ```
 
 ## Key Combinations by Use Case
 
 ### Problem Framing
 
-- `frame.task` → `frame.success-criteria` → `frame.scope`
+- `frame.task` → `frame.success-criteria` → `guardrail.uncertainty`
 
 ### Ideation
 
-- `mode.explore` → `strategy.problem-split` → `frame.brainstorm-angles`
+- `frame.task` → `mode.explore` → `strategy.problem-split`
 
 ### Critical Review
 
-- `mode.critique` → `guardrail.disconfirming-evidence` → `lens.confidence-calibration`
+- `mode.critique` → `guardrail.disconfirming-evidence` → `guardrail.uncertainty`
 
 ### Decision Making
 
-- `frame.compare-options` → `guardrail.assumption-audit` → `schema.decision-memo`
+- `frame.success-criteria` → `guardrail.assumption-audit` → `schema.decision-memo`
 
 ### Learning
 
-- `mode.reflect` → `frame.extract-insights` → `schema.plan-next-actions`
+- `mode.reflect` → `frame.extract-insights` → `schema.execution-brief`
 
 ## Starter Stacks (Copy-Paste)
 
@@ -67,61 +66,52 @@ mode.critique + guardrail.uncertainty
 ### Fast Ideation
 
 ```
-mode.explore + frame.brainstorm-angles
+frame.task + mode.explore
 ```
 
 ### Debug Failure
 
 ```
-mode.critique + frame.codepath-walkthrough + lens.invariant-check + guardrail.change-impact-review
+mode.explore + frame.task + mode.critique + frame.cause-mapping + schema.execution-brief
 ```
 
 ### Make Decision
 
 ```
-mode.decide + frame.compare-options + guardrail.assumption-audit + schema.decision-memo + rubric.decision-quality
+frame.success-criteria + guardrail.assumption-audit + mode.decide + schema.decision-memo + rubric.decision-quality
 ```
 
 ### Safe Code Change
 
 ```
-mode.explore + frame.codepath-walkthrough + lens.invariant-check + guardrail.change-impact-review + frame.test-case-design
+frame.task + mode.explore + guardrail.assumption-audit + strategy.premortem + schema.execution-brief
 ```
 
-## Field-Specific Lenses
+## Useful By Job
 
-### Psychology/Motivation
+### Framing
 
-- `lens.motivation-diagnosis` — Why people behave as they do
-- `lens.user-mental-model` — How users think about the problem
-- `lens.bias-check` — Common cognitive biases
+- `frame.task` — Clarify the ask and scope boundary
+- `frame.success-criteria` — Make success judgeable before work starts
+- `guardrail.uncertainty` — Surface what is still unknown
 
-### Economics/Business
+### Critique
 
-- `lens.opportunity-cost` — What you give up
-- `lens.incentive-audit` — Who benefits from what
-- `lens.cost-of-delay` — Time-value of decisions
+- `mode.critique` — Pressure-test the current answer
+- `guardrail.assumption-audit` — Expose hidden premises
+- `guardrail.disconfirming-evidence` — Find the strongest opposing case
 
-### Engineering/Technical
+### Delivery
 
-- `lens.invariant-check` — What must always be true
-- `lens.interface-contract-review` — Boundary conditions
-- `lens.tech-debt-quadrant` — Tradeoff analysis
-
-### Research/Evidence
-
-- `lens.evidence-strength` — How strong is the evidence?
-- `lens.source-trustworthiness` — Can we trust the source?
-- `lens.claim-evidence-reasoning` — Is the argument sound?
+- `schema.decision-memo` — Record and justify a choice
+- `schema.execution-brief` — Turn a direction into a sequenced plan
+- `schema.incident-postmortem` — Capture lessons after a stabilized failure
 
 ## Guardrail Checklist
 
 - [ ] `guardrail.uncertainty` — Surface unknowns
 - [ ] `guardrail.assumption-audit` — Check premises
 - [ ] `guardrail.disconfirming-evidence` — Seek contrary data
-- [ ] `guardrail.change-impact-review` — Assess blast radius
-- [ ] `guardrail.release-readiness` — Check preconditions
-- [ ] `guardrail.statistical-significance-check` — Validate findings
 
 ## Schema Templates
 
@@ -136,15 +126,15 @@ risks: [potential issues]
 next steps: [action items]
 ```
 
-### Experiment Design
+### Execution Brief
 
 ```
-hypothesis: [predicted relationship]
-success metrics: [how to measure]
-time horizon: [duration]
-actors: [who is involved]
-constraints: [limitations]
-fallback plan: [if it fails]
+objective: [what must happen]
+ordered steps or milestones: [sequence]
+dependencies: [what this relies on]
+major risks: [what could derail it]
+first checkpoint: [earliest validation point]
+immediate next action: [what to do now]
 ```
 
 ## Advanced Patterns
@@ -152,7 +142,7 @@ fallback plan: [if it fails]
 ### Multi-Stage Composition
 
 ```
-frame.task → mode.explore → strategy.split → frame.brainstorm-angles
+frame.task → mode.explore → strategy.problem-split → guardrail.uncertainty
 → mode.decide → guardrail.assumption-audit → schema.decision-memo
 → rubric.decision-quality → mode.reflect → frame.extract-insights
 ```
@@ -160,17 +150,9 @@ frame.task → mode.explore → strategy.split → frame.brainstorm-angles
 ### Iterative Refinement
 
 ```
-mode.critique → frame.argument-structure → lens.confidence-calibration
-→ guardrail.change-impact-review → frame.improvement-plan
+mode.critique → guardrail.assumption-audit → guardrail.disconfirming-evidence
+→ schema.execution-brief
 ```
-
-## Quick Stats
-
-- 7 block types
-- 64 stacks across 9 families
-- 400+ prompt blocks in catalog
-- Average stack: 5–8 blocks
-- Most common: `frame` + `mode` + `strategy` + `guardrail`
 
 ---
 

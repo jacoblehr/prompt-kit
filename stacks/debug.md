@@ -15,4 +15,10 @@ Expected output: Root cause identified, highest-value next experiment named, and
 
 `mode.explore` prevents premature fixation on a single hypothesis. `frame.task` scopes the specific fault being investigated. `mode.critique` switches to adversarial evaluation of candidate causes. `frame.cause-mapping` traces the fault to its structural origin. `schema.execution-brief` converts the diagnosis into a concrete experiment sequence.
 
+Performance variant:
+
+- drop `frame.task` when the bottleneck is already scoped to one path or subsystem
+- keep `mode.explore` -> `frame.cause-mapping` -> `mode.critique` -> `schema.execution-brief`
+- use this variant when the main job is ranking optimization work rather than proving what is broken
+
 **Minimum blocks:** `frame.task` + `frame.cause-mapping`

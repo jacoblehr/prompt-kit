@@ -1,6 +1,6 @@
 # Prompt
 
-Define explicit success criteria for the work below.
+Define explicit success criteria for this task or context.
 
 Requirements:
 

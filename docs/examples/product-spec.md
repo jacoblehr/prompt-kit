@@ -7,24 +7,14 @@ You need to write a product specification for a new feature, but the requirement
 ## The Stack
 
 ```
-mode.explore + frame.task + frame.success-criteria
-→ guardrail.uncertainty + lens.user-mental-model
-→ mode.decide + frame.compare-options + guardrail.assumption-audit
-→ schema.decision-memo + rubric.decision-quality
+frame.task + frame.success-criteria + guardrail.assumption-audit
+→ rubric.plan-quality + schema.execution-brief
 → mode.reflect + frame.extract-insights
 ```
 
 ## Step-by-Step
 
-### 1. Explore the Problem Space
-
-**Block**: `mode.explore`
-
-- Generate multiple interpretations of the vague request
-- Surface hidden constraints and opportunities
-- Avoid premature convergence on one solution
-
-### 2. Frame the Task
+### 1. Frame the Task
 
 **Block**: `frame.task`
 
@@ -32,7 +22,7 @@ mode.explore + frame.task + frame.success-criteria
 - Separate the "ask" from the "job to be done"
 - Define scope boundaries
 
-### 3. Define Success
+### 2. Define Success
 
 **Block**: `frame.success-criteria`
 
@@ -40,39 +30,7 @@ mode.explore + frame.task + frame.success-criteria
 - How will we know if the feature succeeded?
 - Quantifiable metrics where possible
 
-### 4. Surface Uncertainty
-
-**Block**: `guardrail.uncertainty`
-
-- What don't we know?
-- Which assumptions are most dangerous?
-- How can we validate them quickly?
-
-### 5. Understand Users
-
-**Block**: `lens.user-mental-model`
-
-- How will users think about this feature?
-- What mental models do they bring?
-- Where will they expect vs. actual behavior?
-
-### 6. Make a Decision
-
-**Block**: `mode.decide`
-
-- Move from exploration to commitment
-- Choose an approach based on criteria
-- Accept tradeoffs explicitly
-
-### 7. Compare Options
-
-**Block**: `frame.compare-options``
-
-- Structure the alternatives
-- Apply decision criteria
-- Identify pros/cons of each
-
-### 8. Audit Assumptions
+### 3. Audit Assumptions
 
 **Block**: `guardrail.assumption-audit`
 
@@ -80,31 +38,30 @@ mode.explore + frame.task + frame.success-criteria
 - Rate confidence in each
 - Plan validation tests
 
-### 9. Document the Decision
+### 4. Evaluate the Plan
 
-**Block**: `schema.decision-memo`
+**Block**: `rubric.plan-quality`
 
-- Decision and context
-- Options considered
-- Criteria used
-- Risks and mitigations
+- Are dependencies visible and steps ordered well?
+- Is the first action concrete enough to do now?
+- Is there an early checkpoint before the work drifts?
 
-### 10. Evaluate Quality
+### 5. Draft the Execution Brief
 
-**Block**: `rubric.decision-quality`
+**Block**: `schema.execution-brief`
 
-- Does the spec meet quality standards?
-- Is it clear, complete, actionable?
-- Can engineering build from it?
+- Convert the scoped feature into a buildable brief
+- Sequence the work and call out dependencies
+- Make the first checkpoint and immediate next action explicit
 
-### 11. Reflect
+### 6. Reflect
 
 **Block**: `mode.reflect`
 
 - What worked in the spec process?
 - What would we do differently?
 
-### 12. Capture Learnings
+### 7. Capture Learnings
 
 **Block**: `frame.extract-insights`
 
@@ -124,7 +81,7 @@ A product specification that:
 
 ## Key Takeaways
 
-- `mode.explore` prevents premature specification
-- `guardrail.uncertainty` keeps risk visible
-- `schema.decision-memo` creates defensible documentation
+- `frame.success-criteria` keeps the feature target testable
+- `guardrail.assumption-audit` keeps risk visible
+- `schema.execution-brief` turns the spec into a buildable artifact
 - The sequence balances creativity with rigor

@@ -1,26 +1,25 @@
 # rubric.research-quality
 
 ## Purpose
-Validate that a research pass is rigorous enough to inform a decision or support a position.
+Validate that a research artifact says only what the evidence supports and is clear enough to use in a decision.
 
 ## Use when
-After completing an investigation, before using findings to decide or write.
+After an investigation has produced findings, before using that output to decide, brief, or write.
 
 ## Expects
 A research summary or set of findings.
 
 ## Adds
-Per-criterion judgments that flag source gaps, unsupported conclusions, and missing disconfirmation.
+Per-criterion judgments that flag unsupported claims, ambiguous confidence, and decision-useful implications mixed with speculation.
 
 Questions:
 
 - Is the question being answered actually the question that matters for the decision?
-- Are the sources capable of answering this question, or is there a gap?
-- Has disconfirming evidence been actively sought, not just noted when encountered?
-- Are the strongest counter-arguments represented fairly?
+- Are the key claims clearly tied to evidence rather than asserted?
 - Are the conclusions limited to what the evidence actually supports?
 - Is the confidence level on each key claim explicit?
-- Would a skeptical expert with opposing priors find this research intellectually honest?
+- Are decision-relevant implications separated from speculation or open questions?
+- Would a skeptical reader understand what is known, inferred, and still unresolved?
 
 ## Returns
 - per criterion: yes / partial / no, with one-sentence evidence
@@ -28,10 +27,10 @@ Questions:
 - highest-leverage fix if revision is needed
 
 ## Pairs with
-`mode.critique`, `guardrail.uncertainty`, `guardrail.disconfirming-evidence`
+`mode.critique`, `guardrail.uncertainty`, `rubric.research-method`
 
 ## Avoid when
-The research is not yet complete — finish the investigation first.
+The artifact is still mostly raw notes — extract findings first, then evaluate the output.
 
 ---
 

@@ -19,7 +19,7 @@ Structured extraction that ties each insight to evidence and an implication.
 - possible action or implication
 
 ## Pairs with
-`mode.reflect`, `frame.cause-mapping`, `schema.plan-next-actions`, `rubric.research-quality`
+`mode.reflect`, `frame.cause-mapping`, `schema.execution-brief`, `rubric.research-quality`
 
 ## Avoid when
 The goal is faithful summary rather than actionable signal. Use `frame.summarize-source` instead.

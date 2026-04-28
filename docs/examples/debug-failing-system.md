@@ -7,9 +7,9 @@ Your production system is failing intermittently. Logs show errors but the root 
 ## The Stack
 
 ```
-mode.critique + frame.codepath-walkthrough + lens.invariant-check
-→ guardrail.change-impact-review + frame.test-case-design
-→ mode.reflect + frame.extract-insights + schema.plan-next-actions
+mode.explore + frame.task + mode.critique
+→ frame.cause-mapping + schema.execution-brief
+→ mode.reflect + frame.extract-insights
 ```
 
 ## Step-by-Step
@@ -21,34 +21,37 @@ mode.critique + frame.codepath-walkthrough + lens.invariant-check
 - Focus on what's failing, not what should work
 - Suppress politeness, surface hard truths
 
-### 2. Walk Through the Code Path
+### 2. Frame the Fault
 
-**Block**: `frame.codepath-walkthrough`
+**Block**: `frame.task`
 
-- Map every execution path
-- Identify where errors could originate
-- Document assumptions at each step
+- Separate the visible failure from the likely objective
+- State what is in scope for the investigation
+- Keep constraints literal before testing causes
 
-### 3. Check Invariants
+### 3. Critique Likely Causes
 
-**Block**: `lens.invariant-check`
+**Block**: `mode.critique`
 
-- What must always be true about this system?
-- Which invariants are violated by the errors?
+- Pressure-test the leading explanations
+- Look for contradictions or easy-to-miss boundary failures
+- Prioritize the hypotheses that would do the most damage if ignored
 
-### 4. Assess Impact
+### 4. Map Causes
 
-**Block**: `guardrail.change-impact-review`
+**Block**: `frame.cause-mapping`
 
-- Which callers are affected?
-- What's the blast radius of potential fixes?
+- Trace visible symptoms back to structural causes
+- Separate triggers from root cause
+- Name the earliest intervention point
 
-### 5. Design Tests
+### 5. Draft the Execution Brief
 
-**Block**: `frame.test-case-design`
+**Block**: `schema.execution-brief`
 
-- Create tests that reproduce the failure
-- Design tests for each code path identified in step 2
+- Turn the diagnosis into the next experiment sequence
+- Make dependencies and blockers visible
+- Keep the first checkpoint close enough to catch a wrong turn early
 
 ### 6. Reflect and Learn
 
@@ -64,9 +67,9 @@ mode.critique + frame.codepath-walkthrough + lens.invariant-check
 - Turn debugging findings into reusable knowledge
 - Document patterns that led to the failure
 
-### 8. Plan Next Actions
+### 8. Draft the Execution Brief
 
-**Block**: `schema.plan-next-actions`
+**Block**: `schema.execution-brief`
 
 - Concrete steps to fix
 - Who owns each action
@@ -77,13 +80,13 @@ mode.critique + frame.codepath-walkthrough + lens.invariant-check
 A systematic debugging approach that:
 
 - Identifies root causes, not symptoms
-- Minimizes risk of introducing new bugs
+- Turns diagnosis into an explicit next-step plan
 - Creates reusable knowledge for future incidents
 - Documents the system's true behavior
 
 ## Key Takeaways
 
 - Use `mode.critique` to avoid wishful thinking about the problem
-- `lens.invariant-check` surfaces hidden assumptions
-- `frame.test-case-design` closes the loop with verification
+- `frame.cause-mapping` separates trigger from structural cause
+- `schema.execution-brief` closes the loop with a concrete next move
 - The full sequence turns reactive firefighting into systematic improvement

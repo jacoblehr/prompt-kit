@@ -140,7 +140,6 @@ Use these rules to decide where a new asset belongs:
 - If it mainly defines the task, scope, or success criteria → `type=frame`
 - If it mainly sets the cognitive stance → `type=mode`
 - If it mainly controls the reasoning mechanic → `type=strategy`
-- If it mainly applies a conceptual frame or discipline → `type=lens`
 - If it mainly prevents a failure mode or reasoning error → `type=guardrail`
 - If it mainly shapes the output format → `type=schema`
 - If it mainly defines evaluation criteria → `type=rubric`
@@ -153,11 +152,10 @@ Use these rules to decide where a new asset belongs:
 - `frame.task` — frame block that restates a messy request as a structured problem
 - `mode.explore` — mode block for breadth before convergence
 - `strategy.problem-split` — strategy block for decomposition
-- `lens.incentive-audit` — lens block drawn from game theory
 - `guardrail.uncertainty` — guardrail block that prevents hidden confidence
 - `schema.decision-memo` — schema block for decision output
 - `rubric.decision-quality` — rubric block for evaluating decisions
-- `stack.explore-to-decision` — stack for moving from options to a choice
+- `stack.decide` — stack for moving from options to a choice
 
 ---
 

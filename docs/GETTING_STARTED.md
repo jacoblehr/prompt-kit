@@ -34,8 +34,7 @@ npx prompt-kit stats
 
 - `frame` — Define the task, scope, success criteria
 - `mode` — Set cognitive stance (explore, decide, critique, reflect)
-- `strategy` — Reasoning methods (split problems, premortem, inversion)
-- `lens` — Conceptual viewpoints (psychology, economics, game theory)
+- `strategy` — Reasoning methods (split problems, premortem, steelman, red-team)
 - `guardrail` — Prevent common failures (bias, missing evidence)
 - `schema` — Output structure (decision memo, experiment design)
 - `rubric` — Evaluation criteria
@@ -62,22 +61,22 @@ npx prompt-kit stats
 ### Debugging a Failing System
 
 ```
-mode.explore → frame.codepath-walkthrough → lens.invariant-check
-→ guardrail.change-impact-review → frame.test-case-design
+mode.explore → frame.task → mode.critique
+→ frame.cause-mapping → schema.execution-brief
 ```
 
 ### Writing a Product Specification
 
 ```
-mode.decide → frame.compare-options → guardrail.assumption-audit
-→ schema.decision-memo → rubric.decision-quality
+frame.task → frame.success-criteria → guardrail.assumption-audit
+→ rubric.plan-quality → schema.execution-brief
 ```
 
 ### Research Synthesis
 
 ```
-mode.explore → frame.synthesize-sources → lens.survivorship-bias
-→ frame.extract-insights → schema.execution-brief
+mode.explore → frame.extract-insights → guardrail.disconfirming-evidence
+→ rubric.research-method → rubric.research-quality
 ```
 
 ## Essential Stacks (Start Here)
@@ -89,25 +88,25 @@ mode.explore → frame.synthesize-sources → lens.survivorship-bias
 
 ### 2. Fast Ideation (2–3 blocks)
 
-- `mode.explore` + `frame.brainstorm-angles`
-- Use when: Need many options, problem is underframed
+- `frame.task` + `mode.explore`
+- Use when: Need to open the space before deciding what the real problem is
 
 ### 3. Debug a Failure (5–6 blocks)
 
-- `mode.critique` + `frame.codepath-walkthrough` + `lens.invariant-check`
-- → `guardrail.change-impact-review` + `frame.test-case-design`
+- `mode.explore` + `frame.task` + `mode.critique`
+- → `frame.cause-mapping` + `schema.execution-brief`
 - Use when: Investigating bugs, incidents, regressions
 
 ### 4. Decision Making (5–7 blocks)
 
-- `mode.decide` + `frame.compare-options` + `guardrail.assumption-audit`
+- `frame.success-criteria` + `guardrail.assumption-audit` + `mode.decide`
 - → `schema.decision-memo` + `rubric.decision-quality`
 - Use when: Choosing between options, need defensible decision
 
 ### 5. Safe Code Changes (5–6 blocks)
 
-- `mode.explore` + `frame.codepath-walkthrough` + `lens.invariant-check`
-- → `guardrail.change-impact-review` + `frame.test-case-design`
+- `frame.task` + `mode.explore` + `guardrail.assumption-audit`
+- → `strategy.premortem` + `schema.execution-brief`
 - Use when: Modifying unfamiliar code, production changes
 
 ## Adding Your Own Blocks
@@ -121,7 +120,6 @@ npx plop
 # Direct generation
 npx plop block mode explore
 npx plop block strategy premortem
-npx plop block lens psychology
 npx plop block stack debug-incident
 ```
 
@@ -131,23 +129,23 @@ npx plop block stack debug-incident
 
 - `frame.task` — Clarify the ask
 - `frame.success-criteria` — Define done
-- `frame.scope` — Bound the problem
+- `guardrail.uncertainty` — Surface what is still unresolved
 
 ### Option Generation
 
 - `mode.explore` — Widen search space
 - `strategy.problem-split` — Break into pieces
-- `frame.brainstorm-angles` — Generate perspectives
+- `frame.extract-insights` — Pull the useful signal forward
 
 ### Critical Thinking
 
 - `mode.critique` — Find weaknesses
 - `guardrail.disconfirming-evidence` — Seek contrary evidence
-- `lens.confidence-calibration` — Check certainty
+- `guardrail.uncertainty` — Calibrate confidence and unknowns
 
 ### Decision Support
 
-- `frame.compare-options` — Structure comparison
+- `frame.success-criteria` — Make the choice target explicit
 - `guardrail.assumption-audit` — Check premises
 - `rubric.decision-quality` — Define good
 
@@ -155,7 +153,7 @@ npx plop block stack debug-incident
 
 - `mode.reflect` — Step back
 - `frame.extract-insights` — Find patterns
-- `schema.plan-next-actions` — Convert learnings
+- `schema.execution-brief` — Convert learnings into an actionable brief
 
 ## Next Steps
 

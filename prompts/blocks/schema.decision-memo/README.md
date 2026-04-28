@@ -21,7 +21,7 @@ A consistent, scannable memo format that separates decision from rationale and f
 - next action
 
 ## Pairs with
-`mode.decide`, `frame.success-criteria`, `frame.compare-options`, `rubric.decision-quality`
+`mode.decide`, `frame.success-criteria`, `guardrail.assumption-audit`, `rubric.decision-quality`
 
 ## Avoid when
 No decision has actually been made yet — this schema captures a decision, it does not help make one.

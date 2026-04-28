@@ -10,13 +10,14 @@ After a decision, before handoff or delegation, and when execution details are s
 A chosen direction, decision, or plan.
 
 ## Adds
-A structured output format that separates objective, scope, key steps, success criteria, risks, and owner to make execution legible and trackable.
+A structured output format that makes objective, sequencing, dependencies, blockers, risks, and ownership legible enough to execute or hand off.
 
 ## Returns
 - objective
 - owner or responsible role
 - sequence or milestones
 - dependencies
+- likely blockers
 - major risks
 - first checkpoint
 - pause or escalation trigger

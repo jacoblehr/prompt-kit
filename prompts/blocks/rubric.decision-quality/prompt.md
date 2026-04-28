@@ -9,7 +9,7 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Are tradeoffs named rather than hidden?
 - Is uncertainty acknowledged?
 - Is there a concrete next action?
-- Would future-you understand why this decision was made?
+- Would a future reviewer understand why this decision was made?
 
 Return:
 - overall verdict: ready / needs revision

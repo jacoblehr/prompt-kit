@@ -15,4 +15,6 @@ Expected output: Threat inventory ranked by impact, with mitigations assigned an
 
 `mode.critique` opens the system to adversarial evaluation. `guardrail.assumption-audit` surfaces security assumptions baked into the design. `strategy.red-team` generates active attack paths the design does not currently prevent. `schema.execution-brief` produces a risk-ranked mitigation backlog.
 
+**Choose instead when:** use `review-code` if the main job is checking correctness, contracts, blast radius, or implementation bugs in code that already exists, rather than modeling adversarial abuse and exploit paths.
+
 **Minimum blocks:** `mode.critique` + `strategy.red-team`

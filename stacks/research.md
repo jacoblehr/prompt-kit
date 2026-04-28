@@ -7,12 +7,13 @@ Blocks:
 2. `frame.extract-insights`
 3. `guardrail.disconfirming-evidence`
 4. `frame.cause-mapping`
-5. `rubric.research-quality`
+5. `rubric.research-method`
+6. `rubric.research-quality`
 
 Expected output: Consolidated findings with confidence levels, disconfirming evidence considered, and decision-relevant implications named.
 
 ## Composition notes
 
-`mode.explore` prevents premature conclusion before the evidence base is established. `frame.extract-insights` pulls decision-relevant signals from the source material. `guardrail.disconfirming-evidence` requires engaging with evidence that challenges the emerging view. `frame.cause-mapping` traces findings to structural explanations. `rubric.research-quality` validates the output before using it to decide or write.
+`mode.explore` prevents premature conclusion before the evidence base is established. `frame.extract-insights` pulls decision-relevant signals from the source material. `guardrail.disconfirming-evidence` requires engaging with evidence that challenges the emerging view. `frame.cause-mapping` traces findings to structural explanations. `rubric.research-method` checks whether the investigation was conducted rigorously enough to trust. `rubric.research-quality` then validates the output before using it to decide or write.
 
 **Minimum blocks:** `mode.explore` + `guardrail.disconfirming-evidence` + `rubric.research-quality`

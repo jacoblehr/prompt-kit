@@ -7,7 +7,7 @@ Use this repo as a kit of parts.
 1. start with a saved stack if one already matches the task
 2. otherwise start with a `frame` block to clarify the task
 3. add a `mode` block to set the cognitive stance
-4. add a `strategy` or `lens` block if the task needs one (1–2 max)
+4. add a `strategy` block if the task needs one (1–2 max)
 5. add a `guardrail` block if a specific failure mode is likely
 6. add a `schema` block if the output format matters
 7. finish with a `rubric` block if the stakes justify evaluation criteria
@@ -18,112 +18,106 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 
 ### Underframed problem
 
+- `frame.task`
 - `mode.explore`
 - `strategy.problem-split`
-- `frame.task`
-- `frame.scope`
 - `guardrail.uncertainty`
 
 ### Choosing between options
 
-- `mode.decide`
-- `strategy.steelman`
 - `frame.success-criteria`
-- `frame.compare-options`
+- `guardrail.assumption-audit`
+- `mode.decide`
 - `schema.decision-memo`
 
 ### Explore versus exploit
 
-- `mode.decide`
+- `mode.explore`
 - `frame.success-criteria`
-- `frame.explore-exploit-decision`
 - `guardrail.uncertainty`
+- `guardrail.disconfirming-evidence`
+- `mode.decide`
 - `schema.execution-brief`
 
 ### Prioritizing a portfolio
 
-- `mode.decide`
+- `mode.explore`
 - `frame.success-criteria`
-- `frame.prioritize-opportunities`
+- `guardrail.assumption-audit`
+- `mode.decide`
 - `schema.execution-brief`
-- `guardrail.uncertainty`
 
 ### De-risking before full commitment
 
-- `mode.decide`
-- `frame.success-criteria`
-- `frame.design-cheap-test`
+- `frame.task`
+- `guardrail.assumption-audit`
+- `strategy.premortem`
 - `schema.execution-brief`
 - `guardrail.uncertainty`
 
 ### Pressure-testing a plan
 
+- `frame.task`
 - `mode.critique`
 - `strategy.premortem`
 - `strategy.red-team`
 - `guardrail.assumption-audit`
-- `guardrail.stress-test-assumptions`
+- `guardrail.disconfirming-evidence`
 
 ### Improving a prompt
 
+- `frame.task`
 - `mode.critique`
-- `frame.clarify-task`
-- `frame.prompt-critique`
-- `frame.prompt-rewrite`
-- `rubric.prompt-quality`
-
-### Concept lenses
-
-- Game theory lens blocks: `lens.incentive-audit`, `lens.signaling-check`, `lens.coordination-plan`
-- Psychology lens blocks: `lens.bias-check`, `lens.motivation-diagnosis`, `lens.behavior-change-plan`
-- Computer science lens blocks: `lens.invariant-check`, `lens.complexity-tradeoff`, `lens.debugger-loop`, `lens.interface-contract-review`
+- `frame.prompt-compare`
+- `rubric.writing-quality`
+- `schema.execution-brief`
 
 ### Aligning stakeholders
 
 - `mode.explore`
-- `frame.stakeholder-map`
-- `lens.coordination-plan`
-- `frame.alignment-conversation-plan`
+- `frame.task`
+- `guardrail.assumption-audit`
+- `mode.decide`
 - `schema.execution-brief`
 
 ### Pressure-testing a belief or position
 
+- `mode.explore`
+- `frame.task`
 - `strategy.steelman`
-- `strategy.inversion`
-- `frame.critique-argument`
+- `frame.extract-insights`
 - `rubric.argument-quality`
 
 ### Learning from an outcome
 
 - `mode.reflect`
 - `frame.cause-mapping`
-- `schema.decision-journal-entry`
-- `frame.weekly-review`
-- `rubric.reflection-quality`
+- `frame.extract-insights`
+- `schema.execution-brief`
 
 ### Writing with rigor
 
-- `frame.brief-to-draft`
+- `frame.task`
 - `mode.critique`
-- `frame.critique-argument`
-- `frame.rewrite-for-clarity`
+- `guardrail.uncertainty`
+- `frame.prompt-compare`
 - `rubric.writing-quality`
 
 ### Reading before changing code
 
+- `frame.task`
 - `mode.explore`
-- `frame.codepath-walkthrough`
-- `lens.invariant-check`
-- `lens.interface-contract-review`
-- `guardrail.change-impact-review`
+- `mode.critique`
+- `guardrail.assumption-audit`
+- `schema.execution-brief`
 
 ### Debugging from logs
 
+- `mode.explore`
+- `frame.task`
 - `mode.critique`
-- `guardrail.triage-the-unknown`
-- `frame.log-triage`
-- `frame.bug-reproduction-brief`
-- `lens.debugger-loop`
+- `frame.cause-mapping`
+- `schema.execution-brief`
 
 ## Keep It Light
 

@@ -30,14 +30,14 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 
 | Stack | Use for |
 | --- | --- |
-| `orient-before-acting` | Quick sense-check before starting any task |
-| `debug-a-failure` | Systematic bug or incident diagnosis |
-| `debug-a-system` | Architecture and system review |
-| `break-a-recurring-incident` | Incident response and root cause |
-| `read-before-change` | Safe, context-aware code changes |
+| `frame-problem` | Clarify a vague request before choosing a direction |
+| `debug` | Systematic bug or incident diagnosis |
+| `decide` | Traceable high-stakes decision-making |
+| `research` | Evidence gathering before deciding or writing |
+| `feature-design` | Requirements, success criteria, and execution planning |
 | `safe-migration` | Risk-managed schema or API migration |
-| `evaluate-model-output` | LLM output assessment and critique |
-| `write-a-proposal` | Structured proposal writing and review |
+| `review-code` | Correctness, contracts, and blast-radius review |
+| `build-system-prompt` | Persistent prompt and instruction-set design |
 
 ## Build Your Own Composition
 
@@ -53,8 +53,8 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 **Common patterns:**
 
 - Quick sense-check: `mode.critique` + `guardrail.uncertainty`
-- Fast ideation: `mode.explore` + `frame.brainstorm-angles`
-- Deep research: `mode.explore` → `mode.analyze` → `mode.decide`
+- Fast framing: `frame.task` + `mode.explore`
+- Deep research: `mode.explore` + `frame.extract-insights` + `guardrail.disconfirming-evidence`
 
 ## Block Types
 
@@ -63,7 +63,6 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 | `frame`     | Define the task, objective, scope, or success criteria |
 | `mode`      | Set the overarching cognitive stance                   |
 | `strategy`  | Control the reasoning mechanic or method of thought    |
-| `lens`      | Apply a conceptual viewpoint or interpretive frame     |
 | `guardrail` | Prevent common failure modes and reasoning errors      |
 | `schema`    | Shape the output format or structure                   |
 | `rubric`    | Define what "good" looks like for evaluation           |
@@ -111,6 +110,6 @@ See `docs/CONTRIBUTING.md` for details on adding new blocks, stacks, and running
 - `docs/CHEATSHEET.md` — One-page quick reference
 - `docs/ONTOLOGY.md` — Asset taxonomy and rules
 - `docs/COMPOSITION.md` — Assembly rules and patterns
-- `docs/EXAMPLES/` — Real task walkthroughs
+- `docs/examples/` — Real task walkthroughs
 
 (Open `index.html` to browse the full catalog interactively.)

@@ -3,6 +3,565 @@ globalThis.SITE_DATA = {
   "blocks": [
     {
       "section": "Block",
+      "canonicalType": "mode",
+      "blockType": "mode",
+      "form": "mode",
+      "sourceKind": "Mode",
+      "stage": "frame",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Open the problem space before committing to a conclusion, so important options, unknowns, and evidence gaps are visible.",
+        "useWhen": "At the start of an ambiguous task, before narrowing options, or whenever premature convergence is the main risk.",
+        "expects": "A problem, decision, system, or body of material that still needs mapping.",
+        "adds": "Breadth-first reasoning that surfaces options, unknowns, and promising directions before evaluation begins.",
+        "returns": [
+          "plausible directions",
+          "key unknowns",
+          "signals worth testing next"
+        ],
+        "pairsWith": [
+          "frame.task",
+          "frame.success-criteria",
+          "guardrail.uncertainty",
+          "mode.critique"
+        ],
+        "avoidWhen": "The task already has a committed direction and the job is pressure-testing or executing it."
+      },
+      "key": "explore",
+      "aliases": [
+        "mode.explore"
+      ],
+      "title": "explore",
+      "summary": "Open the problem space before committing to a conclusion, so important options, unknowns, and evidence gaps are visible.",
+      "tags": [
+        "explore"
+      ],
+      "copy": "Survey the space before you narrow it.\nMap plausible directions, unknowns, and what to inspect next.\nDo not choose yet unless the prompt explicitly asks you to close.",
+      "body": [
+        [
+          "Purpose",
+          "Open the problem space before committing to a conclusion, so important options, unknowns, and evidence gaps are visible."
+        ],
+        [
+          "Use when",
+          "At the start of an ambiguous task, before narrowing options, or whenever premature convergence is the main risk."
+        ],
+        [
+          "Expects",
+          "A problem, decision, system, or body of material that still needs mapping."
+        ],
+        [
+          "Adds",
+          "Breadth-first reasoning that surfaces options, unknowns, and promising directions before evaluation begins."
+        ],
+        [
+          "Returns",
+          "plausible directions, key unknowns, signals worth testing next"
+        ],
+        [
+          "Pairs with",
+          "frame.task, frame.success-criteria, guardrail.uncertainty, mode.critique"
+        ],
+        [
+          "Avoid when",
+          "The task already has a committed direction and the job is pressure-testing or executing it."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/mode.explore/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "mode",
+      "blockType": "mode",
+      "form": "mode",
+      "sourceKind": "Mode",
+      "stage": "decide",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Close from multiple plausible paths to a committed choice with explicit tradeoffs and next action.",
+        "useWhen": "Options exist and the task now requires commitment rather than further exploration.",
+        "expects": "An option set, decision criteria, or a choice that needs to be made traceable.",
+        "adds": "Decision-first reasoning that makes the chosen option, rationale, tradeoff, and next action explicit.",
+        "returns": [
+          "chosen option",
+          "rationale",
+          "key tradeoff",
+          "next action"
+        ],
+        "pairsWith": [
+          "frame.success-criteria",
+          "guardrail.assumption-audit",
+          "schema.decision-memo",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The task still needs broad exploration or new options generated."
+      },
+      "key": "decide",
+      "aliases": [
+        "mode.decide"
+      ],
+      "title": "decide",
+      "summary": "Close from multiple plausible paths to a committed choice with explicit tradeoffs and next action.",
+      "tags": [
+        "decide"
+      ],
+      "copy": "Choose the best option first, then justify it.\nShow the tradeoff that made the decision real.\nEnd with the next action that follows from the choice.",
+      "body": [
+        [
+          "Purpose",
+          "Close from multiple plausible paths to a committed choice with explicit tradeoffs and next action."
+        ],
+        [
+          "Use when",
+          "Options exist and the task now requires commitment rather than further exploration."
+        ],
+        [
+          "Expects",
+          "An option set, decision criteria, or a choice that needs to be made traceable."
+        ],
+        [
+          "Adds",
+          "Decision-first reasoning that makes the chosen option, rationale, tradeoff, and next action explicit."
+        ],
+        [
+          "Returns",
+          "chosen option, rationale, key tradeoff, next action"
+        ],
+        [
+          "Pairs with",
+          "frame.success-criteria, guardrail.assumption-audit, schema.decision-memo, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The task still needs broad exploration or new options generated."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/mode.decide/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "mode",
+      "blockType": "mode",
+      "form": "mode",
+      "sourceKind": "Mode",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Pressure-test a draft, plan, argument, system, or recommendation by actively looking for weaknesses and failure points.",
+        "useWhen": "The main risk is being too charitable to the current answer, design, or plan.",
+        "expects": "A draft, recommendation, design, code path, or proposed course of action.",
+        "adds": "Adversarial evaluation that surfaces weaknesses, contradictions, boundary failures, and highest-risk flaws.",
+        "returns": [
+          "strongest weaknesses",
+          "likely failure points",
+          "what to fix first"
+        ],
+        "pairsWith": [
+          "guardrail.disconfirming-evidence",
+          "guardrail.assumption-audit",
+          "rubric.argument-quality",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The task still requires generative exploration or the artifact is too incomplete to critique meaningfully."
+      },
+      "key": "critique",
+      "aliases": [
+        "mode.critique"
+      ],
+      "title": "critique",
+      "summary": "Pressure-test a draft, plan, argument, system, or recommendation by actively looking for weaknesses and failure points.",
+      "tags": [
+        "critique"
+      ],
+      "copy": "Read adversarially.\nAssume the current answer is vulnerable and look for where it breaks.\nPrioritize the flaws that matter most if left unfixed.",
+      "body": [
+        [
+          "Purpose",
+          "Pressure-test a draft, plan, argument, system, or recommendation by actively looking for weaknesses and failure points."
+        ],
+        [
+          "Use when",
+          "The main risk is being too charitable to the current answer, design, or plan."
+        ],
+        [
+          "Expects",
+          "A draft, recommendation, design, code path, or proposed course of action."
+        ],
+        [
+          "Adds",
+          "Adversarial evaluation that surfaces weaknesses, contradictions, boundary failures, and highest-risk flaws."
+        ],
+        [
+          "Returns",
+          "strongest weaknesses, likely failure points, what to fix first"
+        ],
+        [
+          "Pairs with",
+          "guardrail.disconfirming-evidence, guardrail.assumption-audit, rubric.argument-quality, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The task still requires generative exploration or the artifact is too incomplete to critique meaningfully."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/mode.critique/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "mode",
+      "blockType": "mode",
+      "form": "mode",
+      "sourceKind": "Mode",
+      "stage": "conclude",
+      "strength": "light",
+      "contract": {
+        "purpose": "Step back from completed work or an outcome to extract lessons, patterns, and adjustments for future action.",
+        "useWhen": "After an incident, project, decision, or iteration when the goal is learning rather than immediate action.",
+        "expects": "An outcome, completed cycle, or body of work to learn from.",
+        "adds": "Retrospective reasoning that separates what happened, what mattered, and what should change next time.",
+        "returns": [
+          "what happened",
+          "what mattered most",
+          "lessons to carry forward"
+        ],
+        "pairsWith": [
+          "frame.cause-mapping",
+          "frame.extract-insights",
+          "schema.incident-postmortem",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The situation is still unfolding and the immediate need is stabilization or decision-making."
+      },
+      "key": "reflect",
+      "aliases": [
+        "mode.reflect"
+      ],
+      "title": "reflect",
+      "summary": "Step back from completed work or an outcome to extract lessons, patterns, and adjustments for future action.",
+      "tags": [
+        "reflect"
+      ],
+      "copy": "Step back from the immediate task.\nExtract what the result teaches, what patterns it revealed, and what should change next time.\nPrefer reusable insight over narrative recap.",
+      "body": [
+        [
+          "Purpose",
+          "Step back from completed work or an outcome to extract lessons, patterns, and adjustments for future action."
+        ],
+        [
+          "Use when",
+          "After an incident, project, decision, or iteration when the goal is learning rather than immediate action."
+        ],
+        [
+          "Expects",
+          "An outcome, completed cycle, or body of work to learn from."
+        ],
+        [
+          "Adds",
+          "Retrospective reasoning that separates what happened, what mattered, and what should change next time."
+        ],
+        [
+          "Returns",
+          "what happened, what mattered most, lessons to carry forward"
+        ],
+        [
+          "Pairs with",
+          "frame.cause-mapping, frame.extract-insights, schema.incident-postmortem, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The situation is still unfolding and the immediate need is stabilization or decision-making."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/mode.reflect/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Break a large or tangled problem into smaller parts that can be understood, assigned, or solved more cleanly.",
+        "useWhen": "The task is too broad to reason about directly and progress depends on separating independent subproblems.",
+        "expects": "A complex problem, objective, or request with multiple moving parts.",
+        "adds": "A decomposition that isolates subproblems, dependencies, and the best order for tackling them.",
+        "returns": [
+          "subproblems",
+          "dependencies between them",
+          "recommended order of attack"
+        ],
+        "pairsWith": [
+          "frame.task",
+          "mode.explore",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The problem is already tightly scoped and splitting it would add ceremony without clarity."
+      },
+      "key": "problem-split",
+      "aliases": [
+        "strategy.problem-split"
+      ],
+      "title": "problem-split",
+      "summary": "Break a large or tangled problem into smaller parts that can be understood, assigned, or solved more cleanly.",
+      "tags": [
+        "problem",
+        "split"
+      ],
+      "copy": "Split the problem into the smallest useful parts.\nName the dependencies between them and suggest the order that reduces coordination or risk.",
+      "body": [
+        [
+          "Purpose",
+          "Break a large or tangled problem into smaller parts that can be understood, assigned, or solved more cleanly."
+        ],
+        [
+          "Use when",
+          "The task is too broad to reason about directly and progress depends on separating independent subproblems."
+        ],
+        [
+          "Expects",
+          "A complex problem, objective, or request with multiple moving parts."
+        ],
+        [
+          "Adds",
+          "A decomposition that isolates subproblems, dependencies, and the best order for tackling them."
+        ],
+        [
+          "Returns",
+          "subproblems, dependencies between them, recommended order of attack"
+        ],
+        [
+          "Pairs with",
+          "frame.task, mode.explore, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The problem is already tightly scoped and splitting it would add ceremony without clarity."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.problem-split/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Assume the plan has already failed and reason backward to expose the most plausible causes before committing.",
+        "useWhen": "The plan feels too smooth, stakes are meaningful, or hidden risks are likely to surface only after execution begins.",
+        "expects": "A plan, decision, or proposed course of action.",
+        "adds": "A failure-first analysis that identifies likely break points, causal chains, and the preventive moves worth making now.",
+        "returns": [
+          "failure causes",
+          "early warning signs",
+          "mitigations or prevention moves"
+        ],
+        "pairsWith": [
+          "guardrail.assumption-audit",
+          "mode.critique",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The task is already in live incident response and the immediate need is stabilization, not pre-commit risk analysis."
+      },
+      "key": "premortem",
+      "aliases": [
+        "strategy.premortem"
+      ],
+      "title": "premortem",
+      "summary": "Assume the plan has already failed and reason backward to expose the most plausible causes before committing.",
+      "tags": [
+        "premortem"
+      ],
+      "copy": "It is one year from now. This plan failed.\nTreat that as the starting fact and explain the most plausible reasons why, then identify what should be done now to prevent that outcome.",
+      "body": [
+        [
+          "Purpose",
+          "Assume the plan has already failed and reason backward to expose the most plausible causes before committing."
+        ],
+        [
+          "Use when",
+          "The plan feels too smooth, stakes are meaningful, or hidden risks are likely to surface only after execution begins."
+        ],
+        [
+          "Expects",
+          "A plan, decision, or proposed course of action."
+        ],
+        [
+          "Adds",
+          "A failure-first analysis that identifies likely break points, causal chains, and the preventive moves worth making now."
+        ],
+        [
+          "Returns",
+          "failure causes, early warning signs, mitigations or prevention moves"
+        ],
+        [
+          "Pairs with",
+          "guardrail.assumption-audit, mode.critique, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The task is already in live incident response and the immediate need is stabilization, not pre-commit risk analysis."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.premortem/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Construct the strongest serious version of a position before accepting, rejecting, or negotiating with it.",
+        "useWhen": "You need to evaluate or negotiate against a position without relying on a weak caricature.",
+        "expects": "A claim, proposal, preferred option, or opposing viewpoint.",
+        "adds": "A fair, maximally strong formulation of the position plus the conditions under which it would be compelling.",
+        "returns": [
+          "strongest version of the position",
+          "why a reasonable person would adopt it",
+          "what would make it persuasive or weak"
+        ],
+        "pairsWith": [
+          "mode.critique",
+          "guardrail.disconfirming-evidence",
+          "mode.decide"
+        ],
+        "avoidWhen": "The task is simple error-checking and does not require representing the opposing view at full strength."
+      },
+      "key": "steelman",
+      "aliases": [
+        "strategy.steelman"
+      ],
+      "title": "steelman",
+      "summary": "Construct the strongest serious version of a position before accepting, rejecting, or negotiating with it.",
+      "tags": [
+        "steelman"
+      ],
+      "copy": "State the strongest serious version of the position first.\nMake clear why a reasonable person would hold it before you compare or challenge it.",
+      "body": [
+        [
+          "Purpose",
+          "Construct the strongest serious version of a position before accepting, rejecting, or negotiating with it."
+        ],
+        [
+          "Use when",
+          "You need to evaluate or negotiate against a position without relying on a weak caricature."
+        ],
+        [
+          "Expects",
+          "A claim, proposal, preferred option, or opposing viewpoint."
+        ],
+        [
+          "Adds",
+          "A fair, maximally strong formulation of the position plus the conditions under which it would be compelling."
+        ],
+        [
+          "Returns",
+          "strongest version of the position, why a reasonable person would adopt it, what would make it persuasive or weak"
+        ],
+        [
+          "Pairs with",
+          "mode.critique, guardrail.disconfirming-evidence, mode.decide"
+        ],
+        [
+          "Avoid when",
+          "The task is simple error-checking and does not require representing the opposing view at full strength."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.steelman/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Simulate adversarial pressure against a system, plan, or position to find exploitable weaknesses before others do.",
+        "useWhen": "Security, abuse, competitive attack, or adversarial misuse is a real risk.",
+        "expects": "A design, plan, product, policy, or argument that could be attacked or exploited.",
+        "adds": "Attack-minded reasoning that enumerates plausible offensive paths, weak boundaries, and the most damaging failure sequences.",
+        "returns": [
+          "plausible attack paths",
+          "weakest boundaries",
+          "highest-priority mitigations"
+        ],
+        "pairsWith": [
+          "mode.critique",
+          "guardrail.assumption-audit",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The task is cooperative design exploration with no meaningful adversarial threat model."
+      },
+      "key": "red-team",
+      "aliases": [
+        "strategy.red-team"
+      ],
+      "title": "red-team",
+      "summary": "Simulate adversarial pressure against a system, plan, or position to find exploitable weaknesses before others do.",
+      "tags": [
+        "red",
+        "team"
+      ],
+      "copy": "Think like an adversary with real incentives.\nIdentify the most plausible attack paths, the weakest boundaries, and the mitigations that matter first.",
+      "body": [
+        [
+          "Purpose",
+          "Simulate adversarial pressure against a system, plan, or position to find exploitable weaknesses before others do."
+        ],
+        [
+          "Use when",
+          "Security, abuse, competitive attack, or adversarial misuse is a real risk."
+        ],
+        [
+          "Expects",
+          "A design, plan, product, policy, or argument that could be attacked or exploited."
+        ],
+        [
+          "Adds",
+          "Attack-minded reasoning that enumerates plausible offensive paths, weak boundaries, and the most damaging failure sequences."
+        ],
+        [
+          "Returns",
+          "plausible attack paths, weakest boundaries, highest-priority mitigations"
+        ],
+        [
+          "Pairs with",
+          "mode.critique, guardrail.assumption-audit, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The task is cooperative design exploration with no meaningful adversarial threat model."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.red-team/README.md"
+    },
+    {
+      "section": "Block",
       "canonicalType": "frame",
       "blockType": "frame",
       "form": "compact",
@@ -116,7 +675,7 @@ globalThis.SITE_DATA = {
         "success",
         "criteria"
       ],
-      "copy": "Define explicit success criteria for the work below.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\n---\ncontext: {context}",
+      "copy": "Define explicit success criteria for this task or context.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -324,7 +883,7 @@ globalThis.SITE_DATA = {
         "pairsWith": [
           "mode.decide",
           "frame.success-criteria",
-          "frame.compare-options",
+          "guardrail.assumption-audit",
           "rubric.decision-quality"
         ],
         "avoidWhen": "No decision has actually been made yet — this schema captures a decision, it does not help make one."
@@ -364,7 +923,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.decide, frame.success-criteria, frame.compare-options, rubric.decision-quality"
+          "mode.decide, frame.success-criteria, guardrail.assumption-audit, rubric.decision-quality"
         ],
         [
           "Avoid when",
@@ -387,12 +946,13 @@ globalThis.SITE_DATA = {
         "purpose": "Standardize how a chosen direction turns into a concrete, actionable brief ready for handoff or execution.",
         "useWhen": "After a decision, before handoff or delegation, and when execution details are starting to drift or remain implicit.",
         "expects": "A chosen direction, decision, or plan.",
-        "adds": "A structured output format that separates objective, scope, key steps, success criteria, risks, and owner to make execution legible and trackable.",
+        "adds": "A structured output format that makes objective, sequencing, dependencies, blockers, risks, and ownership legible enough to execute or hand off.",
         "returns": [
           "objective",
           "owner or responsible role",
           "sequence or milestones",
           "dependencies",
+          "likely blockers",
           "major risks",
           "first checkpoint",
           "pause or escalation trigger",
@@ -432,11 +992,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Adds",
-          "A structured output format that separates objective, scope, key steps, success criteria, risks, and owner to make execution legible and trackable."
+          "A structured output format that makes objective, sequencing, dependencies, blockers, risks, and ownership legible enough to execute or hand off."
         ],
         [
           "Returns",
-          "objective, owner or responsible role, sequence or milestones, dependencies, major risks, first checkpoint, pause or escalation trigger, immediate next action"
+          "objective, owner or responsible role, sequence or milestones, dependencies, likely blockers, major risks, first checkpoint, pause or escalation trigger, immediate next action"
         ],
         [
           "Pairs with",
@@ -491,7 +1051,7 @@ globalThis.SITE_DATA = {
         "cause",
         "mapping"
       ],
-      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- underlying cause\n\n---\ncontext: {context}",
+      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- root cause\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -548,7 +1108,7 @@ globalThis.SITE_DATA = {
         "pairsWith": [
           "mode.reflect",
           "frame.cause-mapping",
-          "schema.plan-next-actions",
+          "schema.execution-brief",
           "rubric.research-quality"
         ],
         "avoidWhen": "The goal is faithful summary rather than actionable signal. Use `frame.summarize-source` instead."
@@ -565,7 +1125,7 @@ globalThis.SITE_DATA = {
         "extract",
         "insights"
       ],
-      "copy": "Extract the highest-value insights from this material.\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\n---\ncontext: {context}\npurpose: {purpose}",
+      "copy": "Extract the highest-value insights from this material.\n\nRequirements:\n- prioritise insights that most directly change what to do next\n- when purpose is provided, filter for insights that serve {purpose}\n- keep supporting evidence specific rather than generic\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- action or implication\n\n---\ncontext: {context}\npurpose: {purpose}",
       "body": [
         [
           "Purpose",
@@ -589,7 +1149,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.reflect, frame.cause-mapping, schema.plan-next-actions, rubric.research-quality"
+          "mode.reflect, frame.cause-mapping, schema.execution-brief, rubric.research-quality"
         ],
         [
           "Avoid when",
@@ -599,6 +1159,82 @@ globalThis.SITE_DATA = {
       "family": "Prompt Blocks",
       "group": "",
       "sourcePath": "prompts/blocks/frame.extract-insights/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "frame",
+      "blockType": "frame",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Compare an original prompt and a revised prompt so real improvements are preserved and regressions are visible before testing.",
+        "useWhen": "After rewriting or tightening a prompt, especially when the new version is clearer but may have dropped task coverage, constraints, or useful flexibility.",
+        "expects": "The original prompt, the revised prompt, and any success criteria or non-goals the rewrite was meant to preserve.",
+        "adds": "A structured before-vs-after comparison that separates structural improvement from style polish and flags capability loss before the prompt is treated as ready.",
+        "returns": [
+          "original prompt job",
+          "revised prompt job",
+          "structural improvements kept",
+          "regressions or capability loss",
+          "unresolved ambiguities",
+          "verdict: ready to test / revise again",
+          "next revision move"
+        ],
+        "pairsWith": [
+          "frame.success-criteria",
+          "mode.critique",
+          "rubric.writing-quality",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "There is no meaningful baseline to compare against, or when you are generating a prompt from scratch rather than revising an existing one."
+      },
+      "key": "frame.prompt-compare",
+      "aliases": [
+        "core.frame.prompt-compare",
+        "core.frame-prompt-compare"
+      ],
+      "title": "frame.prompt-compare",
+      "summary": "Compare an original prompt and a revised prompt so real improvements are preserved and regressions are visible before testing.",
+      "tags": [
+        "frame",
+        "compare"
+      ],
+      "copy": "Compare the revised prompt against the original so improvements are real and regressions are visible.\n\nRequirements:\n\n- state the job of the original and revised prompt separately before judging either\n- separate structural improvements from style-only edits\n- name any task coverage, constraint, output-shape, or safety detail lost in the revision\n- treat missing capability in the revised prompt as a regression even if the wording is cleaner\n- end with a clear verdict: ready to test or revise again\n\nReturn:\n\n- original prompt job\n- revised prompt job\n- structural improvements kept\n- regressions or capability loss\n- unresolved ambiguities\n- verdict: ready to test / revise again\n- next revision move\n\n---\noriginal_prompt: {original_prompt}\nrevised_prompt: {revised_prompt}",
+      "body": [
+        [
+          "Purpose",
+          "Compare an original prompt and a revised prompt so real improvements are preserved and regressions are visible before testing."
+        ],
+        [
+          "Use when",
+          "After rewriting or tightening a prompt, especially when the new version is clearer but may have dropped task coverage, constraints, or useful flexibility."
+        ],
+        [
+          "Expects",
+          "The original prompt, the revised prompt, and any success criteria or non-goals the rewrite was meant to preserve."
+        ],
+        [
+          "Adds",
+          "A structured before-vs-after comparison that separates structural improvement from style polish and flags capability loss before the prompt is treated as ready."
+        ],
+        [
+          "Returns",
+          "original prompt job, revised prompt job, structural improvements kept, regressions or capability loss, unresolved ambiguities, verdict: ready to test / revise again, next revision move"
+        ],
+        [
+          "Pairs with",
+          "frame.success-criteria, mode.critique, rubric.writing-quality, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "There is no meaningful baseline to compare against, or when you are generating a prompt from scratch rather than revising an existing one."
+        ]
+      ],
+      "family": "Prompt Blocks",
+      "group": "",
+      "sourcePath": "prompts/blocks/frame.prompt-compare/prompt.md"
     },
     {
       "section": "Block",
@@ -713,7 +1349,7 @@ globalThis.SITE_DATA = {
         "bounded",
         "recursion"
       ],
-      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached? → STOP.\n2. Iteration limit reached? → STOP.\n3. Stop condition met? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\n---\ndepth: {depth}\niterations: {iterations}\nstop_condition: {stop condition}",
+      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached (> {depth})? → STOP.\n2. Iteration limit reached (> {iterations})? → STOP.\n3. Stop condition met ({stop_condition})? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\n---\ndepth: {depth}\niterations: {iterations}\nstop_condition: {stop_condition}",
       "body": [
         [
           "Purpose",
@@ -750,6 +1386,290 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Generate multiple candidate branches, compare them quickly, and prune weak ones before deeper refinement begins.",
+        "useWhen": "You need competing approaches, but want to spend effort only on the strongest survivors.",
+        "expects": "A problem or prompt that could reasonably branch into more than one viable approach.",
+        "adds": "An early branching checkpoint that produces alternatives, keeps the strongest few, and discards the rest with rationale.",
+        "returns": [
+          "candidate branches",
+          "branches kept",
+          "branches pruned with rationale"
+        ],
+        "pairsWith": [
+          "recurse.evaluate",
+          "recurse.refine",
+          "guardrail.bounded-recursion"
+        ],
+        "avoidWhen": "There is only one viable direction or branching would be theatrical rather than useful."
+      },
+      "key": "recurse.branch-prune",
+      "aliases": [
+        "core.recurse.branch-prune",
+        "core.recurse-branch-prune"
+      ],
+      "title": "recurse.branch-prune",
+      "summary": "Generate multiple candidate branches, compare them quickly, and prune weak ones before deeper refinement begins.",
+      "tags": [
+        "recurse",
+        "branch",
+        "prune"
+      ],
+      "copy": "Generate competing branches for this problem, then prune weak ones before refinement.\n\nRequirements:\n\n- create only meaningfully distinct branches\n- keep the evaluation criteria explicit when pruning\n- discard weak branches early instead of refining all of them\n- preserve the strongest surviving branches with a short rationale\n\nReturn:\n\n- candidate branches\n- branches kept\n- branches pruned with rationale\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Generate multiple candidate branches, compare them quickly, and prune weak ones before deeper refinement begins."
+        ],
+        [
+          "Use when",
+          "You need competing approaches, but want to spend effort only on the strongest survivors."
+        ],
+        [
+          "Expects",
+          "A problem or prompt that could reasonably branch into more than one viable approach."
+        ],
+        [
+          "Adds",
+          "An early branching checkpoint that produces alternatives, keeps the strongest few, and discards the rest with rationale."
+        ],
+        [
+          "Returns",
+          "candidate branches, branches kept, branches pruned with rationale"
+        ],
+        [
+          "Pairs with",
+          "recurse.evaluate, recurse.refine, guardrail.bounded-recursion"
+        ],
+        [
+          "Avoid when",
+          "There is only one viable direction or branching would be theatrical rather than useful."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.branch-prune/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Recursively break a problem into smaller solvable units until the remaining pieces are small enough to act on directly.",
+        "useWhen": "The problem is too large or layered for a single-pass solution and decomposition is the only way to make progress.",
+        "expects": "A problem statement plus any depth limit or stop condition that should bound recursion.",
+        "adds": "A decomposition tree that shows parent-child relationships, leaf tasks, and where recursion should stop.",
+        "returns": [
+          "decomposition tree",
+          "current depth",
+          "leaf tasks or stop point"
+        ],
+        "pairsWith": [
+          "recurse.evaluate",
+          "guardrail.bounded-recursion",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The task is already atomic and recursion would only add overhead."
+      },
+      "key": "recurse.decompose",
+      "aliases": [
+        "core.recurse.decompose",
+        "core.recurse-decompose"
+      ],
+      "title": "recurse.decompose",
+      "summary": "Recursively break a problem into smaller solvable units until the remaining pieces are small enough to act on directly.",
+      "tags": [
+        "recurse",
+        "decompose"
+      ],
+      "copy": "Recursively decompose this problem into smaller units until each leaf is directly actionable or a stopping condition is met.\n\nRequirements:\n\n- preserve the parent-child structure of the decomposition\n- stop splitting when a leaf has one clear job or {stop_condition} is met\n- name the current depth as you go\n- do not invent extra layers once a leaf is already actionable\n\nReturn:\n\n- decomposition tree\n- current depth\n- leaf tasks or stop point\n\n---\ndepth: {depth}\nstop_condition: {stop_condition}\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Recursively break a problem into smaller solvable units until the remaining pieces are small enough to act on directly."
+        ],
+        [
+          "Use when",
+          "The problem is too large or layered for a single-pass solution and decomposition is the only way to make progress."
+        ],
+        [
+          "Expects",
+          "A problem statement plus any depth limit or stop condition that should bound recursion."
+        ],
+        [
+          "Adds",
+          "A decomposition tree that shows parent-child relationships, leaf tasks, and where recursion should stop."
+        ],
+        [
+          "Returns",
+          "decomposition tree, current depth, leaf tasks or stop point"
+        ],
+        [
+          "Pairs with",
+          "recurse.evaluate, guardrail.bounded-recursion, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The task is already atomic and recursion would only add overhead."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.decompose/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Evaluate the current branch or draft in a recursive workflow so weak branches can be pruned and strong ones refined.",
+        "useWhen": "An iterative or branching workflow needs a checkpoint before another refinement step.",
+        "expects": "The current branch, draft, or partial output plus any criteria being used to judge progress.",
+        "adds": "A compact checkpoint that records what passes, what fails, and whether the branch should continue, refine, or stop.",
+        "returns": [
+          "passes",
+          "gaps",
+          "continue / prune / stop decision"
+        ],
+        "pairsWith": [
+          "recurse.refine",
+          "recurse.branch-prune",
+          "guardrail.bounded-recursion"
+        ],
+        "avoidWhen": "There are no criteria yet and the job is still open-ended generation."
+      },
+      "key": "recurse.evaluate",
+      "aliases": [
+        "core.recurse.evaluate",
+        "core.recurse-evaluate"
+      ],
+      "title": "recurse.evaluate",
+      "summary": "Evaluate the current branch or draft in a recursive workflow so weak branches can be pruned and strong ones refined.",
+      "tags": [
+        "recurse",
+        "evaluate"
+      ],
+      "copy": "Evaluate the current branch or draft before another recursive step.\n\nRequirements:\n\n- judge only against the stated criteria or goal\n- separate what already passes from what still fails\n- decide whether to continue, prune, or stop\n- keep the verdict short enough to hand directly into the next recursive step\n\nReturn:\n\n- passes\n- gaps\n- continue / prune / stop decision\n\n---\nartifact: {artifact}",
+      "body": [
+        [
+          "Purpose",
+          "Evaluate the current branch or draft in a recursive workflow so weak branches can be pruned and strong ones refined."
+        ],
+        [
+          "Use when",
+          "An iterative or branching workflow needs a checkpoint before another refinement step."
+        ],
+        [
+          "Expects",
+          "The current branch, draft, or partial output plus any criteria being used to judge progress."
+        ],
+        [
+          "Adds",
+          "A compact checkpoint that records what passes, what fails, and whether the branch should continue, refine, or stop."
+        ],
+        [
+          "Returns",
+          "passes, gaps, continue / prune / stop decision"
+        ],
+        [
+          "Pairs with",
+          "recurse.refine, recurse.branch-prune, guardrail.bounded-recursion"
+        ],
+        [
+          "Avoid when",
+          "There are no criteria yet and the job is still open-ended generation."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.evaluate/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "recurse",
+      "blockType": "recurse",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "revise",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Improve the current branch or draft using the latest evaluation gaps without reopening the whole problem.",
+        "useWhen": "You already know what the current output is missing and want the next recursive step to tighten that specific gap list.",
+        "expects": "The current output plus the gaps or revision targets from the last evaluation pass.",
+        "adds": "A focused refinement pass that preserves what already works and changes only what the evaluation says is weak.",
+        "returns": [
+          "revised output",
+          "gaps addressed",
+          "remaining open gaps"
+        ],
+        "pairsWith": [
+          "recurse.evaluate",
+          "guardrail.bounded-recursion"
+        ],
+        "avoidWhen": "The main problem is still choosing direction rather than improving a chosen branch."
+      },
+      "key": "recurse.refine",
+      "aliases": [
+        "core.recurse.refine",
+        "core.recurse-refine"
+      ],
+      "title": "recurse.refine",
+      "summary": "Improve the current branch or draft using the latest evaluation gaps without reopening the whole problem.",
+      "tags": [
+        "recurse",
+        "refine"
+      ],
+      "copy": "Refine the current branch or draft using the most recent evaluation gaps.\n\nRequirements:\n\n- preserve strengths that already passed evaluation\n- change only what closes the named gaps\n- keep the revision local to the current branch unless a gap forces structural change\n- report what remains unresolved after the refinement pass\n\nReturn:\n\n- revised output\n- gaps addressed\n- remaining open gaps\n\n---\nartifact: {artifact}",
+      "body": [
+        [
+          "Purpose",
+          "Improve the current branch or draft using the latest evaluation gaps without reopening the whole problem."
+        ],
+        [
+          "Use when",
+          "You already know what the current output is missing and want the next recursive step to tighten that specific gap list."
+        ],
+        [
+          "Expects",
+          "The current output plus the gaps or revision targets from the last evaluation pass."
+        ],
+        [
+          "Adds",
+          "A focused refinement pass that preserves what already works and changes only what the evaluation says is weak."
+        ],
+        [
+          "Returns",
+          "revised output, gaps addressed, remaining open gaps"
+        ],
+        [
+          "Pairs with",
+          "recurse.evaluate, guardrail.bounded-recursion"
+        ],
+        [
+          "Avoid when",
+          "The main problem is still choosing direction rather than improving a chosen branch."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/recurse.refine/prompt.md"
+    },
+    {
+      "section": "Block",
       "canonicalType": "schema",
       "blockType": "schema",
       "form": "compact",
@@ -772,7 +1692,7 @@ globalThis.SITE_DATA = {
         "pairsWith": [
           "mode.reflect",
           "frame.cause-mapping",
-          "schema.plan-next-actions"
+          "schema.execution-brief"
         ],
         "avoidWhen": "The incident is still active — stabilize first, then debrief."
       },
@@ -787,7 +1707,7 @@ globalThis.SITE_DATA = {
         "incident",
         "postmortem"
       ],
-      "copy": "Facilitate a structured post-mortem for this incident.\n\n---\ncontext: {context}\nimpact: {impact}\nduration: {duration}\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure",
+      "copy": "Facilitate a structured post-mortem for this incident.\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure\n\n---\ncontext: {context}\nimpact: {impact}\nduration: {duration}",
       "body": [
         [
           "Purpose",
@@ -811,7 +1731,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.reflect, frame.cause-mapping, schema.plan-next-actions"
+          "mode.reflect, frame.cause-mapping, schema.execution-brief"
         ],
         [
           "Avoid when",
@@ -969,12 +1889,11 @@ globalThis.SITE_DATA = {
         "useWhen": "## Purpose",
         "returns": [
           "Is the question being answered actually the question that matters for the decision?",
-          "Are the sources capable of answering this question, or is there a gap?",
-          "Has disconfirming evidence been actively sought, not just noted when encountered?",
-          "Are the strongest counter-arguments represented fairly?",
+          "Are the key claims clearly tied to evidence rather than asserted?",
           "Are the conclusions limited to what the evidence actually supports?",
           "Is the confidence level on each key claim explicit?",
-          "Would a skeptical expert with opposing priors find this research intellectually honest?"
+          "Are decision-relevant implications separated from speculation or open questions?",
+          "Would a skeptical reader understand what is known, inferred, and still unresolved?"
         ]
       },
       "key": "rubric.research-quality",
@@ -988,7 +1907,7 @@ globalThis.SITE_DATA = {
         "research",
         "quality"
       ],
-      "copy": "rubric.research-quality\n\n## Purpose\n\n- Is the question being answered actually the question that matters for the decision?\n- Are the sources capable of answering this question, or is there a gap?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are the strongest counter-arguments represented fairly?\n- Are the conclusions limited to what the evidence actually supports?\n- Is the confidence level on each key claim explicit?\n- Would a skeptical expert with opposing priors find this research intellectually honest?",
+      "copy": "rubric.research-quality\n\n## Purpose\n\n- Is the question being answered actually the question that matters for the decision?\n- Are the key claims clearly tied to evidence rather than asserted?\n- Are the conclusions limited to what the evidence actually supports?\n- Is the confidence level on each key claim explicit?\n- Are decision-relevant implications separated from speculation or open questions?\n- Would a skeptical reader understand what is known, inferred, and still unresolved?",
       "body": [
         [
           "Use when",
@@ -996,7 +1915,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Questions",
-          "Is the question being answered actually the question that matters for the decision?, Are the sources capable of answering this question, or is there a gap?, Has disconfirming evidence been actively sought, not just noted when encountered?, Are the strongest counter-arguments represented fairly?, Are the conclusions limited to what the evidence actually supports?, Is the confidence level on each key claim explicit?, Would a skeptical expert with opposing priors find this research intellectually honest?"
+          "Is the question being answered actually the question that matters for the decision?, Are the key claims clearly tied to evidence rather than asserted?, Are the conclusions limited to what the evidence actually supports?, Is the confidence level on each key claim explicit?, Are decision-relevant implications separated from speculation or open questions?, Would a skeptical reader understand what is known, inferred, and still unresolved?"
         ]
       ],
       "family": "",
@@ -1047,6 +1966,51 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/rubric.writing-quality/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "rubric",
+      "blockType": "rubric",
+      "form": "rubric",
+      "sourceKind": "Rubric",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
+        "useWhen": "## Purpose",
+        "returns": [
+          "Is the question scoped clearly enough to investigate or test?",
+          "Are the sources, tests, or methods capable of answering that question?",
+          "Has disconfirming evidence been actively sought, not just noted when encountered?",
+          "Are confounds, blind spots, or sampling limits named explicitly?",
+          "Are the strongest counter-arguments represented fairly?",
+          "Could another reviewer audit how the conclusion was reached?"
+        ]
+      },
+      "key": "rubric.research-method",
+      "aliases": [
+        "rubric.research-method"
+      ],
+      "title": "rubric.research-method",
+      "summary": "## Purpose.",
+      "tags": [
+        "rubric",
+        "research",
+        "method"
+      ],
+      "copy": "rubric.research-method\n\n## Purpose\n\n- Is the question scoped clearly enough to investigate or test?\n- Are the sources, tests, or methods capable of answering that question?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are confounds, blind spots, or sampling limits named explicitly?\n- Are the strongest counter-arguments represented fairly?\n- Could another reviewer audit how the conclusion was reached?",
+      "body": [
+        [
+          "Use when",
+          "## Purpose"
+        ],
+        [
+          "Questions",
+          "Is the question scoped clearly enough to investigate or test?, Are the sources, tests, or methods capable of answering that question?, Has disconfirming evidence been actively sought, not just noted when encountered?, Are confounds, blind spots, or sampling limits named explicitly?, Are the strongest counter-arguments represented fairly?, Could another reviewer audit how the conclusion was reached?"
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/rubric.research-method/README.md"
     }
   ],
   "stacks": [
@@ -1082,7 +2046,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1153,7 +2118,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1223,7 +2189,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1294,7 +2261,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1367,7 +2335,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1439,7 +2408,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1511,7 +2481,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1559,7 +2530,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "stage": "analyze",
       "outputKind": "summary",
-      "effort": "standard",
+      "effort": "deep",
       "stakes": "medium",
       "summary": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "tags": [
@@ -1578,11 +2549,13 @@ globalThis.SITE_DATA = {
           "`frame.extract-insights`",
           "`guardrail.disconfirming-evidence`",
           "`frame.cause-mapping`",
+          "`rubric.research-method`",
           "`rubric.research-quality`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1604,7 +2577,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
@@ -1616,7 +2589,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `rubric.research-quality`"
+          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `rubric.research-method` -> `rubric.research-quality`"
         ]
       ],
       "sourcePath": "stacks/research.md"
@@ -1630,7 +2603,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "stage": "analyze",
       "outputKind": "brief",
-      "effort": "standard",
+      "effort": "deep",
       "stakes": "high",
       "summary": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "tags": [
@@ -1650,11 +2623,13 @@ globalThis.SITE_DATA = {
           "`guardrail.assumption-audit`",
           "`guardrail.uncertainty`",
           "`frame.extract-insights`",
+          "`rubric.research-method`",
           "`rubric.research-quality`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1676,7 +2651,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
@@ -1688,7 +2663,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `guardrail.assumption-audit` -> `guardrail.uncertainty` -> `frame.extract-insights` -> `rubric.research-quality`"
+          "`mode.explore` -> `guardrail.assumption-audit` -> `guardrail.uncertainty` -> `frame.extract-insights` -> `rubric.research-method` -> `rubric.research-quality`"
         ]
       ],
       "sourcePath": "stacks/hypothesis-test.md"
@@ -1726,7 +2701,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1798,7 +2774,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1868,7 +2845,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -1939,7 +2917,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2012,7 +2991,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2082,7 +3062,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2153,7 +3134,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2226,7 +3208,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2295,7 +3278,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2343,7 +3327,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
       "stage": "frame",
       "outputKind": "prompt",
-      "effort": "standard",
+      "effort": "deep",
       "stakes": "medium",
       "summary": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
       "tags": [
@@ -2361,12 +3345,14 @@ globalThis.SITE_DATA = {
           "`frame.task`",
           "`frame.success-criteria`",
           "`mode.critique`",
+          "`frame.prompt-compare`",
           "`rubric.writing-quality`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2388,7 +3374,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
@@ -2400,7 +3386,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `mode.critique` -> `rubric.writing-quality` -> `schema.execution-brief`"
+          "`frame.task` -> `frame.success-criteria` -> `mode.critique` -> `frame.prompt-compare` -> `rubric.writing-quality` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/build-system-prompt.md"
@@ -2436,7 +3422,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2507,7 +3494,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": "use `security-threat-model` if the main job is simulating active abuse or attack paths before a system ships or changes, rather than reviewing correctness and boundary behavior of an implementation."
       },
       "io": {},
       "body": [
@@ -2542,6 +3530,10 @@ globalThis.SITE_DATA = {
         [
           "Suggested blocks",
           "`frame.task` -> `mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
+        ],
+        [
+          "Choose instead when",
+          "use `security-threat-model` if the main job is simulating active abuse or attack paths before a system ships or changes, rather than reviewing correctness and boundary behavior of an implementation."
         ]
       ],
       "sourcePath": "stacks/review-code.md"
@@ -2578,7 +3570,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2649,7 +3642,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2720,7 +3714,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2761,76 +3756,6 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
-      "key": "stack.performance-fix",
-      "title": "performance-fix",
-      "family": "Developer Workflows",
-      "job": "performance-fix",
-      "useWhen": "Isolate a performance bottleneck and prescribe the highest-leverage fix.",
-      "stage": "analyze",
-      "outputKind": "diagnosis",
-      "effort": "standard",
-      "stakes": "high",
-      "summary": "Isolate a performance bottleneck and prescribe the highest-leverage fix.",
-      "tags": [
-        "performance",
-        "fix"
-      ],
-      "contract": {
-        "job": "performance-fix",
-        "useWhen": "Isolate a performance bottleneck and prescribe the highest-leverage fix.",
-        "minimumBlocks": [
-          "frame.cause-mapping",
-          "schema.execution-brief"
-        ],
-        "fullSequence": [
-          "`mode.explore`",
-          "`frame.cause-mapping`",
-          "`mode.critique`",
-          "`schema.execution-brief`"
-        ],
-        "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": ""
-      },
-      "io": {},
-      "body": [
-        [
-          "Job",
-          "performance-fix"
-        ],
-        [
-          "Use when",
-          "Isolate a performance bottleneck and prescribe the highest-leverage fix."
-        ],
-        [
-          "Stage",
-          "analyze"
-        ],
-        [
-          "Output kind",
-          "diagnosis"
-        ],
-        [
-          "Effort",
-          "standard"
-        ],
-        [
-          "Stakes",
-          "high"
-        ],
-        [
-          "Minimum blocks",
-          "frame.cause-mapping, schema.execution-brief"
-        ],
-        [
-          "Suggested blocks",
-          "`mode.explore` -> `frame.cause-mapping` -> `mode.critique` -> `schema.execution-brief`"
-        ]
-      ],
-      "sourcePath": "stacks/performance-fix.md"
-    },
-    {
-      "section": "Stack",
       "key": "stack.safe-migration",
       "title": "safe-migration",
       "family": "Developer Workflows",
@@ -2863,7 +3788,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": ""
       },
       "io": {},
       "body": [
@@ -2935,7 +3861,8 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": ""
+        "commonFailureMode": "",
+        "chooseInsteadWhen": "use `review-code` if the main job is checking correctness, contracts, blast radius, or implementation bugs in code that already exists, rather than modeling adversarial abuse and exploit paths."
       },
       "io": {},
       "body": [
@@ -2970,6 +3897,10 @@ globalThis.SITE_DATA = {
         [
           "Suggested blocks",
           "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.execution-brief`"
+        ],
+        [
+          "Choose instead when",
+          "use `review-code` if the main job is checking correctness, contracts, blast radius, or implementation bugs in code that already exists, rather than modeling adversarial abuse and exploit paths."
         ]
       ],
       "sourcePath": "stacks/security-threat-model.md"

@@ -13,7 +13,7 @@ Return:
 - visible symptom
 - causal chain (at least 3 levels, branching where applicable)
 - earliest plausible intervention point
-- underlying cause
+- root cause
 
 ---
 context: {context}

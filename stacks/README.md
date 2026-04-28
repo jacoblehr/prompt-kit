@@ -21,30 +21,30 @@ Current stack families:
 
 See [docs/COMPOSITION.md](../docs/COMPOSITION.md) for the full composition rules.
 
-## Lightweight stacks (2–3 blocks)
+## Example starting points
 
-Good starting points when you don't need a full sequence yet.
+Good first stacks when you want an existing recipe instead of composing from zero.
 
-- orient before acting
-- clarify the real job
-- design for outcomes
-- map adoption blockers
+- `frame-problem` for vague or underframed requests
+- `decide` for high-stakes option selection
+- `research` for evidence gathering before a recommendation
+- `debug` for bug, incident, or bottleneck diagnosis
+- `feature-design` for turning a feature request into an execution-ready brief
+- `safe-migration` for risky system or API changes
 
-## Full stacks (4–8 blocks)
+## Heavier workflows
 
-- read before change
-- trace to fix
-- safe migration
-- break a recurring incident
-- problem framing
-- explore to decision
-- explore vs exploit
-- prioritize portfolio
-- de-risk with test
-- pressure test plan
-- debug a failure
-- source to brief
-- stakeholder alignment
-- write, critique, rewrite
-- prompt repair
-- weekly review
+Use these when the job needs a stronger critique or a more explicit execution shape.
+
+- `review-code`
+- `architecture-review`
+- `pressure-test`
+- `security-threat-model`
+- `incident-response`
+- `break-recurring-incident`
+- `build-system-prompt`
+- `improve-prompt`
+
+## Variant note
+
+`debug` now carries the former performance-fix path as a documented variant. Use the shorter debug sequence when the bottleneck is already scoped and the main job is ranking optimization work.

@@ -15,4 +15,6 @@ Expected output: Prioritized issues with correctness, boundary, and impact findi
 
 `mode.explore` reads for intent and contract before evaluating correctness. `mode.critique` switches to adversarial evaluation of correctness, boundaries, and blast radius. `guardrail.assumption-audit` surfaces hidden dependencies the code relies on. `schema.execution-brief` produces concrete, prioritized fix instructions.
 
+**Choose instead when:** use `security-threat-model` if the main job is simulating active abuse or attack paths before a system ships or changes, rather than reviewing correctness and boundary behavior of an implementation.
+
 **Minimum blocks:** `mode.critique` + `schema.execution-brief`

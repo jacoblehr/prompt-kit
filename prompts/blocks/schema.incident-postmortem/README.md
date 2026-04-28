@@ -21,7 +21,7 @@ A structured timeline-to-prevention format that separates root cause from contri
 - structural prevention
 
 ## Pairs with
-`mode.reflect`, `frame.cause-mapping`, `schema.plan-next-actions`
+`mode.reflect`, `frame.cause-mapping`, `schema.execution-brief`
 
 ## Avoid when
 The incident is still active — stabilize first, then debrief.

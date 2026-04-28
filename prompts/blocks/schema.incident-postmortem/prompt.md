@@ -2,11 +2,6 @@
 
 Facilitate a structured post-mortem for this incident.
 
----
-context: {context}
-impact: {impact}
-duration: {duration}
-
 Work through:
 1. Timeline — key events: detection, escalation, diagnosis, resolution
 2. Root cause — deepest systemic cause (apply five-whys or equivalent)
@@ -23,3 +18,8 @@ Return:
 - what went well
 - action items with owners and urgency
 - one structural prevention measure
+
+---
+context: {context}
+impact: {impact}
+duration: {duration}

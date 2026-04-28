@@ -43,7 +43,7 @@ mode.explore + mode.decide + mode.critique all at once
 
 ```
 mode.explore           # one primary mode
-lens.incentive-audit   # compatible modifier
+strategy.problem-split # compatible modifier
 guardrail.uncertainty  # compatible guardrail
 ```
 
@@ -52,6 +52,12 @@ Compatible pairs:
 - `mode.explore` + `guardrail.uncertainty`
 - `mode.critique` + `rubric.argument-quality`
 - `mode.decide` + `frame.success-criteria`
+
+Allowed transition sequence:
+
+- `mode.explore` -> `mode.critique` when the first pass is explicitly for understanding and the second pass is explicitly for adversarial evaluation
+
+If you use a transition sequence, name the handoff in the stack notes. The output of the first mode becomes the input context for the second; they are not active at the same time.
 
 Incompatible pairs:
 
@@ -102,6 +108,28 @@ Guardrails should be surgical.
 If two blocks are doing the same job, one should go.
 
 Test: remove one block. If the prompt changes meaningfully, keep it. If nothing important is lost, drop it.
+
+### Selection guide: guardrails
+
+| Need | Reach for | Why |
+| ----- | --------- | --- |
+| Calibrate uncertainty in a draft or recommendation | `guardrail.uncertainty` | It separates facts, assumptions, and unknowns before you over-commit. |
+| Expose what must be true for a plan or conclusion to work | `guardrail.assumption-audit` | It enumerates hidden premises and tells you what would falsify them. |
+| Stress a preferred answer against the strongest opposing case | `guardrail.disconfirming-evidence` | It searches for real contrary evidence instead of polishing the existing view. |
+
+Use `guardrail.assumption-audit` + `guardrail.disconfirming-evidence` together only when both failure modes are real: hidden premises and confirmation bias.
+
+### Selection guide: schemas
+
+| Artifact you need | Reach for | Why |
+| ----------------- | --------- | --- |
+| Explain and justify a committed choice | `schema.decision-memo` | It captures the decision, rationale, tradeoffs, risks, confidence, and next action. |
+| Turn a chosen direction into sequenced execution | `schema.execution-brief` | It makes ordering, dependencies, blockers, checkpoints, and escalation explicit. |
+| Debrief an incident or failure after stabilization | `schema.incident-postmortem` | It captures timeline, root cause, contributing factors, and prevention work. |
+
+Common handoff:
+
+- `schema.decision-memo` -> `schema.execution-brief` when you first need to justify the choice and then turn it into an action sequence.
 
 ---
 

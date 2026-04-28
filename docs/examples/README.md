@@ -6,19 +6,19 @@ This directory contains real-world walkthroughs showing how to compose blocks in
 
 ### [Debug a Failing System](debug-failing-system.md)
 
-**Stack**: `mode.critique + frame.codepath-walkthrough + lens.invariant-check → guardrail.change-impact-review + frame.test-case-design → mode.reflect + frame.extract-insights + schema.plan-next-actions`
+**Stack**: `mode.explore + frame.task + mode.critique → frame.cause-mapping + schema.execution-brief → mode.reflect + frame.extract-insights`
 
 **When to use**: Production incidents, bugs, unexpected behavior, system failures
 
-**Key insight**: Turn reactive firefighting into systematic investigation by combining critique with structured code path analysis.
+**Key insight**: Turn reactive firefighting into systematic investigation by combining exploration, adversarial diagnosis, and explicit next-step planning.
 
 ### [Write a Product Specification](product-spec.md)
 
-**Stack**: `mode.explore → frame.task → frame.success-criteria → guardrail.uncertainty → lens.user-mental-model → mode.decide → frame.compare-options → guardrail.assumption-audit → schema.decision-memo → rubric.decision-quality → mode.reflect → frame.extract-insights`
+**Stack**: `frame.task → frame.success-criteria → guardrail.assumption-audit → rubric.plan-quality → schema.execution-brief → mode.reflect → frame.extract-insights`
 
 **When to use**: New features, roadmap decisions, requirements gathering, stakeholder alignment
 
-**Key insight**: Balance exploration (understanding the problem) with structured decision-making to produce defensible specifications.
+**Key insight**: Turn a vague feature request into a scoped, testable, execution-ready brief before writing the build plan.
 
 ## How to Use These Examples
 

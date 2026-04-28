@@ -698,7 +698,6 @@ const STACK_META = {
   "architecture-review":      { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
   "incident-response":        { family: "Developer Workflows", stage: "analyze",  outputKind: "plan",      stakes: "high" },
   "break-recurring-incident": { family: "Developer Workflows", stage: "conclude", outputKind: "plan",      stakes: "high" },
-  "performance-fix":          { family: "Developer Workflows", stage: "analyze",  outputKind: "diagnosis", stakes: "high" },
   "safe-migration":           { family: "Developer Workflows", stage: "decide",   outputKind: "plan",      stakes: "high" },
   "security-threat-model":    { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
 };
@@ -745,6 +744,7 @@ function makeStack(fileName) {
   const whyMatch = md.match(/^\*\*Why this order works:\*\*\s*(.+)$/m);
   const swapsMatch = md.match(/^\*\*Common swaps:\*\*\s*(.+)$/m);
   const failureMatch = md.match(/^\*\*Common failure mode:\*\*\s*(.+)$/m);
+  const chooseInsteadMatch = md.match(/^\*\*Choose instead when:\*\*\s*(.+)$/m);
 
   const baseName = fileName.replace(/\.md$/, "");
   const meta = STACK_META[baseName];
@@ -764,7 +764,8 @@ function makeStack(fileName) {
     fullSequence: sequence,
     blockOrderRationale: whyMatch?.[1]?.trim() || "",
     commonSwaps: swapsMatch?.[1]?.trim() || "",
-    commonFailureMode: failureMatch?.[1]?.trim() || ""
+    commonFailureMode: failureMatch?.[1]?.trim() || "",
+    chooseInsteadWhen: chooseInsteadMatch?.[1]?.trim() || ""
   };
   const io = {};
   if (inputs.length > 0) io.usefulInputs = inputs;
@@ -796,6 +797,7 @@ function makeStack(fileName) {
       ["Minimum blocks", contract.minimumBlocks],
       ["Suggested blocks", sequence.join(" -> ")],
       ["Why this order works", contract.blockOrderRationale],
+      ["Choose instead when", contract.chooseInsteadWhen],
       ["Common swaps", contract.commonSwaps],
       ["Common failure mode", contract.commonFailureMode],
       ["Expected outcome", outputs]
@@ -960,7 +962,6 @@ const stackOrder = [
   // "tech-debt-triage.md" — deleted (subset of critique)
   "incident-response.md",
   "break-recurring-incident.md",
-  "performance-fix.md",
   "safe-migration.md",
   "security-threat-model.md",
 ];
