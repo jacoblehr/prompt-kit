@@ -3,10 +3,11 @@
 Evaluate a system design for structural soundness before committing to it.
 
 Blocks:
-1. `mode.critique`
-2. `guardrail.assumption-audit`
-3. `strategy.premortem`
-4. `rubric.decision-quality`
+1. `frame.task`
+2. `mode.critique`
+3. `guardrail.assumption-audit`
+4. `strategy.premortem`
+5. `rubric.decision-quality`
 
 Expected output: Structural risks ranked, hidden assumptions tested, and failure paths named before any decision is committed.
 

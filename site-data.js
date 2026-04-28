@@ -1145,6 +1145,7 @@ globalThis.SITE_DATA = {
           "recurse.evaluate"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`recurse.branch-prune`",
           "`recurse.evaluate`",
           "`recurse.refine`",
@@ -1186,7 +1187,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`recurse.branch-prune` -> `recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
+          "`frame.task` -> `recurse.branch-prune` -> `recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
         ]
       ],
       "sourcePath": "stacks/branch-select.md"
@@ -1270,7 +1271,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
       "stage": "refine",
       "outputKind": "plan",
-      "effort": "quick",
+      "effort": "standard",
       "stakes": "medium",
       "summary": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
       "tags": [
@@ -1286,6 +1287,7 @@ globalThis.SITE_DATA = {
           "guardrail.bounded-recursion"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`recurse.evaluate`",
           "`recurse.refine`",
           "`guardrail.bounded-recursion`"
@@ -1314,7 +1316,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "quick"
+          "standard"
         ],
         [
           "Stakes",
@@ -1326,7 +1328,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
+          "`frame.task` -> `recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
         ]
       ],
       "sourcePath": "stacks/refine-loop.md"
@@ -2072,6 +2074,7 @@ globalThis.SITE_DATA = {
           "rubric.argument-quality"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
           "`guardrail.disconfirming-evidence`",
@@ -2113,7 +2116,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `rubric.argument-quality`"
+          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `rubric.argument-quality`"
         ]
       ],
       "sourcePath": "stacks/critique.md"
@@ -2142,6 +2145,7 @@ globalThis.SITE_DATA = {
           "strategy.premortem"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`mode.critique`",
           "`guardrail.disconfirming-evidence`",
           "`strategy.premortem`",
@@ -2183,7 +2187,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.premortem` -> `rubric.argument-quality`"
+          "`frame.task` -> `mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.premortem` -> `rubric.argument-quality`"
         ]
       ],
       "sourcePath": "stacks/ethical-review.md"
@@ -2197,7 +2201,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "standard",
+      "effort": "deep",
       "stakes": "high",
       "summary": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
       "tags": [
@@ -2213,6 +2217,7 @@ globalThis.SITE_DATA = {
           "guardrail.assumption-audit"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`mode.critique`",
           "`strategy.premortem`",
           "`strategy.red-team`",
@@ -2243,7 +2248,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "deep"
         ],
         [
           "Stakes",
@@ -2255,7 +2260,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence`"
+          "`frame.task` -> `mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence`"
         ]
       ],
       "sourcePath": "stacks/pressure-test.md"
@@ -2494,6 +2499,7 @@ globalThis.SITE_DATA = {
           "schema.execution-brief"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`mode.explore`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
@@ -2535,7 +2541,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/review-code.md"
@@ -2564,6 +2570,7 @@ globalThis.SITE_DATA = {
           "guardrail.assumption-audit"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
           "`strategy.premortem`",
@@ -2605,7 +2612,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.decision-quality`"
+          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.decision-quality`"
         ]
       ],
       "sourcePath": "stacks/architecture-review.md"
@@ -2920,6 +2927,7 @@ globalThis.SITE_DATA = {
           "strategy.red-team"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
           "`strategy.red-team`",
@@ -2961,7 +2969,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.execution-brief`"
         ]
       ],
       "sourcePath": "stacks/security-threat-model.md"

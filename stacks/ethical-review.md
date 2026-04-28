@@ -3,10 +3,11 @@
 Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.
 
 Blocks:
-1. `mode.critique`
-2. `guardrail.disconfirming-evidence`
-3. `strategy.premortem`
-4. `rubric.argument-quality`
+1. `frame.task`
+2. `mode.critique`
+3. `guardrail.disconfirming-evidence`
+4. `strategy.premortem`
+5. `rubric.argument-quality`
 
 Expected output: Ranked ethical risks with strongest opposing cases considered and structural tradeoffs named.
 

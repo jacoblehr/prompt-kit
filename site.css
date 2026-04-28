@@ -2862,10 +2862,13 @@ kbd.search-hint {
   }
 
   .builder-execution-panels {
+    grid-template-columns: 1fr;
     grid-template-rows: auto auto;
+    overflow-y: auto;
   }
 
   .builder-execution-panels:has(.builder-pane--inputs[hidden]) {
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
   }
 

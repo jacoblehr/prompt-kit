@@ -3,10 +3,11 @@
 Surface weaknesses, blind spots, and revision targets in any artifact.
 
 Blocks:
-1. `mode.critique`
-2. `guardrail.assumption-audit`
-3. `guardrail.disconfirming-evidence`
-4. `rubric.argument-quality`
+1. `frame.task`
+2. `mode.critique`
+3. `guardrail.assumption-audit`
+4. `guardrail.disconfirming-evidence`
+5. `rubric.argument-quality`
 
 Expected output: Prioritized defects with concrete revision advice and strongest opposing case considered.
 

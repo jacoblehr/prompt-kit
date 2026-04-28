@@ -3,10 +3,11 @@
 Review code for correctness, contracts, and blast radius before approving it.
 
 Blocks:
-1. `mode.explore`
-2. `mode.critique`
-3. `guardrail.assumption-audit`
-4. `schema.execution-brief`
+1. `frame.task`
+2. `mode.explore`
+3. `mode.critique`
+4. `guardrail.assumption-audit`
+5. `schema.execution-brief`
 
 Expected output: Prioritized issues with correctness, boundary, and impact findings, each with a concrete fix.
 
