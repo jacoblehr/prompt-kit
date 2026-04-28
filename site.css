@@ -2667,18 +2667,23 @@ kbd.search-hint {
     z-index: 350;
     border-left: 0;
     border-top: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .builder-scroll {
+    overflow: visible;
+    flex: none;
     min-height: 0;
-    padding-bottom: 24px;
+    padding-bottom: 0;
   }
 
   .builder-execution {
     position: static;
-    min-height: 280px;
-    height: var(--builder-execution-height, min(44vh, 500px));
-    max-height: min(78vh, 820px);
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
   }
 
   .builder-execution-panels {
@@ -2716,13 +2721,20 @@ kbd.search-hint {
     bottom: 16px;
   }
 
-  /* Allow scroll area to fill the remaining height in the full-screen builder */
+  /* Scroll area flows naturally inside the panel scroll container */
   .shell.builder-open .builder-scroll {
-    flex: 1 1 auto;
+    flex: none;
     max-height: none;
+    overflow: visible;
   }
 
-  /* ─── Header ─── */
+  /* ─── Header: stays at top as user scrolls ─── */
+  .builder-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
   .builder-header-row {
     flex-wrap: wrap;
     gap: 6px 10px;
@@ -2754,17 +2766,20 @@ kbd.search-hint {
     pointer-events: none;
   }
 
-  /* ─── Stacked pane height distribution ─── */
+  /* ─── Panes size to their content in the long-scroll layout ─── */
   .builder-execution-panels {
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto auto;
+    height: auto;
   }
 
   .builder-execution-panels:has(.builder-pane--inputs[hidden]) {
-    grid-template-rows: 1fr;
+    grid-template-rows: auto;
   }
 
   .builder-pane {
-    min-height: 100px;
+    min-height: 0;
+    overflow: visible;
+    grid-template-rows: auto auto;
   }
 
   /* ─── Copy Prompt button: full-width with safe-area support ─── */
@@ -2783,6 +2798,24 @@ kbd.search-hint {
     min-height: 36px;
     padding: 6px 12px;
   }
+
+  /* ─── Natural-height output + input panels in long-scroll layout ─── */
+  .builder-output-panel {
+    grid-template-rows: auto auto;
+  }
+
+  .builder-run-output {
+    height: auto;
+    min-height: 220px;
+  }
+
+  .builder-pane-body {
+    overflow: visible;
+  }
+
+  .builder-inputs-list {
+    overflow: visible;
+  }
 }
 
 /* ─── Small-phone overrides for the prompt builder (≤ 480px) ─────────────── */
@@ -2797,8 +2830,8 @@ kbd.search-hint {
   }
 
   .builder-execution {
-    min-height: 300px;
-    height: var(--builder-execution-height, min(50vh, 440px));
+    height: auto;
+    min-height: 0;
   }
 
   .builder-action-btn {
@@ -2815,7 +2848,9 @@ kbd.search-hint {
 
   .builder-pane {
     padding: 12px;
-    min-height: 80px;
+    min-height: 0;
+    overflow: visible;
+    grid-template-rows: auto auto;
   }
 
   .builder-pane--inputs {
@@ -2827,11 +2862,11 @@ kbd.search-hint {
   }
 
   .builder-execution-panels {
-    grid-template-rows: 2fr 3fr;
+    grid-template-rows: auto auto;
   }
 
   .builder-execution-panels:has(.builder-pane--inputs[hidden]) {
-    grid-template-rows: 1fr;
+    grid-template-rows: auto;
   }
 
   .pb-block-compact {
