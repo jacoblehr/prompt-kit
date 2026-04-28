@@ -20,4 +20,4 @@ For each assumption:
 - what would falsify it
 
 ---
-artifact: [plan, decision, argument, or recommendation]
+artifact: {artifact}

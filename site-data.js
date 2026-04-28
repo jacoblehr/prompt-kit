@@ -42,7 +42,7 @@ globalThis.SITE_DATA = {
         "frame",
         "task"
       ],
-      "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- state when the objective is inferred rather than explicit\n- keep constraints literal\n- draw the scope boundary explicitly — name what is out of scope and why\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- stated ask\n- likely objective\n- in scope\n- out of scope\n- scope boundary to hold\n- constraints\n- knowns\n- unknowns\n- decision or action this frame is meant to support\n- recommended next reasoning step\n\n---\ncontext: [raw request, task, or situation]",
+      "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- state when the objective is inferred rather than explicit\n- keep constraints literal\n- draw the scope boundary explicitly — name what is out of scope and why\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- stated ask\n- likely objective\n- in scope\n- out of scope\n- scope boundary to hold\n- constraints\n- knowns\n- unknowns\n- decision or action this frame is meant to support\n- recommended next reasoning step\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -116,7 +116,7 @@ globalThis.SITE_DATA = {
         "success",
         "criteria"
       ],
-      "copy": "Define explicit success criteria for the work below.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\n---\ncontext: [task, objective, or proposal]",
+      "copy": "Define explicit success criteria for the work below.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -191,7 +191,7 @@ globalThis.SITE_DATA = {
         "guardrail",
         "uncertainty"
       ],
-      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- distinguish \"I don't know\" (absent evidence) from \"evidence is mixed\" (conflicting evidence)\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\n---\nartifact: [current analysis, recommendation, or draft]",
+      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- distinguish \"I don't know\" (absent evidence) from \"evidence is mixed\" (conflicting evidence)\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -265,7 +265,7 @@ globalThis.SITE_DATA = {
         "disconfirming",
         "evidence"
       ],
-      "copy": "Force a check against disconfirming evidence for this conclusion or recommendation.\n\nRequirements:\n\n- seek the strongest real opposing case, not a manufactured weak one\n- update if the opposing evidence materially changes the conclusion\n\nReturn:\n\n- conclusion under review\n- strongest opposing evidence or argument\n- what would be true if the conclusion were wrong\n- whether it still stands and why\n\n---\nartifact: [conclusion, recommendation, or preferred option]",
+      "copy": "Force a check against disconfirming evidence for this conclusion or recommendation.\n\nRequirements:\n\n- seek the strongest real opposing case, not a manufactured weak one\n- update if the opposing evidence materially changes the conclusion\n\nReturn:\n\n- conclusion under review\n- strongest opposing evidence or argument\n- what would be true if the conclusion were wrong\n- whether it still stands and why\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -340,7 +340,7 @@ globalThis.SITE_DATA = {
         "decision",
         "memo"
       ],
-      "copy": "Render this chosen direction or decision as a structured memo.\n\nRequirements:\n\n- make the actual choice explicit\n- keep rationale concise and decision-relevant\n- include only the risks and tradeoffs that matter to execution\n\nReturn:\n\n- decision\n- rationale\n- tradeoffs\n- risks\n- confidence\n- next action\n\n---\ncontext: [chosen option or decision context]",
+      "copy": "Render this chosen direction or decision as a structured memo.\n\nRequirements:\n\n- make the actual choice explicit\n- keep rationale concise and decision-relevant\n- include only the risks and tradeoffs that matter to execution\n\nReturn:\n\n- decision\n- rationale\n- tradeoffs\n- risks\n- confidence\n- next action\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -416,7 +416,7 @@ globalThis.SITE_DATA = {
         "execution",
         "brief"
       ],
-      "copy": "Render this chosen direction, plan, or analysis as a structured execution brief.\n\nRequirements:\n\n- make objective and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n- include the condition that would justify pausing or escalating\n- owner and escalation trigger are optional for solo or internal work\n\nReturn:\n\n- objective\n- owner or responsible role (if applicable)\n- ordered steps or milestones\n- dependencies\n- likely blockers\n- major risks\n- first checkpoint\n- pause or escalation trigger (if applicable)\n- immediate next action\n\n---\ncontext: [chosen direction, plan, or analysis to brief out]",
+      "copy": "Render this chosen direction, plan, or analysis as a structured execution brief.\n\nRequirements:\n\n- make objective and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n- include the condition that would justify pausing or escalating\n- owner and escalation trigger are optional for solo or internal work\n\nReturn:\n\n- objective\n- owner or responsible role (if applicable)\n- ordered steps or milestones\n- dependencies\n- likely blockers\n- major risks\n- first checkpoint\n- pause or escalation trigger (if applicable)\n- immediate next action\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -491,7 +491,7 @@ globalThis.SITE_DATA = {
         "cause",
         "mapping"
       ],
-      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- underlying cause\n\n---\ncontext: [problem or outcome to trace]",
+      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- underlying cause\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -565,7 +565,7 @@ globalThis.SITE_DATA = {
         "extract",
         "insights"
       ],
-      "copy": "Extract the highest-value insights from this material.\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\n---\ncontext: [material to extract from]\npurpose: [decision or goal this should inform]",
+      "copy": "Extract the highest-value insights from this material.\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- possible action or implication\n\n---\ncontext: {context}\npurpose: {purpose}",
       "body": [
         [
           "Purpose",
@@ -641,7 +641,7 @@ globalThis.SITE_DATA = {
         "assumption",
         "audit"
       ],
-      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\n---\nartifact: [plan, decision, argument, or recommendation]",
+      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -713,7 +713,7 @@ globalThis.SITE_DATA = {
         "bounded",
         "recursion"
       ],
-      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached? → STOP.\n2. Iteration limit reached? → STOP.\n3. Stop condition met? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\n---\ndepth: [max depth]\niterations: [max iterations]\nstop_condition: [condition to stop on]",
+      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached? → STOP.\n2. Iteration limit reached? → STOP.\n3. Stop condition met? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\n---\ndepth: {depth}\niterations: {iterations}\nstop_condition: {stop condition}",
       "body": [
         [
           "Purpose",
@@ -787,7 +787,7 @@ globalThis.SITE_DATA = {
         "incident",
         "postmortem"
       ],
-      "copy": "Facilitate a structured post-mortem for this incident.\n\n---\ncontext: [incident summary]\nimpact: [affected systems, users, or data]\nduration: [start to resolution time]\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure",
+      "copy": "Facilitate a structured post-mortem for this incident.\n\n---\ncontext: {context}\nimpact: {impact}\nduration: {duration}\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure",
       "body": [
         [
           "Purpose",

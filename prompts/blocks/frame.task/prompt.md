@@ -25,4 +25,4 @@ Return:
 - recommended next reasoning step
 
 ---
-context: [raw request, task, or situation]
+context: {context}

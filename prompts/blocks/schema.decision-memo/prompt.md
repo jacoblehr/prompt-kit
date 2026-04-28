@@ -18,4 +18,4 @@ Return:
 - next action
 
 ---
-context: [chosen option or decision context]
+context: {context}

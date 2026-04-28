@@ -16,4 +16,4 @@ Return:
 - highest-leverage fix if revision is needed
 
 ---
-artifact: [decision draft or memo]
+artifact: {artifact}

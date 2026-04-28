@@ -16,4 +16,4 @@ Return:
 - underlying cause
 
 ---
-context: [problem or outcome to trace]
+context: {context}

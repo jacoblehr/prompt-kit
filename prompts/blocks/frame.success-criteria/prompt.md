@@ -17,4 +17,4 @@ Return:
 - tradeoffs to watch
 
 ---
-context: [task, objective, or proposal]
+context: {context}

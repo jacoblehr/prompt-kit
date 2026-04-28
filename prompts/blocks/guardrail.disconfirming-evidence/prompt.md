@@ -15,4 +15,4 @@ Return:
 - whether it still stands and why
 
 ---
-artifact: [conclusion, recommendation, or preferred option]
+artifact: {artifact}

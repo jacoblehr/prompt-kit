@@ -17,4 +17,4 @@ Return:
 - highest-leverage fix if revision is needed
 
 ---
-artifact: [research summary or findings]
+artifact: {artifact}

@@ -20,4 +20,4 @@ Return:
 - what would most change the conclusion
 
 ---
-artifact: [current analysis, recommendation, or draft]
+artifact: {artifact}

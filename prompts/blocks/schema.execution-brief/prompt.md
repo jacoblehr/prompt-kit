@@ -23,4 +23,4 @@ Return:
 - immediate next action
 
 ---
-context: [chosen direction, plan, or analysis to brief out]
+context: {context}

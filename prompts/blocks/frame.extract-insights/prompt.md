@@ -10,5 +10,5 @@ For each insight:
 - possible action or implication
 
 ---
-context: [material to extract from]
-purpose: [decision or goal this should inform]
+context: {context}
+purpose: {purpose}

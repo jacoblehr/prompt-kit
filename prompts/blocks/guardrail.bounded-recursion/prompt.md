@@ -17,6 +17,6 @@ Return:
 Do not proceed past any stopping condition under any circumstances.
 
 ---
-depth: [max depth]
-iterations: [max iterations]
-stop_condition: [condition to stop on]
+depth: {depth}
+iterations: {iterations}
+stop_condition: {stop condition}
