@@ -97,6 +97,72 @@ function normalizeRef(ref = "") {
 
 const PLACEHOLDER_RE = /\{[^}\n]{1,80}\}/g;
 
+// ─── Flow mode constants ───────────────────────────────────────────────────────
+//
+// Two execution modes for stacks. Batch is the default and the safer choice for
+// analysis stacks. Chain is opt-in for stacks where each step builds on the previous.
+
+const FLOW_MODES = /** @type {const} */ (["batch", "chain"]);
+const FLOW_MODE_DEFAULT = "batch";
+
+/** Human-readable labels for the UI picker. */
+const FLOW_MODE_LABELS = {
+  batch: "Batch",
+  chain: "Chain"
+};
+
+/** One-line descriptions shown in the flow selector. */
+const FLOW_MODE_DESCRIPTIONS = {
+  batch: "Run all prompts on the original input, then synthesize",
+  chain: "Pipe each output into the next prompt"
+};
+
+// Wrapper injected around every step in chain mode.
+const CHAIN_STEP_WRAPPER = `You are executing one step in a sequential prompt chain.
+
+Use only the provided input for this step.
+Apply the prompt directly to the input.
+Do not explain the prompt.
+Do not refer to stack mechanics.
+Return only the requested output.
+
+Input:
+{input}`;
+
+// Wrapper injected around every step in batch mode.
+const BATCH_STEP_WRAPPER = `You are executing one independent step in a batch prompt stack.
+
+Apply this prompt only to the original user input.
+Ignore other steps in the stack.
+Do not explain the prompt.
+Do not discuss the method.
+Return only the requested output.
+
+Original input:
+{original_input}`;
+
+// Synthesis prompt appended after all batch steps.
+const BATCH_SYNTHESIS_PROMPT = `You are synthesizing multiple independent analyses of the same original input.
+
+Original input:
+{original_input}
+
+Step outputs:
+{step_outputs}
+
+Task:
+Combine the outputs into the smallest useful unified result.
+
+Rules:
+- remove duplication
+- preserve useful distinctions
+- surface contradictions only if they matter
+- do not add unrelated analysis
+- do not explain stack mechanics
+- produce a practical final answer
+
+Return the final synthesized output.`;
+
 function extractPlaceholders(text = "") {
   return [...new Set(String(text || "").match(PLACEHOLDER_RE) || [])];
 }
@@ -121,6 +187,77 @@ function fillPromptTemplate(text = "", inputValues = {}) {
     next = next.split(placeholder).join(value.trim());
   });
   return next;
+}
+
+/**
+ * Resolve a raw flow value to a valid FLOW_MODES entry, defaulting to "batch".
+ * @param {string | undefined} value
+ * @returns {"batch" | "chain"}
+ */
+function resolveFlowMode(value) {
+  return typeof value === "string" && FLOW_MODES.includes(value) ? /** @type {"batch"|"chain"} */ (value) : FLOW_MODE_DEFAULT;
+}
+
+/**
+ * Assemble builder items in chain mode.
+ * Step 1 receives the task input; later steps receive the {input} placeholder
+ * which the user fills with the previous step's model output.
+ * @param {PromptKitBuilderItem[]} items
+ * @param {string} taskInput
+ * @returns {string}
+ */
+function assembleChainSteps(items, taskInput = "") {
+  if (items.length === 0) return "";
+  const total = items.length;
+  return items.map((item, index) => {
+    const inputValue = index === 0
+      ? (taskInput.trim() || "{input}")
+      : "{input}";
+    const wrapper = CHAIN_STEP_WRAPPER.replace("{input}", inputValue);
+    const stepPrompt = `${wrapper}\n\n---\n\n${item.copy.trim()}`;
+    return `## Step ${index + 1} of ${total}: ${humanizeBlockTitle(item.title)}\n\n${stepPrompt}`;
+  }).join("\n\n---\n\n");
+}
+
+/**
+ * Assemble builder items in batch mode.
+ * Every step receives the original input. A synthesis step is appended as the
+ * final step; the user fills {step_outputs} with the collected step outputs.
+ * @param {PromptKitBuilderItem[]} items
+ * @param {string} taskInput
+ * @returns {string}
+ */
+function assembleBatchSteps(items, taskInput = "") {
+  if (items.length === 0) return "";
+  const originalInput = taskInput.trim() || "{original_input}";
+  const total = items.length + 1; // +1 for synthesis
+
+  const steps = items.map((item, index) => {
+    const wrapper = BATCH_STEP_WRAPPER.replace("{original_input}", originalInput);
+    const stepPrompt = `${wrapper}\n\n---\n\n${item.copy.trim()}`;
+    return `## Step ${index + 1} of ${total}: ${humanizeBlockTitle(item.title)}\n\n${stepPrompt}`;
+  });
+
+  const synthesis = BATCH_SYNTHESIS_PROMPT.replace(/{original_input}/g, originalInput);
+  steps.push(`## Step ${total} of ${total}: Synthesis\n\n${synthesis}`);
+
+  return steps.join("\n\n---\n\n");
+}
+
+/**
+ * Assemble all builder items using the specified flow mode.
+ * Items are drawn from all builder sections in order.
+ * @param {"batch" | "chain"} flow
+ * @param {PromptKitBuilderItem[]} items
+ * @param {string} taskInput
+ * @returns {string}
+ */
+function assembleWithFlow(flow, items, taskInput = "") {
+  const allItems = items.filter((item) => item.copy && item.copy.trim());
+  if (allItems.length === 0) return "";
+  return flow === "chain"
+    ? assembleChainSteps(allItems, taskInput)
+    : assembleBatchSteps(allItems, taskInput);
 }
 
 function normalizeSection(item) {
@@ -233,6 +370,7 @@ function createBuilderWorkingState(seed = {}) {
     items: Array.isArray(seed.items) ? seed.items : [],
     modeKey: typeof seed.modeKey === "string" ? seed.modeKey : "",
     lensKey: typeof seed.lensKey === "string" ? seed.lensKey : "",
+    flow: resolveFlowMode(seed.flow),
     ui: {
       ...createBuilderUiState(),
       ...(seed.ui || {}),
@@ -546,6 +684,7 @@ const builderState = (() => {
     get runtime() { return getWorkingState().runtime; },
     get modeKey() { return getWorkingState().modeKey || ""; },
     get lensKey() { return getWorkingState().lensKey || ""; },
+    get flow() { return resolveFlowMode(getWorkingState().flow); },
     load() {
       try {
         const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
@@ -645,6 +784,11 @@ const builderState = (() => {
       save();
     },
     setStartMode() {},
+    setFlow(value) {
+      const working = getWorkingState();
+      working.flow = resolveFlowMode(value);
+      save();
+    },
     setModeKey(value) {
       applyManagedSelection("mode", value);
     },
@@ -754,6 +898,7 @@ const builderState = (() => {
         items: (Array.isArray(newItems) ? newItems : [])
           .map((item) => normalizeStoredItem(item))
           .filter(Boolean),
+        flow: meta.flow,
         runtime: {
           ...createBuilderRuntimeState(),
           lastInput: typeof meta.taskInput === "string" ? meta.taskInput : ""
@@ -1029,8 +1174,10 @@ function createCard(item) {
       const prevItems = builderState.items.map((i) => ({ ...i }));
       const prevStack = builderState.stackName;
       const prevLoadedStackKey = loadedStackKey;
+      const prevFlow = builderState.flow;
       builderState.clear();
       builderState.setStackName(item.job || slugify(item.title) || "loaded-stack");
+      builderState.setFlow(item.flow || FLOW_MODE_DEFAULT);
       steps.forEach((step) => builderState.add(step));
       loadedStackKey = item.key;
       if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
@@ -1045,7 +1192,7 @@ function createCard(item) {
       syncAddButtons();
       if (typeof showBuilderToast === "function") {
         showBuilderToast(`Loaded "${item.title}"`, "Undo", () => {
-          builderState.restore(prevItems, { stackName: prevStack });
+          builderState.restore(prevItems, { stackName: prevStack, flow: prevFlow });
           loadedStackKey = prevLoadedStackKey;
           renderBuilder();
           syncAddButtons();

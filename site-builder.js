@@ -197,9 +197,18 @@ function renderPromptPreview(prompt) {
 }
 
 function renderLivePrompt() {
-  const inputValues = getEffectiveBuilderPromptInputs();
+  const flow = builderState.flow;
+  const taskInput = builderState.taskInput || "";
   let prompt;
-  if (outputMode === "flat") {
+
+  if (flow === "chain" || flow === "batch") {
+    // Flow-mode assembly: produce a numbered multi-step prompt sequence.
+    const allItems = BUILDER_SECTION_ORDER.flatMap((sectionKey) =>
+      builderState.getSectionItems(sectionKey).filter((item) => item.copy && item.copy.trim())
+    );
+    prompt = assembleWithFlow(flow, allItems, taskInput);
+  } else if (outputMode === "flat") {
+    const inputValues = getEffectiveBuilderPromptInputs();
     const parts = BUILDER_SECTION_ORDER.flatMap((sectionKey) =>
       builderState.getSectionItems(sectionKey)
         .filter((item) => item.copy && item.copy.trim())
@@ -207,11 +216,19 @@ function renderLivePrompt() {
     );
     prompt = parts.join("\n\n");
   } else {
+    const inputValues = getEffectiveBuilderPromptInputs();
     prompt = builderState.assemble({ resolveInputs: true, inputValues });
   }
+
   const output = document.getElementById("builder-run-output");
   const tokenCount = document.getElementById("builder-token-count");
   const copyButton = document.getElementById("builder-copy-prompt");
+  const outputModeBtn = document.getElementById("builder-output-mode");
+
+  // Hide the flat/structured toggle when flow mode governs the output
+  if (outputModeBtn) {
+    outputModeBtn.hidden = flow === "chain" || flow === "batch";
+  }
 
   if (output) {
     if (prompt) {
@@ -313,6 +330,36 @@ function renderHeaderControls() {
   }
 
   if (clearBtn) clearBtn.hidden = builderState.items.length === 0;
+}
+
+/**
+ * Render the flow mode selector into #builder-flow.
+ * Shows two radio-style buttons: Batch (recommended default) and Chain.
+ */
+function renderFlowSelector() {
+  const mount = document.getElementById("builder-flow");
+  if (!mount) return;
+  const currentFlow = builderState.flow;
+  mount.innerHTML = `
+    <div class="builder-flow-label">Flow</div>
+    <div class="builder-flow-options" role="radiogroup" aria-label="Stack flow mode">
+      ${FLOW_MODES.map((mode) => `
+        <button
+          type="button"
+          class="builder-flow-btn${currentFlow === mode ? " is-active" : ""}"
+          role="radio"
+          aria-checked="${currentFlow === mode ? "true" : "false"}"
+          data-action="set-flow"
+          data-flow="${escHtml(mode)}"
+          title="${escHtml(FLOW_MODE_DESCRIPTIONS[mode] || "")}"
+        >
+          <span class="flow-btn-label">${escHtml(FLOW_MODE_LABELS[mode] || mode)}</span>
+          ${mode === FLOW_MODE_DEFAULT ? '<span class="flow-btn-badge">Default</span>' : ""}
+        </button>
+      `).join("")}
+    </div>
+    <p class="builder-flow-desc">${escHtml(FLOW_MODE_DESCRIPTIONS[currentFlow] || "")}</p>
+  `;
 }
 
 function renderSectionEmptyState(section) {
@@ -493,6 +540,7 @@ function renderBuilder() {
   const warnings = getBuilderWarnings();
   const badge = document.getElementById("builder-badge");
   renderHeaderControls();
+  renderFlowSelector();
   renderBuilderAlerts(warnings);
   renderBuilderInputs();
   renderComposition();
@@ -1236,6 +1284,21 @@ document.getElementById("builder-output-mode")?.addEventListener("click", () => 
     modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
     modeBtn.title = outputMode === "flat" ? "Show section headers" : "Hide section headers";
   }
+});
+
+// ─── Flow mode selector ───────────────────────────────────────────────────────
+//
+// The flow selector is rendered into #builder-flow by renderFlowSelector().
+// Clicks bubble up to this delegated handler.
+
+document.getElementById("builder-flow")?.addEventListener("click", (event) => {
+  const btn = event.target.closest("[data-action='set-flow']");
+  if (!btn) return;
+  const nextFlow = btn.dataset.flow || "";
+  if (!nextFlow) return;
+  builderState.setFlow(nextFlow);
+  renderFlowSelector();
+  renderLivePrompt();
 });
 
 // ─── Command palette ──────────────────────────────────────────────────────────

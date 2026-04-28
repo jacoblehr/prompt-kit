@@ -2449,6 +2449,78 @@ kbd.search-hint {
   font-size: 0.84em;
 }
 
+/* ─── Flow selector ──────────────────────────────────────────────────────────── */
+
+.builder-flow {
+  padding: 10px 0 4px;
+}
+
+.builder-flow-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.builder-flow-options {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.builder-flow-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: border-color 0.12s, color 0.12s, background 0.12s;
+}
+
+.builder-flow-btn:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.builder-flow-btn.is-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.flow-btn-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 20%, transparent);
+  color: var(--muted);
+}
+
+.builder-flow-btn.is-active .flow-btn-badge {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  color: var(--accent);
+}
+
+.builder-flow-desc {
+  margin-top: 5px;
+  font-size: 0.7rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
 .builder-alerts {
   display: grid;
   gap: 8px;

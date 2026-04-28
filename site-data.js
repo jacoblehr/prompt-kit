@@ -2025,6 +2025,7 @@ globalThis.SITE_DATA = {
       "outputKind": "clarity",
       "effort": "standard",
       "stakes": "low",
+      "flow": "batch",
       "summary": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "tags": [
         "frame",
@@ -2097,6 +2098,7 @@ globalThis.SITE_DATA = {
       "outputKind": "options",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Generate competing paths, select the best one, and discard the rest before refining.",
       "tags": [
         "branch",
@@ -2169,6 +2171,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
       "tags": [
         "decompose",
@@ -2240,6 +2243,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "chain",
       "summary": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
       "tags": [
         "refine",
@@ -2312,6 +2316,7 @@ globalThis.SITE_DATA = {
       "outputKind": "decision",
       "effort": "deep",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Move from a set of options to a committed, traceable choice.",
       "tags": [
         "decide"
@@ -2386,6 +2391,7 @@ globalThis.SITE_DATA = {
       "outputKind": "retrospective",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Evaluate a past decision fairly by separating decision quality from outcome quality.",
       "tags": [
         "review",
@@ -2459,6 +2465,7 @@ globalThis.SITE_DATA = {
       "outputKind": "decision",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Decide under material risk or uncertain futures where failure would be costly.",
       "tags": [
         "risk",
@@ -2532,6 +2539,7 @@ globalThis.SITE_DATA = {
       "outputKind": "summary",
       "effort": "deep",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "tags": [
         "research"
@@ -2605,6 +2613,7 @@ globalThis.SITE_DATA = {
       "outputKind": "brief",
       "effort": "deep",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "tags": [
         "hypothesis",
@@ -2679,6 +2688,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Map audiences and land a change or decision so it is understood and acted on, not just received.",
       "tags": [
         "align",
@@ -2752,6 +2762,7 @@ globalThis.SITE_DATA = {
       "outputKind": "draft",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Build and harden a defensible position from evidence.",
       "tags": [
         "develop",
@@ -2825,6 +2836,7 @@ globalThis.SITE_DATA = {
       "outputKind": "brief",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy.",
       "tags": [
         "negotiate"
@@ -2896,6 +2908,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Define requirements, success criteria, and failure modes for a feature before building it.",
       "tags": [
         "feature",
@@ -2968,6 +2981,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "deep",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Move a feature from defined to shipped with quality gates at each step.",
       "tags": [
         "ship",
@@ -3042,6 +3056,7 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Surface weaknesses, blind spots, and revision targets in any artifact.",
       "tags": [
         "critique"
@@ -3113,6 +3128,7 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
       "tags": [
         "ethical",
@@ -3185,6 +3201,7 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "deep",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
       "tags": [
         "pressure",
@@ -3259,6 +3276,7 @@ globalThis.SITE_DATA = {
       "outputKind": "prompt",
       "effort": "standard",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
       "tags": [
         "improve"
@@ -3329,6 +3347,7 @@ globalThis.SITE_DATA = {
       "outputKind": "prompt",
       "effort": "deep",
       "stakes": "medium",
+      "flow": "batch",
       "summary": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
       "tags": [
         "build",
@@ -3402,6 +3421,7 @@ globalThis.SITE_DATA = {
       "outputKind": "diagnosis",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Diagnose a fault systematically before attempting a fix.",
       "tags": [
         "debug"
@@ -3473,6 +3493,7 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Review code for correctness, contracts, and blast radius before approving it.",
       "tags": [
         "review",
@@ -3549,6 +3570,7 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Evaluate a system design for structural soundness before committing to it.",
       "tags": [
         "architecture",
@@ -3621,6 +3643,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
       "tags": [
         "incident",
@@ -3693,6 +3716,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Break a socio-technical loop that keeps recreating the same class of incident.",
       "tags": [
         "break",
@@ -3765,6 +3789,7 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "deep",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "tags": [
         "safe",
@@ -3839,6 +3864,7 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
+      "flow": "batch",
       "summary": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
       "tags": [
         "security",

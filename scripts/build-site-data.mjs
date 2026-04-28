@@ -658,6 +658,8 @@ const STACK_STAGE_VALUES = ["frame", "explore", "analyze", "decide", "critique",
 const STACK_OUTPUT_KIND_VALUES = ["clarity", "options", "decision", "plan", "brief", "summary", "critique", "diagnosis", "draft", "retrospective", "prompt"];
 const STACK_EFFORT_VALUES = ["quick", "standard", "deep"];
 const STACK_STAKES_VALUES = ["low", "medium", "high"];
+const STACK_FLOW_VALUES = ["chain", "batch"];
+const STACK_FLOW_DEFAULT = "batch";
 
 function stackEffortFromCount(count) {
   if (count <= 3) return "quick";
@@ -745,6 +747,12 @@ function makeStack(fileName) {
   const swapsMatch = md.match(/^\*\*Common swaps:\*\*\s*(.+)$/m);
   const failureMatch = md.match(/^\*\*Common failure mode:\*\*\s*(.+)$/m);
   const chooseInsteadMatch = md.match(/^\*\*Choose instead when:\*\*\s*(.+)$/m);
+  const flowMatch = md.match(/^\*\*Flow:\*\*\s*(chain|batch)\s*$/im);
+  const flow = flowMatch ? flowMatch[1].toLowerCase() : STACK_FLOW_DEFAULT;
+
+  if (!STACK_FLOW_VALUES.includes(flow)) {
+    throw new Error(`Invalid flow value "${flow}" in ${fileName}. Must be one of: ${STACK_FLOW_VALUES.join(", ")}.`);
+  }
 
   const baseName = fileName.replace(/\.md$/, "");
   const meta = STACK_META[baseName];
@@ -782,6 +790,7 @@ function makeStack(fileName) {
     outputKind,
     effort,
     stakes,
+    flow,
     summary: ensureSentence(useWhen),
     tags: resolvedTags(md, title, baseName),
     contract,

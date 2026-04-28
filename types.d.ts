@@ -1,3 +1,5 @@
+type PromptKitFlowMode = "chain" | "batch";
+
 type PromptKitBlockType =
   | "frame"
   | "mode"
@@ -95,6 +97,7 @@ interface PromptKitItem {
   outputKind?: PromptKitStackOutputKind | string;
   effort?: PromptKitStackEffort | string;
   stakes?: PromptKitStackStakes | string;
+  flow?: PromptKitFlowMode | string;
   key?: string;
   aliases?: string[];
   title: string;

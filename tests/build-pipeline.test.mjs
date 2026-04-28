@@ -165,3 +165,46 @@ describe('CLI output format', () => {
     assert.match(output, /result\(s\) for/)
   })
 })
+
+// ---------------------------------------------------------------------------
+// 5. Stack flow field integrity
+// ---------------------------------------------------------------------------
+
+describe('stack flow field', () => {
+  const VALID_FLOW_MODES = ['chain', 'batch']
+  const FLOW_MODE_DEFAULT = 'batch'
+
+  test('every stack has a flow field that is "chain" or "batch"', () => {
+    const failures = []
+    for (const stack of stacks) {
+      if (!VALID_FLOW_MODES.includes(stack.flow)) {
+        failures.push(`stack "${stack.key}" has invalid or missing flow: "${stack.flow}"`)
+      }
+    }
+    assert.deepEqual(failures, [])
+  })
+
+  test('stacks without explicit **Flow:** marker default to batch', () => {
+    // All stacks not explicitly marked chain should resolve to batch
+    const nonChainStacks = stacks.filter((s) => s.flow !== 'chain')
+    for (const stack of nonChainStacks) {
+      assert.equal(
+        stack.flow,
+        FLOW_MODE_DEFAULT,
+        `stack "${stack.key}" should default to batch, got "${stack.flow}"`
+      )
+    }
+  })
+
+  test('refine-loop stack is marked as chain', () => {
+    const stack = stacks.find((s) => s.job === 'refine-loop')
+    assert.ok(stack, 'refine-loop stack should exist in site-data')
+    assert.equal(stack.flow, 'chain', 'refine-loop should have flow: chain')
+  })
+
+  test('research stack defaults to batch', () => {
+    const stack = stacks.find((s) => s.job === 'research')
+    assert.ok(stack, 'research stack should exist in site-data')
+    assert.equal(stack.flow, 'batch')
+  })
+})
