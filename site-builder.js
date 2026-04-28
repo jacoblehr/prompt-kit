@@ -160,15 +160,18 @@ function renderBuilderInputs() {
   if (!mount) return;
   const pane = mount.closest(".builder-pane--inputs");
 
+  // The pane is visible whenever the builder has items — the task input is
+  // always useful regardless of whether blocks have {placeholder} variables.
+  const hasItems = builderState.items.length > 0;
+  if (pane) pane.hidden = !hasItems;
+
   const definitions = getBuilderInputDefinitions();
   if (definitions.length === 0) {
-    if (pane) pane.hidden = true;
     mount.hidden = true;
     mount.innerHTML = "";
     return;
   }
 
-  if (pane) pane.hidden = false;
   mount.hidden = false;
   mount.innerHTML = `<div class="builder-inputs-list">` +
     definitions.map((definition) => `
@@ -889,12 +892,20 @@ document.getElementById("builder-run-input")?.addEventListener("input", (event) 
 });
 
 document.getElementById("builder-copy-prompt").addEventListener("click", async () => {
-  const definitions = getBuilderInputDefinitions();
-  const prompt = builderState.assemble({ resolveInputs: true, inputValues: getEffectiveBuilderPromptInputs() });
+  const flow = builderState.flow;
+  let prompt;
+  if (flow === "chain" || flow === "batch") {
+    const allItems = BUILDER_SECTION_ORDER.flatMap((sectionKey) =>
+      builderState.getSectionItems(sectionKey).filter((item) => item.copy && item.copy.trim())
+    );
+    prompt = assembleWithFlow(flow, allItems, builderState.taskInput || "");
+  } else {
+    prompt = builderState.assemble({ resolveInputs: true, inputValues: getEffectiveBuilderPromptInputs() });
+  }
   if (!prompt) return;
   try {
     await navigator.clipboard.writeText(prompt);
-    showBuilderToast(definitions.length > 0 ? "Filled prompt copied" : "Prompt copied");
+    showBuilderToast("Prompt copied");
   } catch {
     showBuilderToast("Copy failed");
   }
