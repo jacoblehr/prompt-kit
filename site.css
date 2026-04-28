@@ -916,6 +916,18 @@ kbd.search-hint {
   .hero-panels {
     gap: 14px;
   }
+
+  /* ─── Execution resize handle: make touch-friendly on tablet ─── */
+  .builder-execution-resize-handle {
+    height: 18px;
+    margin: -2px 0 0 0;
+    padding: 8px 0;
+  }
+
+  .builder-execution-resize-handle::before {
+    width: 80px;
+    height: 4px;
+  }
 }
 
 /* ─── Small phone breakpoint (≤ 480px) ─────────────────────────────────────── */
@@ -1303,10 +1315,6 @@ kbd.search-hint {
     grid-template-columns: 1fr;
   }
 
-  .builder-resize-handle {
-    display: none;
-  }
-
   .builder-scroll {
     max-height: 40vh;
     flex: none;
@@ -1343,6 +1351,18 @@ kbd.search-hint {
   .add-btn,
   .details-btn {
     min-height: 40px;
+  }
+
+  /* ─── Execution resize handle: make properly sized for touch ─── */
+  .builder-execution-resize-handle {
+    height: 18px;
+    margin: -2px 0 0 0;
+    pointer-events: auto;
+  }
+
+  .builder-execution-resize-handle::before {
+    width: 72px;
+    height: 4px;
   }
 }
 
@@ -2752,14 +2772,6 @@ kbd.search-hint {
     justify-content: center;
   }
 
-  /* ─── Execution resize handle is not usable on touch ─── */
-  .builder-execution-resize-handle {
-    height: 0;
-    overflow: hidden;
-    margin: 0;
-    pointer-events: none;
-  }
-
   /* ─── Stacked pane height distribution ─── */
   .builder-execution-panels {
     grid-template-rows: 1fr 1fr;
@@ -2771,6 +2783,17 @@ kbd.search-hint {
 
   .builder-pane {
     min-height: 130px;
+  }
+
+  /* ─── Execution resize handle: make touch-friendly on mobile ─── */
+  .builder-execution-resize-handle {
+    height: 20px;
+    margin: -5px 0 -1px 0;
+    padding: 8px 0;
+  }
+
+  .builder-execution-resize-handle::before {
+    height: 3px;
   }
 
   /* ─── Copy Prompt button: full-width with safe-area support ─── */
@@ -2805,6 +2828,17 @@ kbd.search-hint {
   .builder-execution {
     min-height: 300px;
     height: var(--builder-execution-height, min(50vh, 440px));
+  }
+
+  .builder-execution-resize-handle {
+    height: 18px;
+    margin: -2px 0 0 0;
+    padding: 8px 0;
+  }
+
+  .builder-execution-resize-handle::before {
+    width: 64px;
+    height: 3px;
   }
 
   .builder-action-btn {
