@@ -41,6 +41,10 @@ function list(relPath) {
   return fs.readdirSync(path.join(ROOT, relPath)).sort((a, b) => a.localeCompare(b));
 }
 
+function exists(relPath) {
+  return fs.existsSync(path.join(ROOT, relPath));
+}
+
 function listDirs(relPath) {
   return list(relPath).filter((name) => fs.statSync(path.join(ROOT, relPath, name)).isDirectory());
 }
@@ -234,6 +238,51 @@ function makeTags(...parts) {
 
 function parseInlineRefs(text = "") {
   return [...text.matchAll(/`([^`]+)`/g)].map((match) => match[1].trim());
+}
+
+function blockTypeFromRef(ref = "") {
+  const prefix = String(ref).split(".")[0];
+  if (["frame", "mode", "strategy", "recurse", "lens", "guardrail", "schema", "rubric"].includes(prefix)) {
+    return prefix;
+  }
+  return "";
+}
+
+function makeCompositionProfile(refs = []) {
+  const refTypes = refs.map((ref) => [ref, blockTypeFromRef(ref)]).filter(([, type]) => type);
+  const typeCounts = refTypes.reduce((counts, [, type]) => {
+    counts[type] = (counts[type] || 0) + 1;
+    return counts;
+  }, {});
+  const modeRefs = refTypes.filter(([, type]) => type === "mode").map(([ref]) => ref);
+  const recurseRefs = refTypes.filter(([, type]) => type === "recurse").map(([ref]) => ref);
+  const hasSchema = Boolean(typeCounts.schema);
+  const hasQualityGate = Boolean(typeCounts.guardrail || typeCounts.rubric);
+  const hasBoundedRecursion = refs.includes("guardrail.bounded-recursion");
+  const needsModeHandoff = modeRefs.length > 1;
+  const needsRecursionBoundary = recurseRefs.length > 0 && !hasBoundedRecursion;
+  const phaseOrder = refTypes
+    .map(([ref, type]) => `${type}:${ref.split(".").slice(1).join(".") || ref}`)
+    .join(" -> ");
+  const strengths = [
+    modeRefs.length > 0 ? "stance" : "",
+    typeCounts.frame ? "framing" : "",
+    (typeCounts.strategy || typeCounts.recurse) ? "reasoning" : "",
+    hasQualityGate ? "checks" : "",
+    hasSchema ? "output" : ""
+  ].filter(Boolean);
+
+  return {
+    phaseOrder,
+    primaryMode: modeRefs[0] || "",
+    modeRefs,
+    hasSchema,
+    hasQualityGate,
+    hasBoundedRecursion,
+    needsModeHandoff,
+    needsRecursionBoundary,
+    strengths
+  };
 }
 
 function inferFormFromSourceKind(sourceKind = "") {
@@ -656,10 +705,7 @@ const STACK_FAMILY_ORDER = [
 
 const STACK_STAGE_VALUES = ["frame", "explore", "analyze", "decide", "critique", "refine", "conclude"];
 const STACK_OUTPUT_KIND_VALUES = ["clarity", "options", "decision", "plan", "brief", "summary", "critique", "diagnosis", "draft", "retrospective", "prompt"];
-const STACK_EFFORT_VALUES = ["quick", "standard", "deep"];
 const STACK_STAKES_VALUES = ["low", "medium", "high"];
-const STACK_FLOW_VALUES = ["chain", "batch"];
-const STACK_FLOW_DEFAULT = "batch";
 
 function stackEffortFromCount(count) {
   if (count <= 3) return "quick";
@@ -696,6 +742,7 @@ const STACK_META = {
   "build-system-prompt": { family: "Prompt Craft", stage: "frame",  outputKind: "prompt",             stakes: "medium" },
   // Developer Workflows
   "debug":                    { family: "Developer Workflows", stage: "analyze",  outputKind: "diagnosis", stakes: "high" },
+  "implement-change":         { family: "Developer Workflows", stage: "decide",   outputKind: "plan",      stakes: "high" },
   "review-code":              { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
   "architecture-review":      { family: "Developer Workflows", stage: "critique", outputKind: "critique",  stakes: "high" },
   "incident-response":        { family: "Developer Workflows", stage: "analyze",  outputKind: "plan",      stakes: "high" },
@@ -747,12 +794,6 @@ function makeStack(fileName) {
   const swapsMatch = md.match(/^\*\*Common swaps:\*\*\s*(.+)$/m);
   const failureMatch = md.match(/^\*\*Common failure mode:\*\*\s*(.+)$/m);
   const chooseInsteadMatch = md.match(/^\*\*Choose instead when:\*\*\s*(.+)$/m);
-  const flowMatch = md.match(/^\*\*Flow:\*\*\s*(chain|batch)\s*$/im);
-  const flow = flowMatch ? flowMatch[1].toLowerCase() : STACK_FLOW_DEFAULT;
-
-  if (!STACK_FLOW_VALUES.includes(flow)) {
-    throw new Error(`Invalid flow value "${flow}" in ${fileName}. Must be one of: ${STACK_FLOW_VALUES.join(", ")}.`);
-  }
 
   const baseName = fileName.replace(/\.md$/, "");
   const meta = STACK_META[baseName];
@@ -778,6 +819,8 @@ function makeStack(fileName) {
   const io = {};
   if (inputs.length > 0) io.usefulInputs = inputs;
   if (outputs.length > 0) io.expectedOutputs = outputs;
+  const sequenceRefs = sequence.flatMap((item) => parseInlineRefs(item));
+  const composition = makeCompositionProfile(sequenceRefs);
 
   return {
     section: "Stack",
@@ -790,14 +833,15 @@ function makeStack(fileName) {
     outputKind,
     effort,
     stakes,
-    flow,
     summary: ensureSentence(useWhen),
     tags: resolvedTags(md, title, baseName),
     contract,
     io,
+    composition,
     body: bodyFromEntries([
       ["Job", contract.job],
       ["Use when", contract.useWhen],
+      ["Composition profile", composition.phaseOrder],
       ["Stage", stage],
       ["Output kind", outputKind],
       ["Effort", effort],
@@ -966,6 +1010,7 @@ const stackOrder = [
   "build-system-prompt.md",
   // Developer Workflows
   "debug.md",
+  "implement-change.md",
   "review-code.md",
   "architecture-review.md",
   // "tech-debt-triage.md" — deleted (subset of critique)
@@ -986,8 +1031,17 @@ const allBlockDirs = listDirs("prompts/blocks");
 const modes = orderNames(allBlockDirs.filter(d => d.startsWith("mode.")).map(d => d.slice(5)), modeOrder).map((dirName) => makeMode(dirName));
 const strategies = orderNames(allBlockDirs.filter(d => d.startsWith("strategy.")).map(d => d.slice(9)), strategyOrder).map((dirName) => makeStrategy(dirName));
 const promptBlocks = orderNames(allBlockDirs.filter(d => !d.startsWith("mode.") && !d.startsWith("strategy.") && !d.startsWith("rubric.")), promptBlockOrder).map((dirName) => makePromptBlock(dirName));
-const snippetBlocks = [];
-const lensBlocks = [];
+const snippetFiles = exists("prompts/snippets")
+  ? orderNames(list("prompts/snippets").filter((fileName) => fileName.endsWith(".md")), snippetOrder)
+  : [];
+const snippetBlocks = snippetFiles.map((fileName) => makeSnippetBlock(fileName));
+const lensBlocks = exists("prompts/concepts")
+  ? listDirs("prompts/concepts").flatMap((group) =>
+    list(`prompts/concepts/${group}`)
+      .filter((fileName) => fileName.endsWith(".md"))
+      .map((fileName) => makeLensBlock(group, fileName))
+  )
+  : [];
 const rubricBlocks = orderNames(allBlockDirs.filter(d => d.startsWith("rubric.")).map(d => d.slice(7)), rubricOrder)
   .map((baseName) => makeRubric(baseName));
 const stackFiles = orderNames(list("stacks"), stackOrder)

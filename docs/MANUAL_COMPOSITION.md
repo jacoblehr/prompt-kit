@@ -124,3 +124,5 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - use the smallest useful combination
 - prefer one good mode block plus one good frame block over a huge stack
 - when a piece feels repetitive or low-value, cut it
+- when a stack uses more than one mode, write the handoff as phases in a single prompt
+- pair recursive blocks with a stopping rule so the model knows when the answer is done

@@ -2025,7 +2025,6 @@ globalThis.SITE_DATA = {
       "outputKind": "clarity",
       "effort": "standard",
       "stakes": "low",
-      "flow": "batch",
       "summary": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "tags": [
         "frame",
@@ -2051,6 +2050,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:task -> strategy:problem-split -> frame:success-criteria -> guardrail:uncertainty",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2059,6 +2076,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Structure an underspecified request before acting so neither the question nor the answer drifts."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:task -> strategy:problem-split -> frame:success-criteria -> guardrail:uncertainty"
         ],
         [
           "Stage",
@@ -2098,7 +2119,6 @@ globalThis.SITE_DATA = {
       "outputKind": "options",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Generate competing paths, select the best one, and discard the rest before refining.",
       "tags": [
         "branch",
@@ -2124,6 +2144,21 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> recurse:branch-prune -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": true,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2132,6 +2167,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Generate competing paths, select the best one, and discard the rest before refining."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> recurse:branch-prune -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion"
         ],
         [
           "Stage",
@@ -2171,7 +2210,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
       "tags": [
         "decompose",
@@ -2196,6 +2234,21 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> recurse:decompose -> recurse:evaluate -> guardrail:bounded-recursion",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": true,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2204,6 +2257,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Recursively decompose a complex problem into leaf-level solutions, then synthesize."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> recurse:decompose -> recurse:evaluate -> guardrail:bounded-recursion"
         ],
         [
           "Stage",
@@ -2243,7 +2300,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "chain",
       "summary": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
       "tags": [
         "refine",
@@ -2269,6 +2325,21 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": true,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2277,6 +2348,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Iteratively improve output against explicit criteria until all pass or iteration limit is reached."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion"
         ],
         [
           "Stage",
@@ -2316,7 +2391,6 @@ globalThis.SITE_DATA = {
       "outputKind": "decision",
       "effort": "deep",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Move from a set of options to a committed, traceable choice.",
       "tags": [
         "decide"
@@ -2344,6 +2418,25 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:success-criteria -> guardrail:disconfirming-evidence -> guardrail:assumption-audit -> mode:decide -> rubric:decision-quality -> schema:decision-memo",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2352,6 +2445,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Move from a set of options to a committed, traceable choice."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:success-criteria -> guardrail:disconfirming-evidence -> guardrail:assumption-audit -> mode:decide -> rubric:decision-quality -> schema:decision-memo"
         ],
         [
           "Stage",
@@ -2391,7 +2488,6 @@ globalThis.SITE_DATA = {
       "outputKind": "retrospective",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Evaluate a past decision fairly by separating decision quality from outcome quality.",
       "tags": [
         "review",
@@ -2418,6 +2514,20 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "guardrail:assumption-audit -> guardrail:disconfirming-evidence -> frame:cause-mapping -> frame:extract-insights -> rubric:decision-quality",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2426,6 +2536,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Evaluate a past decision fairly by separating decision quality from outcome quality."
+        ],
+        [
+          "Composition profile",
+          "guardrail:assumption-audit -> guardrail:disconfirming-evidence -> frame:cause-mapping -> frame:extract-insights -> rubric:decision-quality"
         ],
         [
           "Stage",
@@ -2465,7 +2579,6 @@ globalThis.SITE_DATA = {
       "outputKind": "decision",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Decide under material risk or uncertain futures where failure would be costly.",
       "tags": [
         "risk",
@@ -2492,6 +2605,22 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> frame:cause-mapping -> strategy:premortem -> guardrail:assumption-audit -> schema:decision-memo",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2500,6 +2629,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Decide under material risk or uncertain futures where failure would be costly."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:cause-mapping -> strategy:premortem -> guardrail:assumption-audit -> schema:decision-memo"
         ],
         [
           "Stage",
@@ -2539,7 +2672,6 @@ globalThis.SITE_DATA = {
       "outputKind": "summary",
       "effort": "deep",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "tags": [
         "research"
@@ -2566,6 +2698,23 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-method -> rubric:research-quality",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2574,6 +2723,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Build a well-grounded view from a body of evidence before deciding or writing a position."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-method -> rubric:research-quality"
         ],
         [
           "Stage",
@@ -2613,7 +2766,6 @@ globalThis.SITE_DATA = {
       "outputKind": "brief",
       "effort": "deep",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "tags": [
         "hypothesis",
@@ -2641,6 +2793,23 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method -> rubric:research-quality",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2649,6 +2818,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Design, run, or evaluate a test of a causal claim before acting on it."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method -> rubric:research-quality"
         ],
         [
           "Stage",
@@ -2688,7 +2861,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Map audiences and land a change or decision so it is understood and acted on, not just received.",
       "tags": [
         "align",
@@ -2715,6 +2887,25 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:task -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2723,6 +2914,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Map audiences and land a change or decision so it is understood and acted on, not just received."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:task -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -2762,7 +2957,6 @@ globalThis.SITE_DATA = {
       "outputKind": "draft",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Build and harden a defensible position from evidence.",
       "tags": [
         "develop",
@@ -2789,6 +2983,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:task -> strategy:steelman -> frame:extract-insights -> rubric:argument-quality",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2797,6 +3009,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Build and harden a defensible position from evidence."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:task -> strategy:steelman -> frame:extract-insights -> rubric:argument-quality"
         ],
         [
           "Stage",
@@ -2836,7 +3052,6 @@ globalThis.SITE_DATA = {
       "outputKind": "brief",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy.",
       "tags": [
         "negotiate"
@@ -2861,6 +3076,25 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:task -> strategy:steelman -> mode:decide -> schema:execution-brief",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": false,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2869,6 +3103,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:task -> strategy:steelman -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -2908,7 +3146,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Define requirements, success criteria, and failure modes for a feature before building it.",
       "tags": [
         "feature",
@@ -2934,6 +3171,21 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> rubric:plan-quality -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -2942,6 +3194,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Define requirements, success criteria, and failure modes for a feature before building it."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> rubric:plan-quality -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -2981,7 +3237,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "deep",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Move a feature from defined to shipped with quality gates at each step.",
       "tags": [
         "ship",
@@ -3009,6 +3264,25 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:decide -> frame:success-criteria -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
+        "primaryMode": "mode.decide",
+        "modeRefs": [
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3017,6 +3291,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Move a feature from defined to shipped with quality gates at each step."
+        ],
+        [
+          "Composition profile",
+          "mode:decide -> frame:success-criteria -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3056,7 +3334,6 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Surface weaknesses, blind spots, and revision targets in any artifact.",
       "tags": [
         "critique"
@@ -3081,6 +3358,23 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> rubric:argument-quality",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3089,6 +3383,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Surface weaknesses, blind spots, and revision targets in any artifact."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> rubric:argument-quality"
         ],
         [
           "Stage",
@@ -3128,7 +3426,6 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
       "tags": [
         "ethical",
@@ -3154,6 +3451,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> rubric:argument-quality",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3162,6 +3477,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> rubric:argument-quality"
         ],
         [
           "Stage",
@@ -3201,7 +3520,6 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "deep",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
       "tags": [
         "pressure",
@@ -3229,6 +3547,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3237,6 +3573,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Stress-test a plan before committing to find failure modes optimism may be obscuring."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence"
         ],
         [
           "Stage",
@@ -3276,7 +3616,6 @@ globalThis.SITE_DATA = {
       "outputKind": "prompt",
       "effort": "standard",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
       "tags": [
         "improve"
@@ -3300,6 +3639,23 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3308,6 +3664,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality"
         ],
         [
           "Stage",
@@ -3347,7 +3707,6 @@ globalThis.SITE_DATA = {
       "outputKind": "prompt",
       "effort": "deep",
       "stakes": "medium",
-      "flow": "batch",
       "summary": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
       "tags": [
         "build",
@@ -3374,6 +3733,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:execution-brief",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3382,6 +3759,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Design a system prompt or persistent instruction set for an AI agent or workflow."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3421,7 +3802,6 @@ globalThis.SITE_DATA = {
       "outputKind": "diagnosis",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Diagnose a fault systematically before attempting a fix.",
       "tags": [
         "debug"
@@ -3446,6 +3826,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:task -> mode:critique -> frame:cause-mapping -> schema:execution-brief",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": false,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3454,6 +3852,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Diagnose a fault systematically before attempting a fix."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:task -> mode:critique -> frame:cause-mapping -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3484,6 +3886,116 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.implement-change",
+      "title": "implement-change",
+      "family": "Developer Workflows",
+      "job": "implement-change",
+      "useWhen": "Implement a bounded code change with explicit scope, acceptance criteria, and verification.",
+      "stage": "decide",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Implement a bounded code change with explicit scope, acceptance criteria, and verification.",
+      "tags": [
+        "implement",
+        "change"
+      ],
+      "contract": {
+        "job": "implement-change",
+        "useWhen": "Implement a bounded code change with explicit scope, acceptance criteria, and verification.",
+        "minimumBlocks": [
+          "frame.task",
+          "frame.success-criteria",
+          "schema.execution-brief"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.success-criteria`",
+          "`strategy.problem-split`",
+          "`guardrail.assumption-audit`",
+          "`schema.execution-brief`",
+          "`rubric.plan-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "",
+        "chooseInsteadWhen": "use `review-code` if the artifact already exists and the main job is critique rather than implementation. Use `safe-migration` if the change crosses schema, API, or rollout boundaries."
+      },
+      "io": {
+        "usefulInputs": [
+          "requested behavior change",
+          "relevant files or subsystems",
+          "constraints and non-goals",
+          "acceptance criteria",
+          "verification commands"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:task -> frame:success-criteria -> strategy:problem-split -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "implement-change"
+        ],
+        [
+          "Use when",
+          "Implement a bounded code change with explicit scope, acceptance criteria, and verification."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:success-criteria -> strategy:problem-split -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Useful inputs",
+          "requested behavior change, relevant files or subsystems, constraints and non-goals, acceptance criteria, verification commands"
+        ],
+        [
+          "Minimum blocks",
+          "frame.task, frame.success-criteria, schema.execution-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.success-criteria` -> `strategy.problem-split` -> `guardrail.assumption-audit` -> `schema.execution-brief` -> `rubric.plan-quality`"
+        ],
+        [
+          "Choose instead when",
+          "use `review-code` if the artifact already exists and the main job is critique rather than implementation. Use `safe-migration` if the change crosses schema, API, or rollout boundaries."
+        ]
+      ],
+      "sourcePath": "stacks/implement-change.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.review-code",
       "title": "review-code",
       "family": "Developer Workflows",
@@ -3493,7 +4005,6 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Review code for correctness, contracts, and blast radius before approving it.",
       "tags": [
         "review",
@@ -3519,6 +4030,25 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": "use `security-threat-model` if the main job is simulating active abuse or attack paths before a system ships or changes, rather than reviewing correctness and boundary behavior of an implementation."
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3527,6 +4057,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Review code for correctness, contracts, and blast radius before approving it."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3570,7 +4104,6 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Evaluate a system design for structural soundness before committing to it.",
       "tags": [
         "architecture",
@@ -3596,6 +4129,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> rubric:decision-quality",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": false,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3604,6 +4155,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Evaluate a system design for structural soundness before committing to it."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> rubric:decision-quality"
         ],
         [
           "Stage",
@@ -3643,7 +4198,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
       "tags": [
         "incident",
@@ -3669,6 +4223,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:cause-mapping -> mode:decide -> schema:incident-postmortem -> schema:execution-brief",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": false,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3677,6 +4249,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Contain and diagnose an active incident, then close with a written post-mortem and action plan."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:cause-mapping -> mode:decide -> schema:incident-postmortem -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3716,7 +4292,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Break a socio-technical loop that keeps recreating the same class of incident.",
       "tags": [
         "break",
@@ -3742,6 +4317,24 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:reflect -> frame:cause-mapping -> strategy:premortem -> schema:execution-brief",
+        "primaryMode": "mode.reflect",
+        "modeRefs": [
+          "mode.reflect"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": false,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3750,6 +4343,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Break a socio-technical loop that keeps recreating the same class of incident."
+        ],
+        [
+          "Composition profile",
+          "mode:reflect -> frame:cause-mapping -> strategy:premortem -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3789,7 +4386,6 @@ globalThis.SITE_DATA = {
       "outputKind": "plan",
       "effort": "deep",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "tags": [
         "safe",
@@ -3817,6 +4413,25 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": ""
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:task -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3825,6 +4440,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:task -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3864,7 +4483,6 @@ globalThis.SITE_DATA = {
       "outputKind": "critique",
       "effort": "standard",
       "stakes": "high",
-      "flow": "batch",
       "summary": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
       "tags": [
         "security",
@@ -3891,6 +4509,25 @@ globalThis.SITE_DATA = {
         "chooseInsteadWhen": "use `review-code` if the main job is checking correctness, contracts, blast radius, or implementation bugs in code that already exists, rather than modeling adversarial abuse and exploit paths."
       },
       "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:execution-brief",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
       "body": [
         [
           "Job",
@@ -3899,6 +4536,10 @@ globalThis.SITE_DATA = {
         [
           "Use when",
           "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:execution-brief"
         ],
         [
           "Stage",

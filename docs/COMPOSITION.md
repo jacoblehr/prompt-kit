@@ -4,7 +4,7 @@ This document defines the rules for combining blocks into effective prompts.
 
 ## Default Assembly Order
 
-When building a prompt from blocks, follow this sequence:
+When building a one-shot prompt from blocks, follow this sequence:
 
 ```
 1. Frame      → define the task, scope, and success criteria
@@ -58,6 +58,8 @@ Allowed transition sequence:
 - `mode.explore` -> `mode.critique` when the first pass is explicitly for understanding and the second pass is explicitly for adversarial evaluation
 
 If you use a transition sequence, name the handoff in the stack notes. The output of the first mode becomes the input context for the second; they are not active at the same time.
+
+In the browser builder, loaded stacks keep this handoff as a one-shot composition brief at the top of the copied prompt. That brief tells the model to use the blocks as ordered phases in one response, not as separate turns.
 
 Incompatible pairs:
 
@@ -181,7 +183,11 @@ Recurse blocks with control parameters (`depth:`, `branches:`, `iterations:`) ta
 
 ### Chaining patterns
 
-Outputs are named sections. Feed them forward by pasting the relevant section into the next block's input.
+For manual multi-pass use, outputs are named sections and can be fed forward by pasting the relevant section into the next block's input. For the default lightweight use case, keep the blocks in this order and send them as one prompt with clear section headings.
+
+In the browser builder, the first task-like input is filled from the Task field by default. Later `context:` / `artifact:` inputs are wired inline to use the output from the previous step by default. Each step input can be changed to use the original Task field or a custom value.
+
+When a built prompt has multiple phases, the copied prompt includes a one-shot phase brief and an input handoff map. This keeps manual compositions and saved stacks aligned: the model sees the phase order before it sees any inline "previous output" reference.
 
 ```
 EXPLORE PHASE

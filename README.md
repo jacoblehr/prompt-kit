@@ -1,6 +1,6 @@
 # Prompt Kit
 
-Prompts that work are structured. Prompt Kit gives you the building blocks — ready to copy, combine, and tailor — so you stop writing prompts from scratch and start composing them like a pro.
+Prompts that work are structured. Prompt Kit gives you the building blocks — ready to copy, combine, and tailor — so you stop writing prompts from scratch and start composing strong one-shot prompts.
 
 Open `index.html` in your browser. No install, no config, no friction.
 
@@ -8,8 +8,8 @@ Open `index.html` in your browser. No install, no config, no friction.
 
 1. **Open in browser** — Just open `index.html`, no setup needed
 2. **Search for a block** — Press `/` to focus search, type to filter by name or task
-3. **Start with a stack** — Search for `debug`, `decide`, `proposal`, or any job you need
-4. **Build your own** — Pick blocks and assemble a prompt tuned to your task
+3. **Start with a stack** — Search for `debug`, `decide`, `feature-design`, or any job you need
+4. **Build your own** — Pick blocks and assemble one prompt tuned to your task
 
 **Start with a stack for common tasks:**
 
@@ -24,7 +24,7 @@ Most prompt problems are the same few problems: unclear task framing, no output 
 - **Blocks** — Reusable prompt components, each with a clear job: frame the task, set a reasoning mode, define success criteria, guard against failure, shape the output, evaluate the result.
 - **Stacks** — Pre-built sequences of blocks for recurring jobs — debugging, decision-making, proposals, incident response, and more.
 
-You copy a block or stack into your prompt, fill in your context, and get a structurally stronger prompt in seconds.
+You copy a block or stack into your prompt, fill in your context, and get a structurally stronger one-shot prompt in seconds. Stacks are composition recipes, not automation pipelines.
 
 ## Pre-Built Stacks
 
@@ -35,6 +35,7 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 | `decide` | Traceable high-stakes decision-making |
 | `research` | Evidence gathering before deciding or writing |
 | `feature-design` | Requirements, success criteria, and execution planning |
+| `implement-change` | Bounded code changes with acceptance criteria and verification |
 | `safe-migration` | Risk-managed schema or API migration |
 | `review-code` | Correctness, contracts, and blast-radius review |
 | `build-system-prompt` | Persistent prompt and instruction-set design |
@@ -102,7 +103,7 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 
 ## Contributing
 
-See `docs/CONTRIBUTING.md` for details on adding new blocks, stacks, and running tests.
+Use `npx plop` to add new blocks or stacks, then run `npm run verify` before publishing changes.
 
 ## Documentation
 

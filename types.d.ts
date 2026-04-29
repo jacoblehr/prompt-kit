@@ -1,9 +1,8 @@
-type PromptKitFlowMode = "chain" | "batch";
-
 type PromptKitBlockType =
   | "frame"
   | "mode"
   | "strategy"
+  | "recurse"
   | "lens"
   | "guardrail"
   | "schema"
@@ -15,7 +14,8 @@ type PromptKitBlockForm =
   | "concept"
   | "rubric"
   | "mode"
-  | "strategy";
+  | "strategy"
+  | "recurse";
 
 type PromptKitStage =
   | "frame"
@@ -82,6 +82,18 @@ interface PromptKitStackIO {
   expectedOutputs?: string[];
 }
 
+interface PromptKitStackComposition {
+  phaseOrder?: string;
+  primaryMode?: string;
+  modeRefs?: string[];
+  hasSchema?: boolean;
+  hasQualityGate?: boolean;
+  hasBoundedRecursion?: boolean;
+  needsModeHandoff?: boolean;
+  needsRecursionBoundary?: boolean;
+  strengths?: string[];
+}
+
 interface PromptKitItem {
   section: string;
   canonicalType?: PromptKitBlockType | string;
@@ -92,12 +104,12 @@ interface PromptKitItem {
   strength?: PromptKitStrength | string;
   contract?: PromptKitBlockContract | PromptKitStackContract;
   io?: PromptKitStackIO;
+  composition?: PromptKitStackComposition;
   job?: string;
   useWhen?: string;
   outputKind?: PromptKitStackOutputKind | string;
   effort?: PromptKitStackEffort | string;
   stakes?: PromptKitStackStakes | string;
-  flow?: PromptKitFlowMode | string;
   key?: string;
   aliases?: string[];
   title: string;
@@ -125,7 +137,7 @@ interface PromptKitBuilderItem {
   builderSection?: "instruction" | "context" | "reasoning" | "harness" | string;
   managedBy?: "mode" | "lens" | "" | string;
   chains: Record<string, string>;
-  inputs: Record<string, string>;
+  inputs: Record<string, string | { source?: "previous" | "original" | "custom" | string; customValue?: string }>;
 }
 
 interface PromptKitSiteData {

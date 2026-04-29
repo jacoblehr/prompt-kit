@@ -58,7 +58,7 @@ let resizeStartWidth = 0;
 let isResizingBuilderExecution = false;
 let resizeExecutionStartY = 0;
 let resizeExecutionStartHeight = 0;
-let outputMode = "flat";
+let outputMode = "structured";
 let cmdPaletteSectionHint = "";
 let cmdPaletteSelected = 0;
 let livePromptDebounceTimer = 0;
@@ -68,10 +68,39 @@ let livePromptDebounceTimer = 0;
  * prevent execution, while others stay advisory so the user can iterate quickly.
  */
 function getBuilderWarnings() {
+  const instructionCount = builderState.getSectionItems("instruction").length;
+  const reasoningItems = builderState.getSectionItems("reasoning");
+  const harnessItems = builderState.getSectionItems("harness");
+  const inputPlan = getBuilderInputPlan();
+  const missingCustomInputs = inputPlan.slots.filter((slot) => slot.source === "custom" && !slot.customValue.trim());
+  const modeCount = reasoningItems.filter((item) => item.blockType === "mode").length;
+  const recurseCount = reasoningItems.filter((item) => item.blockType === "recurse").length;
+  const hasBoundedRecursion = builderState.items.some((item) => item.key === "guardrail.bounded-recursion" || item.title === "guardrail.bounded-recursion");
+  const hasSchema = harnessItems.some((item) => item.blockType === "schema");
+  const hasQualityGate = harnessItems.some((item) => item.blockType === "guardrail" || item.blockType === "rubric");
+  const advisory = [];
+
+  if (builderState.items.length >= 3 && !hasSchema) {
+    advisory.push("Add an output schema if the final response needs to be easy to use.");
+  }
+  if (builderState.items.length >= 3 && !hasQualityGate) {
+    advisory.push("Add a targeted guardrail or rubric when stakes or ambiguity are high.");
+  }
+  if (modeCount > 1 && !loadedStackKey) {
+    advisory.push("Multiple modes can conflict; keep one primary mode or make the handoff explicit.");
+  }
+  if (recurseCount > 0 && !hasBoundedRecursion) {
+    advisory.push("Recursive blocks work best with bounded-recursion so the one-shot prompt has a stopping rule.");
+  }
+  if (missingCustomInputs.length > 0) {
+    advisory.push("A custom step input is selected but empty.");
+  }
+
   return {
-    blocking: builderState.getSectionItems("instruction").length === 0
+    blocking: instructionCount === 0
       ? ["Add an Instruction block to define the task."]
-      : []
+      : [],
+    advisory
   };
 }
 
@@ -101,21 +130,106 @@ function getPickerCandidates(sectionKey, query = "") {
 }
 
 function isTaskLikePlaceholder(placeholder = "", totalInputs = 1) {
-  if (totalInputs === 1) return true;
   const value = String(placeholder || "").toLowerCase();
   if (!value) return false;
-  if (/(constraints|non-goals|audience|goal|owner|timescale|deadline|framework|language|background|who asked|why|context \(.*\)|what it does)/.test(value)) {
+  if (/(constraints|non-goals|audience|goal|owner|timescale|deadline|framework|language|background|who asked|why|context \(.*\)|what it does|depth|iterations|stop_condition|stop condition|purpose|impact|duration|original[_\s-]*prompt|revised[_\s-]*prompt)/.test(value)) {
     return false;
   }
+  if (totalInputs === 1) return true;
   return /(request|situation|task|question|problem|topic|prompt|artifact|draft|plan|decision context|text|argument|thesis|position|input|raw request|problem statement|challenge|code_or_design|system_description|codebase_description)/.test(value);
+}
+
+const BUILDER_INPUT_SOURCES = ["previous", "original", "custom"];
+
+function getOrderedBuilderPromptItems() {
+  return BUILDER_SECTION_ORDER.flatMap((sectionKey) => builderState.getSectionItems(sectionKey));
+}
+
+function builderInputSlotKey(itemKey, placeholder) {
+  return `${itemKey}::${placeholder}`;
+}
+
+function normalizeBuilderInputBinding(binding, defaultSource = "original") {
+  if (binding && typeof binding === "object" && !Array.isArray(binding)) {
+    const source = BUILDER_INPUT_SOURCES.includes(binding.source) ? binding.source : defaultSource;
+    return {
+      source,
+      customValue: typeof binding.customValue === "string" ? binding.customValue : ""
+    };
+  }
+
+  if (typeof binding === "string" && binding.trim()) {
+    return {
+      source: "custom",
+      customValue: binding
+    };
+  }
+
+  return {
+    source: defaultSource,
+    customValue: ""
+  };
+}
+
+function getBuilderInputPlan() {
+  const orderedItems = getOrderedBuilderPromptItems();
+  const allPlaceholders = [...new Set(orderedItems.flatMap((item) => extractPlaceholders(item.copy || "")))];
+  const slots = [];
+  let taskLikeCount = 0;
+
+  orderedItems.forEach((item, itemIndex) => {
+    const itemKey = builderItemKey(item);
+    const previousItem = orderedItems
+      .slice(0, itemIndex)
+      .reverse()
+      .find((entry) => entry.copy && entry.copy.trim()) || null;
+    extractPlaceholders(item.copy || "").forEach((placeholder) => {
+      if (!isTaskLikePlaceholder(placeholder, allPlaceholders.length)) return;
+      const isFirstTaskInput = taskLikeCount === 0;
+      const defaultSource = isFirstTaskInput ? "original" : "previous";
+      const binding = normalizeBuilderInputBinding(item.inputs?.[placeholder], defaultSource);
+      const source = isFirstTaskInput && binding.source === "previous" ? "original" : binding.source;
+      slots.push({
+        key: builderInputSlotKey(itemKey, placeholder),
+        itemKey,
+        item,
+        previousItem,
+        placeholder,
+        label: normalizeBuilderInputLabel(placeholder),
+        blockLabel: humanizeBlockTitle(item.title),
+        previousLabel: previousItem ? humanizeBlockTitle(previousItem.title) : "previous step",
+        isFirstTaskInput,
+        defaultSource,
+        source,
+        customValue: binding.customValue
+      });
+      taskLikeCount += 1;
+    });
+  });
+
+  return {
+    slots,
+    slotMap: new Map(slots.map((slot) => [slot.key, slot]))
+  };
+}
+
+function buildPreviousStepSnippet(slot) {
+  const previous = slot.previousLabel || "previous step";
+  return `Use the output from the previous step (${previous}). If that output has multiple sections, use only the sections relevant to this step.`;
+}
+
+function getChainedBuilderInputSlots(inputPlan) {
+  return (inputPlan?.slots || []).filter((slot) => slot.source === "previous" && !slot.isFirstTaskInput);
 }
 
 function getBuilderInputDefinitions() {
   const map = new Map();
+  const chainPlaceholders = new Set(getBuilderInputPlan().slots.map((slot) => slot.placeholder));
 
   builderState.items.forEach((item) => {
     const placeholders = extractPlaceholders(item.copy || "");
     placeholders.forEach((placeholder) => {
+      if (chainPlaceholders.has(placeholder)) return;
       if (!map.has(placeholder)) {
         map.set(placeholder, {
           placeholder,
@@ -130,15 +244,14 @@ function getBuilderInputDefinitions() {
 
   const definitions = [...map.values()];
   definitions.forEach((definition) => {
-    definition.usesTaskInput = isTaskLikePlaceholder(definition.placeholder, definitions.length);
     definition.manualValue = builderState.promptInputs?.[definition.placeholder] || "";
-    definition.effectiveValue = definition.manualValue.trim() || (definition.usesTaskInput ? (builderState.taskInput || "").trim() : "");
+    definition.effectiveValue = definition.manualValue.trim();
   });
 
   return definitions;
 }
 
-function getEffectiveBuilderPromptInputs() {
+function getEffectiveBuilderVariableInputs() {
   return Object.fromEntries(
     getBuilderInputDefinitions()
       .filter((definition) => definition.effectiveValue)
@@ -146,13 +259,59 @@ function getEffectiveBuilderPromptInputs() {
   );
 }
 
+function resolveBuilderInputSlotValue(slot) {
+  if (!slot) return "";
+  if (slot.source === "previous") return buildPreviousStepSnippet(slot);
+  if (slot.source === "custom") return (slot.customValue || "").trim();
+  return (builderState.taskInput || "").trim();
+}
+
+function fillBuilderItemPromptTemplate(item, inputPlan, variableValues = {}) {
+  const itemKey = builderItemKey(item);
+  let next = String(item.copy || "");
+  extractPlaceholders(next).forEach((placeholder) => {
+    const slot = inputPlan.slotMap.get(builderInputSlotKey(itemKey, placeholder));
+    const value = slot ? resolveBuilderInputSlotValue(slot) : variableValues?.[placeholder];
+    if (typeof value !== "string" || !value.trim()) return;
+    next = next.split(placeholder).join(value.trim());
+  });
+  return next;
+}
+
+function assembleBuilderPrompt(options = {}) {
+  const structured = options.structured !== false;
+  const inputPlan = options.inputPlan || getBuilderInputPlan();
+  const variableValues = getEffectiveBuilderVariableInputs();
+
+  if (!structured) {
+    return getOrderedBuilderPromptItems()
+      .filter((item) => item.copy && item.copy.trim())
+      .map((item) => fillBuilderItemPromptTemplate(item, inputPlan, variableValues).trim())
+      .join("\n\n");
+  }
+
+  const parts = BUILDER_SECTION_ORDER
+    .map((sectionKey) => {
+      const section = getBuilderSection(sectionKey);
+      const items = builderState.getSectionItems(sectionKey).filter((item) => item.copy && item.copy.trim());
+      if (items.length === 0) return "";
+      return `## ${section.label}\n\n${items.map((item) => `### ${humanizeBlockTitle(item.title)}\n${fillBuilderItemPromptTemplate(item, inputPlan, variableValues).trim()}`).join("\n\n")}`;
+    })
+    .filter(Boolean);
+
+  return parts.join("\n\n---\n\n");
+}
+
 function renderBuilderAlerts(warnings) {
   const alerts = document.getElementById("builder-alerts");
   if (!alerts) return;
-  alerts.hidden = warnings.blocking.length === 0;
-  alerts.innerHTML = warnings.blocking
-    .map((text) => `<div class="builder-alert builder-alert--blocking">${escHtml(text)}</div>`)
-    .join("");
+  const blocking = warnings.blocking || [];
+  const advisory = warnings.advisory || [];
+  alerts.hidden = blocking.length === 0 && advisory.length === 0;
+  alerts.innerHTML = [
+    ...blocking.map((text) => `<div class="builder-alert builder-alert--blocking">${escHtml(text)}</div>`),
+    ...advisory.map((text) => `<div class="builder-alert builder-alert--advisory">${escHtml(text)}</div>`)
+  ].join("");
 }
 
 function renderBuilderInputs() {
@@ -165,61 +324,92 @@ function renderBuilderInputs() {
   const hasItems = builderState.items.length > 0;
   if (pane) pane.hidden = !hasItems;
 
-  const flow = builderState.flow;
-  const isFlowMode = flow === "chain" || flow === "batch";
-
-  // Update the pane label to show a flow mode badge when active.
   const paneLabel = pane?.querySelector(".builder-pane-label");
   if (paneLabel) {
-    const badge = isFlowMode
-      ? ` <span class="pane-flow-badge pane-flow-badge--${escHtml(flow)}">${escHtml(FLOW_MODE_LABELS[flow] || flow)}</span>`
-      : "";
-    paneLabel.innerHTML = `Inputs${badge}`;
+    paneLabel.textContent = "Inputs";
   }
 
-  // Update pane description to explain how the task field relates to the flow.
   const paneCopy = pane?.querySelector(".builder-pane-copy");
   if (paneCopy) {
-    paneCopy.textContent = isFlowMode
-      ? (flow === "chain"
-          ? "Task seeds step 1. Each step\u2019s output feeds the next."
-          : "Task is passed to each step independently, then synthesized.")
-      : "Fill the task above. Any remaining block-specific variables appear below.";
+    paneCopy.textContent = "Fill the task above. Step inputs are wired forward by default.";
   }
 
-  // Update task field label to reflect its role in the current flow mode.
   const taskLabel = pane?.querySelector(".builder-run-label");
   if (taskLabel) {
-    taskLabel.textContent = isFlowMode
-      ? (flow === "chain" ? "Task \u2014 step 1 input" : "Task \u2014 shared across steps")
-      : "Task";
+    taskLabel.textContent = "Task";
   }
 
+  const inputPlan = getBuilderInputPlan();
   const definitions = getBuilderInputDefinitions();
   const taskFilled = !!builderState.taskInput.trim();
+  const stepSlots = inputPlan.slots;
+  const visibleDefinitions = definitions;
 
-  // Task-like placeholders ({artifact}, {context}, etc.) are automatically
-  // resolved from the task field — hide them in all modes unless the user has
-  // explicitly set a manual override. Manual overrides always remain visible.
-  const visibleDefinitions = definitions.filter(
-    (d) => !d.usesTaskInput || d.manualValue
-  );
-
-  // When the task is filled, show a compact summary of which placeholders are
-  // being resolved from it, so the user knows their input IS being applied.
   const resolvedFromTask = taskFilled
-    ? definitions.filter((d) => d.usesTaskInput && !d.manualValue)
+    ? inputPlan.slots.filter((slot) => slot.source === "original")
     : [];
+  const resolvedFromPrevious = getChainedBuilderInputSlots(inputPlan);
 
   const resolvedHtml = resolvedFromTask.length > 0
     ? `<div class="builder-inputs-resolved">
-        <span class="builder-inputs-resolved-label">Resolved from task</span>
-        ${resolvedFromTask.map((d) => `<span class="builder-inputs-resolved-chip">${escHtml(d.label)}</span>`).join("")}
+        <span class="builder-inputs-resolved-label">From task</span>
+        ${resolvedFromTask.map((slot) => `<span class="builder-inputs-resolved-chip">${escHtml(slot.blockLabel)}</span>`).join("")}
+      </div>`
+    : "";
+
+  const chainedHtml = stepSlots.length > 0
+    ? `<div class="builder-inputs-divider">Step inputs</div>` +
+      `<div class="builder-inputs-list builder-inputs-list--compact">` +
+      stepSlots.map((slot) => {
+        const customOpen = slot.source === "custom";
+        const sourceHelp = slot.source === "previous"
+          ? `From ${slot.previousLabel}`
+          : slot.source === "original"
+            ? "From Task"
+            : "Custom value";
+        return `
+          <div class="builder-input-field">
+            <span class="builder-input-label-row">
+              <span class="builder-input-label">${escHtml(slot.blockLabel)} ${escHtml(slot.label)}</span>
+              <select
+                class="builder-input-select"
+                data-action="builder-input-source"
+                data-item-key="${escHtml(slot.itemKey)}"
+                data-placeholder-key="${escHtml(slot.placeholder)}"
+                aria-label="${escHtml(slot.blockLabel)} ${escHtml(slot.label)} source"
+              >
+                <option value="original"${slot.source === "original" ? " selected" : ""}>Original input</option>
+                ${slot.isFirstTaskInput ? "" : `<option value="previous"${slot.source === "previous" ? " selected" : ""}>Previous output</option>`}
+                <option value="custom"${slot.source === "custom" ? " selected" : ""}>Custom</option>
+              </select>
+            </span>
+            <span class="builder-input-help">${escHtml(sourceHelp)}</span>
+            ${customOpen ? `
+              <textarea
+                class="builder-input-textarea"
+                data-action="builder-input-custom"
+                data-max-height="220"
+                data-item-key="${escHtml(slot.itemKey)}"
+                data-placeholder-key="${escHtml(slot.placeholder)}"
+                spellcheck="false"
+                rows="2"
+                placeholder="${escHtml(slot.placeholder)}"
+              >${escHtml(slot.customValue)}</textarea>
+            ` : ""}
+          </div>
+        `;
+      }).join("") + `</div>`
+    : "";
+
+  const previousHtml = resolvedFromPrevious.length > 0
+    ? `<div class="builder-inputs-resolved">
+        <span class="builder-inputs-resolved-label">Previous output</span>
+        ${resolvedFromPrevious.map((slot) => `<span class="builder-inputs-resolved-chip">${escHtml(slot.blockLabel)}</span>`).join("")}
       </div>`
     : "";
 
   const variablesHtml = visibleDefinitions.length > 0
-    ? `<div class="builder-inputs-divider">${isFlowMode ? "Block variables" : "Variables"}</div>` +
+    ? `<div class="builder-inputs-divider">Variables</div>` +
       `<div class="builder-inputs-list">` +
       visibleDefinitions.map((definition) => {
         const helpText = definition.help
@@ -245,52 +435,104 @@ function renderBuilderInputs() {
       }).join("") + `</div>`
     : "";
 
-  if (!resolvedHtml && !variablesHtml) {
+  if (!resolvedHtml && !previousHtml && !chainedHtml && !variablesHtml) {
     mount.hidden = true;
     mount.innerHTML = "";
     return;
   }
 
   mount.hidden = false;
-  mount.innerHTML = resolvedHtml + variablesHtml;
+  mount.innerHTML = resolvedHtml + previousHtml + chainedHtml + variablesHtml;
 }
 
 function renderPromptPreview(prompt) {
   return escHtml(prompt).replace(/\{[^}\n]{1,80}\}/g, (match) => `<span class="var-token">${match}</span>`);
 }
 
-function renderLivePrompt() {
-  const flow = builderState.flow;
-  const taskInput = builderState.taskInput || "";
-  let prompt;
+function getLoadedStackItem() {
+  if (!loadedStackKey) return null;
+  return stacks.find((stack) => stack.key === loadedStackKey) || null;
+}
 
-  if (flow === "chain" || flow === "batch") {
-    // Flow-mode assembly: produce a numbered multi-step prompt sequence.
-    const allItems = BUILDER_SECTION_ORDER.flatMap((sectionKey) =>
-      builderState.getSectionItems(sectionKey).filter((item) => item.copy && item.copy.trim())
-    );
-    prompt = assembleWithFlow(flow, allItems, taskInput);
-  } else if (outputMode === "flat") {
-    const inputValues = getEffectiveBuilderPromptInputs();
-    const parts = BUILDER_SECTION_ORDER.flatMap((sectionKey) =>
-      builderState.getSectionItems(sectionKey)
-        .filter((item) => item.copy && item.copy.trim())
-        .map((item) => fillPromptTemplate(item.copy.trim(), inputValues))
-    );
-    prompt = parts.join("\n\n");
-  } else {
-    const inputValues = getEffectiveBuilderPromptInputs();
-    prompt = builderState.assemble({ resolveInputs: true, inputValues });
+function asSentenceList(items = []) {
+  return items.filter(Boolean).map((item) => `- ${item}`).join("\n");
+}
+
+function labelize(text = "") {
+  return String(text || "")
+    .split(/[-\s]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function buildBuilderCompositionBrief(stack, inputPlan, orderedItems = []) {
+  const promptItems = orderedItems.filter((item) => item.copy && item.copy.trim());
+  const handoffSlots = getChainedBuilderInputSlots(inputPlan);
+  const shouldRender = !!stack || promptItems.length > 1 || handoffSlots.length > 0;
+  if (!shouldRender) return "";
+
+  const lines = [
+    "# One-shot prompt",
+    "",
+    "Use the blocks below as ordered phases inside a single response. Do not treat them as separate turns or wait for permission between phases."
+  ];
+
+  if (promptItems.length > 1) {
+    lines.push("", "Phase order:", promptItems.map((item, index) => `${index + 1}. ${humanizeBlockTitle(item.title)}`).join("\n"));
   }
+
+  if (handoffSlots.length > 0) {
+    lines.push("", "Input handoffs:");
+    handoffSlots.forEach((slot) => {
+      lines.push(`- ${slot.blockLabel} ${slot.label}: use the output from ${slot.previousLabel}.`);
+    });
+  }
+
+  if (stack) {
+    lines.push("", "## Stack brief", "", `Stack: ${stack.job || stack.title}`, `Goal: ${stack.summary || stack.useWhen || "Complete the requested task."}`);
+
+    if (stack.composition?.phaseOrder) {
+      lines.push(`Composition: ${stack.composition.phaseOrder}`);
+    }
+    if (stack.composition?.needsModeHandoff) {
+      lines.push("Mode handoff: apply the modes sequentially as phases; do not blend them into one simultaneous stance.");
+    }
+    if (stack.composition?.needsRecursionBoundary) {
+      lines.push("Recursion boundary: keep recursive reasoning bounded and stop when the requested output is directly actionable.");
+    }
+    if (stack.io?.usefulInputs?.length) {
+      lines.push("", "Useful inputs:", asSentenceList(stack.io.usefulInputs));
+    }
+    if (stack.io?.expectedOutputs?.length) {
+      lines.push("", "Expected output:", asSentenceList(stack.io.expectedOutputs));
+    }
+    if (stack.contract?.blockOrderRationale) {
+      lines.push("", "Why this order works:", stack.contract.blockOrderRationale);
+    }
+  }
+  return lines.join("\n");
+}
+
+function getActiveBuilderPrompt() {
+  const inputPlan = getBuilderInputPlan();
+  const orderedItems = getOrderedBuilderPromptItems();
+  const stackBrief = buildBuilderCompositionBrief(getLoadedStackItem(), inputPlan, orderedItems);
+  const prompt = assembleBuilderPrompt({ structured: outputMode !== "flat", inputPlan });
+
+  return [stackBrief, prompt].filter(Boolean).join("\n\n---\n\n");
+}
+
+function renderLivePrompt() {
+  const prompt = getActiveBuilderPrompt();
 
   const output = document.getElementById("builder-run-output");
   const tokenCount = document.getElementById("builder-token-count");
   const copyButton = document.getElementById("builder-copy-prompt");
   const outputModeBtn = document.getElementById("builder-output-mode");
 
-  // Hide the flat/structured toggle when flow mode governs the output
   if (outputModeBtn) {
-    outputModeBtn.hidden = flow === "chain" || flow === "batch";
+    outputModeBtn.hidden = false;
   }
 
   if (output) {
@@ -298,7 +540,7 @@ function renderLivePrompt() {
       output.innerHTML = renderPromptPreview(prompt);
       output.classList.remove("is-placeholder");
     } else {
-      output.textContent = "Add blocks to assemble your prompt.";
+      output.textContent = "Add blocks to assemble your one-shot prompt.";
       output.classList.add("is-placeholder");
     }
   }
@@ -393,36 +635,6 @@ function renderHeaderControls() {
   }
 
   if (clearBtn) clearBtn.hidden = builderState.items.length === 0;
-}
-
-/**
- * Render the flow mode selector into #builder-flow.
- * Shows two radio-style buttons: Batch (recommended default) and Chain.
- */
-function renderFlowSelector() {
-  const mount = document.getElementById("builder-flow");
-  if (!mount) return;
-  const currentFlow = builderState.flow;
-  mount.innerHTML = `
-    <div class="builder-flow-label">Flow</div>
-    <div class="builder-flow-options" role="radiogroup" aria-label="Stack flow mode">
-      ${FLOW_MODES.map((mode) => `
-        <button
-          type="button"
-          class="builder-flow-btn${currentFlow === mode ? " is-active" : ""}"
-          role="radio"
-          aria-checked="${currentFlow === mode ? "true" : "false"}"
-          data-action="set-flow"
-          data-flow="${escHtml(mode)}"
-          title="${escHtml(FLOW_MODE_DESCRIPTIONS[mode] || "")}"
-        >
-          <span class="flow-btn-label">${escHtml(FLOW_MODE_LABELS[mode] || mode)}</span>
-          ${mode === FLOW_MODE_DEFAULT ? '<span class="flow-btn-badge">Default</span>' : ""}
-        </button>
-      `).join("")}
-    </div>
-    <p class="builder-flow-desc">${escHtml(FLOW_MODE_DESCRIPTIONS[currentFlow] || "")}</p>
-  `;
 }
 
 function renderSectionEmptyState(section) {
@@ -558,6 +770,33 @@ function renderSection(sectionKey, uiState) {
   `;
 }
 
+function renderLoadedStackGuide() {
+  const stack = getLoadedStackItem();
+  if (!stack) return "";
+  const strengths = stack.composition?.strengths?.length
+    ? stack.composition.strengths.map((item) => `<span>${escHtml(labelize(item))}</span>`).join("")
+    : "";
+  const handoff = stack.composition?.needsModeHandoff
+    ? `<p>Modes are sequenced as phases in the generated prompt, so the model explores before it critiques or decides.</p>`
+    : "";
+  const expected = stack.io?.expectedOutputs?.length
+    ? `<p><strong>Expected:</strong> ${escHtml(stack.io.expectedOutputs.join(", "))}</p>`
+    : "";
+
+  return `
+    <div class="builder-stack-guide">
+      <div class="builder-stack-guide-main">
+        <span class="builder-stack-guide-label">Loaded stack</span>
+        <strong>${escHtml(stack.title)}</strong>
+        <p>${escHtml(stack.summary || stack.useWhen || "")}</p>
+        ${handoff}
+        ${expected}
+      </div>
+      ${strengths ? `<div class="builder-stack-guide-pills">${strengths}</div>` : ""}
+    </div>
+  `;
+}
+
 function renderComposition() {
   const mount = document.getElementById("builder-composition");
   if (!mount) return;
@@ -567,9 +806,10 @@ function renderComposition() {
   if (builderState.items.length === 0) {
     const QUICK_START_BLOCKS = [
       { ref: "frame.task", label: "Define a task" },
-      { ref: "frame.clarify-task", label: "Clarify first" },
+      { ref: "frame.success-criteria", label: "Define success" },
       { ref: "mode.explore", label: "Explore a topic" },
       { ref: "mode.decide", label: "Make a decision" },
+      { ref: "recurse.decompose", label: "Decompose work" },
       { ref: "guardrail.uncertainty", label: "Handle uncertainty" },
       { ref: "schema.execution-brief", label: "Structure the output" }
     ];
@@ -592,7 +832,7 @@ function renderComposition() {
       ${BUILDER_SECTION_ORDER.map((sectionKey) => renderSection(sectionKey, uiState)).join("")}
     `;
   } else {
-    mount.innerHTML = BUILDER_SECTION_ORDER.map((sectionKey) => renderSection(sectionKey, uiState)).join("");
+    mount.innerHTML = renderLoadedStackGuide() + BUILDER_SECTION_ORDER.map((sectionKey) => renderSection(sectionKey, uiState)).join("");
   }
 
   const activePicker = mount.querySelector(".pb-picker-search");
@@ -603,7 +843,6 @@ function renderBuilder() {
   const warnings = getBuilderWarnings();
   const badge = document.getElementById("builder-badge");
   renderHeaderControls();
-  renderFlowSelector();
   renderBuilderAlerts(warnings);
   renderBuilderInputs();
   renderComposition();
@@ -952,16 +1191,7 @@ document.getElementById("builder-run-input")?.addEventListener("input", (event) 
 });
 
 document.getElementById("builder-copy-prompt").addEventListener("click", async () => {
-  const flow = builderState.flow;
-  let prompt;
-  if (flow === "chain" || flow === "batch") {
-    const allItems = BUILDER_SECTION_ORDER.flatMap((sectionKey) =>
-      builderState.getSectionItems(sectionKey).filter((item) => item.copy && item.copy.trim())
-    );
-    prompt = assembleWithFlow(flow, allItems, builderState.taskInput || "");
-  } else {
-    prompt = builderState.assemble({ resolveInputs: true, inputValues: getEffectiveBuilderPromptInputs() });
-  }
+  const prompt = getActiveBuilderPrompt();
   if (!prompt) return;
   try {
     await navigator.clipboard.writeText(prompt);
@@ -974,9 +1204,27 @@ document.getElementById("builder-copy-prompt").addEventListener("click", async (
 document.getElementById("builder-inputs").addEventListener("input", (event) => {
   const target = event.target;
   if (!(target instanceof HTMLTextAreaElement)) return;
-  if (target.dataset.action !== "builder-input") return;
   autoSizeBuilderTextarea(target);
-  builderState.setPromptInput(target.dataset.placeholderKey || "", target.value || "");
+  if (target.dataset.action === "builder-input") {
+    builderState.setPromptInput(target.dataset.placeholderKey || "", target.value || "");
+  }
+  if (target.dataset.action === "builder-input-custom") {
+    builderState.setInputBinding(target.dataset.itemKey || "", target.dataset.placeholderKey || "", {
+      source: "custom",
+      customValue: target.value || ""
+    });
+  }
+  debouncedRenderLivePrompt();
+});
+
+document.getElementById("builder-inputs").addEventListener("change", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLSelectElement)) return;
+  if (target.dataset.action !== "builder-input-source") return;
+  builderState.setInputBinding(target.dataset.itemKey || "", target.dataset.placeholderKey || "", {
+    source: target.value
+  });
+  renderBuilderInputs();
   debouncedRenderLivePrompt();
 });
 
@@ -1072,6 +1320,7 @@ document.getElementById("builder-composition").addEventListener("input", (event)
   if (target.matches(".pb-block-textarea")) {
     autoSizeBuilderTextarea(target);
     builderState.updateBlockCopy(target.dataset.key || "", target.value || "");
+    renderBuilderInputs();
     debouncedRenderLivePrompt();
   }
 });
@@ -1355,22 +1604,6 @@ document.getElementById("builder-output-mode")?.addEventListener("click", () => 
     modeBtn.setAttribute("aria-pressed", String(outputMode === "structured"));
     modeBtn.title = outputMode === "flat" ? "Show section headers" : "Hide section headers";
   }
-});
-
-// ─── Flow mode selector ───────────────────────────────────────────────────────
-//
-// The flow selector is rendered into #builder-flow by renderFlowSelector().
-// Clicks bubble up to this delegated handler.
-
-document.getElementById("builder-flow")?.addEventListener("click", (event) => {
-  const btn = event.target.closest("[data-action='set-flow']");
-  if (!btn) return;
-  const nextFlow = btn.dataset.flow || "";
-  if (!nextFlow) return;
-  builderState.setFlow(nextFlow);
-  renderFlowSelector();
-  renderBuilderInputs();
-  renderLivePrompt();
 });
 
 // ─── Command palette ──────────────────────────────────────────────────────────

@@ -13,11 +13,12 @@ const {
 } = siteData;
 
 /** @type {PromptKitBlockType[]} */
-const BLOCK_TYPE_ORDER = ["frame", "mode", "strategy", "lens", "guardrail", "schema", "rubric"];
+const BLOCK_TYPE_ORDER = ["frame", "mode", "strategy", "recurse", "lens", "guardrail", "schema", "rubric"];
 const BLOCK_TYPE_LABELS = {
   frame: "Frame",
   mode: "Mode",
   strategy: "Strategy",
+  recurse: "Recurse",
   lens: "Lens",
   guardrail: "Guardrail",
   schema: "Schema",
@@ -49,7 +50,7 @@ const BUILDER_SECTIONS = [
     description: "Constraints, references, domain knowledge, and perspective.",
     emptyLabel: "Add supporting context if the task needs it",
     emptyPrompt: "Bring in constraints, requirements, or a lens when they will materially change the answer.",
-    starterRefs: ["frame.requirements-decomposition", "lens.user-mental-model"],
+    starterRefs: ["frame.cause-mapping", "frame.extract-insights"],
     required: false,
     validBlockTypes: ["frame", "lens"]
   },
@@ -58,10 +59,10 @@ const BUILDER_SECTIONS = [
     label: "Reasoning",
     description: "How the system should think through the job.",
     emptyLabel: "Choose how the prompt should reason",
-    emptyPrompt: "A mode sets the stance. A strategy adds a deliberate reasoning move.",
-    starterRefs: ["mode.explore", "mode.decide", "strategy.problem-split"],
+    emptyPrompt: "A mode sets the stance. A strategy or recursive primitive adds a deliberate reasoning move.",
+    starterRefs: ["mode.explore", "mode.decide", "strategy.problem-split", "recurse.decompose"],
     required: false,
-    validBlockTypes: ["mode", "strategy", "lens"]
+    validBlockTypes: ["mode", "strategy", "recurse", "lens"]
   },
   {
     key: "harness",
@@ -69,7 +70,7 @@ const BUILDER_SECTIONS = [
     description: "Validation, output contracts, and final quality checks.",
     emptyLabel: "Add checks when the stakes justify them",
     emptyPrompt: "Use guardrails, schemas, and rubrics to make the output safer and easier to evaluate.",
-    starterRefs: ["guardrail.uncertainty", "schema.execution-brief", "rubric.prompt-quality"],
+    starterRefs: ["guardrail.uncertainty", "schema.execution-brief", "rubric.writing-quality"],
     required: false,
     validBlockTypes: ["guardrail", "schema", "rubric"]
   }
@@ -97,87 +98,6 @@ function normalizeRef(ref = "") {
 
 const PLACEHOLDER_RE = /\{[^}\n]{1,80}\}/g;
 
-// ─── Flow mode constants ───────────────────────────────────────────────────────
-//
-// Two execution modes for stacks. Batch is the default and the safer choice for
-// analysis stacks. Chain is opt-in for stacks where each step builds on the previous.
-
-const FLOW_MODES = /** @type {const} */ (["batch", "chain"]);
-const FLOW_MODE_DEFAULT = "batch";
-
-/** Human-readable labels for the UI picker. */
-const FLOW_MODE_LABELS = {
-  batch: "Batch",
-  chain: "Chain"
-};
-
-/** One-line descriptions shown in the flow selector. */
-const FLOW_MODE_DESCRIPTIONS = {
-  batch: "Run all prompts on the original input, then synthesize",
-  chain: "Pipe each output into the next prompt"
-};
-
-/**
- * Generate a position-aware wrapper for a single chain step.
- * Tells the model which step it is, where the input comes from, and
- * (for steps 2+) bridges block placeholders to the provided input.
- * @param {number} stepNum - 1-based position in the chain
- * @param {number} total - total steps in the chain
- * @param {string} inputValue - the actual input text or {input} placeholder
- * @returns {string}
- */
-function makeChainStepWrapper(stepNum, total, inputValue) {
-  const isFirst = stepNum === 1;
-  const isLast = stepNum === total;
-
-  const positionNote = isFirst
-    ? `This is step ${stepNum} of ${total} — first step. The input is the original task.`
-    : isLast
-    ? `This is step ${stepNum} of ${total} — final step. The input is the output from step ${stepNum - 1}.`
-    : `This is step ${stepNum} of ${total}. The input is the output from step ${stepNum - 1}.`;
-
-  // For steps 2+, bridge block placeholders ({artifact}, {context}) to the input above.
-  const bridgeNote = !isFirst
-    ? `\n\nNote: where the prompt below references {artifact} or {context}, use the Input above.`
-    : "";
-
-  return `You are executing one step in a sequential prompt chain.\n\n${positionNote}\n\nApply the prompt to the input. Do not explain the prompt. Return only the requested output.\n\nInput:\n${inputValue}${bridgeNote}`;
-}
-
-// Wrapper injected around every step in batch mode.
-const BATCH_STEP_WRAPPER = `You are executing one independent step in a batch prompt stack.
-
-Apply this prompt only to the original user input.
-Do not reference or depend on outputs from other steps.
-Do not explain the prompt.
-Return only the requested output.
-Your output will be collected alongside other independent analyses for final synthesis.
-
-Original input:
-{original_input}`;
-
-// Synthesis prompt appended after all batch steps.
-const BATCH_SYNTHESIS_PROMPT = `You are synthesizing multiple independent analyses of the same original input.
-
-Original input:
-{original_input}
-
-Step outputs:
-{step_outputs}
-
-Task:
-Combine the outputs into the smallest useful unified result.
-
-Rules:
-- remove duplication
-- preserve useful distinctions
-- surface contradictions only if they matter
-- do not add unrelated analysis
-- do not explain stack mechanics
-- produce a practical final answer
-
-Return the final synthesized output.`;
-
 function extractPlaceholders(text = "") {
   return [...new Set(String(text || "").match(PLACEHOLDER_RE) || [])];
 }
@@ -194,103 +114,6 @@ function normalizeBuilderInputLabel(placeholder = "") {
   return titleCaseWords(cleaned) || "Input";
 }
 
-function fillPromptTemplate(text = "", inputValues = {}) {
-  let next = String(text || "");
-  extractPlaceholders(next).forEach((placeholder) => {
-    const value = inputValues?.[placeholder];
-    if (typeof value !== "string" || !value.trim()) return;
-    next = next.split(placeholder).join(value.trim());
-  });
-  return next;
-}
-
-/**
- * Resolve a raw flow value to a valid FLOW_MODES entry, defaulting to "batch".
- * @param {string | undefined} value
- * @returns {"batch" | "chain"}
- */
-function resolveFlowMode(value) {
-  return typeof value === "string" && FLOW_MODES.includes(value) ? /** @type {"batch"|"chain"} */ (value) : FLOW_MODE_DEFAULT;
-}
-
-/**
- * Assemble builder items in chain mode.
- * Step 1 receives the task input; later steps receive the {input} placeholder
- * which the user fills with the previous step's model output.
- * @param {PromptKitBuilderItem[]} items
- * @param {string} taskInput
- * @returns {string}
- */
-function assembleChainSteps(items, taskInput = "") {
-  if (items.length === 0) return "";
-  const total = items.length;
-
-  // Preamble shows the full sequence so the user knows what they're running.
-  const preamble = [
-    `# Prompt Chain \u2014 ${total} Step${total !== 1 ? "s" : ""}`,
-    ``,
-    `Run each step in order. Copy the output from each step and paste it as the Input for the next step.`,
-    ``,
-    items.map((item, i) => `${i + 1}. ${humanizeBlockTitle(item.title)}`).join("\n"),
-  ].join("\n");
-
-  const steps = items.map((item, index) => {
-    const inputValue = index === 0
-      ? (taskInput.trim() || "{input}")
-      : "{input}";
-    const wrapper = makeChainStepWrapper(index + 1, total, inputValue);
-    const stepPrompt = `${wrapper}\n\n---\n\n${item.copy.trim()}`;
-    return `## Step ${index + 1} of ${total}: ${humanizeBlockTitle(item.title)}\n\n${stepPrompt}`;
-  });
-
-  return [preamble, ...steps].join("\n\n---\n\n");
-}
-
-/**
- * Assemble builder items in batch mode.
- * Every step receives the original input. A synthesis step is appended as the
- * final step; the user fills {step_outputs} with the collected step outputs.
- * @param {PromptKitBuilderItem[]} items
- * @param {string} taskInput
- * @returns {string}
- */
-function assembleBatchSteps(items, taskInput = "") {
-  if (items.length === 0) return "";
-  const originalInput = taskInput.trim() || "{original_input}";
-  // Synthesis is only meaningful when there are multiple independent analyses to combine.
-  const hasSynthesis = items.length > 1;
-  const total = items.length + (hasSynthesis ? 1 : 0);
-
-  const steps = items.map((item, index) => {
-    const wrapper = BATCH_STEP_WRAPPER.replace("{original_input}", originalInput);
-    const stepPrompt = `${wrapper}\n\n---\n\n${item.copy.trim()}`;
-    return `## Step ${index + 1} of ${total}: ${humanizeBlockTitle(item.title)}\n\n${stepPrompt}`;
-  });
-
-  if (hasSynthesis) {
-    const synthesis = BATCH_SYNTHESIS_PROMPT.replace(/{original_input}/g, originalInput);
-    steps.push(`## Step ${total} of ${total}: Synthesis\n\n${synthesis}`);
-  }
-
-  return steps.join("\n\n---\n\n");
-}
-
-/**
- * Assemble all builder items using the specified flow mode.
- * Items are drawn from all builder sections in order.
- * @param {"batch" | "chain"} flow
- * @param {PromptKitBuilderItem[]} items
- * @param {string} taskInput
- * @returns {string}
- */
-function assembleWithFlow(flow, items, taskInput = "") {
-  const allItems = items.filter((item) => item.copy && item.copy.trim());
-  if (allItems.length === 0) return "";
-  return flow === "chain"
-    ? assembleChainSteps(allItems, taskInput)
-    : assembleBatchSteps(allItems, taskInput);
-}
-
 function normalizeSection(item) {
   if (item.section === "Stack") return "stack";
   return (item.blockType || item.section || "").toLowerCase();
@@ -304,6 +127,7 @@ const BLOCK_TYPE_DESCRIPTIONS = {
   frame: "Task-defining blocks that set the problem, scope, objective, or approach before reasoning begins.",
   mode: "Stance-setting blocks that define how the model should approach the session.",
   strategy: "Reasoning-mechanic blocks that introduce a specific analytical method or move.",
+  recurse: "Bounded recursive reasoning blocks for decomposition, evaluation, refinement, and branch pruning inside one prompt.",
   lens: "Perspective blocks that reframe a situation through a discipline, model, or framework.",
   guardrail: "Validation blocks that prevent common failure modes and reasoning errors.",
   schema: "Output-shaping blocks that define the structure and format of the response.",
@@ -401,7 +225,6 @@ function createBuilderWorkingState(seed = {}) {
     items: Array.isArray(seed.items) ? seed.items : [],
     modeKey: typeof seed.modeKey === "string" ? seed.modeKey : "",
     lensKey: typeof seed.lensKey === "string" ? seed.lensKey : "",
-    flow: resolveFlowMode(seed.flow),
     ui: {
       ...createBuilderUiState(),
       ...(seed.ui || {}),
@@ -447,7 +270,7 @@ function summarizeBuilderSection(items = [], sectionKey = "") {
 function defaultBuilderSectionForItem(item, currentItems = []) {
   const blockType = item?.blockType || "";
   if (blockType === "guardrail" || blockType === "schema" || blockType === "rubric") return "harness";
-  if (blockType === "mode" || blockType === "strategy") return "reasoning";
+  if (blockType === "mode" || blockType === "strategy" || blockType === "recurse") return "reasoning";
   if (blockType === "lens") return currentItems.some((entry) => entry.builderSection === "context") ? "reasoning" : "context";
   if (blockType === "frame") {
     const title = String(item.title || "").toLowerCase();
@@ -537,6 +360,7 @@ function getManualAddTargets(item = {}) {
 
   if (item.blockType === "frame") return ["instruction", "context"];
   if (item.blockType === "lens") return ["context", "reasoning"];
+  if (item.blockType === "recurse") return ["reasoning"];
   return validSections;
 }
 
@@ -627,7 +451,7 @@ const builderState = (() => {
   function save() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        version: 5,
+        version: 6,
         stackName,
         ...cloneBuilderStateValue(workingState)
       }));
@@ -639,6 +463,7 @@ const builderState = (() => {
     const legacyMap = {
       Mode: { section: "Block", blockType: "mode", sourceKind: "Mode" },
       Strategy: { section: "Block", blockType: "strategy", sourceKind: "Strategy" },
+      Recurse: { section: "Block", blockType: "recurse", sourceKind: "Prompt Block" },
       Atom: { section: "Block", blockType: "frame", sourceKind: "Prompt Block" },
       Snippet: { section: "Block", blockType: "frame", sourceKind: "Snippet" },
       Core: { section: "Block", blockType: "frame", sourceKind: "Prompt Block" },
@@ -715,12 +540,11 @@ const builderState = (() => {
     get runtime() { return getWorkingState().runtime; },
     get modeKey() { return getWorkingState().modeKey || ""; },
     get lensKey() { return getWorkingState().lensKey || ""; },
-    get flow() { return resolveFlowMode(getWorkingState().flow); },
     load() {
       try {
         const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
 
-        if (raw && raw.version === 5) {
+        if (raw && (raw.version === 6 || raw.version === 5)) {
           stackName = typeof raw.stackName === "string" && raw.stackName.trim() ? raw.stackName : "untitled-stack";
           workingState = createBuilderWorkingState({
             ...raw,
@@ -814,12 +638,27 @@ const builderState = (() => {
       }
       save();
     },
-    setStartMode() {},
-    setFlow(value) {
-      const working = getWorkingState();
-      working.flow = resolveFlowMode(value);
-      save();
+    setInputBinding(itemKey, placeholder, binding = {}) {
+      if (!itemKey || !placeholder) return;
+      withWorkingItems((items) => {
+        const item = items.find((entry) => builderItemKey(entry) === itemKey);
+        if (!item) return;
+        if (!item.inputs || typeof item.inputs !== "object") item.inputs = {};
+        const current = item.inputs[placeholder] && typeof item.inputs[placeholder] === "object"
+          ? item.inputs[placeholder]
+          : {};
+        const next = {
+          ...current,
+          ...binding
+        };
+        if (!next.source && !next.customValue) {
+          delete item.inputs[placeholder];
+        } else {
+          item.inputs[placeholder] = next;
+        }
+      });
     },
+    setStartMode() {},
     setModeKey(value) {
       applyManagedSelection("mode", value);
     },
@@ -929,7 +768,6 @@ const builderState = (() => {
         items: (Array.isArray(newItems) ? newItems : [])
           .map((item) => normalizeStoredItem(item))
           .filter(Boolean),
-        flow: meta.flow,
         runtime: {
           ...createBuilderRuntimeState(),
           lastInput: typeof meta.taskInput === "string" ? meta.taskInput : ""
@@ -940,19 +778,6 @@ const builderState = (() => {
       }
       save();
     },
-    assemble(options = {}) {
-      const resolveInputs = !!options.resolveInputs;
-      const inputValues = resolveInputs ? (options.inputValues || {}) : {};
-      const parts = BUILDER_SECTION_ORDER
-        .map((sectionKey) => {
-          const section = getBuilderSection(sectionKey);
-          const items = this.getSectionItems(sectionKey).filter((item) => item.copy && item.copy.trim());
-          if (items.length === 0) return "";
-          return `## ${section.label}\n\n${items.map((item) => `### ${humanizeBlockTitle(item.title)}\n${resolveInputs ? fillPromptTemplate(item.copy.trim(), inputValues) : item.copy.trim()}`).join("\n\n")}`;
-        })
-        .filter(Boolean);
-      return parts.join("\n\n---\n\n");
-    }
   };
 })();
 
@@ -1032,7 +857,12 @@ function bodyCopy(item) {
     .join("\n\n");
 }
 function escHtml(str = "") {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 // ─── Recent items panel ───────────────────────────────────────────────────────
@@ -1143,7 +973,8 @@ function createCard(item) {
         item.stage ? `Stage: ${STACK_STAGE_LABELS[item.stage] || titleCaseWords(item.stage)}` : "",
         item.outputKind ? `Output: ${STACK_OUTPUT_KIND_LABELS[item.outputKind] || titleCaseWords(item.outputKind)}` : "",
         (item.effort || getStackEffort(item)) ? `Effort: ${STACK_EFFORT_LABELS[item.effort || getStackEffort(item)] || titleCaseWords(item.effort || getStackEffort(item))}` : "",
-        item.stakes ? `Stakes: ${STACK_STAKES_LABELS[item.stakes] || titleCaseWords(item.stakes)}` : ""
+        item.stakes ? `Stakes: ${STACK_STAKES_LABELS[item.stakes] || titleCaseWords(item.stakes)}` : "",
+        item.composition?.strengths?.length ? `Composes: ${item.composition.strengths.map((part) => titleCaseWords(part)).join(" + ")}` : ""
       ].filter(Boolean);
 
       if (metaPills.length > 0) {
@@ -1205,10 +1036,8 @@ function createCard(item) {
       const prevItems = builderState.items.map((i) => ({ ...i }));
       const prevStack = builderState.stackName;
       const prevLoadedStackKey = loadedStackKey;
-      const prevFlow = builderState.flow;
       builderState.clear();
       builderState.setStackName(item.job || slugify(item.title) || "loaded-stack");
-      builderState.setFlow(item.flow || FLOW_MODE_DEFAULT);
       steps.forEach((step) => builderState.add(step));
       loadedStackKey = item.key;
       if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
@@ -1223,7 +1052,7 @@ function createCard(item) {
       syncAddButtons();
       if (typeof showBuilderToast === "function") {
         showBuilderToast(`Loaded "${item.title}"`, "Undo", () => {
-          builderState.restore(prevItems, { stackName: prevStack, flow: prevFlow });
+          builderState.restore(prevItems, { stackName: prevStack });
           loadedStackKey = prevLoadedStackKey;
           renderBuilder();
           syncAddButtons();

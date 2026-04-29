@@ -1,6 +1,7 @@
 import { test, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import { execSync } from 'node:child_process'
+import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
@@ -131,6 +132,30 @@ describe('stack ref integrity', () => {
     }
     assert.deepEqual(failures, [])
   })
+
+  test('all stacks expose composition profiles for one-shot assembly', () => {
+    const failures = []
+    for (const stack of stacks) {
+      if (!stack.composition?.phaseOrder) {
+        failures.push(`${stack.key}: missing composition phase order`)
+      }
+      if (!Array.isArray(stack.composition?.strengths) || stack.composition.strengths.length === 0) {
+        failures.push(`${stack.key}: missing composition strengths`)
+      }
+    }
+    assert.deepEqual(failures, [])
+  })
+
+  test('multi-mode stacks declare an explicit phase handoff need', () => {
+    const failures = []
+    for (const stack of stacks) {
+      const modeRefs = stack.composition?.modeRefs || []
+      if (modeRefs.length > 1 && !stack.composition?.needsModeHandoff) {
+        failures.push(`${stack.key}: multiple modes without handoff flag`)
+      }
+    }
+    assert.deepEqual(failures, [])
+  })
 })
 
 // ---------------------------------------------------------------------------
@@ -145,6 +170,8 @@ describe('CLI output format', () => {
       stdio: 'pipe',
     })
     assert.match(output, /\d+ block\(s\) found/)
+    assert.match(output, new RegExp(`${blocks.length} block\\(s\\) found`))
+    assert.match(output, /frame\.task/)
   })
 
   test('list stacks outputs a stack count line', () => {
@@ -154,6 +181,8 @@ describe('CLI output format', () => {
       stdio: 'pipe',
     })
     assert.match(output, /\d+ stack\(s\) found/)
+    assert.match(output, new RegExp(`${stacks.length} stack\\(s\\) found`))
+    assert.doesNotMatch(output, /^\s+README\s+-/m)
   })
 
   test('search returns results for a known keyword', () => {
@@ -164,47 +193,70 @@ describe('CLI output format', () => {
     })
     assert.match(output, /result\(s\) for/)
   })
+
+  test('stats reports generated catalog counts and block types', () => {
+    const output = execSync('node bin/cli.js stats', {
+      cwd: ROOT,
+      encoding: 'utf-8',
+      stdio: 'pipe',
+    })
+    assert.match(output, new RegExp(`Blocks: ${blocks.length}`))
+    assert.match(output, new RegExp(`Stacks: ${stacks.length}`))
+    assert.match(output, /frame:/)
+    assert.match(output, /recurse:/)
+  })
 })
 
 // ---------------------------------------------------------------------------
-// 5. Stack flow field integrity
+// 5. Browser builder reference coverage
 // ---------------------------------------------------------------------------
 
-describe('stack flow field', () => {
-  const VALID_FLOW_MODES = ['chain', 'batch']
-  const FLOW_MODE_DEFAULT = 'batch'
+describe('browser builder reference coverage', () => {
+  const siteJs = readFileSync(path.join(ROOT, 'site.js'), 'utf-8')
+  const knownRefs = new Set()
+  for (const block of blocks) {
+    if (block.key) knownRefs.add(block.key)
+    for (const alias of block.aliases ?? []) knownRefs.add(alias)
+  }
 
-  test('every stack has a flow field that is "chain" or "batch"', () => {
+  test('all builder starter refs resolve to known blocks', () => {
+    const refs = [...siteJs.matchAll(/starterRefs:\s*\[([^\]]*)\]/g)]
+      .flatMap((match) => [...match[1].matchAll(/"([^"]+)"/g)].map((refMatch) => refMatch[1]))
+
+    const failures = refs.filter((ref) => !knownRefs.has(ref))
+    assert.deepEqual(failures, [])
+  })
+
+  test('all generated block types are known by the browser builder', () => {
+    const orderMatch = siteJs.match(/BLOCK_TYPE_ORDER\s*=\s*\[([^\]]+)\]/)
+    assert.ok(orderMatch, 'BLOCK_TYPE_ORDER should be declared in site.js')
+    const uiTypes = new Set([...orderMatch[1].matchAll(/"([^"]+)"/g)].map((match) => match[1]))
+    const generatedTypes = new Set(blocks.map((block) => block.blockType).filter(Boolean))
+
+    const failures = [...generatedTypes].filter((type) => !uiTypes.has(type))
+    assert.deepEqual(failures, [])
+  })
+})
+
+// ---------------------------------------------------------------------------
+// 6. Compose-only stack metadata
+// ---------------------------------------------------------------------------
+
+describe('compose-only stack metadata', () => {
+  test('stacks no longer expose flow metadata', () => {
     const failures = []
     for (const stack of stacks) {
-      if (!VALID_FLOW_MODES.includes(stack.flow)) {
-        failures.push(`stack "${stack.key}" has invalid or missing flow: "${stack.flow}"`)
+      if (Object.prototype.hasOwnProperty.call(stack, 'flow')) {
+        failures.push(`stack "${stack.key}" should not expose flow metadata`)
       }
     }
     assert.deepEqual(failures, [])
   })
 
-  test('stacks without explicit **Flow:** marker default to batch', () => {
-    // All stacks not explicitly marked chain should resolve to batch
-    const nonChainStacks = stacks.filter((s) => s.flow !== 'chain')
-    for (const stack of nonChainStacks) {
-      assert.equal(
-        stack.flow,
-        FLOW_MODE_DEFAULT,
-        `stack "${stack.key}" should default to batch, got "${stack.flow}"`
-      )
-    }
-  })
-
-  test('refine-loop stack is marked as chain', () => {
+  test('refine-loop remains a valid stack without special execution metadata', () => {
     const stack = stacks.find((s) => s.job === 'refine-loop')
     assert.ok(stack, 'refine-loop stack should exist in site-data')
-    assert.equal(stack.flow, 'chain', 'refine-loop should have flow: chain')
-  })
-
-  test('research stack defaults to batch', () => {
-    const stack = stacks.find((s) => s.job === 'research')
-    assert.ok(stack, 'research stack should exist in site-data')
-    assert.equal(stack.flow, 'batch')
+    assert.ok(Array.isArray(stack.contract?.fullSequence))
+    assert.ok(stack.contract.fullSequence.includes('`recurse.refine`'))
   })
 })

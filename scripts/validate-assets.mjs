@@ -1,4 +1,4 @@
-import { readFile, readdir, stat } from 'fs/promises'
+import { readFile, readdir } from 'fs/promises'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
@@ -38,7 +38,7 @@ async function validate() {
   }
 }
 
-async function validateBlocks(dir, errors, warnings) {
+async function validateBlocks(dir, errors, _warnings) {
   const items = await readdir(dir, { withFileTypes: true })
 
   for (const item of items) {
@@ -77,8 +77,8 @@ async function validateBlocks(dir, errors, warnings) {
   }
 }
 
-async function validateStacks(dir, errors, warnings) {
-  const items = await readdir(dir, { withFileRemarks: false })
+async function validateStacks(dir, _errors, warnings) {
+  const items = await readdir(dir)
 
   for (const file of items) {
     if (!file.endsWith('.md')) continue
@@ -97,7 +97,7 @@ async function validateStacks(dir, errors, warnings) {
   }
 }
 
-async function validateSiteData(file) {
+async function validateSiteData(file, errors) {
   try {
     const content = await readFile(file, 'utf-8')
 

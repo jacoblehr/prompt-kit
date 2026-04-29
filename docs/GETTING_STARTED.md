@@ -8,7 +8,7 @@
 2. Use `/` to focus the search bar
 3. Type a task (e.g., "debug", "decide", "research")
 4. Browse suggested stacks
-5. Copy the composed prompt to your LLM
+5. Copy the composed one-shot prompt to your LLM
 
 ### Option B: CLI (Fast Discovery)
 
@@ -39,7 +39,7 @@ npx prompt-kit stats
 - `schema` — Output structure (decision memo, experiment design)
 - `rubric` — Evaluation criteria
 
-**Stacks** — Named assemblies of blocks for recurring jobs. Each stack includes:
+**Stacks** — Named assemblies of blocks for recurring jobs. Each stack is a recipe for one strong prompt and includes:
 
 - A clear job description
 - Minimum viable block sequence
@@ -157,7 +157,7 @@ npx plop block stack debug-incident
 
 ## Next Steps
 
-1. **Try a stack**: Search for one above and paste it into your LLM
+1. **Try a stack**: Search for one above and paste the assembled prompt into your LLM
 2. **Customize**: Replace generic prompts with your domain specifics
 3. **Extend**: Add your own blocks using `npx plop`
 4. **Share**: Document which combinations work for your team
