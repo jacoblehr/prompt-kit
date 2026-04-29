@@ -1,17 +1,19 @@
 // @ts-check
 
-builderState.load();
+const app = window.PromptKit;
 
-renderCards();
-renderBuilder();
-syncAddButtons();
-updateNavCounts();
-renderFilterGroups();
-applyFilters();
-renderRecentItems();
+app.builderState.load();
 
-if (builderState.items.length > 0) {
-  openBuilder();
+app.renderCards();
+app.renderBuilder();
+app.syncAddButtons();
+app.updateNavCounts();
+app.renderFilterGroups();
+app.applyFilters();
+app.renderRecentItems();
+
+if (app.builderState.items.length > 0) {
+  app.openBuilder();
 }
 
 document.getElementById("sidebar-filter-toggle")?.addEventListener("click", () => {

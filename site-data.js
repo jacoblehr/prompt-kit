@@ -861,6 +861,82 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
+      "canonicalType": "guardrail",
+      "blockType": "guardrail",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "critique",
+      "strength": "heavy",
+      "contract": {
+        "purpose": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
+        "useWhen": "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged.",
+        "expects": "A plan, decision, argument, or recommendation.",
+        "adds": "An explicit inventory of assumptions, typed by category and ranked by consequence if false.",
+        "returns": [
+          "assumption statement",
+          "explicit or implied",
+          "type (empirical / causal / value)",
+          "confidence (high / medium / low)",
+          "impact if false",
+          "what would falsify it"
+        ],
+        "pairsWith": [
+          "mode.critique",
+          "strategy.premortem",
+          "guardrail.uncertainty",
+          "schema.decision-memo"
+        ],
+        "avoidWhen": "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
+      },
+      "key": "guardrail.assumption-audit",
+      "aliases": [
+        "core.guardrail.assumption-audit",
+        "core.guardrail-assumption-audit"
+      ],
+      "title": "guardrail.assumption-audit",
+      "summary": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
+      "tags": [
+        "guardrail",
+        "assumption",
+        "audit"
+      ],
+      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\n---\nartifact: {artifact}",
+      "body": [
+        [
+          "Purpose",
+          "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it."
+        ],
+        [
+          "Use when",
+          "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged."
+        ],
+        [
+          "Expects",
+          "A plan, decision, argument, or recommendation."
+        ],
+        [
+          "Adds",
+          "An explicit inventory of assumptions, typed by category and ranked by consequence if false."
+        ],
+        [
+          "Returns",
+          "assumption statement, explicit or implied, type (empirical / causal / value), confidence (high / medium / low), impact if false, what would falsify it"
+        ],
+        [
+          "Pairs with",
+          "mode.critique, strategy.premortem, guardrail.uncertainty, schema.decision-memo"
+        ],
+        [
+          "Avoid when",
+          "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/guardrail.assumption-audit/prompt.md"
+    },
+    {
+      "section": "Block",
       "canonicalType": "schema",
       "blockType": "schema",
       "form": "compact",
@@ -1242,83 +1318,7 @@ globalThis.SITE_DATA = {
       "blockType": "guardrail",
       "form": "compact",
       "sourceKind": "Prompt Block",
-      "stage": "critique",
-      "strength": "heavy",
-      "contract": {
-        "purpose": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
-        "useWhen": "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged.",
-        "expects": "A plan, decision, argument, or recommendation.",
-        "adds": "An explicit inventory of assumptions, typed by category and ranked by consequence if false.",
-        "returns": [
-          "assumption statement",
-          "explicit or implied",
-          "type (empirical / causal / value)",
-          "confidence (high / medium / low)",
-          "impact if false",
-          "what would falsify it"
-        ],
-        "pairsWith": [
-          "mode.critique",
-          "strategy.premortem",
-          "guardrail.uncertainty",
-          "schema.decision-memo"
-        ],
-        "avoidWhen": "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
-      },
-      "key": "guardrail.assumption-audit",
-      "aliases": [
-        "core.guardrail.assumption-audit",
-        "core.guardrail-assumption-audit"
-      ],
-      "title": "guardrail.assumption-audit",
-      "summary": "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it.",
-      "tags": [
-        "guardrail",
-        "assumption",
-        "audit"
-      ],
-      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\n---\nartifact: {artifact}",
-      "body": [
-        [
-          "Purpose",
-          "Surface and stress-test the assumptions behind a plan, decision, or argument before committing to it."
-        ],
-        [
-          "Use when",
-          "A task depends on important hidden or unverified assumptions. Use before committing to a plan, before a critique that needs its premises checked, or when uncertainty feels hidden rather than acknowledged."
-        ],
-        [
-          "Expects",
-          "A plan, decision, argument, or recommendation."
-        ],
-        [
-          "Adds",
-          "An explicit inventory of assumptions, typed by category and ranked by consequence if false."
-        ],
-        [
-          "Returns",
-          "assumption statement, explicit or implied, type (empirical / causal / value), confidence (high / medium / low), impact if false, what would falsify it"
-        ],
-        [
-          "Pairs with",
-          "mode.critique, strategy.premortem, guardrail.uncertainty, schema.decision-memo"
-        ],
-        [
-          "Avoid when",
-          "The task is exploratory and assumptions are not yet formed — in that case explore first, audit later."
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/guardrail.assumption-audit/prompt.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "guardrail",
-      "blockType": "guardrail",
-      "form": "compact",
-      "sourceKind": "Prompt Block",
-      "stage": "any",
+      "stage": "refine",
       "strength": "heavy",
       "contract": {
         "purpose": "Enforce explicit stopping conditions on any recursive or iterative block, preventing infinite loops or uncontrolled expansion.",
@@ -1604,7 +1604,7 @@ globalThis.SITE_DATA = {
       "blockType": "recurse",
       "form": "compact",
       "sourceKind": "Prompt Block",
-      "stage": "revise",
+      "stage": "refine",
       "strength": "medium",
       "contract": {
         "purpose": "Improve the current branch or draft using the latest evaluation gaps without reopening the whole problem.",
@@ -1888,6 +1888,51 @@ globalThis.SITE_DATA = {
       "contract": {
         "useWhen": "## Purpose",
         "returns": [
+          "Is the question scoped clearly enough to investigate or test?",
+          "Are the sources, tests, or methods capable of answering that question?",
+          "Has disconfirming evidence been actively sought, not just noted when encountered?",
+          "Are confounds, blind spots, or sampling limits named explicitly?",
+          "Are the strongest counter-arguments represented fairly?",
+          "Could another reviewer audit how the conclusion was reached?"
+        ]
+      },
+      "key": "rubric.research-method",
+      "aliases": [
+        "rubric.research-method"
+      ],
+      "title": "rubric.research-method",
+      "summary": "## Purpose.",
+      "tags": [
+        "rubric",
+        "research",
+        "method"
+      ],
+      "copy": "rubric.research-method\n\n## Purpose\n\n- Is the question scoped clearly enough to investigate or test?\n- Are the sources, tests, or methods capable of answering that question?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are confounds, blind spots, or sampling limits named explicitly?\n- Are the strongest counter-arguments represented fairly?\n- Could another reviewer audit how the conclusion was reached?",
+      "body": [
+        [
+          "Use when",
+          "## Purpose"
+        ],
+        [
+          "Questions",
+          "Is the question scoped clearly enough to investigate or test?, Are the sources, tests, or methods capable of answering that question?, Has disconfirming evidence been actively sought, not just noted when encountered?, Are confounds, blind spots, or sampling limits named explicitly?, Are the strongest counter-arguments represented fairly?, Could another reviewer audit how the conclusion was reached?"
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/rubric.research-method/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "rubric",
+      "blockType": "rubric",
+      "form": "rubric",
+      "sourceKind": "Rubric",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
+        "useWhen": "## Purpose",
+        "returns": [
           "Is the question being answered actually the question that matters for the decision?",
           "Are the key claims clearly tied to evidence rather than asserted?",
           "Are the conclusions limited to what the evidence actually supports?",
@@ -1966,51 +2011,6 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/rubric.writing-quality/README.md"
-    },
-    {
-      "section": "Block",
-      "canonicalType": "rubric",
-      "blockType": "rubric",
-      "form": "rubric",
-      "sourceKind": "Rubric",
-      "stage": "analyze",
-      "strength": "medium",
-      "contract": {
-        "useWhen": "## Purpose",
-        "returns": [
-          "Is the question scoped clearly enough to investigate or test?",
-          "Are the sources, tests, or methods capable of answering that question?",
-          "Has disconfirming evidence been actively sought, not just noted when encountered?",
-          "Are confounds, blind spots, or sampling limits named explicitly?",
-          "Are the strongest counter-arguments represented fairly?",
-          "Could another reviewer audit how the conclusion was reached?"
-        ]
-      },
-      "key": "rubric.research-method",
-      "aliases": [
-        "rubric.research-method"
-      ],
-      "title": "rubric.research-method",
-      "summary": "## Purpose.",
-      "tags": [
-        "rubric",
-        "research",
-        "method"
-      ],
-      "copy": "rubric.research-method\n\n## Purpose\n\n- Is the question scoped clearly enough to investigate or test?\n- Are the sources, tests, or methods capable of answering that question?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are confounds, blind spots, or sampling limits named explicitly?\n- Are the strongest counter-arguments represented fairly?\n- Could another reviewer audit how the conclusion was reached?",
-      "body": [
-        [
-          "Use when",
-          "## Purpose"
-        ],
-        [
-          "Questions",
-          "Is the question scoped clearly enough to investigate or test?, Are the sources, tests, or methods capable of answering that question?, Has disconfirming evidence been actively sought, not just noted when encountered?, Are confounds, blind spots, or sampling limits named explicitly?, Are the strongest counter-arguments represented fairly?, Could another reviewer audit how the conclusion was reached?"
-        ]
-      ],
-      "family": "",
-      "group": "",
-      "sourcePath": "prompts/blocks/rubric.research-method/README.md"
     }
   ],
   "stacks": [
@@ -4729,5 +4729,67 @@ globalThis.SITE_DATA = {
         "rubric.research-quality"
       ]
     }
-  ]
+  ],
+  "meta": {
+    "blockTypeOrder": [
+      "frame",
+      "mode",
+      "strategy",
+      "recurse",
+      "guardrail",
+      "schema",
+      "rubric"
+    ],
+    "blockTypeLabels": {
+      "frame": "Frame",
+      "mode": "Mode",
+      "strategy": "Strategy",
+      "recurse": "Recurse",
+      "guardrail": "Guardrail",
+      "schema": "Schema",
+      "rubric": "Rubric"
+    },
+    "stackFamilyOrder": [
+      "Thinking & Framing",
+      "Deciding & Prioritising",
+      "Research & Analysis",
+      "Writing & Communication",
+      "Planning & Execution",
+      "Critique & Review",
+      "Prompt Craft",
+      "Developer Workflows"
+    ],
+    "stackStageOrder": [
+      "frame",
+      "explore",
+      "analyze",
+      "decide",
+      "critique",
+      "refine",
+      "conclude"
+    ],
+    "stackOutputKindOrder": [
+      "clarity",
+      "options",
+      "decision",
+      "plan",
+      "brief",
+      "summary",
+      "critique",
+      "diagnosis",
+      "draft",
+      "retrospective",
+      "prompt"
+    ],
+    "stackEffortOrder": [
+      "quick",
+      "standard",
+      "deep"
+    ],
+    "stackStakesOrder": [
+      "low",
+      "medium",
+      "high"
+    ]
+  }
 };

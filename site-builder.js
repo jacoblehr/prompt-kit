@@ -889,6 +889,9 @@ function autoSizeBuilderTextarea(textarea) {
   textarea.style.overflowY = "hidden";
 }
 
+/**
+ * @param {ParentNode} [root]
+ */
 function autoSizeBuilderTextareas(root = document) {
   root.querySelectorAll(BUILDER_TEXTAREA_SELECTOR).forEach((element) => {
     autoSizeBuilderTextarea(element);
@@ -1012,9 +1015,11 @@ function closeCmdPalette() {
 function getLoadedStackSwapKeys() {
   if (!loadedStackKey) return new Set();
   const stackItem = stacks.find((s) => s.key === loadedStackKey);
-  if (!stackItem?.contract?.commonSwaps) return new Set();
+  const contract = stackItem?.contract;
+  const commonSwaps = contract && "commonSwaps" in contract ? contract.commonSwaps : "";
+  if (!commonSwaps) return new Set();
   const keys = new Set();
-  const matches = stackItem.contract.commonSwaps.matchAll(/`([a-z][a-z0-9.+-]+)`/g);
+  const matches = commonSwaps.matchAll(/`([a-z][a-z0-9.+-]+)`/g);
   for (const m of matches) {
     const resolved = resolveRef(m[1]);
     if (resolved) keys.add(resolved.key || resolved.title);
@@ -1688,4 +1693,14 @@ document.getElementById("load-stack-input")?.addEventListener("change", (event) 
     if (input) input.value = "";
   };
   reader.readAsText(file);
+});
+
+window.PromptKit = window.PromptKit || {};
+Object.assign(window.PromptKit, {
+  assembleBuilderPrompt,
+  closeBuilder,
+  openBuilder,
+  renderBuilder,
+  showBuilderToast,
+  syncAddButtons
 });

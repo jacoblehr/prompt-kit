@@ -78,7 +78,6 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 - **Critique & Review** — Assessment and improvement
 - **Prompt Craft** — Prompt engineering and refinement
 - **Developer Workflows** — Engineering and delivery practices
-- **Reflection & Learning** — After-action review and learning
 
 ## Quick Reference
 
@@ -96,10 +95,12 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 - `npx plop` — Interactive generator for new blocks and stacks
 - `npm run build` — Rebuild browser catalog (`site-data.js`)
 - `npm run validate` — Check asset integrity
+- `npm run build:check` — Confirm generated browser catalog is current
 - `npm run lint` — Lint JavaScript files
+- `npm run typecheck` — Type-check browser JavaScript with `tsc`
 - `npm run format` — Format with Prettier
 - `npm test` — Run tests
-- `npm run verify` — Run validate + lint + tests
+- `npm run verify` — Run validate + generated-data check + lint + typecheck + tests
 
 ## Contributing
 

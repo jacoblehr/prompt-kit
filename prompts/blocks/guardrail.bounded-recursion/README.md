@@ -29,7 +29,7 @@ Used alone without a recursive block — this is a guardrail, not a standalone r
 
 ## Metadata
 - type: guardrail
-- stage: any
+- stage: refine
 - strength: heavy
 
 ---

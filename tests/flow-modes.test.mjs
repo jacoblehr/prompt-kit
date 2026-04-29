@@ -2,45 +2,16 @@ import { test, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import {
+  assembleFlatPrompt,
+  assembleStructuredPrompt
+} from '../scripts/catalog/prompt-utils.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 
 await import(path.join(ROOT, 'site-data.js'))
 const { stacks } = globalThis.SITE_DATA
-
-function extractPlaceholders(text = '') {
-  return [...new Set(String(text || '').match(/\{[^}\n]{1,80}\}/g) || [])]
-}
-
-function fillPromptTemplate(text = '', inputValues = {}) {
-  let next = String(text || '')
-  extractPlaceholders(next).forEach((placeholder) => {
-    const value = inputValues?.[placeholder]
-    if (typeof value !== 'string' || !value.trim()) return
-    next = next.split(placeholder).join(value.trim())
-  })
-  return next
-}
-
-function assembleFlatPrompt(items, inputValues = {}) {
-  return items
-    .filter((item) => item.copy && item.copy.trim())
-    .map((item) => fillPromptTemplate(item.copy.trim(), inputValues))
-    .join('\n\n')
-}
-
-function assembleStructuredPrompt(sections, inputValues = {}) {
-  const parts = sections
-    .map((section) => {
-      const items = section.items.filter((item) => item.copy && item.copy.trim())
-      if (items.length === 0) return ''
-      return `## ${section.label}\n\n${items.map((item) => `### ${item.title}\n${fillPromptTemplate(item.copy.trim(), inputValues)}`).join('\n\n')}`
-    })
-    .filter(Boolean)
-
-  return parts.join('\n\n---\n\n')
-}
 
 describe('compose prompt assembly', () => {
   test('flat assembly concatenates resolved block copy without section wrappers', () => {

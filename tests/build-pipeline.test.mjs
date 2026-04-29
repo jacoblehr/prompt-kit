@@ -228,9 +228,8 @@ describe('browser builder reference coverage', () => {
   })
 
   test('all generated block types are known by the browser builder', () => {
-    const orderMatch = siteJs.match(/BLOCK_TYPE_ORDER\s*=\s*\[([^\]]+)\]/)
-    assert.ok(orderMatch, 'BLOCK_TYPE_ORDER should be declared in site.js')
-    const uiTypes = new Set([...orderMatch[1].matchAll(/"([^"]+)"/g)].map((match) => match[1]))
+    assert.match(siteJs, /meta\.blockTypeOrder/, 'site.js should read block type order from catalog metadata')
+    const uiTypes = new Set(globalThis.SITE_DATA.meta.blockTypeOrder)
     const generatedTypes = new Set(blocks.map((block) => block.blockType).filter(Boolean))
 
     const failures = [...generatedTypes].filter((type) => !uiTypes.has(type))

@@ -2,63 +2,17 @@
  * Simulate the site's analyzePrompt linter against every assembled stack.
  * Outputs which stacks trigger which rules and why.
  */
-import { readFile } from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { buildCatalog } from './catalog/build-catalog.mjs'
+import { analyzePrompt } from './catalog/prompt-utils.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.join(__dirname, '..')
 
-// ── Linter rules (mirrors site-builder.js) ───────────────────────────────────
-
-const LINTER_VAGUE = /\b(improve|vague|enhance|optimize|better|good|things like|etc\.|something like|sort of|kind of|more effective|more useful)\b/gi
-const LINTER_OUTPUT = /\b(return|output|format|respond with|give me a list|in json|in markdown|as a table|as bullets?|as numbered|structure your)\b/i
-const WORD_LIMIT = 700
-const REPEAT_THRESHOLD = 4
-
-function analyzePrompt(text) {
-  if (!text || !text.trim()) return { hints: [], wordCount: 0 }
-
-  const hints = []
-  const wordCount = text.trim().split(/\s+/).length
-
-  const vagueHits = text.match(LINTER_VAGUE) || []
-  if (vagueHits.length >= 2) {
-    hints.push({ type: 'vague', text: `Vague language (${vagueHits.join(', ')})` })
-  }
-
-  if (!LINTER_OUTPUT.test(text)) {
-    hints.push({ type: 'format', text: 'No output format specified' })
-  }
-
-  if (wordCount > WORD_LIMIT) {
-    hints.push({ type: 'length', text: `~${wordCount} words (>${WORD_LIMIT})` })
-  }
-
-  const tokens = text.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
-  const grams = new Map()
-  for (let i = 0; i < tokens.length - 1; i++) {
-    const gram = `${tokens[i]} ${tokens[i + 1]}`
-    if (gram.length >= 7) grams.set(gram, (grams.get(gram) || 0) + 1)
-  }
-  const hotGrams = [...grams.entries()].filter(([, c]) => c >= REPEAT_THRESHOLD).sort((a, b) => b[1] - a[1])
-  if (hotGrams.length > 0) {
-    hints.push({ type: 'repetition', text: `Repeated 2-grams: ${hotGrams.slice(0, 3).map(([g, c]) => `"${g}" ×${c}`).join(', ')}` })
-  }
-
-  return { hints, wordCount }
-}
-
 // ── Load site data ────────────────────────────────────────────────────────────
 
-const siteDataPath = path.join(ROOT, 'site-data.js')
-const siteDataRaw = await readFile(siteDataPath, 'utf-8')
-// site-data.js does globalThis.SITE_DATA = {...}
-const match = siteDataRaw.match(/globalThis\.SITE_DATA\s*=\s*(\{[\s\S]*\});?\s*$/)
-if (!match) throw new Error('Could not parse site-data.js')
-const siteData = JSON.parse(match[1])
-
-const { blocks, stacks } = siteData
+const { blocks, stacks } = buildCatalog({ root: ROOT })
 
 // ── Build block copy index ────────────────────────────────────────────────────
 

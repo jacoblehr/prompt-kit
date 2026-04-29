@@ -17,7 +17,6 @@ Current stack families:
 - Critique & Review
 - Prompt Craft
 - Developer Workflows
-- Reflection & Learning
 
 See [docs/COMPOSITION.md](../docs/COMPOSITION.md) for the full composition rules.
 

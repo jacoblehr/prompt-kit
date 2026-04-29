@@ -7,19 +7,22 @@ if (!siteData) {
   throw new Error("site-data.js must be loaded before site.js");
 }
 
+window.PromptKit = window.PromptKit || {};
+window.PromptKit.catalog = siteData;
+window.PromptKit.meta = siteData.meta || {};
+
 const {
   blocks = [],
   stacks = []
 } = siteData;
 
 /** @type {PromptKitBlockType[]} */
-const BLOCK_TYPE_ORDER = ["frame", "mode", "strategy", "recurse", "lens", "guardrail", "schema", "rubric"];
-const BLOCK_TYPE_LABELS = {
+const BLOCK_TYPE_ORDER = window.PromptKit.meta.blockTypeOrder || ["frame", "mode", "strategy", "recurse", "guardrail", "schema", "rubric"];
+const BLOCK_TYPE_LABELS = window.PromptKit.meta.blockTypeLabels || {
   frame: "Frame",
   mode: "Mode",
   strategy: "Strategy",
   recurse: "Recurse",
-  lens: "Lens",
   guardrail: "Guardrail",
   schema: "Schema",
   rubric: "Rubric"
@@ -49,10 +52,10 @@ const BUILDER_SECTIONS = [
     label: "Context",
     description: "Constraints, references, domain knowledge, and perspective.",
     emptyLabel: "Add supporting context if the task needs it",
-    emptyPrompt: "Bring in constraints, requirements, or a lens when they will materially change the answer.",
+    emptyPrompt: "Bring in constraints or requirements when they will materially change the answer.",
     starterRefs: ["frame.cause-mapping", "frame.extract-insights"],
     required: false,
-    validBlockTypes: ["frame", "lens"]
+    validBlockTypes: ["frame"]
   },
   {
     key: "reasoning",
@@ -62,7 +65,7 @@ const BUILDER_SECTIONS = [
     emptyPrompt: "A mode sets the stance. A strategy or recursive primitive adds a deliberate reasoning move.",
     starterRefs: ["mode.explore", "mode.decide", "strategy.problem-split", "recurse.decompose"],
     required: false,
-    validBlockTypes: ["mode", "strategy", "recurse", "lens"]
+    validBlockTypes: ["mode", "strategy", "recurse"]
   },
   {
     key: "harness",
@@ -128,13 +131,12 @@ const BLOCK_TYPE_DESCRIPTIONS = {
   mode: "Stance-setting blocks that define how the model should approach the session.",
   strategy: "Reasoning-mechanic blocks that introduce a specific analytical method or move.",
   recurse: "Bounded recursive reasoning blocks for decomposition, evaluation, refinement, and branch pruning inside one prompt.",
-  lens: "Perspective blocks that reframe a situation through a discipline, model, or framework.",
   guardrail: "Validation blocks that prevent common failure modes and reasoning errors.",
   schema: "Output-shaping blocks that define the structure and format of the response.",
   rubric: "Evaluation blocks for checking whether the result is actually good enough."
 };
 
-const STACK_FAMILY_ORDER = [
+const STACK_FAMILY_ORDER = window.PromptKit.meta.stackFamilyOrder || [
   "Thinking & Framing",
   "Deciding & Prioritising",
   "Research & Analysis",
@@ -142,14 +144,13 @@ const STACK_FAMILY_ORDER = [
   "Planning & Execution",
   "Critique & Review",
   "Prompt Craft",
-  "Developer Workflows",
-  "Reflection & Learning"
+  "Developer Workflows"
 ];
 
-const STACK_STAGE_ORDER = ["frame", "explore", "analyze", "decide", "critique", "refine", "conclude"];
-const STACK_OUTPUT_KIND_ORDER = ["clarity", "options", "decision", "plan", "brief", "summary", "critique", "diagnosis", "draft", "retrospective", "prompt"];
-const STACK_EFFORT_ORDER = ["quick", "standard", "deep"];
-const STACK_STAKES_ORDER = ["low", "medium", "high"];
+const STACK_STAGE_ORDER = window.PromptKit.meta.stackStageOrder || ["frame", "explore", "analyze", "decide", "critique", "refine", "conclude"];
+const STACK_OUTPUT_KIND_ORDER = window.PromptKit.meta.stackOutputKindOrder || ["clarity", "options", "decision", "plan", "brief", "summary", "critique", "diagnosis", "draft", "retrospective", "prompt"];
+const STACK_EFFORT_ORDER = window.PromptKit.meta.stackEffortOrder || ["quick", "standard", "deep"];
+const STACK_STAKES_ORDER = window.PromptKit.meta.stackStakesOrder || ["low", "medium", "high"];
 
 const STACK_STAGE_LABELS = Object.fromEntries(STACK_STAGE_ORDER.map((value) => [value, titleCase(value)]));
 const STACK_OUTPUT_KIND_LABELS = Object.fromEntries(STACK_OUTPUT_KIND_ORDER.map((value) => [value, titleCaseWords(value)]));
@@ -264,7 +265,7 @@ function summarizeBuilderSection(items = [], sectionKey = "") {
 
 /**
  * Choose the default section for a block when the user adds it without an
- * explicit target. Frame and lens blocks can legally live in more than one
+ * explicit target. Frame blocks can legally live in more than one
  * section, so we bias toward the most product-readable placement.
  */
 function defaultBuilderSectionForItem(item, currentItems = []) {
@@ -1236,13 +1237,13 @@ function applyFilters() {
 
   document.querySelectorAll(".block-type-section").forEach((sectionEl) => {
     const cards = sectionEl.querySelectorAll(".searchable");
-    const hasVisibleCard = [...cards].some((card) => !card.classList.contains("hidden"));
+    const hasVisibleCard = Array.from(cards).some((card) => !card.classList.contains("hidden"));
     sectionEl.classList.toggle("hidden", !hasVisibleCard);
   });
 
   document.querySelectorAll(".stack-family-group").forEach((groupEl) => {
     const cards = groupEl.querySelectorAll(".searchable");
-    const hasVisibleCard = [...cards].some((card) => !card.classList.contains("hidden"));
+    const hasVisibleCard = Array.from(cards).some((card) => !card.classList.contains("hidden"));
     groupEl.classList.toggle("hidden", !hasVisibleCard);
   });
 
@@ -1635,3 +1636,25 @@ document.addEventListener("focusout", (e) => {
 
 stepPopoverEl.addEventListener("mouseenter", () => clearTimeout(spHideTimer));
 stepPopoverEl.addEventListener("mouseleave", hideStepPopoverNow);
+
+Object.assign(window.PromptKit, {
+  applyFilters,
+  blockTypeLabel,
+  builderItemKey,
+  builderState,
+  defaultBuilderSectionForItem,
+  escHtml,
+  extractPlaceholders,
+  getBuilderSection,
+  getExistingBuilderItem,
+  humanizeBlockTitle,
+  isValidBuilderSection,
+  matchesFuzzySearch,
+  normalizeBuilderInputLabel,
+  renderCards,
+  renderFilterGroups,
+  renderRecentItems,
+  resolveRef,
+  syncFilterUi,
+  updateNavCounts
+});

@@ -10,7 +10,7 @@ When building a one-shot prompt from blocks, follow this sequence:
 1. Frame      → define the task, scope, and success criteria
 2. Mode       → set the cognitive stance
 3. Strategy   → add the reasoning mechanic (1–2 max)
-4. Lens       → apply a viewpoint if relevant (optional)
+4. Recurse    → add bounded decomposition, evaluation, refinement, or branch pruning if needed
 5. Guardrail  → prevent the failure modes most likely here
 6. Schema     → define the output shape
 7. Rubric     → add evaluation criteria (optional)
@@ -20,7 +20,7 @@ Why this order works:
 
 - Frame first gives the model a target before you tell it how to think.
 - Mode shapes the reasoning stance before you add mechanics.
-- Strategy and lens refine the thinking without overriding the stance.
+- Strategy and recurse blocks refine the thinking without overriding the stance.
 - Guardrail arrives after reasoning is set — it constrains without blocking.
 - Schema comes late so the prompt reads like a task before it reads like a form.
 - Rubric is optional. Add it when the task needs explicit self-checking.

@@ -27,5 +27,5 @@ The main problem is still choosing direction rather than improving a chosen bran
 
 ## Metadata
 - type: recurse
-- stage: revise
+- stage: refine
 - strength: medium

@@ -3,7 +3,6 @@ type PromptKitBlockType =
   | "mode"
   | "strategy"
   | "recurse"
-  | "lens"
   | "guardrail"
   | "schema"
   | "rubric";
@@ -35,8 +34,7 @@ type PromptKitStackFamily =
   | "Planning & Execution"
   | "Critique & Review"
   | "Prompt Craft"
-  | "Developer Workflows"
-  | "Reflection & Learning";
+  | "Developer Workflows";
 type PromptKitStackOutputKind =
   | "clarity"
   | "options"
@@ -75,6 +73,7 @@ interface PromptKitStackContract {
   blockOrderRationale?: string;
   commonSwaps?: string;
   commonFailureMode?: string;
+  chooseInsteadWhen?: string;
 }
 
 interface PromptKitStackIO {
@@ -143,6 +142,21 @@ interface PromptKitBuilderItem {
 interface PromptKitSiteData {
   blocks: PromptKitItem[];
   stacks: PromptKitItem[];
+  featuredStacks?: Array<{
+    title: string;
+    description: string;
+    tags: string[];
+    refs: string[];
+  }>;
+  meta: {
+    blockTypeOrder?: PromptKitBlockType[];
+    blockTypeLabels?: Record<string, string>;
+    stackFamilyOrder?: string[];
+    stackStageOrder?: string[];
+    stackOutputKindOrder?: string[];
+    stackEffortOrder?: string[];
+    stackStakesOrder?: string[];
+  };
 }
 
 interface BuilderSlotDefinition {
@@ -150,6 +164,17 @@ interface BuilderSlotDefinition {
   label: string;
   optional: boolean;
   help: string;
+}
+
+interface BuilderSectionDefinition {
+  key: string;
+  label: string;
+  description: string;
+  emptyLabel: string;
+  emptyPrompt: string;
+  starterRefs: string[];
+  required: boolean;
+  validBlockTypes: string[];
 }
 
 interface Element {
@@ -180,6 +205,46 @@ interface EventTarget {
 interface Event {
   clientX: number;
   clientY: number;
+}
+
+interface PromptKitApp {
+  catalog?: PromptKitSiteData;
+  meta: PromptKitSiteData["meta"];
+  applyFilters(): void;
+  blockTypeLabel(blockType?: string): string;
+  builderItemKey(item?: Partial<PromptKitItem>): string;
+  builderState: {
+    items: PromptKitBuilderItem[];
+    load(): void;
+    has(item: PromptKitItem | PromptKitBuilderItem): boolean;
+    add(item: PromptKitItem | PromptKitBuilderItem, options?: Record<string, string>): boolean;
+  };
+  assembleBuilderPrompt(options?: { structured?: boolean; inputPlan?: unknown }): string;
+  closeBuilder(): void;
+  defaultBuilderSectionForItem(item: Partial<PromptKitItem>, currentItems?: PromptKitBuilderItem[]): string;
+  escHtml(str?: string): string;
+  extractPlaceholders(text?: string): string[];
+  getBuilderSection(sectionKey?: string): BuilderSectionDefinition;
+  getExistingBuilderItem(item?: Partial<PromptKitItem>): PromptKitBuilderItem | null;
+  humanizeBlockTitle(title?: string): string;
+  isValidBuilderSection(sectionKey?: string, blockType?: string): boolean;
+  matchesFuzzySearch(haystack?: string, query?: string): boolean;
+  normalizeBuilderInputLabel(placeholder?: string): string;
+  openBuilder(): void;
+  renderBuilder(): void;
+  renderCards(): void;
+  renderFilterGroups(): void;
+  renderRecentItems(): void;
+  resolveRef(ref?: string): PromptKitItem | null;
+  showBuilderToast(message: string, actionLabel?: string, onAction?: (() => void) | null): void;
+  syncAddButtons(): void;
+  syncFilterUi(): void;
+  updateNavCounts(): void;
+  [key: string]: unknown;
+}
+
+interface Window {
+  PromptKit: PromptKitApp;
 }
 
 declare var SITE_DATA: PromptKitSiteData | undefined;

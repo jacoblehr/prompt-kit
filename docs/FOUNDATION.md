@@ -44,7 +44,7 @@ Typical flow:
 1. frame the task
 2. choose a stack if one already fits
 3. otherwise choose a mode block
-4. add a strategy, guardrail, schema, or lens block as needed
+4. add a strategy, recurse, guardrail, or schema block as needed
 5. inspect the result
 6. keep, revise, or discard the pieces
 

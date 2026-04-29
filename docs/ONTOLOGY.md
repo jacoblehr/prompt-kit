@@ -24,7 +24,6 @@ Blocks are typed by role. The type tells you what a block contributes — not wh
 | `frame` | Define the task, objective, scope, or success criteria |
 | `mode` | Set the overarching cognitive stance |
 | `strategy` | Control the reasoning mechanic or method of thought |
-| `lens` | Apply a conceptual viewpoint or interpretive frame |
 | `guardrail` | Prevent common failure modes and reasoning errors |
 | `schema` | Shape the output format or structure |
 | `rubric` | Define what "good" looks like for evaluation |
@@ -45,7 +44,7 @@ Every block should answer these questions:
 
 Every block carries:
 
-- `type` — one of: `frame`, `mode`, `strategy`, `lens`, `guardrail`, `schema`, `rubric`
+- `type` — one of: `frame`, `mode`, `strategy`, `recurse`, `guardrail`, `schema`, `rubric`
 - `stage` — primary reasoning stage: `frame`, `explore`, `analyze`, `decide`, `critique`, `refine`, `conclude`
 - `strength` — cognitive load added: `light`, `medium`, `heavy`
 
@@ -105,7 +104,7 @@ When assembling blocks into a prompt, use this sequence as the default:
 
 1. **Frame** — define the task, scope, and success criteria first
 2. **Mode** — set the cognitive stance (explore, critique, decide, reflect)
-3. **Strategy or lens** — add the reasoning mechanic or viewpoint (1–2 max)
+3. **Strategy or recurse** — add the reasoning mechanic or bounded recursive move (1–2 max)
 4. **Guardrail** — prevent the failure modes most likely for this task
 5. **Schema** — define the output shape after reasoning instructions are set
 6. **Rubric** — add evaluation criteria only when self-checking is needed
@@ -123,12 +122,11 @@ The repo stores source material in several folders. All of them map into the sur
 | `prompts/blocks/mode.*` | `mode` |
 | `prompts/blocks/strategy.*` | `strategy` |
 | `prompts/blocks/rubric.*` | `rubric` |
-| `prompts/blocks/frame.*`, `guardrail.*`, `schema.*`, `assumption.*` | `frame`, `guardrail`, `schema`, or `assumption` |
-| `prompts/snippets/` | `frame`, `strategy`, `guardrail`, or `schema` — full-task blocks |
-| `prompts/concepts/` | `lens` |
+| `prompts/blocks/frame.*`, `guardrail.*`, `schema.*` | `frame`, `guardrail`, or `schema` |
+| `prompts/blocks/recurse.*` | `recurse` |
 | `stacks/` | stacks (not blocks) |
 
-Snippet families, lens groups, and similar distinctions are browsing metadata, not top-level ontology layers.
+`prompts/snippets/` and `prompts/concepts/` are inactive extension paths. They are not parsed into the catalog unless the build pipeline deliberately re-enables them.
 
 ---
 
@@ -140,6 +138,7 @@ Use these rules to decide where a new asset belongs:
 - If it mainly defines the task, scope, or success criteria → `type=frame`
 - If it mainly sets the cognitive stance → `type=mode`
 - If it mainly controls the reasoning mechanic → `type=strategy`
+- If it mainly controls bounded decomposition, evaluation, refinement, or branch pruning → `type=recurse`
 - If it mainly prevents a failure mode or reasoning error → `type=guardrail`
 - If it mainly shapes the output format → `type=schema`
 - If it mainly defines evaluation criteria → `type=rubric`
