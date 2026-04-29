@@ -117,26 +117,41 @@ const FLOW_MODE_DESCRIPTIONS = {
   chain: "Pipe each output into the next prompt"
 };
 
-// Wrapper injected around every step in chain mode.
-const CHAIN_STEP_WRAPPER = `You are executing one step in a sequential prompt chain.
+/**
+ * Generate a position-aware wrapper for a single chain step.
+ * Tells the model which step it is, where the input comes from, and
+ * (for steps 2+) bridges block placeholders to the provided input.
+ * @param {number} stepNum - 1-based position in the chain
+ * @param {number} total - total steps in the chain
+ * @param {string} inputValue - the actual input text or {input} placeholder
+ * @returns {string}
+ */
+function makeChainStepWrapper(stepNum, total, inputValue) {
+  const isFirst = stepNum === 1;
+  const isLast = stepNum === total;
 
-Use only the provided input for this step.
-Apply the prompt directly to the input.
-Do not explain the prompt.
-Do not refer to stack mechanics.
-Return only the requested output.
+  const positionNote = isFirst
+    ? `This is step ${stepNum} of ${total} — first step. The input is the original task.`
+    : isLast
+    ? `This is step ${stepNum} of ${total} — final step. The input is the output from step ${stepNum - 1}.`
+    : `This is step ${stepNum} of ${total}. The input is the output from step ${stepNum - 1}.`;
 
-Input:
-{input}`;
+  // For steps 2+, bridge block placeholders ({artifact}, {context}) to the input above.
+  const bridgeNote = !isFirst
+    ? `\n\nNote: where the prompt below references {artifact} or {context}, use the Input above.`
+    : "";
+
+  return `You are executing one step in a sequential prompt chain.\n\n${positionNote}\n\nApply the prompt to the input. Do not explain the prompt. Return only the requested output.\n\nInput:\n${inputValue}${bridgeNote}`;
+}
 
 // Wrapper injected around every step in batch mode.
 const BATCH_STEP_WRAPPER = `You are executing one independent step in a batch prompt stack.
 
 Apply this prompt only to the original user input.
-Ignore other steps in the stack.
+Do not reference or depend on outputs from other steps.
 Do not explain the prompt.
-Do not discuss the method.
 Return only the requested output.
+Your output will be collected alongside other independent analyses for final synthesis.
 
 Original input:
 {original_input}`;
@@ -209,14 +224,26 @@ function resolveFlowMode(value) {
 function assembleChainSteps(items, taskInput = "") {
   if (items.length === 0) return "";
   const total = items.length;
-  return items.map((item, index) => {
+
+  // Preamble shows the full sequence so the user knows what they're running.
+  const preamble = [
+    `# Prompt Chain \u2014 ${total} Step${total !== 1 ? "s" : ""}`,
+    ``,
+    `Run each step in order. Copy the output from each step and paste it as the Input for the next step.`,
+    ``,
+    items.map((item, i) => `${i + 1}. ${humanizeBlockTitle(item.title)}`).join("\n"),
+  ].join("\n");
+
+  const steps = items.map((item, index) => {
     const inputValue = index === 0
       ? (taskInput.trim() || "{input}")
       : "{input}";
-    const wrapper = CHAIN_STEP_WRAPPER.replace("{input}", inputValue);
+    const wrapper = makeChainStepWrapper(index + 1, total, inputValue);
     const stepPrompt = `${wrapper}\n\n---\n\n${item.copy.trim()}`;
     return `## Step ${index + 1} of ${total}: ${humanizeBlockTitle(item.title)}\n\n${stepPrompt}`;
-  }).join("\n\n---\n\n");
+  });
+
+  return [preamble, ...steps].join("\n\n---\n\n");
 }
 
 /**
@@ -230,7 +257,9 @@ function assembleChainSteps(items, taskInput = "") {
 function assembleBatchSteps(items, taskInput = "") {
   if (items.length === 0) return "";
   const originalInput = taskInput.trim() || "{original_input}";
-  const total = items.length + 1; // +1 for synthesis
+  // Synthesis is only meaningful when there are multiple independent analyses to combine.
+  const hasSynthesis = items.length > 1;
+  const total = items.length + (hasSynthesis ? 1 : 0);
 
   const steps = items.map((item, index) => {
     const wrapper = BATCH_STEP_WRAPPER.replace("{original_input}", originalInput);
@@ -238,8 +267,10 @@ function assembleBatchSteps(items, taskInput = "") {
     return `## Step ${index + 1} of ${total}: ${humanizeBlockTitle(item.title)}\n\n${stepPrompt}`;
   });
 
-  const synthesis = BATCH_SYNTHESIS_PROMPT.replace(/{original_input}/g, originalInput);
-  steps.push(`## Step ${total} of ${total}: Synthesis\n\n${synthesis}`);
+  if (hasSynthesis) {
+    const synthesis = BATCH_SYNTHESIS_PROMPT.replace(/{original_input}/g, originalInput);
+    steps.push(`## Step ${total} of ${total}: Synthesis\n\n${synthesis}`);
+  }
 
   return steps.join("\n\n---\n\n");
 }

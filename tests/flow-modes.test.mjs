@@ -18,24 +18,13 @@ const { stacks } = globalThis.SITE_DATA
 const VALID_FLOW_MODES = ['chain', 'batch']
 const FLOW_MODE_DEFAULT = 'batch'
 
-const CHAIN_STEP_WRAPPER = `You are executing one step in a sequential prompt chain.
-
-Use only the provided input for this step.
-Apply the prompt directly to the input.
-Do not explain the prompt.
-Do not refer to stack mechanics.
-Return only the requested output.
-
-Input:
-{input}`
-
 const BATCH_STEP_WRAPPER = `You are executing one independent step in a batch prompt stack.
 
 Apply this prompt only to the original user input.
-Ignore other steps in the stack.
+Do not reference or depend on outputs from other steps.
 Do not explain the prompt.
-Do not discuss the method.
 Return only the requested output.
+Your output will be collected alongside other independent analyses for final synthesis.
 
 Original input:
 {original_input}`
@@ -62,30 +51,63 @@ Rules:
 Return the final synthesized output.`
 
 /**
+ * Generate a position-aware wrapper for a single chain step.
+ */
+function makeChainStepWrapper(stepNum, total, inputValue) {
+  const isFirst = stepNum === 1
+  const isLast = stepNum === total
+
+  const positionNote = isFirst
+    ? `This is step ${stepNum} of ${total} \u2014 first step. The input is the original task.`
+    : isLast
+    ? `This is step ${stepNum} of ${total} \u2014 final step. The input is the output from step ${stepNum - 1}.`
+    : `This is step ${stepNum} of ${total}. The input is the output from step ${stepNum - 1}.`
+
+  const bridgeNote = !isFirst
+    ? `\n\nNote: where the prompt below references {artifact} or {context}, use the Input above.`
+    : ''
+
+  return `You are executing one step in a sequential prompt chain.\n\n${positionNote}\n\nApply the prompt to the input. Do not explain the prompt. Return only the requested output.\n\nInput:\n${inputValue}${bridgeNote}`
+}
+
+/**
  * Assemble steps in chain mode.
- * Step 1 receives the task input; subsequent steps receive {{input}} as placeholder.
+ * Step 1 receives the task input; subsequent steps receive {input} as placeholder.
  */
 function assembleChainSteps(items, taskInput = '') {
   if (items.length === 0) return ''
   const total = items.length
-  return items.map((item, index) => {
+
+  const preamble = [
+    `# Prompt Chain \u2014 ${total} Step${total !== 1 ? 's' : ''}`,
+    '',
+    'Run each step in order. Copy the output from each step and paste it as the Input for the next step.',
+    '',
+    items.map((item, i) => `${i + 1}. ${item.title}`).join('\n'),
+  ].join('\n')
+
+  const steps = items.map((item, index) => {
     const inputValue = index === 0
       ? (taskInput.trim() || '{input}')
       : '{input}'
-    const wrapper = CHAIN_STEP_WRAPPER.replace('{input}', inputValue)
+    const wrapper = makeChainStepWrapper(index + 1, total, inputValue)
     const stepPrompt = `${wrapper}\n\n---\n\n${item.copy.trim()}`
     return `## Step ${index + 1} of ${total}: ${item.title}\n\n${stepPrompt}`
-  }).join('\n\n---\n\n')
+  })
+
+  return [preamble, ...steps].join('\n\n---\n\n')
 }
 
 /**
  * Assemble steps in batch mode.
- * Each step receives the original input. A synthesis step is appended.
+ * Each step receives the original input.
+ * Synthesis is appended only when there are multiple steps.
  */
 function assembleBatchSteps(items, taskInput = '') {
   if (items.length === 0) return ''
   const originalInput = taskInput.trim() || '{original_input}'
-  const total = items.length + 1 // +1 for synthesis
+  const hasSynthesis = items.length > 1
+  const total = items.length + (hasSynthesis ? 1 : 0)
 
   const steps = items.map((item, index) => {
     const wrapper = BATCH_STEP_WRAPPER.replace('{original_input}', originalInput)
@@ -93,10 +115,11 @@ function assembleBatchSteps(items, taskInput = '') {
     return `## Step ${index + 1} of ${total}: ${item.title}\n\n${stepPrompt}`
   })
 
-  const synthesis = BATCH_SYNTHESIS_PROMPT
-    .replace(/{original_input}/g, originalInput)
+  if (hasSynthesis) {
+    const synthesis = BATCH_SYNTHESIS_PROMPT.replace(/{original_input}/g, originalInput)
+    steps.push(`## Step ${total} of ${total}: Synthesis\n\n${synthesis}`)
+  }
 
-  steps.push(`## Step ${total} of ${total}: Synthesis\n\n${synthesis}`)
   return steps.join('\n\n---\n\n')
 }
 
@@ -114,29 +137,38 @@ describe('chain execution', () => {
   test('step 1 receives the original task input', () => {
     const taskInput = 'my task'
     const output = assembleChainSteps(items, taskInput)
-    const step1 = output.split('\n\n---\n\n')[0]
+    // The preamble is at index 0; step 1 content comes after it.
+    const step1 = output.split('\n\n---\n\n').find(p => p.includes('## Step 1 of'))
+    assert.ok(step1, 'Step 1 block should exist')
     assert.ok(
       step1.includes('my task'),
       'Step 1 should contain the task input'
     )
   })
 
-  test('steps 2+ receive {{input}} placeholder (not the task input)', () => {
-    const taskInput = 'my task'
-    const output = assembleChainSteps(items, taskInput)
-    const parts = output.split('\n\n---\n\n')
-    // parts[1] is the separator context before step-b content
-    // Each step starts with ## Step N of N
-    const step2Block = parts.find(p => p.includes('## Step 2 of'))
-    assert.ok(step2Block, 'Step 2 block should exist')
+  test('step 2 has position context referencing step 1 output', () => {
+    const output = assembleChainSteps(items, 'my task')
+    const step2 = output.split('\n\n---\n\n').find(p => p.includes('## Step 2 of'))
+    assert.ok(step2, 'Step 2 block should exist')
     assert.ok(
-      step2Block.includes('{input}'),
-      'Step 2 should contain the {input} placeholder'
+      step2.includes('output from step 1'),
+      'Step 2 wrapper should reference step 1 output'
     )
-    assert.ok(
-      !step2Block.includes('my task'),
-      'Step 2 should not contain the original task input directly'
-    )
+  })
+
+  test('step 2+ include bridge note for {artifact}/{context}', () => {
+    const output = assembleChainSteps(items, 'my task')
+    const step2 = output.split('\n\n---\n\n').find(p => p.includes('## Step 2 of'))
+    assert.ok(step2.includes('where the prompt below references {artifact} or {context}'))
+  })
+
+  test('assembled chain output includes sequence preamble', () => {
+    const output = assembleChainSteps(items, 'my task')
+    const preamble = output.split('\n\n---\n\n')[0]
+    assert.ok(preamble.includes('# Prompt Chain'))
+    assert.ok(preamble.includes('Run each step in order'))
+    assert.ok(preamble.includes('step-a'))
+    assert.ok(preamble.includes('step-b'))
   })
 
   test('all step prompts contain the block copy', () => {
@@ -220,6 +252,13 @@ describe('batch execution', () => {
       lastStep.includes('{step_outputs}'),
       'Synthesis step should contain {step_outputs} placeholder'
     )
+  })
+
+  test('skips synthesis step when there is only one item', () => {
+    const singleItem = [{ title: 'solo-step', copy: 'Do it.' }]
+    const output = assembleBatchSteps(singleItem, 'my input')
+    assert.ok(!output.includes('Synthesis'), 'Should not include a Synthesis step for a single item')
+    assert.ok(output.includes('## Step 1 of 1:'), 'Should label the step as 1 of 1')
   })
 
   test('produces N+1 total steps for N items (N analysis + 1 synthesis)', () => {
