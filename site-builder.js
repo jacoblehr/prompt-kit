@@ -184,7 +184,7 @@ function renderBuilderInputs() {
       ? (flow === "chain"
           ? "Task seeds step 1. Each step\u2019s output feeds the next."
           : "Task is passed to each step independently, then synthesized.")
-      : "Fill only the variables that are not already implied by the task.";
+      : "Fill the task above. Any remaining block-specific variables appear below.";
   }
 
   // Update task field label to reflect its role in the current flow mode.
@@ -196,44 +196,63 @@ function renderBuilderInputs() {
   }
 
   const definitions = getBuilderInputDefinitions();
+  const taskFilled = !!builderState.taskInput.trim();
 
-  // In flow mode, task-like placeholders ({artifact}, {context}, etc.) are
-  // handled by the flow assembly wrappers — hide them to avoid redundancy.
-  // Non-task placeholders ({depth}, {iterations}, {stop_condition}) still need
-  // manual values and remain visible.
-  const visibleDefinitions = isFlowMode
-    ? definitions.filter((d) => !d.usesTaskInput)
-    : definitions;
+  // Task-like placeholders ({artifact}, {context}, etc.) are automatically
+  // resolved from the task field — hide them in all modes unless the user has
+  // explicitly set a manual override. Manual overrides always remain visible.
+  const visibleDefinitions = definitions.filter(
+    (d) => !d.usesTaskInput || d.manualValue
+  );
 
-  if (visibleDefinitions.length === 0) {
+  // When the task is filled, show a compact summary of which placeholders are
+  // being resolved from it, so the user knows their input IS being applied.
+  const resolvedFromTask = taskFilled
+    ? definitions.filter((d) => d.usesTaskInput && !d.manualValue)
+    : [];
+
+  const resolvedHtml = resolvedFromTask.length > 0
+    ? `<div class="builder-inputs-resolved">
+        <span class="builder-inputs-resolved-label">Resolved from task</span>
+        ${resolvedFromTask.map((d) => `<span class="builder-inputs-resolved-chip">${escHtml(d.label)}</span>`).join("")}
+      </div>`
+    : "";
+
+  const variablesHtml = visibleDefinitions.length > 0
+    ? `<div class="builder-inputs-divider">${isFlowMode ? "Block variables" : "Variables"}</div>` +
+      `<div class="builder-inputs-list">` +
+      visibleDefinitions.map((definition) => {
+        const helpText = definition.help
+          ? definition.help.length > 160 ? definition.help.slice(0, 160) + "\u2026" : definition.help
+          : "";
+        return `
+          <label class="builder-input-field">
+            <span class="builder-input-label-row">
+              <span class="builder-input-label">${escHtml(definition.label)}</span>
+            </span>
+            <textarea
+              class="builder-input-textarea"
+              data-action="builder-input"
+              data-max-height="220"
+              data-placeholder-key="${escHtml(definition.placeholder)}"
+              spellcheck="false"
+              rows="2"
+              placeholder="${escHtml(definition.placeholder)}"
+            >${escHtml(definition.manualValue)}</textarea>
+            ${helpText ? `<span class="builder-input-help">${escHtml(helpText)}</span>` : ""}
+          </label>
+        `;
+      }).join("") + `</div>`
+    : "";
+
+  if (!resolvedHtml && !variablesHtml) {
     mount.hidden = true;
     mount.innerHTML = "";
     return;
   }
 
   mount.hidden = false;
-  mount.innerHTML =
-    `<div class="builder-inputs-divider">${isFlowMode ? "Block variables" : "Variables"}</div>` +
-    `<div class="builder-inputs-list">` +
-    visibleDefinitions.map((definition) => `
-      <label class="builder-input-field">
-        <span class="builder-input-label-row">
-          <span class="builder-input-label">${escHtml(definition.label)}</span>
-          ${definition.usesTaskInput && !definition.manualValue && builderState.taskInput.trim()
-            ? '<span class="builder-input-badge">From task</span>'
-            : ''}
-        </span>
-        <textarea
-          class="builder-input-textarea"
-          data-action="builder-input"
-          data-max-height="220"
-          data-placeholder-key="${escHtml(definition.placeholder)}"
-          spellcheck="false"
-          rows="2"
-          placeholder="${escHtml(definition.placeholder)}"
-        >${escHtml(definition.manualValue)}</textarea>
-      </label>
-    `).join("") + `</div>`;
+  mount.innerHTML = resolvedHtml + variablesHtml;
 }
 
 function renderPromptPreview(prompt) {

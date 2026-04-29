@@ -2317,6 +2317,33 @@ kbd.search-hint {
   margin-bottom: 4px;
 }
 
+.builder-inputs-resolved {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 0 7px;
+}
+
+.builder-inputs-resolved-label {
+  flex-shrink: 0;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.builder-inputs-resolved-chip {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
 .builder-inputs-card {
   display: grid;
   gap: 12px;
