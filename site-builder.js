@@ -165,16 +165,57 @@ function renderBuilderInputs() {
   const hasItems = builderState.items.length > 0;
   if (pane) pane.hidden = !hasItems;
 
+  const flow = builderState.flow;
+  const isFlowMode = flow === "chain" || flow === "batch";
+
+  // Update the pane label to show a flow mode badge when active.
+  const paneLabel = pane?.querySelector(".builder-pane-label");
+  if (paneLabel) {
+    const badge = isFlowMode
+      ? ` <span class="pane-flow-badge pane-flow-badge--${escHtml(flow)}">${escHtml(FLOW_MODE_LABELS[flow] || flow)}</span>`
+      : "";
+    paneLabel.innerHTML = `Inputs${badge}`;
+  }
+
+  // Update pane description to explain how the task field relates to the flow.
+  const paneCopy = pane?.querySelector(".builder-pane-copy");
+  if (paneCopy) {
+    paneCopy.textContent = isFlowMode
+      ? (flow === "chain"
+          ? "Task seeds step 1. Each step\u2019s output feeds the next."
+          : "Task is passed to each step independently, then synthesized.")
+      : "Fill only the variables that are not already implied by the task.";
+  }
+
+  // Update task field label to reflect its role in the current flow mode.
+  const taskLabel = pane?.querySelector(".builder-run-label");
+  if (taskLabel) {
+    taskLabel.textContent = isFlowMode
+      ? (flow === "chain" ? "Task \u2014 step 1 input" : "Task \u2014 shared across steps")
+      : "Task";
+  }
+
   const definitions = getBuilderInputDefinitions();
-  if (definitions.length === 0) {
+
+  // In flow mode, task-like placeholders ({artifact}, {context}, etc.) are
+  // handled by the flow assembly wrappers — hide them to avoid redundancy.
+  // Non-task placeholders ({depth}, {iterations}, {stop_condition}) still need
+  // manual values and remain visible.
+  const visibleDefinitions = isFlowMode
+    ? definitions.filter((d) => !d.usesTaskInput)
+    : definitions;
+
+  if (visibleDefinitions.length === 0) {
     mount.hidden = true;
     mount.innerHTML = "";
     return;
   }
 
   mount.hidden = false;
-  mount.innerHTML = `<div class="builder-inputs-list">` +
-    definitions.map((definition) => `
+  mount.innerHTML =
+    `<div class="builder-inputs-divider">${isFlowMode ? "Block variables" : "Variables"}</div>` +
+    `<div class="builder-inputs-list">` +
+    visibleDefinitions.map((definition) => `
       <label class="builder-input-field">
         <span class="builder-input-label-row">
           <span class="builder-input-label">${escHtml(definition.label)}</span>
@@ -1309,6 +1350,7 @@ document.getElementById("builder-flow")?.addEventListener("click", (event) => {
   if (!nextFlow) return;
   builderState.setFlow(nextFlow);
   renderFlowSelector();
+  renderBuilderInputs();
   renderLivePrompt();
 });
 
