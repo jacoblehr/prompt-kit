@@ -120,6 +120,8 @@ Test: remove one block. If the prompt changes meaningfully, keep it. If nothing 
 | Need | Reach for | Why |
 | ----- | --------- | --- |
 | Calibrate uncertainty in a draft or recommendation | `guardrail.uncertainty` | It separates facts, assumptions, and unknowns before you over-commit. |
+| Keep a plan or prompt from growing beyond its objective | `guardrail.scope-creep` | It separates essential work from optional, deferred, or distracting additions. |
+| Keep claims tied to supplied evidence | `guardrail.source-grounding` | It labels claims as supported, inferred, contradicted, or unsupported. |
 | Expose what must be true for a plan or conclusion to work | `guardrail.assumption-audit` | It enumerates hidden premises and tells you what would falsify them. |
 | Stress a preferred answer against the strongest opposing case | `guardrail.disconfirming-evidence` | It searches for real contrary evidence instead of polishing the existing view. |
 
@@ -135,8 +137,11 @@ Use `guardrail.assumption-audit` + `guardrail.disconfirming-evidence` together o
 | Write or revise prompts and instruction sets | `schema.prompt-spec` | It separates final prompt text from assumptions, constraints, output shape, tests, and limitations. |
 | Debrief an incident or failure after stabilization | `schema.incident-postmortem` | It captures timeline, root cause, contributing factors, and prevention work. |
 | Preserve multiple viable paths before choosing | `schema.option-map` | It shows when each option fits, what it assumes, and what evidence is still needed. |
+| Define product, workflow, or implementation requirements | `schema.requirements-brief` | It separates user need, required behavior, acceptance criteria, constraints, non-goals, and open questions. |
 | Design a test before acting on a claim | `schema.experiment-plan` | It names the hypothesis, method, metric, confounds, and decision rule before results are known. |
+| Stage a launch, change, policy, or process update | `schema.rollout-plan` | It makes phases, stakeholder actions, communication, monitoring, and rollback explicit. |
 | Produce audience-fit prose from source material | `schema.content-draft` | It separates the draft from the takeaway, call to action, and revision notes. |
+| Standardize repeated work into reusable procedure | `schema.playbook` | It captures trigger conditions, inputs, steps, decision rules, examples, and escalation paths. |
 
 Common handoff:
 
@@ -159,6 +164,8 @@ Not every task needs a full stack. Often two or three blocks are enough.
 | Creative first draft  | `frame.audience` + `mode.create` + `schema.content-draft` |
 | Notes to synthesis    | `frame.extract-insights` + `mode.synthesize` |
 | Option comparison     | `frame.success-criteria` + `strategy.tradeoff-matrix` |
+| Usability review      | `strategy.journey-map` + `rubric.usability-quality` |
+| Rollout planning      | `frame.stakeholders` + `schema.rollout-plan` |
 
 ---
 

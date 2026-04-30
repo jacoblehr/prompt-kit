@@ -503,6 +503,234 @@ globalThis.SITE_DATA = {
       "stage": "analyze",
       "strength": "medium",
       "contract": {
+        "purpose": "Trace the experience step by step from the actor's point of view so friction, handoffs, missing feedback, and failure states become visible.",
+        "useWhen": "A product, workflow, service, document, process, or operational path must be evaluated by how someone actually moves through it.",
+        "expects": "A user, customer, operator, stakeholder, or system actor plus the journey, workflow, or task they are trying to complete.",
+        "adds": "A stepwise experience map with goals, actions, questions, emotions or confidence, friction, feedback, and improvement opportunities.",
+        "returns": [
+          "actor and job",
+          "journey steps",
+          "goal at each step",
+          "friction or confusion",
+          "feedback or state visibility",
+          "failure point",
+          "improvement opportunity"
+        ],
+        "pairsWith": [
+          "frame.current-state",
+          "frame.audience",
+          "rubric.usability-quality",
+          "schema.findings-brief",
+          "schema.requirements-brief"
+        ],
+        "avoidWhen": "The task is not sequential, actor-centered, or experience-dependent."
+      },
+      "key": "journey-map",
+      "aliases": [
+        "strategy.journey-map"
+      ],
+      "title": "journey-map",
+      "summary": "Trace the experience step by step from the actor's point of view so friction, handoffs, missing feedback, and failure states become visible.",
+      "tags": [
+        "journey",
+        "map"
+      ],
+      "copy": "Map the journey from the actor's point of view.\nFor each step, state what they are trying to do, what they see or know, where friction appears, and what feedback or recovery path is missing.\nPrioritize the moments that most affect task completion.",
+      "body": [
+        [
+          "Purpose",
+          "Trace the experience step by step from the actor's point of view so friction, handoffs, missing feedback, and failure states become visible."
+        ],
+        [
+          "Use when",
+          "A product, workflow, service, document, process, or operational path must be evaluated by how someone actually moves through it."
+        ],
+        [
+          "Expects",
+          "A user, customer, operator, stakeholder, or system actor plus the journey, workflow, or task they are trying to complete."
+        ],
+        [
+          "Adds",
+          "A stepwise experience map with goals, actions, questions, emotions or confidence, friction, feedback, and improvement opportunities."
+        ],
+        [
+          "Returns",
+          "actor and job, journey steps, goal at each step, friction or confusion, feedback or state visibility, failure point, improvement opportunity"
+        ],
+        [
+          "Pairs with",
+          "frame.current-state, frame.audience, rubric.usability-quality, schema.findings-brief, schema.requirements-brief"
+        ],
+        [
+          "Avoid when",
+          "The task is not sequential, actor-centered, or experience-dependent."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.journey-map/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "explore",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Challenge which constraints are real, flexible, inherited, or self-imposed so a stuck plan can be simplified or reframed.",
+        "useWhen": "A solution space feels cramped, expensive, slow, or overcomplicated because constraints have been accepted without inspection.",
+        "expects": "A plan, problem, feature, process, prompt, or strategy with stated or implied constraints.",
+        "adds": "A constraint inventory that tests what can be removed, relaxed, sequenced later, traded off, or replaced with a simpler condition.",
+        "returns": [
+          "stated constraints",
+          "implied constraints",
+          "hard constraints",
+          "flexible constraints",
+          "constraints to challenge",
+          "simpler path if relaxed",
+          "risk of relaxing"
+        ],
+        "pairsWith": [
+          "frame.task",
+          "frame.current-state",
+          "mode.explore",
+          "guardrail.scope-creep",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "Constraints are legal, safety-critical, contractual, or already validated as non-negotiable."
+      },
+      "key": "constraint-relaxation",
+      "aliases": [
+        "strategy.constraint-relaxation"
+      ],
+      "title": "constraint-relaxation",
+      "summary": "Challenge which constraints are real, flexible, inherited, or self-imposed so a stuck plan can be simplified or reframed.",
+      "tags": [
+        "constraint",
+        "relaxation"
+      ],
+      "copy": "List the explicit and implied constraints on this problem.\nClassify each as hard, flexible, unknown, or self-imposed.\nFor the flexible or self-imposed constraints, show what simpler path appears if it is relaxed and what risk that creates.\nRecommend the smallest relaxation that meaningfully improves the solution.",
+      "body": [
+        [
+          "Purpose",
+          "Challenge which constraints are real, flexible, inherited, or self-imposed so a stuck plan can be simplified or reframed."
+        ],
+        [
+          "Use when",
+          "A solution space feels cramped, expensive, slow, or overcomplicated because constraints have been accepted without inspection."
+        ],
+        [
+          "Expects",
+          "A plan, problem, feature, process, prompt, or strategy with stated or implied constraints."
+        ],
+        [
+          "Adds",
+          "A constraint inventory that tests what can be removed, relaxed, sequenced later, traded off, or replaced with a simpler condition."
+        ],
+        [
+          "Returns",
+          "stated constraints, implied constraints, hard constraints, flexible constraints, constraints to challenge, simpler path if relaxed, risk of relaxing"
+        ],
+        [
+          "Pairs with",
+          "frame.task, frame.current-state, mode.explore, guardrail.scope-creep, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "Constraints are legal, safety-critical, contractual, or already validated as non-negotiable."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.constraint-relaxation/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "explore",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Explore multiple plausible futures before choosing a robust direction under uncertainty.",
+        "useWhen": "The decision depends on external conditions, uncertain adoption, market shifts, policy changes, resource constraints, or other futures that cannot be predicted cleanly.",
+        "expects": "A strategic choice, plan, bet, roadmap, policy, or recommendation facing material uncertainty.",
+        "adds": "A set of distinct scenarios, leading indicators, moves that work across scenarios, and bets that only work if one future is true.",
+        "returns": [
+          "key uncertainty",
+          "plausible scenarios",
+          "implications by scenario",
+          "robust moves",
+          "scenario-specific bets",
+          "leading indicators",
+          "decision to make now"
+        ],
+        "pairsWith": [
+          "mode.explore",
+          "strategy.tradeoff-matrix",
+          "guardrail.assumption-audit",
+          "mode.decide",
+          "schema.decision-memo"
+        ],
+        "avoidWhen": "The uncertainty can be resolved cheaply with direct evidence or when the task needs immediate execution rather than strategic exploration."
+      },
+      "key": "scenario-planning",
+      "aliases": [
+        "strategy.scenario-planning"
+      ],
+      "title": "scenario-planning",
+      "summary": "Explore multiple plausible futures before choosing a robust direction under uncertainty.",
+      "tags": [
+        "scenario",
+        "planning"
+      ],
+      "copy": "Identify the uncertainties that would most change the decision.\nCreate several meaningfully different plausible scenarios.\nFor each scenario, name the implication, the move that would work, and the indicator that would tell us it is becoming more likely.\nSeparate robust moves from scenario-specific bets.",
+      "body": [
+        [
+          "Purpose",
+          "Explore multiple plausible futures before choosing a robust direction under uncertainty."
+        ],
+        [
+          "Use when",
+          "The decision depends on external conditions, uncertain adoption, market shifts, policy changes, resource constraints, or other futures that cannot be predicted cleanly."
+        ],
+        [
+          "Expects",
+          "A strategic choice, plan, bet, roadmap, policy, or recommendation facing material uncertainty."
+        ],
+        [
+          "Adds",
+          "A set of distinct scenarios, leading indicators, moves that work across scenarios, and bets that only work if one future is true."
+        ],
+        [
+          "Returns",
+          "key uncertainty, plausible scenarios, implications by scenario, robust moves, scenario-specific bets, leading indicators, decision to make now"
+        ],
+        [
+          "Pairs with",
+          "mode.explore, strategy.tradeoff-matrix, guardrail.assumption-audit, mode.decide, schema.decision-memo"
+        ],
+        [
+          "Avoid when",
+          "The uncertainty can be resolved cheaply with direct evidence or when the task needs immediate execution rather than strategic exploration."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.scenario-planning/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
         "purpose": "Compare options across explicit criteria so the real tradeoffs are visible before choosing or recommending.",
         "useWhen": "Several plausible options exist and the risk is choosing by vibe, recency, politics, or a single over-weighted criterion.",
         "expects": "An option set plus criteria, constraints, or success conditions.",
@@ -858,6 +1086,85 @@ globalThis.SITE_DATA = {
       "form": "compact",
       "sourceKind": "Prompt Block",
       "stage": "frame",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Capture how the current system, workflow, behavior, or situation works before designing a future state.",
+        "useWhen": "The task risks skipping over existing constraints, habits, incentives, dependencies, or failure modes.",
+        "expects": "A workflow, product area, process, system, policy, team practice, or user journey that may need improvement or replacement.",
+        "adds": "A baseline map of the current state so later recommendations can preserve what works, fix what breaks, and respect real constraints.",
+        "returns": [
+          "current flow or state",
+          "actors involved",
+          "inputs and outputs",
+          "pain points",
+          "constraints",
+          "workarounds",
+          "what already works",
+          "change risks"
+        ],
+        "pairsWith": [
+          "frame.task",
+          "strategy.journey-map",
+          "strategy.problem-split",
+          "schema.requirements-brief",
+          "schema.rollout-plan"
+        ],
+        "avoidWhen": "The current state is already documented clearly enough and restating it would slow down a simple task."
+      },
+      "key": "frame.current-state",
+      "aliases": [
+        "core.frame.current-state",
+        "core.frame-current-state"
+      ],
+      "title": "frame.current-state",
+      "summary": "Capture how the current system, workflow, behavior, or situation works before designing a future state.",
+      "tags": [
+        "frame",
+        "current",
+        "state"
+      ],
+      "copy": "Map the current state before proposing changes.\n\nRequirements:\n\n- describe what happens today, not the desired future state\n- identify actors, handoffs, inputs, outputs, and dependencies\n- separate pain points from constraints\n- preserve what already works\n- name informal workarounds or hidden coordination\n- identify the risks created by changing this state\n\nReturn:\n\n- current flow or state\n- actors involved\n- inputs and outputs\n- pain points\n- constraints\n- workarounds\n- what already works\n- change risks\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Capture how the current system, workflow, behavior, or situation works before designing a future state."
+        ],
+        [
+          "Use when",
+          "The task risks skipping over existing constraints, habits, incentives, dependencies, or failure modes."
+        ],
+        [
+          "Expects",
+          "A workflow, product area, process, system, policy, team practice, or user journey that may need improvement or replacement."
+        ],
+        [
+          "Adds",
+          "A baseline map of the current state so later recommendations can preserve what works, fix what breaks, and respect real constraints."
+        ],
+        [
+          "Returns",
+          "current flow or state, actors involved, inputs and outputs, pain points, constraints, workarounds, what already works, change risks"
+        ],
+        [
+          "Pairs with",
+          "frame.task, strategy.journey-map, strategy.problem-split, schema.requirements-brief, schema.rollout-plan"
+        ],
+        [
+          "Avoid when",
+          "The current state is already documented clearly enough and restating it would slow down a simple task."
+        ]
+      ],
+      "family": "Prompt Blocks",
+      "group": "",
+      "sourcePath": "prompts/blocks/frame.current-state/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "frame",
+      "blockType": "frame",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "frame",
       "strength": "light",
       "contract": {
         "purpose": "Frame the audience, channel, desired action, and likely objections before shaping a message or artifact.",
@@ -925,6 +1232,84 @@ globalThis.SITE_DATA = {
       "family": "Prompt Blocks",
       "group": "",
       "sourcePath": "prompts/blocks/frame.audience/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "frame",
+      "blockType": "frame",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "frame",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Map the people, groups, incentives, objections, and behavior changes that determine whether a plan or message will actually land.",
+        "useWhen": "A decision, rollout, change, negotiation, or communication depends on different parties understanding, accepting, approving, adopting, or acting.",
+        "expects": "A proposed change, decision, product, policy, message, or plan plus any known audiences or affected groups.",
+        "adds": "A stakeholder map that separates roles, incentives, likely concerns, influence, required action, and sequencing needs.",
+        "returns": [
+          "stakeholder or group",
+          "role in the outcome",
+          "current incentive or concern",
+          "likely objection or friction",
+          "needed behavior change",
+          "influence or dependency",
+          "best engagement move"
+        ],
+        "pairsWith": [
+          "frame.audience",
+          "mode.explore",
+          "mode.decide",
+          "strategy.steelman",
+          "schema.rollout-plan",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The task is purely individual, private, or technical and no adoption, approval, or coordination behavior matters."
+      },
+      "key": "frame.stakeholders",
+      "aliases": [
+        "core.frame.stakeholders",
+        "core.frame-stakeholders"
+      ],
+      "title": "frame.stakeholders",
+      "summary": "Map the people, groups, incentives, objections, and behavior changes that determine whether a plan or message will actually land.",
+      "tags": [
+        "frame",
+        "stakeholders"
+      ],
+      "copy": "Map the stakeholders for this change, decision, message, or plan.\n\nRequirements:\n\n- identify affected groups, decision-makers, blockers, operators, and end users separately\n- describe each group's incentive or concern without assuming they are irrational\n- name the behavior change or decision needed from each group\n- distinguish approval power from adoption influence\n- recommend a practical engagement move for each important stakeholder\n- call out any stakeholder that is missing but likely necessary\n\nReturn:\n\n- stakeholder or group\n- role in the outcome\n- current incentive or concern\n- likely objection or friction\n- needed behavior change\n- influence or dependency\n- best engagement move\n- missing stakeholder to verify\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Map the people, groups, incentives, objections, and behavior changes that determine whether a plan or message will actually land."
+        ],
+        [
+          "Use when",
+          "A decision, rollout, change, negotiation, or communication depends on different parties understanding, accepting, approving, adopting, or acting."
+        ],
+        [
+          "Expects",
+          "A proposed change, decision, product, policy, message, or plan plus any known audiences or affected groups."
+        ],
+        [
+          "Adds",
+          "A stakeholder map that separates roles, incentives, likely concerns, influence, required action, and sequencing needs."
+        ],
+        [
+          "Returns",
+          "stakeholder or group, role in the outcome, current incentive or concern, likely objection or friction, needed behavior change, influence or dependency, best engagement move"
+        ],
+        [
+          "Pairs with",
+          "frame.audience, mode.explore, mode.decide, strategy.steelman, schema.rollout-plan, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The task is purely individual, private, or technical and no adoption, approval, or coordination behavior matters."
+        ]
+      ],
+      "family": "Prompt Blocks",
+      "group": "",
+      "sourcePath": "prompts/blocks/frame.stakeholders/prompt.md"
     },
     {
       "section": "Block",
@@ -1074,6 +1459,160 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/guardrail.uncertainty/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "guardrail",
+      "blockType": "guardrail",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Prevent a plan, prompt, or recommendation from expanding beyond the objective, capacity, or decision it is meant to serve.",
+        "useWhen": "The work is starting to accumulate extra goals, checks, features, audiences, or implementation details that may dilute the main outcome.",
+        "expects": "A draft plan, scope, roadmap, prompt, feature, or recommendation plus the original objective or constraint.",
+        "adds": "A scope control pass that separates essential work from optional, deferred, or distracting additions.",
+        "returns": [
+          "core objective",
+          "in-scope items",
+          "scope creep candidates",
+          "deferred items",
+          "items to remove",
+          "smallest useful next version"
+        ],
+        "pairsWith": [
+          "frame.task",
+          "frame.success-criteria",
+          "mode.critique",
+          "schema.execution-brief",
+          "schema.rollout-plan"
+        ],
+        "avoidWhen": "The task is deliberately divergent exploration and narrowing scope would interrupt useful idea generation."
+      },
+      "key": "guardrail.scope-creep",
+      "aliases": [
+        "core.guardrail.scope-creep",
+        "core.guardrail-scope-creep"
+      ],
+      "title": "guardrail.scope-creep",
+      "summary": "Prevent a plan, prompt, or recommendation from expanding beyond the objective, capacity, or decision it is meant to serve.",
+      "tags": [
+        "guardrail",
+        "scope",
+        "creep"
+      ],
+      "copy": "Audit this plan, prompt, recommendation, or scope for creep.\n\nRequirements:\n\n- restate the core objective in one sentence\n- distinguish essential work from nice-to-have expansion\n- identify items that add coordination, risk, or delay without changing the outcome\n- preserve necessary constraints; do not cut risk controls merely because they add effort\n- name the smallest useful next version\n- recommend what to remove, defer, or keep\n\nReturn:\n\n- core objective\n- in-scope items\n- scope creep candidates\n- deferred items\n- items to remove\n- smallest useful next version\n- scope boundary to hold\n\n---\nartifact: {artifact}",
+      "body": [
+        [
+          "Purpose",
+          "Prevent a plan, prompt, or recommendation from expanding beyond the objective, capacity, or decision it is meant to serve."
+        ],
+        [
+          "Use when",
+          "The work is starting to accumulate extra goals, checks, features, audiences, or implementation details that may dilute the main outcome."
+        ],
+        [
+          "Expects",
+          "A draft plan, scope, roadmap, prompt, feature, or recommendation plus the original objective or constraint."
+        ],
+        [
+          "Adds",
+          "A scope control pass that separates essential work from optional, deferred, or distracting additions."
+        ],
+        [
+          "Returns",
+          "core objective, in-scope items, scope creep candidates, deferred items, items to remove, smallest useful next version"
+        ],
+        [
+          "Pairs with",
+          "frame.task, frame.success-criteria, mode.critique, schema.execution-brief, schema.rollout-plan"
+        ],
+        [
+          "Avoid when",
+          "The task is deliberately divergent exploration and narrowing scope would interrupt useful idea generation."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/guardrail.scope-creep/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "guardrail",
+      "blockType": "guardrail",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Tie claims, findings, and recommendations back to supplied evidence so unsupported inference does not masquerade as established fact.",
+        "useWhen": "The output depends on notes, research, interviews, logs, documents, or data and must stay faithful to what the sources support.",
+        "expects": "A draft, synthesis, finding, recommendation, or argument plus the source material it claims to rely on.",
+        "adds": "An evidence check that labels each important claim as directly supported, inferred, contradicted, or unsupported.",
+        "returns": [
+          "key claim",
+          "source support",
+          "evidence type",
+          "unsupported leap",
+          "contradiction or missing source",
+          "revision needed"
+        ],
+        "pairsWith": [
+          "frame.extract-insights",
+          "mode.synthesize",
+          "guardrail.uncertainty",
+          "rubric.research-quality",
+          "schema.findings-brief"
+        ],
+        "avoidWhen": "The task is explicitly speculative, creative, or based on judgment rather than evidence fidelity."
+      },
+      "key": "guardrail.source-grounding",
+      "aliases": [
+        "core.guardrail.source-grounding",
+        "core.guardrail-source-grounding"
+      ],
+      "title": "guardrail.source-grounding",
+      "summary": "Tie claims, findings, and recommendations back to supplied evidence so unsupported inference does not masquerade as established fact.",
+      "tags": [
+        "guardrail",
+        "source",
+        "grounding"
+      ],
+      "copy": "Check whether this artifact is grounded in the supplied source material.\n\nRequirements:\n\n- list the important claims, findings, or recommendations\n- mark each claim as directly supported, inferred, contradicted, or unsupported\n- distinguish evidence from interpretation\n- flag missing sources and source contradictions\n- weaken or remove claims that are stronger than the evidence permits\n- name the revision needed to make the artifact source-faithful\n\nReturn:\n\n- key claim\n- source support\n- evidence type\n- unsupported leap\n- contradiction or missing source\n- revision needed\n- claims to remove or qualify\n\n---\nartifact: {artifact}",
+      "body": [
+        [
+          "Purpose",
+          "Tie claims, findings, and recommendations back to supplied evidence so unsupported inference does not masquerade as established fact."
+        ],
+        [
+          "Use when",
+          "The output depends on notes, research, interviews, logs, documents, or data and must stay faithful to what the sources support."
+        ],
+        [
+          "Expects",
+          "A draft, synthesis, finding, recommendation, or argument plus the source material it claims to rely on."
+        ],
+        [
+          "Adds",
+          "An evidence check that labels each important claim as directly supported, inferred, contradicted, or unsupported."
+        ],
+        [
+          "Returns",
+          "key claim, source support, evidence type, unsupported leap, contradiction or missing source, revision needed"
+        ],
+        [
+          "Pairs with",
+          "frame.extract-insights, mode.synthesize, guardrail.uncertainty, rubric.research-quality, schema.findings-brief"
+        ],
+        [
+          "Avoid when",
+          "The task is explicitly speculative, creative, or based on judgment rather than evidence fidelity."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/guardrail.source-grounding/prompt.md"
     },
     {
       "section": "Block",
@@ -1308,6 +1847,84 @@ globalThis.SITE_DATA = {
       "form": "compact",
       "sourceKind": "Prompt Block",
       "stage": "conclude",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Render a user need, product change, workflow change, or implementation request as clear requirements before design or execution.",
+        "useWhen": "The output should define what must be true, who it serves, and how success will be judged before planning the work.",
+        "expects": "A feature request, customer insight, stakeholder ask, workflow problem, or scoped change.",
+        "adds": "A requirements-oriented output shape that separates user need, acceptance criteria, constraints, non-goals, edge cases, and open questions.",
+        "returns": [
+          "user or actor",
+          "problem or need",
+          "required behavior",
+          "acceptance criteria",
+          "constraints",
+          "non-goals",
+          "edge cases",
+          "open questions"
+        ],
+        "pairsWith": [
+          "frame.current-state",
+          "frame.audience",
+          "frame.success-criteria",
+          "guardrail.source-grounding",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The decision has already been made and the main need is sequencing, ownership, and delivery checkpoints."
+      },
+      "key": "schema.requirements-brief",
+      "aliases": [
+        "core.schema.requirements-brief",
+        "core.schema-requirements-brief"
+      ],
+      "title": "schema.requirements-brief",
+      "summary": "Render a user need, product change, workflow change, or implementation request as clear requirements before design or execution.",
+      "tags": [
+        "requirements",
+        "brief"
+      ],
+      "copy": "Render this request, insight, or scoped change as a requirements brief.\n\nRequirements:\n\n- identify the user, actor, or system that must be served\n- state the problem or need without prescribing unnecessary implementation\n- make required behavior observable\n- include acceptance criteria and failure conditions\n- separate constraints from non-goals\n- name edge cases and open questions\n- keep execution sequencing out unless it clarifies a requirement\n\nReturn:\n\n- user or actor\n- problem or need\n- required behavior\n- acceptance criteria\n- constraints\n- non-goals\n- edge cases\n- open questions\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Render a user need, product change, workflow change, or implementation request as clear requirements before design or execution."
+        ],
+        [
+          "Use when",
+          "The output should define what must be true, who it serves, and how success will be judged before planning the work."
+        ],
+        [
+          "Expects",
+          "A feature request, customer insight, stakeholder ask, workflow problem, or scoped change."
+        ],
+        [
+          "Adds",
+          "A requirements-oriented output shape that separates user need, acceptance criteria, constraints, non-goals, edge cases, and open questions."
+        ],
+        [
+          "Returns",
+          "user or actor, problem or need, required behavior, acceptance criteria, constraints, non-goals, edge cases, open questions"
+        ],
+        [
+          "Pairs with",
+          "frame.current-state, frame.audience, frame.success-criteria, guardrail.source-grounding, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The decision has already been made and the main need is sequencing, ownership, and delivery checkpoints."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.requirements-brief/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
       "strength": "light",
       "contract": {
         "purpose": "Render a chosen direction as a structured decision memo that makes the actual choice, rationale, and next action explicit.",
@@ -1452,6 +2069,85 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/schema.execution-brief/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Render a change, feature, policy, process, or migration as a staged rollout with adoption, monitoring, and rollback made explicit.",
+        "useWhen": "A plan must move through people, systems, customers, or operational gates rather than being completed in one private step.",
+        "expects": "A chosen change or direction plus known stakeholders, dependencies, risks, and success signals.",
+        "adds": "A rollout-oriented output shape that separates phases, audiences, owners, communications, monitoring, rollback triggers, and adoption checks.",
+        "returns": [
+          "rollout objective",
+          "phases",
+          "audience or stakeholder actions",
+          "owner or responsible role",
+          "communication points",
+          "monitoring signals",
+          "rollback or pause trigger",
+          "adoption check",
+          "next action"
+        ],
+        "pairsWith": [
+          "frame.stakeholders",
+          "frame.current-state",
+          "strategy.premortem",
+          "guardrail.scope-creep",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The work is a private analysis, small one-step task, or decision memo with no adoption or operational rollout."
+      },
+      "key": "schema.rollout-plan",
+      "aliases": [
+        "core.schema.rollout-plan",
+        "core.schema-rollout-plan"
+      ],
+      "title": "schema.rollout-plan",
+      "summary": "Render a change, feature, policy, process, or migration as a staged rollout with adoption, monitoring, and rollback made explicit.",
+      "tags": [
+        "rollout",
+        "plan"
+      ],
+      "copy": "Render this chosen change or direction as a staged rollout plan.\n\nRequirements:\n\n- define the rollout objective and success signal\n- sequence phases from lowest-risk learning to broader release\n- name owners or responsible roles where relevant\n- include stakeholder or audience actions, not only internal tasks\n- specify communication points and monitoring signals\n- include rollback, pause, or escalation triggers\n- include an adoption check after launch\n\nReturn:\n\n- rollout objective\n- phases\n- audience or stakeholder actions\n- owner or responsible role\n- communication points\n- monitoring signals\n- rollback or pause trigger\n- adoption check\n- immediate next action\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Render a change, feature, policy, process, or migration as a staged rollout with adoption, monitoring, and rollback made explicit."
+        ],
+        [
+          "Use when",
+          "A plan must move through people, systems, customers, or operational gates rather than being completed in one private step."
+        ],
+        [
+          "Expects",
+          "A chosen change or direction plus known stakeholders, dependencies, risks, and success signals."
+        ],
+        [
+          "Adds",
+          "A rollout-oriented output shape that separates phases, audiences, owners, communications, monitoring, rollback triggers, and adoption checks."
+        ],
+        [
+          "Returns",
+          "rollout objective, phases, audience or stakeholder actions, owner or responsible role, communication points, monitoring signals, rollback or pause trigger, adoption check, next action"
+        ],
+        [
+          "Pairs with",
+          "frame.stakeholders, frame.current-state, strategy.premortem, guardrail.scope-creep, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The work is a private analysis, small one-step task, or decision memo with no adoption or operational rollout."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.rollout-plan/prompt.md"
     },
     {
       "section": "Block",
@@ -1679,6 +2375,83 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/schema.content-draft/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Turn repeated work, lessons, or a successful approach into a reusable procedure that another person can follow.",
+        "useWhen": "The desired output is not just a conclusion but a repeatable way to handle similar situations in the future.",
+        "expects": "Lessons, decisions, incident reviews, process notes, examples, or a successful workflow worth standardizing.",
+        "adds": "A playbook format that captures trigger conditions, steps, decision rules, examples, escalation points, and maintenance notes.",
+        "returns": [
+          "when to use",
+          "inputs needed",
+          "procedure",
+          "decision rules",
+          "examples",
+          "failure signs",
+          "escalation path",
+          "maintenance notes"
+        ],
+        "pairsWith": [
+          "mode.reflect",
+          "frame.extract-insights",
+          "frame.cause-mapping",
+          "guardrail.assumption-audit",
+          "schema.execution-brief"
+        ],
+        "avoidWhen": "The task is one-off, highly contextual, or too immature to standardize without creating false certainty."
+      },
+      "key": "schema.playbook",
+      "aliases": [
+        "core.schema.playbook",
+        "core.schema-playbook"
+      ],
+      "title": "schema.playbook",
+      "summary": "Turn repeated work, lessons, or a successful approach into a reusable procedure that another person can follow.",
+      "tags": [
+        "playbook"
+      ],
+      "copy": "Render this lesson, process, or repeated workflow as a reusable playbook.\n\nRequirements:\n\n- state when the playbook applies and when it does not\n- list the inputs or context needed before starting\n- sequence the procedure as repeatable steps\n- include decision rules for common branches\n- include examples or patterns that make the steps concrete\n- name failure signs and escalation points\n- include notes for keeping the playbook current\n\nReturn:\n\n- when to use\n- inputs needed\n- procedure\n- decision rules\n- examples\n- failure signs\n- escalation path\n- maintenance notes\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Turn repeated work, lessons, or a successful approach into a reusable procedure that another person can follow."
+        ],
+        [
+          "Use when",
+          "The desired output is not just a conclusion but a repeatable way to handle similar situations in the future."
+        ],
+        [
+          "Expects",
+          "Lessons, decisions, incident reviews, process notes, examples, or a successful workflow worth standardizing."
+        ],
+        [
+          "Adds",
+          "A playbook format that captures trigger conditions, steps, decision rules, examples, escalation points, and maintenance notes."
+        ],
+        [
+          "Returns",
+          "when to use, inputs needed, procedure, decision rules, examples, failure signs, escalation path, maintenance notes"
+        ],
+        [
+          "Pairs with",
+          "mode.reflect, frame.extract-insights, frame.cause-mapping, guardrail.assumption-audit, schema.execution-brief"
+        ],
+        [
+          "Avoid when",
+          "The task is one-off, highly contextual, or too immature to standardize without creating false certainty."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.playbook/prompt.md"
     },
     {
       "section": "Block",
@@ -3095,6 +3868,114 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.simplify-plan",
+      "title": "simplify-plan",
+      "family": "Thinking & Framing",
+      "job": "simplify-plan",
+      "useWhen": "Reduce an overcomplicated plan, prompt, process, or feature scope to the smallest version that still achieves the objective.",
+      "stage": "refine",
+      "outputKind": "plan",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Reduce an overcomplicated plan, prompt, process, or feature scope to the smallest version that still achieves the objective.",
+      "tags": [
+        "simplify",
+        "plan"
+      ],
+      "contract": {
+        "job": "simplify-plan",
+        "useWhen": "Reduce an overcomplicated plan, prompt, process, or feature scope to the smallest version that still achieves the objective.",
+        "minimumBlocks": [
+          "strategy.constraint-relaxation",
+          "guardrail.scope-creep",
+          "schema.execution-brief"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`strategy.constraint-relaxation`",
+          "`mode.critique`",
+          "`guardrail.scope-creep`",
+          "`schema.execution-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `schema.requirements-brief` instead of `schema.execution-brief` when the simplified output should become requirements rather than an action sequence.",
+        "commonFailureMode": "Cutting visible effort while accidentally removing the constraints or checks that made the plan safe.",
+        "chooseInsteadWhen": "use `pressure-test` when the plan is risky and needs stronger adversarial review rather than simplification."
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> strategy:constraint-relaxation -> mode:critique -> guardrail:scope-creep -> schema:execution-brief",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "simplify-plan"
+        ],
+        [
+          "Use when",
+          "Reduce an overcomplicated plan, prompt, process, or feature scope to the smallest version that still achieves the objective."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> strategy:constraint-relaxation -> mode:critique -> guardrail:scope-creep -> schema:execution-brief"
+        ],
+        [
+          "Stage",
+          "refine"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "strategy.constraint-relaxation, guardrail.scope-creep, schema.execution-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `strategy.constraint-relaxation` -> `mode.critique` -> `guardrail.scope-creep` -> `schema.execution-brief`"
+        ],
+        [
+          "Choose instead when",
+          "use `pressure-test` when the plan is risky and needs stronger adversarial review rather than simplification."
+        ],
+        [
+          "Common swaps",
+          "Use `schema.requirements-brief` instead of `schema.execution-brief` when the simplified output should become requirements rather than an action sequence."
+        ],
+        [
+          "Common failure mode",
+          "Cutting visible effort while accidentally removing the constraints or checks that made the plan safe."
+        ]
+      ],
+      "sourcePath": "stacks/simplify-plan.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.decide",
       "title": "decide",
       "family": "Deciding & Prioritising",
@@ -3593,6 +4474,114 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.strategy-to-roadmap",
+      "title": "strategy-to-roadmap",
+      "family": "Deciding & Prioritising",
+      "job": "strategy-to-roadmap",
+      "useWhen": "Convert a strategic direction or ambiguous bet into a sequenced roadmap that can survive uncertainty and capacity constraints.",
+      "stage": "decide",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Convert a strategic direction or ambiguous bet into a sequenced roadmap that can survive uncertainty and capacity constraints.",
+      "tags": [
+        "roadmap"
+      ],
+      "contract": {
+        "job": "strategy-to-roadmap",
+        "useWhen": "Convert a strategic direction or ambiguous bet into a sequenced roadmap that can survive uncertainty and capacity constraints.",
+        "minimumBlocks": [
+          "strategy.scenario-planning",
+          "strategy.tradeoff-matrix",
+          "mode.decide"
+        ],
+        "fullSequence": [
+          "`frame.success-criteria`",
+          "`strategy.scenario-planning`",
+          "`strategy.tradeoff-matrix`",
+          "`guardrail.assumption-audit`",
+          "`mode.decide`",
+          "`schema.execution-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `schema.decision-memo` instead of `schema.execution-brief` when the roadmap decision needs to be recorded before planning execution.",
+        "commonFailureMode": "Producing a timeline of desired outcomes without naming which moves are robust across scenarios and which depend on one future being true.",
+        "chooseInsteadWhen": "use `prioritize-portfolio` when the options are already known and the main problem is ranking within current capacity."
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:success-criteria -> strategy:scenario-planning -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
+        "primaryMode": "mode.decide",
+        "modeRefs": [
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "strategy-to-roadmap"
+        ],
+        [
+          "Use when",
+          "Convert a strategic direction or ambiguous bet into a sequenced roadmap that can survive uncertainty and capacity constraints."
+        ],
+        [
+          "Composition profile",
+          "frame:success-criteria -> strategy:scenario-planning -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Minimum blocks",
+          "strategy.scenario-planning, strategy.tradeoff-matrix, mode.decide"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.success-criteria` -> `strategy.scenario-planning` -> `strategy.tradeoff-matrix` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Choose instead when",
+          "use `prioritize-portfolio` when the options are already known and the main problem is ranking within current capacity."
+        ],
+        [
+          "Common swaps",
+          "Use `schema.decision-memo` instead of `schema.execution-brief` when the roadmap decision needs to be recorded before planning execution."
+        ],
+        [
+          "Common failure mode",
+          "Producing a timeline of desired outcomes without naming which moves are robust across scenarios and which depend on one future being true."
+        ]
+      ],
+      "sourcePath": "stacks/strategy-to-roadmap.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.research",
       "title": "research",
       "family": "Research & Analysis",
@@ -4001,6 +4990,110 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.requirements-from-feedback",
+      "title": "requirements-from-feedback",
+      "family": "Research & Analysis",
+      "job": "requirements-from-feedback",
+      "useWhen": "Turn customer feedback, research notes, support tickets, stakeholder asks, or workflow observations into grounded requirements.",
+      "stage": "conclude",
+      "outputKind": "brief",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Turn customer feedback, research notes, support tickets, stakeholder asks, or workflow observations into grounded requirements.",
+      "tags": [
+        "requirements",
+        "feedback"
+      ],
+      "contract": {
+        "job": "requirements-from-feedback",
+        "useWhen": "Turn customer feedback, research notes, support tickets, stakeholder asks, or workflow observations into grounded requirements.",
+        "minimumBlocks": [
+          "frame.extract-insights",
+          "guardrail.source-grounding",
+          "schema.requirements-brief"
+        ],
+        "fullSequence": [
+          "`frame.extract-insights`",
+          "`guardrail.source-grounding`",
+          "`frame.audience`",
+          "`frame.success-criteria`",
+          "`schema.requirements-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Add `rubric.research-quality` when the source material is weak or the requirements will drive a high-stakes decision.",
+        "commonFailureMode": "Translating feedback directly into features without preserving the underlying need, evidence strength, or non-goals.",
+        "chooseInsteadWhen": "use `customer-insight-synthesis` when the desired output is ranked findings rather than requirements."
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:extract-insights -> guardrail:source-grounding -> frame:audience -> frame:success-criteria -> schema:requirements-brief",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "requirements-from-feedback"
+        ],
+        [
+          "Use when",
+          "Turn customer feedback, research notes, support tickets, stakeholder asks, or workflow observations into grounded requirements."
+        ],
+        [
+          "Composition profile",
+          "frame:extract-insights -> guardrail:source-grounding -> frame:audience -> frame:success-criteria -> schema:requirements-brief"
+        ],
+        [
+          "Stage",
+          "conclude"
+        ],
+        [
+          "Output kind",
+          "brief"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "frame.extract-insights, guardrail.source-grounding, schema.requirements-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.extract-insights` -> `guardrail.source-grounding` -> `frame.audience` -> `frame.success-criteria` -> `schema.requirements-brief`"
+        ],
+        [
+          "Choose instead when",
+          "use `customer-insight-synthesis` when the desired output is ranked findings rather than requirements."
+        ],
+        [
+          "Common swaps",
+          "Add `rubric.research-quality` when the source material is weak or the requirements will drive a high-stakes decision."
+        ],
+        [
+          "Common failure mode",
+          "Translating feedback directly into features without preserving the underlying need, evidence strength, or non-goals."
+        ]
+      ],
+      "sourcePath": "stacks/requirements-from-feedback.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.align-stakeholders",
       "title": "align-stakeholders",
       "family": "Writing & Communication",
@@ -4401,6 +5494,113 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.make-playbook",
+      "title": "make-playbook",
+      "family": "Writing & Communication",
+      "job": "make-playbook",
+      "useWhen": "Turn lessons, repeated work, or a successful workflow into a reusable playbook.",
+      "stage": "conclude",
+      "outputKind": "brief",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Turn lessons, repeated work, or a successful workflow into a reusable playbook.",
+      "tags": [
+        "make",
+        "playbook"
+      ],
+      "contract": {
+        "job": "make-playbook",
+        "useWhen": "Turn lessons, repeated work, or a successful workflow into a reusable playbook.",
+        "minimumBlocks": [
+          "mode.reflect",
+          "frame.extract-insights",
+          "schema.playbook"
+        ],
+        "fullSequence": [
+          "`mode.reflect`",
+          "`frame.extract-insights`",
+          "`guardrail.assumption-audit`",
+          "`guardrail.scope-creep`",
+          "`schema.playbook`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Add `schema.execution-brief` after `schema.playbook` if the playbook needs an implementation or adoption plan.",
+        "commonFailureMode": "Standardizing a one-off situation into a rigid process without naming when the playbook does and does not apply.",
+        "chooseInsteadWhen": "use `after-action-review` when the main output is a retrospective with remediation actions rather than a reusable procedure."
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "mode:reflect -> frame:extract-insights -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:playbook",
+        "primaryMode": "mode.reflect",
+        "modeRefs": [
+          "mode.reflect"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "make-playbook"
+        ],
+        [
+          "Use when",
+          "Turn lessons, repeated work, or a successful workflow into a reusable playbook."
+        ],
+        [
+          "Composition profile",
+          "mode:reflect -> frame:extract-insights -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:playbook"
+        ],
+        [
+          "Stage",
+          "conclude"
+        ],
+        [
+          "Output kind",
+          "brief"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "mode.reflect, frame.extract-insights, schema.playbook"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.reflect` -> `frame.extract-insights` -> `guardrail.assumption-audit` -> `guardrail.scope-creep` -> `schema.playbook`"
+        ],
+        [
+          "Choose instead when",
+          "use `after-action-review` when the main output is a retrospective with remediation actions rather than a reusable procedure."
+        ],
+        [
+          "Common swaps",
+          "Add `schema.execution-brief` after `schema.playbook` if the playbook needs an implementation or adoption plan."
+        ],
+        [
+          "Common failure mode",
+          "Standardizing a one-off situation into a rigid process without naming when the playbook does and does not apply."
+        ]
+      ],
+      "sourcePath": "stacks/make-playbook.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.negotiate",
       "title": "negotiate",
       "family": "Writing & Communication",
@@ -4694,6 +5894,112 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/feature-design.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.rollout-plan",
+      "title": "rollout-plan",
+      "family": "Planning & Execution",
+      "job": "rollout-plan",
+      "useWhen": "Plan a change, launch, policy, migration, or process update so adoption, monitoring, and rollback are explicit.",
+      "stage": "decide",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Plan a change, launch, policy, migration, or process update so adoption, monitoring, and rollback are explicit.",
+      "tags": [
+        "rollout",
+        "plan"
+      ],
+      "contract": {
+        "job": "rollout-plan",
+        "useWhen": "Plan a change, launch, policy, migration, or process update so adoption, monitoring, and rollback are explicit.",
+        "minimumBlocks": [
+          "frame.stakeholders",
+          "strategy.premortem",
+          "schema.rollout-plan"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.current-state`",
+          "`frame.stakeholders`",
+          "`strategy.premortem`",
+          "`guardrail.scope-creep`",
+          "`schema.rollout-plan`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Add `rubric.plan-quality` when the rollout must pass a formal readiness review.",
+        "commonFailureMode": "Treating rollout as a task list while leaving adoption, communication, monitoring, and pause criteria implicit.",
+        "chooseInsteadWhen": "use `safe-migration` for technical compatibility or schema/API migration risk; use `ship-feature` when the main question is release readiness."
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> frame:current-state -> frame:stakeholders -> strategy:premortem -> guardrail:scope-creep -> schema:rollout-plan",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "rollout-plan"
+        ],
+        [
+          "Use when",
+          "Plan a change, launch, policy, migration, or process update so adoption, monitoring, and rollback are explicit."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:current-state -> frame:stakeholders -> strategy:premortem -> guardrail:scope-creep -> schema:rollout-plan"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Minimum blocks",
+          "frame.stakeholders, strategy.premortem, schema.rollout-plan"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.current-state` -> `frame.stakeholders` -> `strategy.premortem` -> `guardrail.scope-creep` -> `schema.rollout-plan`"
+        ],
+        [
+          "Choose instead when",
+          "use `safe-migration` for technical compatibility or schema/API migration risk; use `ship-feature` when the main question is release readiness."
+        ],
+        [
+          "Common swaps",
+          "Add `rubric.plan-quality` when the rollout must pass a formal readiness review."
+        ],
+        [
+          "Common failure mode",
+          "Treating rollout as a task list while leaving adoption, communication, monitoring, and pause criteria implicit."
+        ]
+      ],
+      "sourcePath": "stacks/rollout-plan.md"
     },
     {
       "section": "Stack",
@@ -5100,6 +6406,115 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/pressure-test.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.usability-review",
+      "title": "usability-review",
+      "family": "Critique & Review",
+      "job": "usability-review",
+      "useWhen": "Evaluate whether an interface, workflow, document, onboarding path, or process lets its intended user complete the job without avoidable friction.",
+      "stage": "critique",
+      "outputKind": "critique",
+      "effort": "deep",
+      "stakes": "medium",
+      "summary": "Evaluate whether an interface, workflow, document, onboarding path, or process lets its intended user complete the job without avoidable friction.",
+      "tags": [
+        "usability",
+        "review"
+      ],
+      "contract": {
+        "job": "usability-review",
+        "useWhen": "Evaluate whether an interface, workflow, document, onboarding path, or process lets its intended user complete the job without avoidable friction.",
+        "minimumBlocks": [
+          "strategy.journey-map",
+          "rubric.usability-quality",
+          "schema.findings-brief"
+        ],
+        "fullSequence": [
+          "`frame.audience`",
+          "`frame.current-state`",
+          "`strategy.journey-map`",
+          "`mode.critique`",
+          "`rubric.usability-quality`",
+          "`schema.findings-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `schema.requirements-brief` instead of `schema.findings-brief` when the review should become requirements for a redesign.",
+        "commonFailureMode": "Reviewing the artifact as a static object instead of walking through what the user knows, sees, decides, and does.",
+        "chooseInsteadWhen": "use `feature-design` if the main job is defining a new feature rather than reviewing an existing experience."
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:audience -> frame:current-state -> strategy:journey-map -> mode:critique -> rubric:usability-quality -> schema:findings-brief",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "usability-review"
+        ],
+        [
+          "Use when",
+          "Evaluate whether an interface, workflow, document, onboarding path, or process lets its intended user complete the job without avoidable friction."
+        ],
+        [
+          "Composition profile",
+          "frame:audience -> frame:current-state -> strategy:journey-map -> mode:critique -> rubric:usability-quality -> schema:findings-brief"
+        ],
+        [
+          "Stage",
+          "critique"
+        ],
+        [
+          "Output kind",
+          "critique"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "strategy.journey-map, rubric.usability-quality, schema.findings-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.audience` -> `frame.current-state` -> `strategy.journey-map` -> `mode.critique` -> `rubric.usability-quality` -> `schema.findings-brief`"
+        ],
+        [
+          "Choose instead when",
+          "use `feature-design` if the main job is defining a new feature rather than reviewing an existing experience."
+        ],
+        [
+          "Common swaps",
+          "Use `schema.requirements-brief` instead of `schema.findings-brief` when the review should become requirements for a redesign."
+        ],
+        [
+          "Common failure mode",
+          "Reviewing the artifact as a static object instead of walking through what the user knows, sees, decides, and does."
+        ]
+      ],
+      "sourcePath": "stacks/usability-review.md"
     },
     {
       "section": "Stack",

@@ -36,12 +36,16 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 | `research` | Evidence gathering before deciding or writing |
 | `experiment-design` | Design a useful test before acting on a hypothesis |
 | `customer-insight-synthesis` | Turn feedback or interviews into decision-useful insight |
+| `requirements-from-feedback` | Convert feedback or research notes into grounded requirements |
 | `feature-design` | Requirements, success criteria, and execution planning |
+| `rollout-plan` | Stage a launch, change, or policy update with adoption and rollback explicit |
 | `implement-change` | Bounded code changes with acceptance criteria and verification |
 | `safe-migration` | Risk-managed schema or API migration |
 | `review-code` | Correctness, contracts, and blast-radius review |
+| `usability-review` | Evaluate whether a workflow or interface lets users complete the job |
 | `turn-notes-into-draft` | Convert messy source material into an audience-fit draft |
 | `creative-brief` | Shape a creative request into usable concept direction |
+| `make-playbook` | Turn repeated work or lessons into a reusable procedure |
 | `build-system-prompt` | Persistent prompt and instruction-set design |
 
 ## Build Your Own Composition
@@ -62,6 +66,8 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 - Creative draft: `frame.audience` + `mode.create` + `schema.content-draft`
 - Synthesis: `frame.extract-insights` + `mode.synthesize` + `schema.findings-brief`
 - Option comparison: `frame.success-criteria` + `strategy.tradeoff-matrix` + `schema.option-map`
+- Usability review: `strategy.journey-map` + `rubric.usability-quality` + `schema.findings-brief`
+- Rollout planning: `frame.stakeholders` + `strategy.premortem` + `schema.rollout-plan`
 - Deep research: `mode.explore` + `frame.extract-insights` + `guardrail.disconfirming-evidence`
 
 ## Block Types
