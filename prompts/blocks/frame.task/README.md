@@ -22,7 +22,7 @@ A structured frame with the stated ask separated from the likely objective, expl
 - recommended next reasoning step
 
 ## Pairs with
-`mode.explore`, `strategy.problem-split`, `frame.success-criteria`, `frame.scope`
+`mode.explore`, `strategy.problem-split`, `frame.success-criteria`, `guardrail.uncertainty`
 
 ## Avoid when
 The task is already tightly specified and a restatement would add noise.

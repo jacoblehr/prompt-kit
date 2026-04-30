@@ -23,7 +23,7 @@ describe('catalog build API', () => {
   test('buildCatalog returns generated data plus diagnostics without writing', () => {
     const catalog = buildCatalog({ root: ROOT })
 
-    assert.equal(catalog.blocks.length, 30)
+    assert.equal(catalog.blocks.length, 32)
     assert.equal(catalog.stacks.length, 27)
     assert.equal(catalog.featuredStacks.length, 10)
     assert.equal(catalog.diagnostics.blockCount, catalog.blocks.length)

@@ -8,12 +8,15 @@ Blocks:
 3. `guardrail.uncertainty`
 4. `frame.extract-insights`
 5. `rubric.research-method`
-6. `rubric.research-quality`
 
 Expected output: Causal claim tested, confounds named, confidence calibrated, and action-relevant conclusions separated from mere correlation.
 
 ## Composition notes
 
-`mode.explore` opens the hypothesis space before testing. `guardrail.assumption-audit` surfaces what the experiment depends on being true. `guardrail.uncertainty` forces confidence calibration on any finding. `frame.extract-insights` separates decision-useful signal from statistical noise. `rubric.research-method` checks whether the test design and evidence-gathering were sound enough to trust. `rubric.research-quality` validates the conclusion before acting on it.
+`mode.explore` opens the hypothesis space before testing. `guardrail.assumption-audit` surfaces what the experiment depends on being true. `guardrail.uncertainty` forces confidence calibration on any finding. `frame.extract-insights` separates decision-useful signal from statistical noise. `rubric.research-method` checks whether the test design and evidence-gathering were sound enough to trust.
 
-**Minimum blocks:** `guardrail.assumption-audit` + `guardrail.uncertainty` + `rubric.research-quality`
+**Common swaps:** Add `rubric.research-quality` after `rubric.research-method` when the final written conclusion also needs a quality gate.
+
+**Common failure mode:** Treating correlation or noisy signal as a tested causal claim.
+
+**Minimum blocks:** `guardrail.assumption-audit` + `guardrail.uncertainty` + `rubric.research-method`

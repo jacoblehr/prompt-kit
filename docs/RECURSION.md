@@ -13,7 +13,7 @@ These blocks compose like lego — stack them, nest them, or use them standalone
 | `recurse.decompose` | recurse | analyze | Break problems into structured subproblem hierarchies |
 | `recurse.evaluate` | recurse | critique | Assess output against explicit criteria with per-criterion verdicts |
 | `recurse.refine` | recurse | refine | Improve output through bounded critique-and-revise loops |
-| `guardrail.bounded-recursion` | guardrail | any | Enforce stopping conditions before every recursive step |
+| `guardrail.bounded-recursion` | guardrail | any | Enforce explicit exits before every recursive step |
 | `recurse.branch-prune` | recurse | explore | Generate, evaluate, and prune multiple reasoning paths |
 
 ---
@@ -76,7 +76,7 @@ Break a complex problem into a subproblem tree and synthesize a final answer.
 [guardrail.bounded-recursion]
 max_depth: 2
 max_iterations: 9
-stop_condition: all subproblems directly solvable
+exit: all subproblems directly solvable
 
 [recurse.decompose]
 max_depth: 2
@@ -107,7 +107,7 @@ criteria: accuracy, completeness, conciseness
 [guardrail.bounded-recursion]
 max_depth: 1
 max_iterations: 2
-stop_condition: all criteria pass
+exit: all criteria pass
 
 Output to improve: {paste initial output}
 ```
@@ -135,7 +135,7 @@ criteria: accuracy, feasibility, completeness
 [guardrail.bounded-recursion]
 max_depth: 1
 max_iterations: 2
-stop_condition: all refine criteria pass
+exit: all refine criteria pass
 
 Problem: {paste problem or task}
 ```

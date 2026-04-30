@@ -8,6 +8,8 @@ Good blocks do one narrow job, such as:
 - defining success criteria
 - surfacing uncertainty
 - enforcing an output schema
+- ranking review findings
+- formatting a prompt spec
 - bounding scope
 - auditing assumptions
 - forcing disconfirming evidence

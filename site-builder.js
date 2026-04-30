@@ -475,7 +475,8 @@ function buildBuilderCompositionBrief(stack, inputPlan, orderedItems = []) {
   const lines = [
     "# One-shot prompt",
     "",
-    "Use the blocks below as ordered phases inside a single response. Do not treat them as separate turns or wait for permission between phases."
+    "Use the blocks below as ordered phases inside a single response. Do not treat them as separate turns or wait for permission between phases.",
+    "Use intermediate phases to improve the answer, but return the expected final artifact unless the user explicitly asks to see the phase work."
   ];
 
   if (promptItems.length > 1) {

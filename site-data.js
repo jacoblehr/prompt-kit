@@ -586,7 +586,7 @@ globalThis.SITE_DATA = {
           "mode.explore",
           "strategy.problem-split",
           "frame.success-criteria",
-          "frame.scope"
+          "guardrail.uncertainty"
         ],
         "avoidWhen": "The task is already tightly specified and a restatement would add noise."
       },
@@ -625,7 +625,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Pairs with",
-          "mode.explore, strategy.problem-split, frame.success-criteria, frame.scope"
+          "mode.explore, strategy.problem-split, frame.success-criteria, guardrail.uncertainty"
         ],
         [
           "Avoid when",
@@ -1089,6 +1089,156 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "light",
+      "contract": {
+        "purpose": "Render critique, review, or threat-model output as a ranked findings brief that is easy to act on.",
+        "useWhen": "After reviewing a plan, code change, design, argument, or system and the main output should be prioritized issues rather than a general narrative.",
+        "expects": "A critique, review notes, risk analysis, or threat model.",
+        "adds": "A compact finding format that ties each issue to evidence, impact, fix, and confidence.",
+        "returns": [
+          "finding",
+          "severity",
+          "evidence",
+          "impact",
+          "recommended fix",
+          "confidence"
+        ],
+        "pairsWith": [
+          "mode.critique",
+          "strategy.red-team",
+          "guardrail.assumption-audit",
+          "rubric.argument-quality"
+        ],
+        "avoidWhen": "The main need is sequencing work after a decision. Use `schema.execution-brief` for plans, milestones, dependencies, and escalation triggers."
+      },
+      "key": "schema.findings-brief",
+      "aliases": [
+        "core.schema.findings-brief",
+        "core.schema-findings-brief"
+      ],
+      "title": "schema.findings-brief",
+      "summary": "Render critique, review, or threat-model output as a ranked findings brief that is easy to act on.",
+      "tags": [
+        "findings",
+        "brief"
+      ],
+      "copy": "Render this review, critique, or analysis as a ranked findings brief.\n\nRequirements:\n\n- prioritize findings by severity and actionability\n- tie every finding to concrete evidence from the provided material\n- avoid generic risks unless they change a decision or next action\n- include a recommended fix for each finding\n- use confidence to show how certain the finding is, not how severe it is\n\nReturn:\nFor each finding:\n\n- finding\n- severity (critical / high / medium / low)\n- evidence\n- impact\n- recommended fix\n- confidence (high / medium / low)\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Render critique, review, or threat-model output as a ranked findings brief that is easy to act on."
+        ],
+        [
+          "Use when",
+          "After reviewing a plan, code change, design, argument, or system and the main output should be prioritized issues rather than a general narrative."
+        ],
+        [
+          "Expects",
+          "A critique, review notes, risk analysis, or threat model."
+        ],
+        [
+          "Adds",
+          "A compact finding format that ties each issue to evidence, impact, fix, and confidence."
+        ],
+        [
+          "Returns",
+          "finding, severity, evidence, impact, recommended fix, confidence"
+        ],
+        [
+          "Pairs with",
+          "mode.critique, strategy.red-team, guardrail.assumption-audit, rubric.argument-quality"
+        ],
+        [
+          "Avoid when",
+          "The main need is sequencing work after a decision. Use `schema.execution-brief` for plans, milestones, dependencies, and escalation triggers."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.findings-brief/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "light",
+      "contract": {
+        "purpose": "Render a prompt, system prompt, or persistent instruction set as a testable prompt spec.",
+        "useWhen": "Designing, rewriting, or reviewing prompts where the final artifact needs clear task definition, boundaries, constraints, output shape, and test cases.",
+        "expects": "A prompt draft, desired assistant behavior, workflow description, or prompt-improvement analysis.",
+        "adds": "A prompt-specific output shape that separates the final prompt from its operating assumptions and test plan.",
+        "returns": [
+          "prompt purpose",
+          "final prompt",
+          "context assumptions",
+          "constraints and boundaries",
+          "output shape",
+          "test cases",
+          "known limitations"
+        ],
+        "pairsWith": [
+          "frame.task",
+          "frame.success-criteria",
+          "frame.prompt-compare",
+          "rubric.writing-quality"
+        ],
+        "avoidWhen": "The desired output is an implementation plan or handoff brief rather than a prompt or instruction set."
+      },
+      "key": "schema.prompt-spec",
+      "aliases": [
+        "core.schema.prompt-spec",
+        "core.schema-prompt-spec"
+      ],
+      "title": "schema.prompt-spec",
+      "summary": "Render a prompt, system prompt, or persistent instruction set as a testable prompt spec.",
+      "tags": [
+        "spec"
+      ],
+      "copy": "Render this prompt design, rewrite, or instruction set as a testable prompt spec.\n\nRequirements:\n\n- make the prompt's job explicit before the prompt text\n- separate operating assumptions from instructions the model must follow\n- state constraints and boundaries as behavior rules, not vague preferences\n- define the expected output shape clearly enough to test\n- include at least two test cases, including one hard or edge case\n- name known limitations rather than hiding them\n\nReturn:\n\n- prompt purpose\n- final prompt\n- context assumptions\n- constraints and boundaries\n- output shape\n- test cases\n- known limitations\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Render a prompt, system prompt, or persistent instruction set as a testable prompt spec."
+        ],
+        [
+          "Use when",
+          "Designing, rewriting, or reviewing prompts where the final artifact needs clear task definition, boundaries, constraints, output shape, and test cases."
+        ],
+        [
+          "Expects",
+          "A prompt draft, desired assistant behavior, workflow description, or prompt-improvement analysis."
+        ],
+        [
+          "Adds",
+          "A prompt-specific output shape that separates the final prompt from its operating assumptions and test plan."
+        ],
+        [
+          "Returns",
+          "prompt purpose, final prompt, context assumptions, constraints and boundaries, output shape, test cases, known limitations"
+        ],
+        [
+          "Pairs with",
+          "frame.task, frame.success-criteria, frame.prompt-compare, rubric.writing-quality"
+        ],
+        [
+          "Avoid when",
+          "The desired output is an implementation plan or handoff brief rather than a prompt or instruction set."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.prompt-spec/prompt.md"
+    },
+    {
+      "section": "Block",
       "canonicalType": "frame",
       "blockType": "frame",
       "form": "compact",
@@ -1187,7 +1337,7 @@ globalThis.SITE_DATA = {
           "schema.execution-brief",
           "rubric.research-quality"
         ],
-        "avoidWhen": "The goal is faithful summary rather than actionable signal. Use `frame.summarize-source` instead."
+        "avoidWhen": "The goal is faithful summary rather than actionable signal; this block is tuned for implications and next action, not complete coverage."
       },
       "key": "frame.extract-insights",
       "aliases": [
@@ -1229,7 +1379,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Avoid when",
-          "The goal is faithful summary rather than actionable signal. Use `frame.summarize-source` instead."
+          "The goal is faithful summary rather than actionable signal; this block is tuned for implications and next action, not complete coverage."
         ]
       ],
       "family": "Prompt Blocks",
@@ -1277,7 +1427,7 @@ globalThis.SITE_DATA = {
         "frame",
         "compare"
       ],
-      "copy": "Compare the revised prompt against the original so improvements are real and regressions are visible.\n\nRequirements:\n\n- state the job of the original and revised prompt separately before judging either\n- separate structural improvements from style-only edits\n- name any task coverage, constraint, output-shape, or safety detail lost in the revision\n- treat missing capability in the revised prompt as a regression even if the wording is cleaner\n- end with a clear verdict: ready to test or revise again\n\nReturn:\n\n- original prompt job\n- revised prompt job\n- structural improvements kept\n- regressions or capability loss\n- unresolved ambiguities\n- verdict: ready to test / revise again\n- next revision move\n\n---\noriginal_prompt: {original_prompt}\nrevised_prompt: {revised_prompt}",
+      "copy": "Compare a revised prompt against the original so improvements are real and regressions are visible.\n\nRequirements:\n\n- state the job of the original and new version separately before judging either\n- separate structural improvements from style-only edits\n- name any task coverage, constraint, output-shape, or safety detail lost in the revision\n- treat missing capability in the new version as a regression even if the wording is cleaner\n- end with a clear verdict: ready to test or revise again\n\nReturn:\n\n- original prompt job\n- new prompt job\n- structural improvements kept\n- regressions or capability loss\n- unresolved ambiguities\n- verdict: ready to test / revise again\n- next revision move\n\n---\noriginal_prompt: {original_prompt}\nrevised_prompt: {revised_prompt}",
       "body": [
         [
           "Purpose",
@@ -1323,7 +1473,7 @@ globalThis.SITE_DATA = {
       "contract": {
         "purpose": "Enforce explicit stopping conditions on any recursive or iterative block, preventing infinite loops or uncontrolled expansion.",
         "useWhen": "Using `recurse.decompose`, `recurse.refine`, or `recurse.branch-prune`. Always pair with recursive blocks. Must be declared before the first recursive step begins.",
-        "expects": "- max_depth: hard recursion depth limit\n- max_iterations: hard iteration limit\n- stop_condition: explicit natural-language condition checked before each step",
+        "expects": "- max_depth: hard recursion depth limit\n- max_iterations: hard iteration limit\n- exit: explicit natural-language condition checked before each step",
         "adds": "A directive to check all stopping conditions before every recursive or iterative step, and to halt with an explicit stopping reason when any condition is met.",
         "returns": [
           "current depth or iteration at stopping point",
@@ -1349,7 +1499,7 @@ globalThis.SITE_DATA = {
         "bounded",
         "recursion"
       ],
-      "copy": "Enforce BOUNDED RECURSION on the current operation.\n\nBefore every recursive or iterative step, check ALL of the following conditions in this order:\n\n1. Max depth reached (> {depth})? → STOP.\n2. Iteration limit reached (> {iterations})? → STOP.\n3. Stop condition met ({stop_condition})? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed past any stopping condition under any circumstances.\n\n---\ndepth: {depth}\niterations: {iterations}\nstop_condition: {stop_condition}",
+      "copy": "Enforce BOUNDED RECURSION on this operation.\n\nBefore every recursive or iterative step, check these limits in order:\n\n1. Max depth reached (> {depth})? → STOP.\n2. Iteration limit reached (> {iterations})? → STOP.\n3. Exit criterion met ({exit})? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed after any limit is reached.\n\n---\ndepth: {depth}\niterations: {iterations}\nexit: {exit}",
       "body": [
         [
           "Purpose",
@@ -1361,7 +1511,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Expects",
-          "- max_depth: hard recursion depth limit\n- max_iterations: hard iteration limit\n- stop_condition: explicit natural-language condition checked before each step"
+          "- max_depth: hard recursion depth limit\n- max_iterations: hard iteration limit\n- exit: explicit natural-language condition checked before each step"
         ],
         [
           "Adds",
@@ -1467,7 +1617,7 @@ globalThis.SITE_DATA = {
       "contract": {
         "purpose": "Recursively break a problem into smaller solvable units until the remaining pieces are small enough to act on directly.",
         "useWhen": "The problem is too large or layered for a single-pass solution and decomposition is the only way to make progress.",
-        "expects": "A problem statement plus any depth limit or stop condition that should bound recursion.",
+        "expects": "A problem statement plus any depth limit or exit criterion that should bound recursion.",
         "adds": "A decomposition tree that shows parent-child relationships, leaf tasks, and where recursion should stop.",
         "returns": [
           "decomposition tree",
@@ -1492,7 +1642,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "decompose"
       ],
-      "copy": "Recursively decompose this problem into smaller units until each leaf is directly actionable or a stopping condition is met.\n\nRequirements:\n\n- preserve the parent-child structure of the decomposition\n- stop splitting when a leaf has one clear job or {stop_condition} is met\n- name the current depth as you go\n- do not invent extra layers once a leaf is already actionable\n\nReturn:\n\n- decomposition tree\n- current depth\n- leaf tasks or stop point\n\n---\ndepth: {depth}\nstop_condition: {stop_condition}\ncontext: {context}",
+      "copy": "Recursively decompose this problem into smaller units until each leaf is directly actionable or the exit criterion is met.\n\nRequirements:\n\n- preserve the parent-child structure of the decomposition\n- stop splitting when a leaf has one clear job or {exit} is met\n- name the current depth as you go\n- do not invent extra layers once a leaf is already actionable\n\nReturn:\n\n- decomposition tree\n- current depth\n- leaf tasks or stop point\n\n---\ndepth: {depth}\nexit: {exit}\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1504,7 +1654,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Expects",
-          "A problem statement plus any depth limit or stop condition that should bound recursion."
+          "A problem statement plus any depth limit or exit criterion that should bound recursion."
         ],
         [
           "Adds",
@@ -1563,7 +1713,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "evaluate"
       ],
-      "copy": "Evaluate the current branch or draft before another recursive step.\n\nRequirements:\n\n- judge only against the stated criteria or goal\n- separate what already passes from what still fails\n- decide whether to continue, prune, or stop\n- keep the verdict short enough to hand directly into the next recursive step\n\nReturn:\n\n- passes\n- gaps\n- continue / prune / stop decision\n\n---\nartifact: {artifact}",
+      "copy": "Evaluate this branch or draft before another recursive step.\n\nRequirements:\n\n- judge only against the stated criteria or goal\n- separate what already passes from what still fails\n- decide whether to continue, prune, or stop\n- keep the verdict short enough to hand directly into the next recursive step\n\nReturn:\n\n- passes\n- gaps\n- continue / prune / stop decision\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1633,7 +1783,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "refine"
       ],
-      "copy": "Refine the current branch or draft using the most recent evaluation gaps.\n\nRequirements:\n\n- preserve strengths that already passed evaluation\n- change only what closes the named gaps\n- keep the revision local to the current branch unless a gap forces structural change\n- report what remains unresolved after the refinement pass\n\nReturn:\n\n- revised output\n- gaps addressed\n- remaining open gaps\n\n---\nartifact: {artifact}",
+      "copy": "Refine this branch or draft using the most recent evaluation gaps.\n\nRequirements:\n\n- preserve strengths that already passed evaluation\n- change only what closes the named gaps\n- keep the revision local unless a gap forces structural change\n- report what remains unresolved after the refinement pass\n\nReturn:\n\n- revised output\n- gaps addressed\n- remaining open gaps\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -2389,7 +2539,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Move from a set of options to a committed, traceable choice.",
       "stage": "decide",
       "outputKind": "decision",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "high",
       "summary": "Move from a set of options to a committed, traceable choice.",
       "tags": [
@@ -2404,22 +2554,20 @@ globalThis.SITE_DATA = {
           "schema.decision-memo"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.success-criteria`",
-          "`guardrail.disconfirming-evidence`",
+          "`mode.explore`",
           "`guardrail.assumption-audit`",
           "`mode.decide`",
-          "`rubric.decision-quality`",
           "`schema.decision-memo`"
         ],
         "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonSwaps": "Add `guardrail.disconfirming-evidence` before `mode.decide` when a preferred answer already exists. Add `rubric.decision-quality` before `schema.decision-memo` for high-stakes review.",
+        "commonFailureMode": "Overloading the default path with too many checks, causing the model to audit forever instead of choosing.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:success-criteria -> guardrail:disconfirming-evidence -> guardrail:assumption-audit -> mode:decide -> rubric:decision-quality -> schema:decision-memo",
+        "phaseOrder": "frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:decision-memo",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore",
@@ -2448,7 +2596,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:success-criteria -> guardrail:disconfirming-evidence -> guardrail:assumption-audit -> mode:decide -> rubric:decision-quality -> schema:decision-memo"
+          "frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:decision-memo"
         ],
         [
           "Stage",
@@ -2460,7 +2608,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
@@ -2472,7 +2620,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.success-criteria` -> `guardrail.disconfirming-evidence` -> `guardrail.assumption-audit` -> `mode.decide` -> `rubric.decision-quality` -> `schema.decision-memo`"
+          "`frame.success-criteria` -> `mode.explore` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.decision-memo`"
+        ],
+        [
+          "Common swaps",
+          "Add `guardrail.disconfirming-evidence` before `mode.decide` when a preferred answer already exists. Add `rubric.decision-quality` before `schema.decision-memo` for high-stakes review."
+        ],
+        [
+          "Common failure mode",
+          "Overloading the default path with too many checks, causing the model to audit forever instead of choosing."
         ]
       ],
       "sourcePath": "stacks/decide.md"
@@ -2670,7 +2826,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "stage": "analyze",
       "outputKind": "summary",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "medium",
       "summary": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "tags": [
@@ -2689,17 +2845,16 @@ globalThis.SITE_DATA = {
           "`frame.extract-insights`",
           "`guardrail.disconfirming-evidence`",
           "`frame.cause-mapping`",
-          "`rubric.research-method`",
           "`rubric.research-quality`"
         ],
         "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonSwaps": "Add `rubric.research-method` before `rubric.research-quality` when the process itself must be audited, not just the final findings.",
+        "commonFailureMode": "Treating raw notes as evidence quality; extract findings first, then judge whether the claims are supported.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-method -> rubric:research-quality",
+        "phaseOrder": "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-quality",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore"
@@ -2726,7 +2881,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-method -> rubric:research-quality"
+          "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-quality"
         ],
         [
           "Stage",
@@ -2738,7 +2893,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
@@ -2750,7 +2905,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `rubric.research-method` -> `rubric.research-quality`"
+          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `rubric.research-quality`"
+        ],
+        [
+          "Common swaps",
+          "Add `rubric.research-method` before `rubric.research-quality` when the process itself must be audited, not just the final findings."
+        ],
+        [
+          "Common failure mode",
+          "Treating raw notes as evidence quality; extract findings first, then judge whether the claims are supported."
         ]
       ],
       "sourcePath": "stacks/research.md"
@@ -2764,7 +2927,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "stage": "analyze",
       "outputKind": "brief",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "high",
       "summary": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "tags": [
@@ -2777,24 +2940,23 @@ globalThis.SITE_DATA = {
         "minimumBlocks": [
           "guardrail.assumption-audit",
           "guardrail.uncertainty",
-          "rubric.research-quality"
+          "rubric.research-method"
         ],
         "fullSequence": [
           "`mode.explore`",
           "`guardrail.assumption-audit`",
           "`guardrail.uncertainty`",
           "`frame.extract-insights`",
-          "`rubric.research-method`",
-          "`rubric.research-quality`"
+          "`rubric.research-method`"
         ],
         "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonSwaps": "Add `rubric.research-quality` after `rubric.research-method` when the final written conclusion also needs a quality gate.",
+        "commonFailureMode": "Treating correlation or noisy signal as a tested causal claim.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method -> rubric:research-quality",
+        "phaseOrder": "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore"
@@ -2821,7 +2983,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method -> rubric:research-quality"
+          "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method"
         ],
         [
           "Stage",
@@ -2833,7 +2995,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
@@ -2841,11 +3003,19 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "guardrail.assumption-audit, guardrail.uncertainty, rubric.research-quality"
+          "guardrail.assumption-audit, guardrail.uncertainty, rubric.research-method"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `guardrail.assumption-audit` -> `guardrail.uncertainty` -> `frame.extract-insights` -> `rubric.research-method` -> `rubric.research-quality`"
+          "`mode.explore` -> `guardrail.assumption-audit` -> `guardrail.uncertainty` -> `frame.extract-insights` -> `rubric.research-method`"
+        ],
+        [
+          "Common swaps",
+          "Add `rubric.research-quality` after `rubric.research-method` when the final written conclusion also needs a quality gate."
+        ],
+        [
+          "Common failure mode",
+          "Treating correlation or noisy signal as a tested causal claim."
         ]
       ],
       "sourcePath": "stacks/hypothesis-test.md"
@@ -2875,20 +3045,20 @@ globalThis.SITE_DATA = {
           "schema.execution-brief"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.task`",
+          "`mode.explore`",
           "`guardrail.assumption-audit`",
           "`mode.decide`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Treating alignment as one message for everyone instead of a sequenced set of asks by audience.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:task -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
+        "phaseOrder": "frame:task -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore",
@@ -2917,7 +3087,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:task -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
+          "frame:task -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -2941,7 +3111,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.explore` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Treating alignment as one message for everyone instead of a sequenced set of asks by audience."
         ]
       ],
       "sourcePath": "stacks/align-stakeholders.md"
@@ -3064,20 +3238,20 @@ globalThis.SITE_DATA = {
           "strategy.steelman"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.task`",
+          "`mode.explore`",
           "`strategy.steelman`",
           "`mode.decide`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Optimizing the opening position without naming interests, walk-away conditions, or the counterpart's strongest case.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:task -> strategy:steelman -> mode:decide -> schema:execution-brief",
+        "phaseOrder": "frame:task -> mode:explore -> strategy:steelman -> mode:decide -> schema:execution-brief",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore",
@@ -3106,7 +3280,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:task -> strategy:steelman -> mode:decide -> schema:execution-brief"
+          "frame:task -> mode:explore -> strategy:steelman -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3130,7 +3304,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `strategy.steelman` -> `mode.decide` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.explore` -> `strategy.steelman` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Optimizing the opening position without naming interests, walk-away conditions, or the counterpart's strongest case."
         ]
       ],
       "sourcePath": "stacks/negotiate.md"
@@ -3251,8 +3429,8 @@ globalThis.SITE_DATA = {
           "schema.execution-brief"
         ],
         "fullSequence": [
-          "`mode.decide`",
           "`frame.success-criteria`",
+          "`mode.decide`",
           "`guardrail.assumption-audit`",
           "`strategy.premortem`",
           "`rubric.plan-quality`",
@@ -3260,12 +3438,12 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Treating ship readiness as enthusiasm to release rather than criteria, risks, and gates.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:decide -> frame:success-criteria -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
+        "phaseOrder": "frame:success-criteria -> mode:decide -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
         "primaryMode": "mode.decide",
         "modeRefs": [
           "mode.decide"
@@ -3294,7 +3472,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:decide -> frame:success-criteria -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
+          "frame:success-criteria -> mode:decide -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3318,7 +3496,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.decide` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
+          "`frame.success-criteria` -> `mode.decide` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Treating ship readiness as enthusiasm to release rather than criteria, risks, and gates."
         ]
       ],
       "sourcePath": "stacks/ship-feature.md"
@@ -3343,28 +3525,28 @@ globalThis.SITE_DATA = {
         "useWhen": "Surface weaknesses, blind spots, and revision targets in any artifact.",
         "minimumBlocks": [
           "mode.critique",
-          "rubric.argument-quality"
+          "schema.findings-brief"
         ],
         "fullSequence": [
           "`frame.task`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
           "`guardrail.disconfirming-evidence`",
-          "`rubric.argument-quality`"
+          "`schema.findings-brief`"
         ],
         "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonSwaps": "Use `rubric.argument-quality` instead of `schema.findings-brief` when the artifact is specifically an argument and you need a pass/fail quality gate.",
+        "commonFailureMode": "Producing clever objections without ranking which defects matter most or how to fix them.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> rubric:argument-quality",
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
         ],
-        "hasSchema": false,
+        "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
@@ -3372,7 +3554,8 @@ globalThis.SITE_DATA = {
         "strengths": [
           "stance",
           "framing",
-          "checks"
+          "checks",
+          "output"
         ]
       },
       "body": [
@@ -3386,7 +3569,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> rubric:argument-quality"
+          "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -3406,11 +3589,19 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, rubric.argument-quality"
+          "mode.critique, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `rubric.argument-quality`"
+          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `schema.findings-brief`"
+        ],
+        [
+          "Common swaps",
+          "Use `rubric.argument-quality` instead of `schema.findings-brief` when the artifact is specifically an argument and you need a pass/fail quality gate."
+        ],
+        [
+          "Common failure mode",
+          "Producing clever objections without ranking which defects matter most or how to fix them."
         ]
       ],
       "sourcePath": "stacks/critique.md"
@@ -3443,21 +3634,21 @@ globalThis.SITE_DATA = {
           "`mode.critique`",
           "`guardrail.disconfirming-evidence`",
           "`strategy.premortem`",
-          "`rubric.argument-quality`"
+          "`schema.findings-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Treating ethics as a generic concern list instead of specific harm paths with affected parties and mitigation choices.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> rubric:argument-quality",
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
         ],
-        "hasSchema": false,
+        "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
@@ -3466,7 +3657,8 @@ globalThis.SITE_DATA = {
           "stance",
           "framing",
           "reasoning",
-          "checks"
+          "checks",
+          "output"
         ]
       },
       "body": [
@@ -3480,7 +3672,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> rubric:argument-quality"
+          "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -3504,7 +3696,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.premortem` -> `rubric.argument-quality`"
+          "`frame.task` -> `mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.premortem` -> `schema.findings-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Treating ethics as a generic concern list instead of specific harm paths with affected parties and mitigation choices."
         ]
       ],
       "sourcePath": "stacks/ethical-review.md"
@@ -3539,21 +3735,21 @@ globalThis.SITE_DATA = {
           "`strategy.premortem`",
           "`strategy.red-team`",
           "`guardrail.assumption-audit`",
-          "`guardrail.disconfirming-evidence`"
+          "`schema.findings-brief`"
         ],
         "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonSwaps": "Use `guardrail.disconfirming-evidence` instead of `strategy.red-team` when the risk is confirmation bias rather than active attack.",
+        "commonFailureMode": "Producing a long risk list without severity, evidence, or a concrete fix path.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence",
+        "phaseOrder": "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
         ],
-        "hasSchema": false,
+        "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
@@ -3562,7 +3758,8 @@ globalThis.SITE_DATA = {
           "stance",
           "framing",
           "reasoning",
-          "checks"
+          "checks",
+          "output"
         ]
       },
       "body": [
@@ -3576,7 +3773,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence"
+          "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -3600,7 +3797,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence`"
+          "`frame.task` -> `mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `schema.findings-brief`"
+        ],
+        [
+          "Common swaps",
+          "Use `guardrail.disconfirming-evidence` instead of `strategy.red-team` when the risk is confirmation bias rather than active attack."
+        ],
+        [
+          "Common failure mode",
+          "Producing a long risk list without severity, evidence, or a concrete fix path."
         ]
       ],
       "sourcePath": "stacks/pressure-test.md"
@@ -3631,21 +3836,22 @@ globalThis.SITE_DATA = {
           "`frame.task`",
           "`mode.critique`",
           "`guardrail.uncertainty`",
-          "`rubric.writing-quality`"
+          "`rubric.writing-quality`",
+          "`schema.prompt-spec`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Rephrasing the prompt without fixing missing context, constraints, boundaries, or output shape.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality",
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality -> schema:prompt-spec",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
         ],
-        "hasSchema": false,
+        "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
@@ -3653,7 +3859,8 @@ globalThis.SITE_DATA = {
         "strengths": [
           "stance",
           "framing",
-          "checks"
+          "checks",
+          "output"
         ]
       },
       "body": [
@@ -3667,7 +3874,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality"
+          "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality -> schema:prompt-spec"
         ],
         [
           "Stage",
@@ -3691,7 +3898,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.uncertainty` -> `rubric.writing-quality`"
+          "`frame.task` -> `mode.critique` -> `guardrail.uncertainty` -> `rubric.writing-quality` -> `schema.prompt-spec`"
+        ],
+        [
+          "Common failure mode",
+          "Rephrasing the prompt without fixing missing context, constraints, boundaries, or output shape."
         ]
       ],
       "sourcePath": "stacks/improve-prompt.md"
@@ -3725,16 +3936,16 @@ globalThis.SITE_DATA = {
           "`mode.critique`",
           "`frame.prompt-compare`",
           "`rubric.writing-quality`",
-          "`schema.execution-brief`"
+          "`schema.prompt-spec`"
         ],
         "blockOrderRationale": "",
-        "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonSwaps": "Drop `frame.prompt-compare` when creating a prompt from scratch with no baseline to preserve.",
+        "commonFailureMode": "Producing polished instructions without test cases, boundaries, or a clear output contract.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:execution-brief",
+        "phaseOrder": "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:prompt-spec",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -3762,7 +3973,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:execution-brief"
+          "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:prompt-spec"
         ],
         [
           "Stage",
@@ -3786,7 +3997,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `mode.critique` -> `frame.prompt-compare` -> `rubric.writing-quality` -> `schema.execution-brief`"
+          "`frame.task` -> `frame.success-criteria` -> `mode.critique` -> `frame.prompt-compare` -> `rubric.writing-quality` -> `schema.prompt-spec`"
+        ],
+        [
+          "Common swaps",
+          "Drop `frame.prompt-compare` when creating a prompt from scratch with no baseline to preserve."
+        ],
+        [
+          "Common failure mode",
+          "Producing polished instructions without test cases, boundaries, or a clear output contract."
         ]
       ],
       "sourcePath": "stacks/build-system-prompt.md"
@@ -3814,20 +4033,20 @@ globalThis.SITE_DATA = {
           "frame.cause-mapping"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.task`",
+          "`mode.explore`",
           "`mode.critique`",
           "`frame.cause-mapping`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Jumping to a fix before the candidate cause has survived critique and causal mapping.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:task -> mode:critique -> frame:cause-mapping -> schema:execution-brief",
+        "phaseOrder": "frame:task -> mode:explore -> mode:critique -> frame:cause-mapping -> schema:execution-brief",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore",
@@ -3855,7 +4074,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:task -> mode:critique -> frame:cause-mapping -> schema:execution-brief"
+          "frame:task -> mode:explore -> mode:critique -> frame:cause-mapping -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -3879,7 +4098,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `mode.critique` -> `frame.cause-mapping` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.explore` -> `mode.critique` -> `frame.cause-mapping` -> `schema.execution-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Jumping to a fix before the candidate cause has survived critique and causal mapping."
         ]
       ],
       "sourcePath": "stacks/debug.md"
@@ -4015,23 +4238,23 @@ globalThis.SITE_DATA = {
         "useWhen": "Review code for correctness, contracts, and blast radius before approving it.",
         "minimumBlocks": [
           "mode.critique",
-          "schema.execution-brief"
+          "schema.findings-brief"
         ],
         "fullSequence": [
           "`frame.task`",
           "`mode.explore`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
-          "`schema.execution-brief`"
+          "`schema.findings-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Reporting style or preference issues before correctness, contract, or blast-radius findings.",
         "chooseInsteadWhen": "use `security-threat-model` if the main job is simulating active abuse or attack paths before a system ships or changes, rather than reviewing correctness and boundary behavior of an implementation."
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief",
+        "phaseOrder": "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:findings-brief",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore",
@@ -4060,7 +4283,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief"
+          "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -4080,15 +4303,19 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, schema.execution-brief"
+          "mode.critique, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.findings-brief`"
         ],
         [
           "Choose instead when",
           "use `security-threat-model` if the main job is simulating active abuse or attack paths before a system ships or changes, rather than reviewing correctness and boundary behavior of an implementation."
+        ],
+        [
+          "Common failure mode",
+          "Reporting style or preference issues before correctness, contract, or blast-radius findings."
         ]
       ],
       "sourcePath": "stacks/review-code.md"
@@ -4121,21 +4348,21 @@ globalThis.SITE_DATA = {
           "`mode.critique`",
           "`guardrail.assumption-audit`",
           "`strategy.premortem`",
-          "`rubric.decision-quality`"
+          "`schema.findings-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Judging architectural elegance instead of naming the failure paths that would change the decision.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> rubric:decision-quality",
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
         ],
-        "hasSchema": false,
+        "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
@@ -4144,7 +4371,8 @@ globalThis.SITE_DATA = {
           "stance",
           "framing",
           "reasoning",
-          "checks"
+          "checks",
+          "output"
         ]
       },
       "body": [
@@ -4158,7 +4386,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> rubric:decision-quality"
+          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -4182,7 +4410,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.decision-quality`"
+          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.findings-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Judging architectural elegance instead of naming the failure paths that would change the decision."
         ]
       ],
       "sourcePath": "stacks/architecture-review.md"
@@ -4208,23 +4440,24 @@ globalThis.SITE_DATA = {
         "useWhen": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
         "minimumBlocks": [
           "frame.cause-mapping",
-          "schema.incident-postmortem"
+          "mode.decide",
+          "schema.execution-brief"
         ],
         "fullSequence": [
+          "`frame.task`",
           "`mode.explore`",
           "`frame.cause-mapping`",
           "`mode.decide`",
-          "`schema.incident-postmortem`",
           "`schema.execution-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Trying to write the postmortem while the incident still needs containment or diagnosis.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:cause-mapping -> mode:decide -> schema:incident-postmortem -> schema:execution-brief",
+        "phaseOrder": "frame:task -> mode:explore -> frame:cause-mapping -> mode:decide -> schema:execution-brief",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore",
@@ -4252,7 +4485,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:cause-mapping -> mode:decide -> schema:incident-postmortem -> schema:execution-brief"
+          "frame:task -> mode:explore -> frame:cause-mapping -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -4272,11 +4505,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.cause-mapping, schema.incident-postmortem"
+          "frame.cause-mapping, mode.decide, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.cause-mapping` -> `mode.decide` -> `schema.incident-postmortem` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.explore` -> `frame.cause-mapping` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Trying to write the postmortem while the incident still needs containment or diagnosis."
         ]
       ],
       "sourcePath": "stacks/incident-response.md"
@@ -4400,8 +4637,8 @@ globalThis.SITE_DATA = {
           "schema.execution-brief"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.task`",
+          "`mode.explore`",
           "`guardrail.assumption-audit`",
           "`strategy.premortem`",
           "`rubric.plan-quality`",
@@ -4409,12 +4646,12 @@ globalThis.SITE_DATA = {
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Planning the target state while leaving current behavior, rollback triggers, or compatibility assumptions implicit.",
         "chooseInsteadWhen": ""
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:task -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
+        "phaseOrder": "frame:task -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore"
@@ -4443,7 +4680,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:task -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
+          "frame:task -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -4467,7 +4704,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.explore` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
+        ],
+        [
+          "Common failure mode",
+          "Planning the target state while leaving current behavior, rollback triggers, or compatibility assumptions implicit."
         ]
       ],
       "sourcePath": "stacks/safe-migration.md"
@@ -4501,16 +4742,16 @@ globalThis.SITE_DATA = {
           "`mode.critique`",
           "`guardrail.assumption-audit`",
           "`strategy.red-team`",
-          "`schema.execution-brief`"
+          "`schema.findings-brief`"
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
-        "commonFailureMode": "",
+        "commonFailureMode": "Listing generic security concerns without tying them to a boundary, attack path, or fix.",
         "chooseInsteadWhen": "use `review-code` if the main job is checking correctness, contracts, blast radius, or implementation bugs in code that already exists, rather than modeling adversarial abuse and exploit paths."
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:execution-brief",
+        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -4539,7 +4780,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:execution-brief"
+          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -4563,11 +4804,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.findings-brief`"
         ],
         [
           "Choose instead when",
           "use `review-code` if the main job is checking correctness, contracts, blast radius, or implementation bugs in code that already exists, rather than modeling adversarial abuse and exploit paths."
+        ],
+        [
+          "Common failure mode",
+          "Listing generic security concerns without tying them to a boundary, attack path, or fix."
         ]
       ],
       "sourcePath": "stacks/security-threat-model.md"
@@ -4649,7 +4894,7 @@ globalThis.SITE_DATA = {
         "strategy.premortem",
         "strategy.red-team",
         "guardrail.assumption-audit",
-        "guardrail.disconfirming-evidence"
+        "schema.findings-brief"
       ]
     },
     {
@@ -4661,8 +4906,8 @@ globalThis.SITE_DATA = {
         "diagnosis"
       ],
       "refs": [
-        "mode.explore",
         "frame.task",
+        "mode.explore",
         "mode.critique",
         "frame.cause-mapping",
         "schema.execution-brief"
@@ -4695,7 +4940,8 @@ globalThis.SITE_DATA = {
         "frame.task",
         "mode.critique",
         "guardrail.uncertainty",
-        "rubric.writing-quality"
+        "rubric.writing-quality",
+        "schema.prompt-spec"
       ]
     },
     {

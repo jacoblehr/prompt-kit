@@ -44,12 +44,12 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 
 **Minimal sequence** (works for most tasks):
 
-1. `mode.explore` — Widen your search space before converging
-2. `frame.task` — Separate the stated ask from the real objective
+1. `frame.task` — Separate the stated ask from the real objective
+2. `mode.explore` — Widen your search space before converging
 3. `strategy.problem-split` — Break into manageable, sequenced pieces
 4. `frame.success-criteria` — Define what success looks like up front
 5. `guardrail.uncertainty` — Surface hidden assumptions and gaps
-6. `rubric.decision-quality` — Evaluate whether the output is actually good
+6. `schema.execution-brief` or `schema.findings-brief` — Shape the final artifact
 
 **Common patterns:**
 

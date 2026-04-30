@@ -48,6 +48,16 @@ Use these when the job needs a stronger critique or a more explicit execution sh
 
 `debug` now carries the former performance-fix path as a documented variant. Use the shorter debug sequence when the bottleneck is already scoped and the main job is ranking optimization work.
 
+## Domain overlays worth pairing
+
+Use domain overlays only when the task benefits from extra vocabulary or failure modes:
+
+- `review-code`, `debug`, `safe-migration`, `security-threat-model` -> `domains/code.md`
+- `feature-design`, `ship-feature` -> `domains/product.md`
+- `build-system-prompt`, `improve-prompt` -> `domains/prompts.md`
+- `research`, `hypothesis-test` -> `domains/data.md`
+- `align-stakeholders`, `develop-position`, `negotiate` -> `domains/writing.md`
+
 ## Stack quality bar
 
 A strong stack should make these things obvious:

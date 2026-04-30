@@ -3,8 +3,8 @@
 Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.
 
 Blocks:
-1. `mode.explore`
-2. `frame.task`
+1. `frame.task`
+2. `mode.explore`
 3. `guardrail.assumption-audit`
 4. `strategy.premortem`
 5. `rubric.plan-quality`
@@ -14,6 +14,8 @@ Expected output: Sequenced migration plan with rollback triggers, dependency ord
 
 ## Composition notes
 
-`mode.explore` maps existing behavior before touching anything. `frame.task` scopes what is migrating and what must stay intact. `guardrail.assumption-audit` surfaces what the migration relies on being true. `strategy.premortem` simulates breakage before it happens. `rubric.plan-quality` validates the migration plan before the execution brief gates it. `schema.execution-brief` gates execution with explicit rollback triggers.
+`frame.task` scopes what is migrating and what must stay intact. `mode.explore` maps existing behavior before touching anything. `guardrail.assumption-audit` surfaces what the migration relies on being true. `strategy.premortem` simulates breakage before it happens. `rubric.plan-quality` validates the migration plan before the execution brief gates it. `schema.execution-brief` gates execution with explicit rollback triggers.
+
+**Common failure mode:** Planning the target state while leaving current behavior, rollback triggers, or compatibility assumptions implicit.
 
 **Minimum blocks:** `frame.task` + `guardrail.assumption-audit` + `schema.execution-brief`

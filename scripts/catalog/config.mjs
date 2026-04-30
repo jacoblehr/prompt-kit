@@ -88,7 +88,9 @@ const PROMPT_BLOCK_ORDER = [
   "guardrail.disconfirming-evidence",
   "guardrail.assumption-audit",
   "schema.decision-memo",
-  "schema.execution-brief"
+  "schema.execution-brief",
+  "schema.findings-brief",
+  "schema.prompt-spec"
 ];
 const RUBRIC_ORDER = [
   "decision-quality",
@@ -158,13 +160,13 @@ const FEATURED_STACKS = [
     title: "Pressure Test a Plan",
     description: "Before committing to execution. Runs adversarial critique, premortem, and red-team to surface the plan's biggest vulnerabilities.",
     tags: ["critique", "risk", "pre-commit"],
-    refs: ["mode.critique", "strategy.premortem", "strategy.red-team", "guardrail.assumption-audit", "guardrail.disconfirming-evidence"]
+    refs: ["mode.critique", "strategy.premortem", "strategy.red-team", "guardrail.assumption-audit", "schema.findings-brief"]
   },
   {
     title: "Debug a Failure",
     description: "When a bug, incident, or broken workflow needs a structured diagnosis. Starts with task framing, critiques likely causes, maps causal chain, and turns the next move into a concrete plan.",
     tags: ["debugging", "incident", "diagnosis"],
-    refs: ["mode.explore", "frame.task", "mode.critique", "frame.cause-mapping", "schema.execution-brief"]
+    refs: ["frame.task", "mode.explore", "mode.critique", "frame.cause-mapping", "schema.execution-brief"]
   },
   {
     title: "After-Action Review",
@@ -176,7 +178,7 @@ const FEATURED_STACKS = [
     title: "Improve a Prompt",
     description: "When a prompt is underperforming. Frames the task, critiques the current version, audits for uncertainty, and rewrites against a quality rubric.",
     tags: ["prompting", "iteration", "repair"],
-    refs: ["frame.task", "mode.critique", "guardrail.uncertainty", "rubric.writing-quality"]
+    refs: ["frame.task", "mode.critique", "guardrail.uncertainty", "rubric.writing-quality", "schema.prompt-spec"]
   },
   {
     title: "Decompose and Solve",

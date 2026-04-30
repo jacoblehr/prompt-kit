@@ -61,6 +61,8 @@ If you use a transition sequence, name the handoff in the stack notes. The outpu
 
 In the browser builder, loaded stacks keep this handoff as a one-shot composition brief at the top of the copied prompt. That brief tells the model to use the blocks as ordered phases in one response, not as separate turns.
 
+In one-shot use, phases are working checkpoints. The final response should return the expected artifact for the stack, not a separate dump of every intermediate block output, unless the user explicitly asks to inspect the phase work.
+
 Incompatible pairs:
 
 - `mode.explore` + immediate convergence schema
@@ -127,6 +129,8 @@ Use `guardrail.assumption-audit` + `guardrail.disconfirming-evidence` together o
 | ----------------- | --------- | --- |
 | Explain and justify a committed choice | `schema.decision-memo` | It captures the decision, rationale, tradeoffs, risks, confidence, and next action. |
 | Turn a chosen direction into sequenced execution | `schema.execution-brief` | It makes ordering, dependencies, blockers, checkpoints, and escalation explicit. |
+| Present critique, review, or threat-model results | `schema.findings-brief` | It ranks findings and ties each one to evidence, impact, fix, and confidence. |
+| Write or revise prompts and instruction sets | `schema.prompt-spec` | It separates final prompt text from assumptions, constraints, output shape, tests, and limitations. |
 | Debrief an incident or failure after stabilization | `schema.incident-postmortem` | It captures timeline, root cause, contributing factors, and prevention work. |
 
 Common handoff:
@@ -211,7 +215,7 @@ DECIDE PHASE
   output:  chosen option, rationale, tradeoff, next action
 
 OUTPUT PHASE
-  context: [decided direction] → schema.decision-memo | schema.execution-brief | schema.incident-postmortem
+  context: [decided direction, critique, or prompt draft] → schema.decision-memo | schema.execution-brief | schema.findings-brief | schema.prompt-spec | schema.incident-postmortem
   output:  structured document
 
 EVAL PHASE

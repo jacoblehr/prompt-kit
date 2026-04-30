@@ -9,7 +9,7 @@ Using `recurse.decompose`, `recurse.refine`, or `recurse.branch-prune`. Always p
 ## Expects
 - max_depth: hard recursion depth limit
 - max_iterations: hard iteration limit
-- stop_condition: explicit natural-language condition checked before each step
+- exit: explicit natural-language condition checked before each step
 
 ## Adds
 A directive to check all stopping conditions before every recursive or iterative step, and to halt with an explicit stopping reason when any condition is met.
@@ -41,5 +41,5 @@ Used alone without a recursive block — this is a guardrail, not a standalone r
 
 ## Anti-patterns
 - omitting this block from any composition that uses recursive blocks
-- using vague stop_conditions like "when done" (must be a falsifiable condition)
+- using vague exit criteria like "when done" (must be falsifiable)
 - setting max_depth and max_iterations both to 1 on a recursive block (will always stop immediately)

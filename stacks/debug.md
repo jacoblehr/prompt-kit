@@ -3,8 +3,8 @@
 Diagnose a fault systematically before attempting a fix.
 
 Blocks:
-1. `mode.explore`
-2. `frame.task`
+1. `frame.task`
+2. `mode.explore`
 3. `mode.critique`
 4. `frame.cause-mapping`
 5. `schema.execution-brief`
@@ -13,12 +13,14 @@ Expected output: Root cause identified, highest-value next experiment named, and
 
 ## Composition notes
 
-`mode.explore` prevents premature fixation on a single hypothesis. `frame.task` scopes the specific fault being investigated. `mode.critique` switches to adversarial evaluation of candidate causes. `frame.cause-mapping` traces the fault to its structural origin. `schema.execution-brief` converts the diagnosis into a concrete experiment sequence.
+`frame.task` scopes the specific fault being investigated before hypotheses expand. `mode.explore` prevents premature fixation on a single cause. `mode.critique` switches to adversarial evaluation of candidate causes. `frame.cause-mapping` traces the fault to its structural origin. `schema.execution-brief` converts the diagnosis into a concrete experiment sequence.
 
 Performance variant:
 
 - drop `frame.task` when the bottleneck is already scoped to one path or subsystem
-- keep `mode.explore` -> `frame.cause-mapping` -> `mode.critique` -> `schema.execution-brief`
+- keep `mode.explore` -> `mode.critique` -> `frame.cause-mapping` -> `schema.execution-brief`
 - use this variant when the main job is ranking optimization work rather than proving what is broken
+
+**Common failure mode:** Jumping to a fix before the candidate cause has survived critique and causal mapping.
 
 **Minimum blocks:** `frame.task` + `frame.cause-mapping`

@@ -8,7 +8,7 @@
 | `mode`      | Set cognitive stance               | `mode.explore`, `mode.critique`, `mode.decide`        |
 | `strategy`  | Need specific reasoning approach   | `strategy.problem-split`, `strategy.premortem`        |
 | `guardrail` | Prevent known failure modes        | `guardrail.uncertainty`, `guardrail.assumption-audit` |
-| `schema`    | Require structured output          | `schema.decision-memo`, `schema.execution-brief`      |
+| `schema`    | Require structured output          | `schema.decision-memo`, `schema.findings-brief`       |
 | `rubric`    | Need evaluation criteria           | `rubric.decision-quality`, `rubric.plan-quality`      |
 
 ## Stack Selection Guide
@@ -17,7 +17,7 @@
 | ------------------- | ---------------------------------------------------------------------------- |
 | Quick gut check     | `mode.critique` + `guardrail.uncertainty`                                    |
 | Generate ideas      | `frame.task` + `mode.explore`                                                |
-| Debug issue         | `mode.explore` + `frame.task` + `frame.cause-mapping`                        |
+| Debug issue         | `frame.task` + `mode.explore` + `frame.cause-mapping`                        |
 | Make decision       | `frame.success-criteria` + `guardrail.assumption-audit` + `mode.decide`     |
 | Learn from work     | `mode.reflect` + `frame.extract-insights` + `schema.execution-brief`         |
 | Research topic      | `mode.explore` + `frame.extract-insights` + `rubric.research-quality`        |
@@ -30,7 +30,7 @@ frame.task + mode.explore        → Define and explore the problem
 mode.explore + strategy.problem-split → Break a large problem into tractable pieces
 mode.critique + guardrail.disconfirming-evidence → Find and pressure-test weak spots
 frame.success-criteria + schema  → Define and structure output
-mode.decide + rubric.decision-quality → Make and evaluate decisions
+mode.critique + schema.findings-brief → Turn critique into ranked findings
 ```
 
 ## Key Combinations by Use Case
@@ -45,7 +45,7 @@ mode.decide + rubric.decision-quality → Make and evaluate decisions
 
 ### Critical Review
 
-- `mode.critique` → `guardrail.disconfirming-evidence` → `guardrail.uncertainty`
+- `mode.critique` → `guardrail.disconfirming-evidence` → `schema.findings-brief`
 
 ### Decision Making
 
@@ -72,13 +72,13 @@ frame.task + mode.explore
 ### Debug Failure
 
 ```
-mode.explore + frame.task + mode.critique + frame.cause-mapping + schema.execution-brief
+frame.task + mode.explore + mode.critique + frame.cause-mapping + schema.execution-brief
 ```
 
 ### Make Decision
 
 ```
-frame.success-criteria + guardrail.assumption-audit + mode.decide + schema.decision-memo + rubric.decision-quality
+frame.success-criteria + mode.explore + guardrail.assumption-audit + mode.decide + schema.decision-memo
 ```
 
 ### Safe Code Change
@@ -105,6 +105,8 @@ frame.task + mode.explore + guardrail.assumption-audit + strategy.premortem + sc
 
 - `schema.decision-memo` — Record and justify a choice
 - `schema.execution-brief` — Turn a direction into a sequenced plan
+- `schema.findings-brief` — Rank critique or review findings
+- `schema.prompt-spec` — Format prompts with constraints, output shape, tests, and limits
 - `schema.incident-postmortem` — Capture lessons after a stabilized failure
 
 ## Guardrail Checklist
@@ -137,6 +139,17 @@ first checkpoint: [earliest validation point]
 immediate next action: [what to do now]
 ```
 
+### Findings Brief
+
+```
+finding: [what is wrong or risky]
+severity: [critical / high / medium / low]
+evidence: [specific basis]
+impact: [why it matters]
+recommended fix: [what should change]
+confidence: [high / medium / low]
+```
+
 ## Advanced Patterns
 
 ### Multi-Stage Composition
@@ -151,7 +164,7 @@ frame.task → mode.explore → strategy.problem-split → guardrail.uncertainty
 
 ```
 mode.critique → guardrail.assumption-audit → guardrail.disconfirming-evidence
-→ schema.execution-brief
+→ schema.findings-brief
 ```
 
 ---

@@ -10,8 +10,8 @@ Production checkout requests intermittently fail with HTTP 502s. Logs mention up
 
 Blocks:
 
-1. `mode.explore`
-2. `frame.task`
+1. `frame.task`
+2. `mode.explore`
 3. `mode.critique`
 4. `frame.cause-mapping`
 5. `schema.execution-brief`
@@ -31,15 +31,15 @@ Context:
 
 ## Reasoning Approach
 
-First survey plausible failure paths without choosing yet. Map candidate causes, unknowns, and signals worth testing.
-
-Then restate the fault as a structured problem frame:
+First restate the fault as a structured problem frame:
 - stated ask
 - likely objective
 - in scope
 - out of scope
 - constraints
 - knowns and unknowns
+
+Then survey plausible failure paths without choosing yet. Map candidate causes, unknowns, and signals worth testing.
 
 Then switch to critique. Pressure-test the leading causes and look for contradictions, boundary failures, and explanations that only fit part of the evidence.
 
@@ -63,4 +63,4 @@ Return an execution brief with:
 
 ## Why This Works
 
-The prompt stays one-shot, but it still creates a phase order: explore before critique, critique before cause mapping, cause mapping before execution. That avoids turning the stack into a multi-turn workflow while preserving the useful discipline of the blocks.
+The prompt stays one-shot, but it still creates a phase order: frame before exploration, explore before critique, critique before cause mapping, cause mapping before execution. That avoids turning the stack into a multi-turn workflow while preserving the useful discipline of the blocks.

@@ -1,6 +1,6 @@
 # Prompt
 
-Evaluate the current branch or draft before another recursive step.
+Evaluate this branch or draft before another recursive step.
 
 Requirements:
 

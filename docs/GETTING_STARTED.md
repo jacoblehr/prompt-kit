@@ -36,7 +36,7 @@ npx prompt-kit stats
 - `mode` — Set cognitive stance (explore, decide, critique, reflect)
 - `strategy` — Reasoning methods (split problems, premortem, steelman, red-team)
 - `guardrail` — Prevent common failures (bias, missing evidence)
-- `schema` — Output structure (decision memo, experiment design)
+- `schema` — Output structure (decision memo, findings brief, execution brief)
 - `rubric` — Evaluation criteria
 
 **Stacks** — Named assemblies of blocks for recurring jobs. Each stack is a recipe for one strong prompt and includes:
@@ -61,7 +61,7 @@ npx prompt-kit stats
 ### Debugging a Failing System
 
 ```
-mode.explore → frame.task → mode.critique
+frame.task → mode.explore → mode.critique
 → frame.cause-mapping → schema.execution-brief
 ```
 
@@ -76,7 +76,7 @@ frame.task → frame.success-criteria → guardrail.assumption-audit
 
 ```
 mode.explore → frame.extract-insights → guardrail.disconfirming-evidence
-→ rubric.research-method → rubric.research-quality
+→ rubric.research-quality
 ```
 
 ## Essential Stacks (Start Here)
@@ -93,14 +93,14 @@ mode.explore → frame.extract-insights → guardrail.disconfirming-evidence
 
 ### 3. Debug a Failure (5–6 blocks)
 
-- `mode.explore` + `frame.task` + `mode.critique`
+- `frame.task` + `mode.explore` + `mode.critique`
 - → `frame.cause-mapping` + `schema.execution-brief`
 - Use when: Investigating bugs, incidents, regressions
 
 ### 4. Decision Making (5–7 blocks)
 
-- `frame.success-criteria` + `guardrail.assumption-audit` + `mode.decide`
-- → `schema.decision-memo` + `rubric.decision-quality`
+- `frame.success-criteria` + `mode.explore` + `guardrail.assumption-audit`
+- → `mode.decide` + `schema.decision-memo`
 - Use when: Choosing between options, need defensible decision
 
 ### 5. Safe Code Changes (5–6 blocks)
@@ -147,7 +147,7 @@ npx plop block stack debug-incident
 
 - `frame.success-criteria` — Make the choice target explicit
 - `guardrail.assumption-audit` — Check premises
-- `rubric.decision-quality` — Define good
+- `schema.decision-memo` — Record the chosen option and tradeoff
 
 ### Learning & Reflection
 
@@ -182,7 +182,7 @@ npx plop block stack debug-incident
 
 **Problem**: Too many options, can't decide
 
-- **Fix**: Use `rubric.decision-quality` to define evaluation criteria
+- **Fix**: Use `frame.success-criteria` to define evaluation criteria, then `mode.decide`
 
 **Problem**: Repetitive work
 

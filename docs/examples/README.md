@@ -6,7 +6,7 @@ This directory contains real-world walkthroughs showing how to compose blocks in
 
 ### [Debug a Failing System](debug-failing-system.md)
 
-**Stack**: `mode.explore + frame.task + mode.critique → frame.cause-mapping + schema.execution-brief → mode.reflect + frame.extract-insights`
+**Stack**: `frame.task + mode.explore + mode.critique → frame.cause-mapping + schema.execution-brief → mode.reflect + frame.extract-insights`
 
 **When to use**: Production incidents, bugs, unexpected behavior, system failures
 

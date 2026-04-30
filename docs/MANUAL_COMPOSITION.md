@@ -62,7 +62,7 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `strategy.premortem`
 - `strategy.red-team`
 - `guardrail.assumption-audit`
-- `guardrail.disconfirming-evidence`
+- `schema.findings-brief`
 
 ### Improving a prompt
 
@@ -70,12 +70,12 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `mode.critique`
 - `frame.prompt-compare`
 - `rubric.writing-quality`
-- `schema.execution-brief`
+- `schema.prompt-spec`
 
 ### Aligning stakeholders
 
-- `mode.explore`
 - `frame.task`
+- `mode.explore`
 - `guardrail.assumption-audit`
 - `mode.decide`
 - `schema.execution-brief`
@@ -109,12 +109,12 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `mode.explore`
 - `mode.critique`
 - `guardrail.assumption-audit`
-- `schema.execution-brief`
+- `schema.findings-brief`
 
 ### Debugging from logs
 
-- `mode.explore`
 - `frame.task`
+- `mode.explore`
 - `mode.critique`
 - `frame.cause-mapping`
 - `schema.execution-brief`
