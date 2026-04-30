@@ -34,10 +34,14 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 | `debug` | Systematic bug or incident diagnosis |
 | `decide` | Traceable high-stakes decision-making |
 | `research` | Evidence gathering before deciding or writing |
+| `experiment-design` | Design a useful test before acting on a hypothesis |
+| `customer-insight-synthesis` | Turn feedback or interviews into decision-useful insight |
 | `feature-design` | Requirements, success criteria, and execution planning |
 | `implement-change` | Bounded code changes with acceptance criteria and verification |
 | `safe-migration` | Risk-managed schema or API migration |
 | `review-code` | Correctness, contracts, and blast-radius review |
+| `turn-notes-into-draft` | Convert messy source material into an audience-fit draft |
+| `creative-brief` | Shape a creative request into usable concept direction |
 | `build-system-prompt` | Persistent prompt and instruction-set design |
 
 ## Build Your Own Composition
@@ -55,6 +59,9 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 
 - Quick sense-check: `mode.critique` + `guardrail.uncertainty`
 - Fast framing: `frame.task` + `mode.explore`
+- Creative draft: `frame.audience` + `mode.create` + `schema.content-draft`
+- Synthesis: `frame.extract-insights` + `mode.synthesize` + `schema.findings-brief`
+- Option comparison: `frame.success-criteria` + `strategy.tradeoff-matrix` + `schema.option-map`
 - Deep research: `mode.explore` + `frame.extract-insights` + `guardrail.disconfirming-evidence`
 
 ## Block Types
@@ -64,6 +71,7 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 | `frame`     | Define the task, objective, scope, or success criteria |
 | `mode`      | Set the overarching cognitive stance                   |
 | `strategy`  | Control the reasoning mechanic or method of thought    |
+| `recurse`   | Bound decomposition, branch selection, evaluation, or refinement |
 | `guardrail` | Prevent common failure modes and reasoning errors      |
 | `schema`    | Shape the output format or structure                   |
 | `rubric`    | Define what "good" looks like for evaluation           |

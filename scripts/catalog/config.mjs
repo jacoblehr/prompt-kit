@@ -55,13 +55,20 @@ const STACK_META = {
   "decompose-solve": { family: "Thinking & Framing", stage: "analyze", outputKind: "plan", stakes: "medium" },
   "refine-loop": { family: "Thinking & Framing", stage: "refine", outputKind: "plan", stakes: "medium" },
   "decide": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
+  "explore-or-exploit": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "medium" },
+  "prioritize-portfolio": { family: "Deciding & Prioritising", stage: "decide", outputKind: "plan", stakes: "medium" },
   "review-decision": { family: "Deciding & Prioritising", stage: "conclude", outputKind: "retrospective", stakes: "medium" },
   "risk-decision": { family: "Deciding & Prioritising", stage: "decide", outputKind: "decision", stakes: "high" },
   "research": { family: "Research & Analysis", stage: "analyze", outputKind: "summary", stakes: "medium" },
+  "experiment-design": { family: "Research & Analysis", stage: "frame", outputKind: "brief", stakes: "medium" },
   "hypothesis-test": { family: "Research & Analysis", stage: "analyze", outputKind: "brief", stakes: "high" },
+  "customer-insight-synthesis": { family: "Research & Analysis", stage: "conclude", outputKind: "summary", stakes: "medium" },
   "align-stakeholders": { family: "Writing & Communication", stage: "decide", outputKind: "plan", stakes: "medium" },
+  "after-action-review": { family: "Writing & Communication", stage: "conclude", outputKind: "retrospective", stakes: "medium" },
+  "creative-brief": { family: "Writing & Communication", stage: "explore", outputKind: "draft", stakes: "low" },
   "develop-position": { family: "Writing & Communication", stage: "refine", outputKind: "draft", stakes: "medium" },
   "negotiate": { family: "Writing & Communication", stage: "decide", outputKind: "brief", stakes: "high" },
+  "turn-notes-into-draft": { family: "Writing & Communication", stage: "conclude", outputKind: "draft", stakes: "medium" },
   "feature-design": { family: "Planning & Execution", stage: "frame", outputKind: "plan", stakes: "high" },
   "ship-feature": { family: "Planning & Execution", stage: "decide", outputKind: "plan", stakes: "high" },
   "critique": { family: "Critique & Review", stage: "critique", outputKind: "critique", stakes: "medium" },
@@ -79,23 +86,28 @@ const STACK_META = {
   "security-threat-model": { family: "Developer Workflows", stage: "critique", outputKind: "critique", stakes: "high" }
 };
 
-const MODE_ORDER = ["explore", "decide", "critique", "reflect"];
-const STRATEGY_ORDER = ["problem-split", "premortem", "steelman", "red-team"];
+const MODE_ORDER = ["explore", "create", "synthesize", "decide", "critique", "reflect"];
+const STRATEGY_ORDER = ["problem-split", "tradeoff-matrix", "premortem", "steelman", "red-team"];
 const PROMPT_BLOCK_ORDER = [
   "frame.task",
+  "frame.audience",
   "frame.success-criteria",
   "guardrail.uncertainty",
   "guardrail.disconfirming-evidence",
   "guardrail.assumption-audit",
+  "schema.option-map",
   "schema.decision-memo",
   "schema.execution-brief",
   "schema.findings-brief",
+  "schema.experiment-plan",
+  "schema.content-draft",
   "schema.prompt-spec"
 ];
 const RUBRIC_ORDER = [
   "decision-quality",
   "argument-quality",
   "plan-quality",
+  "usability-quality",
   "research-method",
   "research-quality",
   "writing-quality"
@@ -107,13 +119,20 @@ const STACK_ORDER = [
   "decompose-solve.md",
   "refine-loop.md",
   "decide.md",
+  "explore-or-exploit.md",
+  "prioritize-portfolio.md",
   "review-decision.md",
   "risk-decision.md",
   "research.md",
+  "experiment-design.md",
   "hypothesis-test.md",
+  "customer-insight-synthesis.md",
   "align-stakeholders.md",
+  "after-action-review.md",
+  "creative-brief.md",
   "develop-position.md",
   "negotiate.md",
+  "turn-notes-into-draft.md",
   "feature-design.md",
   "ship-feature.md",
   "critique.md",
@@ -140,21 +159,21 @@ const FEATURED_STACKS = [
   },
   {
     title: "Make a Risky Decision",
-    description: "When real options exist and the stakes matter. Sets criteria, steelmans alternatives, audits assumptions, and captures the final choice.",
+    description: "When real options exist and the stakes matter. Sets criteria, compares tradeoffs, audits assumptions, and captures the final choice.",
     tags: ["decide", "rigor", "high-stakes"],
-    refs: ["mode.decide", "frame.success-criteria", "strategy.steelman", "guardrail.assumption-audit", "schema.decision-memo"]
+    refs: ["mode.decide", "frame.success-criteria", "strategy.tradeoff-matrix", "guardrail.assumption-audit", "schema.decision-memo"]
   },
   {
     title: "Explore or Exploit",
     description: "When the real question is whether to keep searching or commit now. Forces the tradeoff between additional information and the cost of delay.",
     tags: ["decision", "exploration", "timing"],
-    refs: ["mode.decide", "frame.success-criteria", "guardrail.uncertainty", "guardrail.disconfirming-evidence", "schema.execution-brief"]
+    refs: ["frame.success-criteria", "mode.explore", "guardrail.uncertainty", "strategy.tradeoff-matrix", "mode.decide", "schema.decision-memo"]
   },
   {
     title: "Prioritize and Execute",
     description: "When several good-looking bets compete for scarce resources. Defines criteria, ranks the field, and turns the winner into an execution brief.",
     tags: ["prioritization", "portfolio", "focus"],
-    refs: ["mode.decide", "frame.success-criteria", "guardrail.assumption-audit", "schema.execution-brief"]
+    refs: ["frame.success-criteria", "strategy.tradeoff-matrix", "guardrail.assumption-audit", "mode.decide", "schema.execution-brief"]
   },
   {
     title: "Pressure Test a Plan",
@@ -172,25 +191,25 @@ const FEATURED_STACKS = [
     title: "After-Action Review",
     description: "When an outcome exists and the risk is repeating the same mistake. Maps causes, extracts reusable lessons, and assigns follow-on actions.",
     tags: ["reflect", "learning", "retrospective"],
-    refs: ["mode.reflect", "frame.cause-mapping", "frame.extract-insights", "schema.execution-brief"]
+    refs: ["mode.reflect", "frame.cause-mapping", "frame.extract-insights", "schema.incident-postmortem", "schema.execution-brief"]
   },
   {
-    title: "Improve a Prompt",
-    description: "When a prompt is underperforming. Frames the task, critiques the current version, audits for uncertainty, and rewrites against a quality rubric.",
-    tags: ["prompting", "iteration", "repair"],
-    refs: ["frame.task", "mode.critique", "guardrail.uncertainty", "rubric.writing-quality", "schema.prompt-spec"]
+    title: "Turn Notes Into Draft",
+    description: "When useful source material is scattered. Frames the audience, extracts the signal, synthesizes a throughline, and drafts for the channel.",
+    tags: ["writing", "synthesis", "draft"],
+    refs: ["frame.audience", "frame.extract-insights", "mode.synthesize", "schema.content-draft", "rubric.writing-quality"]
   },
   {
-    title: "Decompose and Solve",
-    description: "When a problem is too large to solve directly. Breaks it recursively into leaf-level problems, evaluates each answer, and synthesizes the result.",
-    tags: ["recursion", "decomposition", "problem-solving"],
-    refs: ["frame.task", "recurse.decompose", "recurse.evaluate", "guardrail.bounded-recursion"]
+    title: "Creative Brief",
+    description: "When a request needs useful original directions. Frames the task and audience, generates concepts, then turns the strongest one into a draftable brief.",
+    tags: ["creative", "brief", "audience"],
+    refs: ["frame.task", "frame.audience", "mode.create", "frame.success-criteria", "schema.content-draft"]
   },
   {
-    title: "Research to Decision",
-    description: "When you need a well-grounded view before deciding. Extracts insights, forces disconfirmation, maps causes, and checks research quality.",
-    tags: ["research", "synthesis", "briefing"],
-    refs: ["mode.explore", "frame.extract-insights", "guardrail.disconfirming-evidence", "frame.cause-mapping", "rubric.research-quality"]
+    title: "Customer Insight Synthesis",
+    description: "When feedback needs to become decision-useful insight. Extracts signal, checks counter-evidence, synthesizes patterns, and ranks findings.",
+    tags: ["research", "synthesis", "customers"],
+    refs: ["mode.explore", "frame.extract-insights", "guardrail.disconfirming-evidence", "mode.synthesize", "schema.findings-brief"]
   }
 ];
 

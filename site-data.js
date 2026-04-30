@@ -77,6 +77,148 @@ globalThis.SITE_DATA = {
       "blockType": "mode",
       "form": "mode",
       "sourceKind": "Mode",
+      "stage": "explore",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Generate original options, drafts, concepts, or variations while keeping the work anchored to the objective and constraints.",
+        "useWhen": "The task needs invention, ideation, or first-draft production rather than analysis of an existing artifact.",
+        "expects": "A creative brief, target outcome, audience, constraints, or source material to transform.",
+        "adds": "Generative breadth with enough selection discipline that the result is useful rather than merely novel.",
+        "returns": [
+          "candidate directions",
+          "strongest draft or concept",
+          "rationale for why it fits",
+          "risks or constraints to preserve in revision"
+        ],
+        "pairsWith": [
+          "frame.audience",
+          "frame.success-criteria",
+          "schema.content-draft",
+          "recurse.refine"
+        ],
+        "avoidWhen": "The task already has a committed artifact and the main job is evaluation, verification, or execution."
+      },
+      "key": "create",
+      "aliases": [
+        "mode.create"
+      ],
+      "title": "create",
+      "summary": "Generate original options, drafts, concepts, or variations while keeping the work anchored to the objective and constraints.",
+      "tags": [
+        "create"
+      ],
+      "copy": "Create several meaningfully different directions before choosing one.\nKeep the objective, audience, and constraints visible while drafting.\nSelect the strongest direction and explain why it is the best fit.",
+      "body": [
+        [
+          "Purpose",
+          "Generate original options, drafts, concepts, or variations while keeping the work anchored to the objective and constraints."
+        ],
+        [
+          "Use when",
+          "The task needs invention, ideation, or first-draft production rather than analysis of an existing artifact."
+        ],
+        [
+          "Expects",
+          "A creative brief, target outcome, audience, constraints, or source material to transform."
+        ],
+        [
+          "Adds",
+          "Generative breadth with enough selection discipline that the result is useful rather than merely novel."
+        ],
+        [
+          "Returns",
+          "candidate directions, strongest draft or concept, rationale for why it fits, risks or constraints to preserve in revision"
+        ],
+        [
+          "Pairs with",
+          "frame.audience, frame.success-criteria, schema.content-draft, recurse.refine"
+        ],
+        [
+          "Avoid when",
+          "The task already has a committed artifact and the main job is evaluation, verification, or execution."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/mode.create/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "mode",
+      "blockType": "mode",
+      "form": "mode",
+      "sourceKind": "Mode",
+      "stage": "conclude",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Combine multiple inputs, findings, or partial answers into one coherent view without flattening important disagreement.",
+        "useWhen": "The useful material is scattered across notes, evidence, branches, stakeholder views, or prior analysis and needs to become one artifact.",
+        "expects": "Multiple inputs with a shared question, decision, audience, or output goal.",
+        "adds": "Integration that preserves tensions, resolves duplication, and separates consensus from unresolved disagreement.",
+        "returns": [
+          "consolidated view",
+          "strongest throughline",
+          "tensions or unresolved conflicts",
+          "implications or next use"
+        ],
+        "pairsWith": [
+          "frame.extract-insights",
+          "schema.findings-brief",
+          "schema.content-draft",
+          "rubric.research-quality"
+        ],
+        "avoidWhen": "The inputs are still too raw to compare or the task requires faithful summarization of every source rather than an integrated view."
+      },
+      "key": "synthesize",
+      "aliases": [
+        "mode.synthesize"
+      ],
+      "title": "synthesize",
+      "summary": "Combine multiple inputs, findings, or partial answers into one coherent view without flattening important disagreement.",
+      "tags": [
+        "synthesize"
+      ],
+      "copy": "Synthesize the inputs into one coherent view.\nPreserve meaningful disagreement instead of smoothing it away.\nName the throughline, the unresolved tensions, and what the synthesis implies next.",
+      "body": [
+        [
+          "Purpose",
+          "Combine multiple inputs, findings, or partial answers into one coherent view without flattening important disagreement."
+        ],
+        [
+          "Use when",
+          "The useful material is scattered across notes, evidence, branches, stakeholder views, or prior analysis and needs to become one artifact."
+        ],
+        [
+          "Expects",
+          "Multiple inputs with a shared question, decision, audience, or output goal."
+        ],
+        [
+          "Adds",
+          "Integration that preserves tensions, resolves duplication, and separates consensus from unresolved disagreement."
+        ],
+        [
+          "Returns",
+          "consolidated view, strongest throughline, tensions or unresolved conflicts, implications or next use"
+        ],
+        [
+          "Pairs with",
+          "frame.extract-insights, schema.findings-brief, schema.content-draft, rubric.research-quality"
+        ],
+        [
+          "Avoid when",
+          "The inputs are still too raw to compare or the task requires faithful summarization of every source rather than an integrated view."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/mode.synthesize/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "mode",
+      "blockType": "mode",
+      "form": "mode",
+      "sourceKind": "Mode",
       "stage": "decide",
       "strength": "medium",
       "contract": {
@@ -351,6 +493,79 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/strategy.problem-split/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "strategy",
+      "blockType": "strategy",
+      "form": "strategy",
+      "sourceKind": "Strategy",
+      "stage": "analyze",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Compare options across explicit criteria so the real tradeoffs are visible before choosing or recommending.",
+        "useWhen": "Several plausible options exist and the risk is choosing by vibe, recency, politics, or a single over-weighted criterion.",
+        "expects": "An option set plus criteria, constraints, or success conditions.",
+        "adds": "A structured comparison that separates fit, cost, risk, reversibility, and confidence.",
+        "returns": [
+          "option matrix",
+          "strongest option by criterion",
+          "tradeoff that matters most",
+          "dominated options to drop",
+          "recommendation or next evidence needed"
+        ],
+        "pairsWith": [
+          "frame.success-criteria",
+          "mode.decide",
+          "schema.option-map",
+          "schema.decision-memo"
+        ],
+        "avoidWhen": "There is only one viable option or the options are not yet concrete enough to compare."
+      },
+      "key": "tradeoff-matrix",
+      "aliases": [
+        "strategy.tradeoff-matrix"
+      ],
+      "title": "tradeoff-matrix",
+      "summary": "Compare options across explicit criteria so the real tradeoffs are visible before choosing or recommending.",
+      "tags": [
+        "tradeoff",
+        "matrix"
+      ],
+      "copy": "Compare the viable options across the criteria that would actually change the choice.\nShow where each option wins, loses, and depends on an assumption.\nName dominated options, the hardest tradeoff, and the next evidence needed if the choice is not yet ready.",
+      "body": [
+        [
+          "Purpose",
+          "Compare options across explicit criteria so the real tradeoffs are visible before choosing or recommending."
+        ],
+        [
+          "Use when",
+          "Several plausible options exist and the risk is choosing by vibe, recency, politics, or a single over-weighted criterion."
+        ],
+        [
+          "Expects",
+          "An option set plus criteria, constraints, or success conditions."
+        ],
+        [
+          "Adds",
+          "A structured comparison that separates fit, cost, risk, reversibility, and confidence."
+        ],
+        [
+          "Returns",
+          "option matrix, strongest option by criterion, tradeoff that matters most, dominated options to drop, recommendation or next evidence needed"
+        ],
+        [
+          "Pairs with",
+          "frame.success-criteria, mode.decide, schema.option-map, schema.decision-memo"
+        ],
+        [
+          "Avoid when",
+          "There is only one viable option or the options are not yet concrete enough to compare."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/strategy.tradeoff-matrix/README.md"
     },
     {
       "section": "Block",
@@ -635,6 +850,81 @@ globalThis.SITE_DATA = {
       "family": "Prompt Blocks",
       "group": "",
       "sourcePath": "prompts/blocks/frame.task/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "frame",
+      "blockType": "frame",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "frame",
+      "strength": "light",
+      "contract": {
+        "purpose": "Frame the audience, channel, desired action, and likely objections before shaping a message or artifact.",
+        "useWhen": "The work must land with a specific reader, customer, stakeholder, buyer, learner, or decision-maker.",
+        "expects": "A message, artifact, proposal, feature, or topic plus the audience it must serve.",
+        "adds": "Audience-specific constraints so the output optimizes for comprehension, trust, and action rather than generic polish.",
+        "returns": [
+          "audience",
+          "desired action or response",
+          "current belief or context",
+          "likely objections or anxieties",
+          "channel constraints",
+          "tone and detail level"
+        ],
+        "pairsWith": [
+          "mode.create",
+          "mode.synthesize",
+          "schema.content-draft",
+          "rubric.writing-quality"
+        ],
+        "avoidWhen": "The artifact is purely internal reasoning and no audience-specific adaptation is useful."
+      },
+      "key": "frame.audience",
+      "aliases": [
+        "core.frame.audience",
+        "core.frame-audience"
+      ],
+      "title": "frame.audience",
+      "summary": "Frame the audience, channel, desired action, and likely objections before shaping a message or artifact.",
+      "tags": [
+        "frame",
+        "audience"
+      ],
+      "copy": "Frame the audience before producing or revising this artifact.\n\nRequirements:\n\n- identify who the artifact must land with\n- name the action, belief, or decision the audience should reach\n- surface likely objections, anxieties, or misreadings\n- account for the channel and attention constraints\n- choose a tone and detail level that fit the audience\n\nReturn:\n\n- audience\n- desired action or response\n- current belief or context\n- likely objections or anxieties\n- channel constraints\n- tone and detail level\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Frame the audience, channel, desired action, and likely objections before shaping a message or artifact."
+        ],
+        [
+          "Use when",
+          "The work must land with a specific reader, customer, stakeholder, buyer, learner, or decision-maker."
+        ],
+        [
+          "Expects",
+          "A message, artifact, proposal, feature, or topic plus the audience it must serve."
+        ],
+        [
+          "Adds",
+          "Audience-specific constraints so the output optimizes for comprehension, trust, and action rather than generic polish."
+        ],
+        [
+          "Returns",
+          "audience, desired action or response, current belief or context, likely objections or anxieties, channel constraints, tone and detail level"
+        ],
+        [
+          "Pairs with",
+          "mode.create, mode.synthesize, schema.content-draft, rubric.writing-quality"
+        ],
+        [
+          "Avoid when",
+          "The artifact is purely internal reasoning and no audience-specific adaptation is useful."
+        ]
+      ],
+      "family": "Prompt Blocks",
+      "group": "",
+      "sourcePath": "prompts/blocks/frame.audience/prompt.md"
     },
     {
       "section": "Block",
@@ -944,6 +1234,82 @@ globalThis.SITE_DATA = {
       "stage": "conclude",
       "strength": "light",
       "contract": {
+        "purpose": "Render an option set as a clear map of choices, tradeoffs, assumptions, and when each option is best.",
+        "useWhen": "The output should preserve multiple viable paths instead of prematurely forcing a single decision.",
+        "expects": "Options, alternatives, candidate approaches, or branches with enough context to compare.",
+        "adds": "A scannable option format that supports later decision-making, stakeholder discussion, or branch pruning.",
+        "returns": [
+          "options",
+          "choose when",
+          "strengths",
+          "weaknesses or risks",
+          "key assumptions",
+          "evidence needed",
+          "options to drop"
+        ],
+        "pairsWith": [
+          "mode.explore",
+          "strategy.tradeoff-matrix",
+          "recurse.branch-prune",
+          "mode.decide"
+        ],
+        "avoidWhen": "A decision has already been made and the main need is a decision memo or execution brief."
+      },
+      "key": "schema.option-map",
+      "aliases": [
+        "core.schema.option-map",
+        "core.schema-option-map"
+      ],
+      "title": "schema.option-map",
+      "summary": "Render an option set as a clear map of choices, tradeoffs, assumptions, and when each option is best.",
+      "tags": [
+        "option",
+        "map"
+      ],
+      "copy": "Render these alternatives as an option map.\n\nRequirements:\n\n- preserve genuinely different viable paths\n- state when each option is the right choice\n- separate strengths from assumptions\n- flag dominated options that should be dropped\n- name the evidence needed before choosing if the answer is not ready\n\nReturn:\n\n- options\n- choose when\n- strengths\n- weaknesses or risks\n- key assumptions\n- evidence needed\n- options to drop\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Render an option set as a clear map of choices, tradeoffs, assumptions, and when each option is best."
+        ],
+        [
+          "Use when",
+          "The output should preserve multiple viable paths instead of prematurely forcing a single decision."
+        ],
+        [
+          "Expects",
+          "Options, alternatives, candidate approaches, or branches with enough context to compare."
+        ],
+        [
+          "Adds",
+          "A scannable option format that supports later decision-making, stakeholder discussion, or branch pruning."
+        ],
+        [
+          "Returns",
+          "options, choose when, strengths, weaknesses or risks, key assumptions, evidence needed, options to drop"
+        ],
+        [
+          "Pairs with",
+          "mode.explore, strategy.tradeoff-matrix, recurse.branch-prune, mode.decide"
+        ],
+        [
+          "Avoid when",
+          "A decision has already been made and the main need is a decision memo or execution brief."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.option-map/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "light",
+      "contract": {
         "purpose": "Render a chosen direction as a structured decision memo that makes the actual choice, rationale, and next action explicit.",
         "useWhen": "After a decision has been reached and needs to be recorded, communicated, or handed off clearly. Use after choosing, before execution planning, and when you want later reflection to be easier.",
         "expects": "A chosen option or decision context.",
@@ -1161,6 +1527,158 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/schema.findings-brief/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Render a hypothesis, research question, or product bet as a testable experiment plan with a decision rule.",
+        "useWhen": "The team needs to learn before committing and the output should specify how evidence will change action.",
+        "expects": "A hypothesis, claim, product bet, policy change, or uncertain recommendation.",
+        "adds": "A structured test plan that names the metric, method, sample, risks, and decision threshold up front.",
+        "returns": [
+          "hypothesis",
+          "decision this test informs",
+          "method",
+          "metric or observation",
+          "sample or scope",
+          "confounds and risks",
+          "decision rule",
+          "next action after each outcome"
+        ],
+        "pairsWith": [
+          "guardrail.assumption-audit",
+          "guardrail.uncertainty",
+          "rubric.research-method",
+          "frame.success-criteria"
+        ],
+        "avoidWhen": "The claim can be resolved directly from existing evidence or the team is not prepared to act on the result."
+      },
+      "key": "schema.experiment-plan",
+      "aliases": [
+        "core.schema.experiment-plan",
+        "core.schema-experiment-plan"
+      ],
+      "title": "schema.experiment-plan",
+      "summary": "Render a hypothesis, research question, or product bet as a testable experiment plan with a decision rule.",
+      "tags": [
+        "experiment",
+        "plan"
+      ],
+      "copy": "Render this hypothesis or uncertain claim as an experiment plan.\n\nRequirements:\n\n- state the decision the test is meant to inform\n- define the method before interpreting evidence\n- choose metrics or observations that can actually answer the question\n- name confounds, sampling limits, and operational risks\n- include a decision rule before the result is known\n\nReturn:\n\n- hypothesis\n- decision this test informs\n- method\n- metric or observation\n- sample or scope\n- confounds and risks\n- decision rule\n- next action after each outcome\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Render a hypothesis, research question, or product bet as a testable experiment plan with a decision rule."
+        ],
+        [
+          "Use when",
+          "The team needs to learn before committing and the output should specify how evidence will change action."
+        ],
+        [
+          "Expects",
+          "A hypothesis, claim, product bet, policy change, or uncertain recommendation."
+        ],
+        [
+          "Adds",
+          "A structured test plan that names the metric, method, sample, risks, and decision threshold up front."
+        ],
+        [
+          "Returns",
+          "hypothesis, decision this test informs, method, metric or observation, sample or scope, confounds and risks, decision rule, next action after each outcome"
+        ],
+        [
+          "Pairs with",
+          "guardrail.assumption-audit, guardrail.uncertainty, rubric.research-method, frame.success-criteria"
+        ],
+        [
+          "Avoid when",
+          "The claim can be resolved directly from existing evidence or the team is not prepared to act on the result."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.experiment-plan/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "schema",
+      "blockType": "schema",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "conclude",
+      "strength": "light",
+      "contract": {
+        "purpose": "Render source material or a chosen message as a usable draft tailored to audience, channel, and next action.",
+        "useWhen": "The desired output is a message, memo, article, post, announcement, narrative, or other written artifact rather than a plan or findings list.",
+        "expects": "Audience frame, key points, notes, desired takeaway, and any channel constraints.",
+        "adds": "A writing-oriented output shape that makes the main point, support, call to action, and revision notes explicit.",
+        "returns": [
+          "title or subject",
+          "opening point",
+          "draft",
+          "intended takeaway",
+          "call to action",
+          "revision notes"
+        ],
+        "pairsWith": [
+          "frame.audience",
+          "mode.create",
+          "mode.synthesize",
+          "rubric.writing-quality"
+        ],
+        "avoidWhen": "The main output should be a ranked issue list, decision memo, or execution plan."
+      },
+      "key": "schema.content-draft",
+      "aliases": [
+        "core.schema.content-draft",
+        "core.schema-content-draft"
+      ],
+      "title": "schema.content-draft",
+      "summary": "Render source material or a chosen message as a usable draft tailored to audience, channel, and next action.",
+      "tags": [
+        "content",
+        "draft"
+      ],
+      "copy": "Render this material as a written draft tailored to the audience and channel.\n\nRequirements:\n\n- put the main point early\n- preserve the facts or claims that matter\n- adapt tone and detail level to the audience\n- make the intended takeaway explicit\n- include the call to action only if the artifact needs one\n- keep revision notes separate from the draft itself\n\nReturn:\n\n- title or subject\n- opening point\n- draft\n- intended takeaway\n- call to action (if applicable)\n- revision notes\n\n---\ncontext: {context}",
+      "body": [
+        [
+          "Purpose",
+          "Render source material or a chosen message as a usable draft tailored to audience, channel, and next action."
+        ],
+        [
+          "Use when",
+          "The desired output is a message, memo, article, post, announcement, narrative, or other written artifact rather than a plan or findings list."
+        ],
+        [
+          "Expects",
+          "Audience frame, key points, notes, desired takeaway, and any channel constraints."
+        ],
+        [
+          "Adds",
+          "A writing-oriented output shape that makes the main point, support, call to action, and revision notes explicit."
+        ],
+        [
+          "Returns",
+          "title or subject, opening point, draft, intended takeaway, call to action, revision notes"
+        ],
+        [
+          "Pairs with",
+          "frame.audience, mode.create, mode.synthesize, rubric.writing-quality"
+        ],
+        [
+          "Avoid when",
+          "The main output should be a ranked issue list, decision memo, or execution plan."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/schema.content-draft/prompt.md"
     },
     {
       "section": "Block",
@@ -2033,6 +2551,51 @@ globalThis.SITE_DATA = {
       "blockType": "rubric",
       "form": "rubric",
       "sourceKind": "Rubric",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "useWhen": "## Purpose",
+        "returns": [
+          "Is the user's job and starting context explicit?",
+          "Is the first action obvious?",
+          "Can the user tell what state they are in?",
+          "Are errors, empty states, or edge cases handled?",
+          "Does the flow avoid unnecessary steps or choices?",
+          "Is success visible to the user when the job is complete?"
+        ]
+      },
+      "key": "rubric.usability-quality",
+      "aliases": [
+        "rubric.usability-quality"
+      ],
+      "title": "rubric.usability-quality",
+      "summary": "## Purpose.",
+      "tags": [
+        "rubric",
+        "usability",
+        "quality"
+      ],
+      "copy": "rubric.usability-quality\n\n## Purpose\n\n- Is the user's job and starting context explicit?\n- Is the first action obvious?\n- Can the user tell what state they are in?\n- Are errors, empty states, or edge cases handled?\n- Does the flow avoid unnecessary steps or choices?\n- Is success visible to the user when the job is complete?",
+      "body": [
+        [
+          "Use when",
+          "## Purpose"
+        ],
+        [
+          "Questions",
+          "Is the user's job and starting context explicit?, Is the first action obvious?, Can the user tell what state they are in?, Are errors, empty states, or edge cases handled?, Does the flow avoid unnecessary steps or choices?, Is success visible to the user when the job is complete?"
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/rubric.usability-quality/README.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "rubric",
+      "blockType": "rubric",
+      "form": "rubric",
+      "sourceKind": "Rubric",
       "stage": "analyze",
       "strength": "medium",
       "contract": {
@@ -2635,6 +3198,217 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.explore-or-exploit",
+      "title": "explore-or-exploit",
+      "family": "Deciding & Prioritising",
+      "job": "explore-or-exploit",
+      "useWhen": "Decide whether to keep searching, gather one more signal, or commit now.",
+      "stage": "decide",
+      "outputKind": "decision",
+      "effort": "deep",
+      "stakes": "medium",
+      "summary": "Decide whether to keep searching, gather one more signal, or commit now.",
+      "tags": [
+        "explore",
+        "exploit"
+      ],
+      "contract": {
+        "job": "explore-or-exploit",
+        "useWhen": "Decide whether to keep searching, gather one more signal, or commit now.",
+        "minimumBlocks": [
+          "guardrail.uncertainty",
+          "mode.decide",
+          "schema.decision-memo"
+        ],
+        "fullSequence": [
+          "`frame.success-criteria`",
+          "`mode.explore`",
+          "`guardrail.uncertainty`",
+          "`strategy.tradeoff-matrix`",
+          "`mode.decide`",
+          "`schema.decision-memo`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `schema.option-map` instead of `schema.decision-memo` when the right answer is to preserve options for stakeholder discussion.",
+        "commonFailureMode": "Treating uncertainty as a reason to keep searching forever instead of comparing the value of information against the cost of delay.",
+        "chooseInsteadWhen": ""
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:success-criteria -> mode:explore -> guardrail:uncertainty -> strategy:tradeoff-matrix -> mode:decide -> schema:decision-memo",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "explore-or-exploit"
+        ],
+        [
+          "Use when",
+          "Decide whether to keep searching, gather one more signal, or commit now."
+        ],
+        [
+          "Composition profile",
+          "frame:success-criteria -> mode:explore -> guardrail:uncertainty -> strategy:tradeoff-matrix -> mode:decide -> schema:decision-memo"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "decision"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "guardrail.uncertainty, mode.decide, schema.decision-memo"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.success-criteria` -> `mode.explore` -> `guardrail.uncertainty` -> `strategy.tradeoff-matrix` -> `mode.decide` -> `schema.decision-memo`"
+        ],
+        [
+          "Common swaps",
+          "Use `schema.option-map` instead of `schema.decision-memo` when the right answer is to preserve options for stakeholder discussion."
+        ],
+        [
+          "Common failure mode",
+          "Treating uncertainty as a reason to keep searching forever instead of comparing the value of information against the cost of delay."
+        ]
+      ],
+      "sourcePath": "stacks/explore-or-exploit.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.prioritize-portfolio",
+      "title": "prioritize-portfolio",
+      "family": "Deciding & Prioritising",
+      "job": "prioritize-portfolio",
+      "useWhen": "Rank competing bets or tasks when several look worthwhile but capacity is constrained.",
+      "stage": "decide",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "medium",
+      "summary": "Rank competing bets or tasks when several look worthwhile but capacity is constrained.",
+      "tags": [
+        "prioritize",
+        "portfolio"
+      ],
+      "contract": {
+        "job": "prioritize-portfolio",
+        "useWhen": "Rank competing bets or tasks when several look worthwhile but capacity is constrained.",
+        "minimumBlocks": [
+          "frame.success-criteria",
+          "strategy.tradeoff-matrix",
+          "mode.decide"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.success-criteria`",
+          "`strategy.tradeoff-matrix`",
+          "`guardrail.assumption-audit`",
+          "`mode.decide`",
+          "`schema.execution-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `schema.option-map` before `mode.decide` when the portfolio needs discussion before commitment.",
+        "commonFailureMode": "Ranking by desirability while leaving capacity, dependency, reversibility, or confidence implicit.",
+        "chooseInsteadWhen": ""
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
+        "primaryMode": "mode.decide",
+        "modeRefs": [
+          "mode.decide"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "prioritize-portfolio"
+        ],
+        [
+          "Use when",
+          "Rank competing bets or tasks when several look worthwhile but capacity is constrained."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "frame.success-criteria, strategy.tradeoff-matrix, mode.decide"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.success-criteria` -> `strategy.tradeoff-matrix` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Common swaps",
+          "Use `schema.option-map` before `mode.decide` when the portfolio needs discussion before commitment."
+        ],
+        [
+          "Common failure mode",
+          "Ranking by desirability while leaving capacity, dependency, reversibility, or confidence implicit."
+        ]
+      ],
+      "sourcePath": "stacks/prioritize-portfolio.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.review-decision",
       "title": "review-decision",
       "family": "Deciding & Prioritising",
@@ -2920,6 +3694,106 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.experiment-design",
+      "title": "experiment-design",
+      "family": "Research & Analysis",
+      "job": "experiment-design",
+      "useWhen": "Design a useful experiment before acting on a hypothesis, product bet, or causal claim.",
+      "stage": "frame",
+      "outputKind": "brief",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Design a useful experiment before acting on a hypothesis, product bet, or causal claim.",
+      "tags": [
+        "experiment",
+        "design"
+      ],
+      "contract": {
+        "job": "experiment-design",
+        "useWhen": "Design a useful experiment before acting on a hypothesis, product bet, or causal claim.",
+        "minimumBlocks": [
+          "frame.success-criteria",
+          "schema.experiment-plan",
+          "rubric.research-method"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.success-criteria`",
+          "`guardrail.assumption-audit`",
+          "`schema.experiment-plan`",
+          "`rubric.research-method`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `hypothesis-test` when evidence already exists and the job is evaluating a causal claim rather than designing a new test.",
+        "commonFailureMode": "Choosing a metric or method after deciding what answer would be convenient.",
+        "chooseInsteadWhen": ""
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> schema:experiment-plan -> rubric:research-method",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "experiment-design"
+        ],
+        [
+          "Use when",
+          "Design a useful experiment before acting on a hypothesis, product bet, or causal claim."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> schema:experiment-plan -> rubric:research-method"
+        ],
+        [
+          "Stage",
+          "frame"
+        ],
+        [
+          "Output kind",
+          "brief"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "frame.success-criteria, schema.experiment-plan, rubric.research-method"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `schema.experiment-plan` -> `rubric.research-method`"
+        ],
+        [
+          "Common swaps",
+          "Use `hypothesis-test` when evidence already exists and the job is evaluating a causal claim rather than designing a new test."
+        ],
+        [
+          "Common failure mode",
+          "Choosing a metric or method after deciding what answer would be convenient."
+        ]
+      ],
+      "sourcePath": "stacks/experiment-design.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.hypothesis-test",
       "title": "hypothesis-test",
       "family": "Research & Analysis",
@@ -3022,6 +3896,111 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.customer-insight-synthesis",
+      "title": "customer-insight-synthesis",
+      "family": "Research & Analysis",
+      "job": "customer-insight-synthesis",
+      "useWhen": "Synthesize customer feedback, interviews, support tickets, or usage notes into decision-useful insight.",
+      "stage": "conclude",
+      "outputKind": "summary",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Synthesize customer feedback, interviews, support tickets, or usage notes into decision-useful insight.",
+      "tags": [
+        "customer",
+        "insight",
+        "synthesis"
+      ],
+      "contract": {
+        "job": "customer-insight-synthesis",
+        "useWhen": "Synthesize customer feedback, interviews, support tickets, or usage notes into decision-useful insight.",
+        "minimumBlocks": [
+          "frame.extract-insights",
+          "mode.synthesize",
+          "schema.findings-brief"
+        ],
+        "fullSequence": [
+          "`mode.explore`",
+          "`frame.extract-insights`",
+          "`guardrail.disconfirming-evidence`",
+          "`mode.synthesize`",
+          "`schema.findings-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Add `rubric.research-quality` when the findings will support a high-stakes product or strategy decision.",
+        "commonFailureMode": "Treating the loudest quotes as representative insight without checking segment, frequency, or counter-evidence.",
+        "chooseInsteadWhen": ""
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> mode:synthesize -> schema:findings-brief",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.synthesize"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "customer-insight-synthesis"
+        ],
+        [
+          "Use when",
+          "Synthesize customer feedback, interviews, support tickets, or usage notes into decision-useful insight."
+        ],
+        [
+          "Composition profile",
+          "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> mode:synthesize -> schema:findings-brief"
+        ],
+        [
+          "Stage",
+          "conclude"
+        ],
+        [
+          "Output kind",
+          "summary"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "frame.extract-insights, mode.synthesize, schema.findings-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `mode.synthesize` -> `schema.findings-brief`"
+        ],
+        [
+          "Common swaps",
+          "Add `rubric.research-quality` when the findings will support a high-stakes product or strategy decision."
+        ],
+        [
+          "Common failure mode",
+          "Treating the loudest quotes as representative insight without checking segment, frequency, or counter-evidence."
+        ]
+      ],
+      "sourcePath": "stacks/customer-insight-synthesis.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.align-stakeholders",
       "title": "align-stakeholders",
       "family": "Writing & Communication",
@@ -3119,6 +4098,211 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/align-stakeholders.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.after-action-review",
+      "title": "after-action-review",
+      "family": "Writing & Communication",
+      "job": "after-action-review",
+      "useWhen": "Extract reusable learning from a completed project, incident, launch, decision, or experiment.",
+      "stage": "conclude",
+      "outputKind": "retrospective",
+      "effort": "standard",
+      "stakes": "medium",
+      "summary": "Extract reusable learning from a completed project, incident, launch, decision, or experiment.",
+      "tags": [
+        "after",
+        "action",
+        "review"
+      ],
+      "contract": {
+        "job": "after-action-review",
+        "useWhen": "Extract reusable learning from a completed project, incident, launch, decision, or experiment.",
+        "minimumBlocks": [
+          "mode.reflect",
+          "frame.extract-insights",
+          "schema.execution-brief"
+        ],
+        "fullSequence": [
+          "`mode.reflect`",
+          "`frame.cause-mapping`",
+          "`frame.extract-insights`",
+          "`schema.incident-postmortem`",
+          "`schema.execution-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Drop `schema.incident-postmortem` for lightweight project retrospectives where a full timeline would add ceremony.",
+        "commonFailureMode": "Producing a narrative recap without identifying what should change next time.",
+        "chooseInsteadWhen": ""
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "mode:reflect -> frame:cause-mapping -> frame:extract-insights -> schema:incident-postmortem -> schema:execution-brief",
+        "primaryMode": "mode.reflect",
+        "modeRefs": [
+          "mode.reflect"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": false,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "after-action-review"
+        ],
+        [
+          "Use when",
+          "Extract reusable learning from a completed project, incident, launch, decision, or experiment."
+        ],
+        [
+          "Composition profile",
+          "mode:reflect -> frame:cause-mapping -> frame:extract-insights -> schema:incident-postmortem -> schema:execution-brief"
+        ],
+        [
+          "Stage",
+          "conclude"
+        ],
+        [
+          "Output kind",
+          "retrospective"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "mode.reflect, frame.extract-insights, schema.execution-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`mode.reflect` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.incident-postmortem` -> `schema.execution-brief`"
+        ],
+        [
+          "Common swaps",
+          "Drop `schema.incident-postmortem` for lightweight project retrospectives where a full timeline would add ceremony."
+        ],
+        [
+          "Common failure mode",
+          "Producing a narrative recap without identifying what should change next time."
+        ]
+      ],
+      "sourcePath": "stacks/after-action-review.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.creative-brief",
+      "title": "creative-brief",
+      "family": "Writing & Communication",
+      "job": "creative-brief",
+      "useWhen": "Shape a creative, campaign, content, or concept request into a brief with enough direction to make useful work.",
+      "stage": "explore",
+      "outputKind": "draft",
+      "effort": "standard",
+      "stakes": "low",
+      "summary": "Shape a creative, campaign, content, or concept request into a brief with enough direction to make useful work.",
+      "tags": [
+        "creative",
+        "brief"
+      ],
+      "contract": {
+        "job": "creative-brief",
+        "useWhen": "Shape a creative, campaign, content, or concept request into a brief with enough direction to make useful work.",
+        "minimumBlocks": [
+          "frame.audience",
+          "mode.create",
+          "frame.success-criteria"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.audience`",
+          "`mode.create`",
+          "`frame.success-criteria`",
+          "`schema.content-draft`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `schema.option-map` instead of `schema.content-draft` when the output should present multiple creative directions rather than draft one.",
+        "commonFailureMode": "Producing clever ideas that are not tied to audience, channel, constraint, or desired response.",
+        "chooseInsteadWhen": ""
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:task -> frame:audience -> mode:create -> frame:success-criteria -> schema:content-draft",
+        "primaryMode": "mode.create",
+        "modeRefs": [
+          "mode.create"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": false,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "creative-brief"
+        ],
+        [
+          "Use when",
+          "Shape a creative, campaign, content, or concept request into a brief with enough direction to make useful work."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:audience -> mode:create -> frame:success-criteria -> schema:content-draft"
+        ],
+        [
+          "Stage",
+          "explore"
+        ],
+        [
+          "Output kind",
+          "draft"
+        ],
+        [
+          "Effort",
+          "standard"
+        ],
+        [
+          "Stakes",
+          "low"
+        ],
+        [
+          "Minimum blocks",
+          "frame.audience, mode.create, frame.success-criteria"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.audience` -> `mode.create` -> `frame.success-criteria` -> `schema.content-draft`"
+        ],
+        [
+          "Common swaps",
+          "Use `schema.option-map` instead of `schema.content-draft` when the output should present multiple creative directions rather than draft one."
+        ],
+        [
+          "Common failure mode",
+          "Producing clever ideas that are not tied to audience, channel, constraint, or desired response."
+        ]
+      ],
+      "sourcePath": "stacks/creative-brief.md"
     },
     {
       "section": "Stack",
@@ -3312,6 +4496,113 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/negotiate.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.turn-notes-into-draft",
+      "title": "turn-notes-into-draft",
+      "family": "Writing & Communication",
+      "job": "turn-notes-into-draft",
+      "useWhen": "Turn scattered notes, transcripts, bullets, or research fragments into a useful written draft.",
+      "stage": "conclude",
+      "outputKind": "draft",
+      "effort": "deep",
+      "stakes": "medium",
+      "summary": "Turn scattered notes, transcripts, bullets, or research fragments into a useful written draft.",
+      "tags": [
+        "turn",
+        "notes",
+        "draft"
+      ],
+      "contract": {
+        "job": "turn-notes-into-draft",
+        "useWhen": "Turn scattered notes, transcripts, bullets, or research fragments into a useful written draft.",
+        "minimumBlocks": [
+          "frame.audience",
+          "frame.extract-insights",
+          "schema.content-draft"
+        ],
+        "fullSequence": [
+          "`frame.audience`",
+          "`frame.extract-insights`",
+          "`mode.synthesize`",
+          "`schema.content-draft`",
+          "`rubric.writing-quality`",
+          "`recurse.refine`",
+          "`guardrail.bounded-recursion`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "Use `schema.findings-brief` instead of `schema.content-draft` when the output should stay as findings rather than prose.",
+        "commonFailureMode": "Summarizing all notes faithfully instead of building the draft around the audience's job and the strongest throughline.",
+        "chooseInsteadWhen": ""
+      },
+      "io": {},
+      "composition": {
+        "phaseOrder": "frame:audience -> frame:extract-insights -> mode:synthesize -> schema:content-draft -> rubric:writing-quality -> recurse:refine -> guardrail:bounded-recursion",
+        "primaryMode": "mode.synthesize",
+        "modeRefs": [
+          "mode.synthesize"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": true,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "turn-notes-into-draft"
+        ],
+        [
+          "Use when",
+          "Turn scattered notes, transcripts, bullets, or research fragments into a useful written draft."
+        ],
+        [
+          "Composition profile",
+          "frame:audience -> frame:extract-insights -> mode:synthesize -> schema:content-draft -> rubric:writing-quality -> recurse:refine -> guardrail:bounded-recursion"
+        ],
+        [
+          "Stage",
+          "conclude"
+        ],
+        [
+          "Output kind",
+          "draft"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Minimum blocks",
+          "frame.audience, frame.extract-insights, schema.content-draft"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.audience` -> `frame.extract-insights` -> `mode.synthesize` -> `schema.content-draft` -> `rubric.writing-quality` -> `recurse.refine` -> `guardrail.bounded-recursion`"
+        ],
+        [
+          "Common swaps",
+          "Use `schema.findings-brief` instead of `schema.content-draft` when the output should stay as findings rather than prose."
+        ],
+        [
+          "Common failure mode",
+          "Summarizing all notes faithfully instead of building the draft around the audience's job and the strongest throughline."
+        ]
+      ],
+      "sourcePath": "stacks/turn-notes-into-draft.md"
     },
     {
       "section": "Stack",
@@ -4836,7 +6127,7 @@ globalThis.SITE_DATA = {
     },
     {
       "title": "Make a Risky Decision",
-      "description": "When real options exist and the stakes matter. Sets criteria, steelmans alternatives, audits assumptions, and captures the final choice.",
+      "description": "When real options exist and the stakes matter. Sets criteria, compares tradeoffs, audits assumptions, and captures the final choice.",
       "tags": [
         "decide",
         "rigor",
@@ -4845,7 +6136,7 @@ globalThis.SITE_DATA = {
       "refs": [
         "mode.decide",
         "frame.success-criteria",
-        "strategy.steelman",
+        "strategy.tradeoff-matrix",
         "guardrail.assumption-audit",
         "schema.decision-memo"
       ]
@@ -4859,11 +6150,12 @@ globalThis.SITE_DATA = {
         "timing"
       ],
       "refs": [
-        "mode.decide",
         "frame.success-criteria",
+        "mode.explore",
         "guardrail.uncertainty",
-        "guardrail.disconfirming-evidence",
-        "schema.execution-brief"
+        "strategy.tradeoff-matrix",
+        "mode.decide",
+        "schema.decision-memo"
       ]
     },
     {
@@ -4875,9 +6167,10 @@ globalThis.SITE_DATA = {
         "focus"
       ],
       "refs": [
-        "mode.decide",
         "frame.success-criteria",
+        "strategy.tradeoff-matrix",
         "guardrail.assumption-audit",
+        "mode.decide",
         "schema.execution-brief"
       ]
     },
@@ -4925,54 +6218,56 @@ globalThis.SITE_DATA = {
         "mode.reflect",
         "frame.cause-mapping",
         "frame.extract-insights",
+        "schema.incident-postmortem",
         "schema.execution-brief"
       ]
     },
     {
-      "title": "Improve a Prompt",
-      "description": "When a prompt is underperforming. Frames the task, critiques the current version, audits for uncertainty, and rewrites against a quality rubric.",
+      "title": "Turn Notes Into Draft",
+      "description": "When useful source material is scattered. Frames the audience, extracts the signal, synthesizes a throughline, and drafts for the channel.",
       "tags": [
-        "prompting",
-        "iteration",
-        "repair"
+        "writing",
+        "synthesis",
+        "draft"
       ],
       "refs": [
-        "frame.task",
-        "mode.critique",
-        "guardrail.uncertainty",
-        "rubric.writing-quality",
-        "schema.prompt-spec"
+        "frame.audience",
+        "frame.extract-insights",
+        "mode.synthesize",
+        "schema.content-draft",
+        "rubric.writing-quality"
       ]
     },
     {
-      "title": "Decompose and Solve",
-      "description": "When a problem is too large to solve directly. Breaks it recursively into leaf-level problems, evaluates each answer, and synthesizes the result.",
+      "title": "Creative Brief",
+      "description": "When a request needs useful original directions. Frames the task and audience, generates concepts, then turns the strongest one into a draftable brief.",
       "tags": [
-        "recursion",
-        "decomposition",
-        "problem-solving"
+        "creative",
+        "brief",
+        "audience"
       ],
       "refs": [
         "frame.task",
-        "recurse.decompose",
-        "recurse.evaluate",
-        "guardrail.bounded-recursion"
+        "frame.audience",
+        "mode.create",
+        "frame.success-criteria",
+        "schema.content-draft"
       ]
     },
     {
-      "title": "Research to Decision",
-      "description": "When you need a well-grounded view before deciding. Extracts insights, forces disconfirmation, maps causes, and checks research quality.",
+      "title": "Customer Insight Synthesis",
+      "description": "When feedback needs to become decision-useful insight. Extracts signal, checks counter-evidence, synthesizes patterns, and ranks findings.",
       "tags": [
         "research",
         "synthesis",
-        "briefing"
+        "customers"
       ],
       "refs": [
         "mode.explore",
         "frame.extract-insights",
         "guardrail.disconfirming-evidence",
-        "frame.cause-mapping",
-        "rubric.research-quality"
+        "mode.synthesize",
+        "schema.findings-brief"
       ]
     }
   ],

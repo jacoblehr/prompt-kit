@@ -24,6 +24,7 @@ Blocks are typed by role. The type tells you what a block contributes — not wh
 | `frame` | Define the task, objective, scope, or success criteria |
 | `mode` | Set the overarching cognitive stance |
 | `strategy` | Control the reasoning mechanic or method of thought |
+| `recurse` | Bound decomposition, evaluation, refinement, or branch pruning |
 | `guardrail` | Prevent common failure modes and reasoning errors |
 | `schema` | Shape the output format or structure |
 | `rubric` | Define what "good" looks like for evaluation |

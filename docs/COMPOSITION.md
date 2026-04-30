@@ -50,6 +50,8 @@ guardrail.uncertainty  # compatible guardrail
 Compatible pairs:
 
 - `mode.explore` + `guardrail.uncertainty`
+- `mode.create` + `frame.audience`
+- `mode.synthesize` + `frame.extract-insights`
 - `mode.critique` + `rubric.argument-quality`
 - `mode.decide` + `frame.success-criteria`
 
@@ -132,6 +134,9 @@ Use `guardrail.assumption-audit` + `guardrail.disconfirming-evidence` together o
 | Present critique, review, or threat-model results | `schema.findings-brief` | It ranks findings and ties each one to evidence, impact, fix, and confidence. |
 | Write or revise prompts and instruction sets | `schema.prompt-spec` | It separates final prompt text from assumptions, constraints, output shape, tests, and limitations. |
 | Debrief an incident or failure after stabilization | `schema.incident-postmortem` | It captures timeline, root cause, contributing factors, and prevention work. |
+| Preserve multiple viable paths before choosing | `schema.option-map` | It shows when each option fits, what it assumes, and what evidence is still needed. |
+| Design a test before acting on a claim | `schema.experiment-plan` | It names the hypothesis, method, metric, confounds, and decision rule before results are known. |
+| Produce audience-fit prose from source material | `schema.content-draft` | It separates the draft from the takeaway, call to action, and revision notes. |
 
 Common handoff:
 
@@ -151,6 +156,9 @@ Not every task needs a full stack. Often two or three blocks are enough.
 | Pressure test         | `mode.critique` + `strategy.premortem`    |
 | Decision with options | `mode.decide` + `frame.success-criteria`  |
 | Structured output     | task block + `schema.decision-memo`       |
+| Creative first draft  | `frame.audience` + `mode.create` + `schema.content-draft` |
+| Notes to synthesis    | `frame.extract-insights` + `mode.synthesize` |
+| Option comparison     | `frame.success-criteria` + `strategy.tradeoff-matrix` |
 
 ---
 

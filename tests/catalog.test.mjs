@@ -23,8 +23,8 @@ describe('catalog build API', () => {
   test('buildCatalog returns generated data plus diagnostics without writing', () => {
     const catalog = buildCatalog({ root: ROOT })
 
-    assert.equal(catalog.blocks.length, 32)
-    assert.equal(catalog.stacks.length, 27)
+    assert.equal(catalog.blocks.length, 40)
+    assert.equal(catalog.stacks.length, 34)
     assert.equal(catalog.featuredStacks.length, 10)
     assert.equal(catalog.diagnostics.blockCount, catalog.blocks.length)
     assert.deepEqual(catalog.meta.blockTypeOrder, BLOCK_TYPE_ORDER)
