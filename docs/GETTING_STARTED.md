@@ -109,6 +109,30 @@ mode.explore → frame.extract-insights → guardrail.disconfirming-evidence
 - → `strategy.premortem` + `schema.execution-brief`
 - Use when: Modifying unfamiliar code, production changes
 
+### 6. Agentic Coding (6–9 blocks)
+
+- `frame.task` + `mode.explore` + `strategy.problem-split`
+- → `guardrail.bounded-recursion` + `guardrail.scope-creep` + `schema.execution-brief`
+- Use when: Asking an autonomous coding agent to inspect, edit, verify, and report back from a repository
+
+### 7. Test Strategy (4–6 blocks)
+
+- `frame.success-criteria` + `mode.explore` + `mode.critique`
+- → `guardrail.assumption-audit` + `schema.execution-brief`
+- Use when: Planning risk-based test coverage for a feature, fix, refactor, or system change
+
+### 8. Assumption Inversion (4–6 blocks)
+
+- `frame.task` + `mode.create` + `strategy.constraint-relaxation`
+- → `guardrail.assumption-audit` + `schema.option-map`
+- Use when: The obvious answer is too familiar and you need plausible strange options
+
+### 9. Weird Prototype (5–7 blocks)
+
+- `frame.task` + `frame.audience` + `mode.create`
+- → `frame.success-criteria` + `schema.experiment-plan`
+- Use when: A strange idea might teach something, but only if tested before it is normalized
+
 ## Adding Your Own Blocks
 
 Use the plop generator:

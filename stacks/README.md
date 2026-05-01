@@ -28,8 +28,11 @@ Good first stacks when you want an existing recipe instead of composing from zer
 - `decide` for high-stakes option selection
 - `explore-or-exploit` for choosing whether to keep searching or commit
 - `prioritize-portfolio` for ranking competing bets under capacity constraints
+- `assumption-inversion` for generating non-obvious options from fixed-looking assumptions
+- `counterfactual-roadmap` for planning backward from alternate futures
 - `research` for evidence gathering before a recommendation
 - `experiment-design` for turning a hypothesis into a useful test plan
+- `weird-prototype` for learning from a strange idea before normalizing it
 - `customer-insight-synthesis` for turning feedback into ranked insight
 - `requirements-from-feedback` for turning feedback into grounded requirements
 - `turn-notes-into-draft` for turning scattered material into audience-fit prose
@@ -38,6 +41,10 @@ Good first stacks when you want an existing recipe instead of composing from zer
 - `debug` for bug, incident, or bottleneck diagnosis
 - `feature-design` for turning a feature request into an execution-ready brief
 - `rollout-plan` for staging change with adoption, monitoring, and rollback explicit
+- `agentic-coding` for autonomous repo changes with discovery, bounded implementation, verification, and handoff
+- `test-strategy` for deciding the smallest useful risk-based test plan
+- `refactor-plan` for behavior-preserving structural improvements
+- `api-contract-design` for API contracts with consumers, errors, compatibility, and validation explicit
 - `safe-migration` for risky system or API changes
 
 ## Heavier workflows
@@ -45,6 +52,11 @@ Good first stacks when you want an existing recipe instead of composing from zer
 Use these when the job needs a stronger critique or a more explicit execution shape.
 
 - `review-code`
+- `agentic-coding`
+- `negative-space-critique`
+- `test-strategy`
+- `refactor-plan`
+- `api-contract-design`
 - `architecture-review`
 - `pressure-test`
 - `usability-review`
@@ -60,7 +72,7 @@ Use these when the job needs a stronger critique or a more explicit execution sh
 
 ## Pattern note
 
-`branch-select`, `decompose-solve`, and `refine-loop` are technique-heavy stacks. Use them when you deliberately need recursion or branch control; for everyday workflows, prefer outcome-named stacks such as `creative-brief`, `prioritize-portfolio`, or `turn-notes-into-draft`.
+`branch-select`, `decompose-solve`, `refine-loop`, `assumption-inversion`, `counterfactual-roadmap`, `negative-space-critique`, and `weird-prototype` are technique-heavy or experimental stacks. Use them when you deliberately need recursion, branch control, counterfactual thinking, absence-finding, or unusual prototypes; for everyday workflows, prefer outcome-named stacks such as `creative-brief`, `prioritize-portfolio`, or `turn-notes-into-draft`.
 
 `simplify-plan` is also a technique-forward stack, but it earns its place when the problem is accumulated scope rather than missing structure.
 
@@ -68,10 +80,11 @@ Use these when the job needs a stronger critique or a more explicit execution sh
 
 Use domain overlays only when the task benefits from extra vocabulary or failure modes:
 
-- `review-code`, `debug`, `safe-migration`, `security-threat-model` -> `domains/code.md`
+- `agentic-coding`, `implement-change`, `review-code`, `debug`, `test-strategy`, `refactor-plan`, `api-contract-design`, `safe-migration`, `security-threat-model` -> `domains/code.md`
 - `feature-design`, `ship-feature` -> `domains/product.md`
-- `rollout-plan`, `usability-review` -> `domains/product.md`
-- `experiment-design`, `customer-insight-synthesis`, `requirements-from-feedback` -> `domains/product.md` or `domains/data.md`
+- `rollout-plan`, `usability-review`, `weird-prototype` -> `domains/product.md`
+- `experiment-design`, `counterfactual-roadmap`, `customer-insight-synthesis`, `requirements-from-feedback` -> `domains/product.md` or `domains/data.md`
+- `assumption-inversion`, `negative-space-critique` -> use whichever domain overlay matches the artifact under review
 - `build-system-prompt`, `improve-prompt` -> `domains/prompts.md`
 - `research`, `hypothesis-test` -> `domains/data.md`
 - `align-stakeholders`, `develop-position`, `make-playbook`, `negotiate`, `turn-notes-into-draft`, `creative-brief` -> `domains/writing.md`

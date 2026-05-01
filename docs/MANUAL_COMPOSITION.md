@@ -55,6 +55,22 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `schema.execution-brief`
 - `guardrail.uncertainty`
 
+### Assumption inversion
+
+- `frame.task`
+- `mode.create`
+- `strategy.constraint-relaxation`
+- `guardrail.assumption-audit`
+- `schema.option-map`
+
+### Counterfactual roadmap
+
+- `frame.success-criteria`
+- `mode.explore`
+- `strategy.scenario-planning`
+- `guardrail.uncertainty`
+- `schema.option-map`
+
 ### Pressure-testing a plan
 
 - `frame.task`
@@ -71,6 +87,14 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `frame.prompt-compare`
 - `rubric.writing-quality`
 - `schema.prompt-spec`
+
+### Negative-space critique
+
+- `frame.task`
+- `mode.critique`
+- `strategy.red-team`
+- `guardrail.assumption-audit`
+- `schema.findings-brief`
 
 ### Aligning stakeholders
 
@@ -103,6 +127,15 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `frame.prompt-compare`
 - `rubric.writing-quality`
 
+### Weird prototype
+
+- `frame.task`
+- `frame.audience`
+- `mode.create`
+- `strategy.constraint-relaxation`
+- `frame.success-criteria`
+- `schema.experiment-plan`
+
 ### Reading before changing code
 
 - `frame.task`
@@ -110,6 +143,39 @@ See [docs/COMPOSITION.md](./COMPOSITION.md) for the full assembly rules.
 - `mode.critique`
 - `guardrail.assumption-audit`
 - `schema.findings-brief`
+
+### Agentic coding
+
+- `frame.task`
+- `mode.explore`
+- `strategy.problem-split`
+- `guardrail.bounded-recursion`
+- `guardrail.scope-creep`
+- `schema.execution-brief`
+
+### Test strategy
+
+- `frame.success-criteria`
+- `mode.explore`
+- `mode.critique`
+- `guardrail.assumption-audit`
+- `schema.execution-brief`
+
+### Refactor planning
+
+- `frame.current-state`
+- `frame.success-criteria`
+- `guardrail.assumption-audit`
+- `strategy.premortem`
+- `schema.execution-brief`
+
+### API contract design
+
+- `frame.task`
+- `frame.stakeholders`
+- `frame.success-criteria`
+- `strategy.tradeoff-matrix`
+- `schema.requirements-brief`
 
 ### Debugging from logs
 

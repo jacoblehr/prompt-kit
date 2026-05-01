@@ -2,7 +2,7 @@
 
 ## Current State (May 2026)
 
-The active catalog contains 40 blocks, 34 stacks, and 10 featured stack recipes. The source library is intentionally compact: all active blocks live under `prompts/blocks/`, stacks live under `stacks/`, and the browser catalog is generated into `site-data.js`.
+The active catalog contains 50 blocks, 48 stacks, and 10 featured stack recipes. The source library is intentionally compact: all active blocks live under `prompts/blocks/`, stacks live under `stacks/`, and the browser catalog is generated into `site-data.js`.
 
 The quality pipeline is now the source of truth for contribution readiness:
 

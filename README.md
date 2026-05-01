@@ -35,13 +35,21 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 | `decide` | Traceable high-stakes decision-making |
 | `research` | Evidence gathering before deciding or writing |
 | `experiment-design` | Design a useful test before acting on a hypothesis |
+| `weird-prototype` | Test a strange idea before normalizing or discarding it |
+| `assumption-inversion` | Generate non-obvious options by inverting fixed-looking assumptions |
+| `counterfactual-roadmap` | Plan backward from alternate futures and trigger signals |
 | `customer-insight-synthesis` | Turn feedback or interviews into decision-useful insight |
 | `requirements-from-feedback` | Convert feedback or research notes into grounded requirements |
 | `feature-design` | Requirements, success criteria, and execution planning |
 | `rollout-plan` | Stage a launch, change, or policy update with adoption and rollback explicit |
+| `agentic-coding` | Autonomous repo changes with discovery, implementation slices, verification, and handoff |
 | `implement-change` | Bounded code changes with acceptance criteria and verification |
+| `test-strategy` | Risk-based test planning for features, fixes, refactors, and system changes |
+| `refactor-plan` | Behavior-preserving refactors with invariants and rollback checkpoints explicit |
+| `api-contract-design` | API contracts with consumers, compatibility, errors, and validation explicit |
 | `safe-migration` | Risk-managed schema or API migration |
 | `review-code` | Correctness, contracts, and blast-radius review |
+| `negative-space-critique` | Find what an artifact omits, avoids, or silently assumes |
 | `usability-review` | Evaluate whether a workflow or interface lets users complete the job |
 | `turn-notes-into-draft` | Convert messy source material into an audience-fit draft |
 | `creative-brief` | Shape a creative request into usable concept direction |
@@ -66,6 +74,8 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 - Creative draft: `frame.audience` + `mode.create` + `schema.content-draft`
 - Synthesis: `frame.extract-insights` + `mode.synthesize` + `schema.findings-brief`
 - Option comparison: `frame.success-criteria` + `strategy.tradeoff-matrix` + `schema.option-map`
+- Assumption inversion: `mode.create` + `strategy.constraint-relaxation` + `schema.option-map`
+- Counterfactual planning: `strategy.scenario-planning` + `guardrail.uncertainty` + `schema.option-map`
 - Usability review: `strategy.journey-map` + `rubric.usability-quality` + `schema.findings-brief`
 - Rollout planning: `frame.stakeholders` + `strategy.premortem` + `schema.rollout-plan`
 - Deep research: `mode.explore` + `frame.extract-insights` + `guardrail.disconfirming-evidence`

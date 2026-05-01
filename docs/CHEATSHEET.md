@@ -22,6 +22,10 @@
 | Learn from work     | `mode.reflect` + `frame.extract-insights` + `schema.execution-brief`         |
 | Research topic      | `mode.explore` + `frame.extract-insights` + `rubric.research-quality`        |
 | Ship feature safely | `frame.task` + `frame.success-criteria` + `guardrail.assumption-audit`       |
+| Agentic coding task | `frame.task` + `mode.explore` + `guardrail.scope-creep` + `schema.execution-brief` |
+| Test strategy       | `frame.success-criteria` + `mode.critique` + `schema.execution-brief`        |
+| Experimental option | `mode.create` + `strategy.constraint-relaxation` + `schema.option-map`       |
+| Counterfactual plan | `strategy.scenario-planning` + `guardrail.uncertainty` + `schema.option-map` |
 
 ## Common Block Pairs
 
@@ -85,6 +89,30 @@ frame.success-criteria + mode.explore + guardrail.assumption-audit + mode.decide
 
 ```
 frame.task + mode.explore + guardrail.assumption-audit + strategy.premortem + schema.execution-brief
+```
+
+### Agentic Coding
+
+```
+frame.task + mode.explore + strategy.problem-split + guardrail.bounded-recursion + guardrail.scope-creep + schema.execution-brief
+```
+
+### Test Strategy
+
+```
+frame.success-criteria + mode.explore + mode.critique + guardrail.assumption-audit + schema.execution-brief
+```
+
+### Assumption Inversion
+
+```
+frame.task + mode.create + strategy.constraint-relaxation + guardrail.assumption-audit + schema.option-map
+```
+
+### Weird Prototype
+
+```
+frame.task + frame.audience + mode.create + strategy.constraint-relaxation + frame.success-criteria + schema.experiment-plan
 ```
 
 ## Useful By Job

@@ -166,6 +166,11 @@ Not every task needs a full stack. Often two or three blocks are enough.
 | Option comparison     | `frame.success-criteria` + `strategy.tradeoff-matrix` |
 | Usability review      | `strategy.journey-map` + `rubric.usability-quality` |
 | Rollout planning      | `frame.stakeholders` + `schema.rollout-plan` |
+| Agentic coding        | `frame.task` + `mode.explore` + `guardrail.scope-creep` + `schema.execution-brief` |
+| Test strategy         | `frame.success-criteria` + `mode.critique` + `schema.execution-brief` |
+| Experimental options  | `mode.create` + `strategy.constraint-relaxation` + `schema.option-map` |
+| Counterfactual plan   | `strategy.scenario-planning` + `guardrail.uncertainty` + `schema.option-map` |
+| Missing-piece critique | `mode.critique` + `guardrail.assumption-audit` + `schema.findings-brief` |
 
 ---
 

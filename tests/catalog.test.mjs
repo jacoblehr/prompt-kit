@@ -24,7 +24,7 @@ describe('catalog build API', () => {
     const catalog = buildCatalog({ root: ROOT })
 
     assert.equal(catalog.blocks.length, 50)
-    assert.equal(catalog.stacks.length, 40)
+    assert.equal(catalog.stacks.length, 48)
     assert.equal(catalog.featuredStacks.length, 10)
     assert.equal(catalog.diagnostics.blockCount, catalog.blocks.length)
     assert.deepEqual(catalog.meta.blockTypeOrder, BLOCK_TYPE_ORDER)
@@ -48,6 +48,34 @@ describe('catalog build API', () => {
     const catalog = buildCatalog({ root: ROOT })
 
     assert.deepEqual(catalog.featuredStacks, FEATURED_STACKS)
+  })
+
+  test('software engineering prompt coverage includes agentic coding and adjacent workflows', () => {
+    const catalog = buildCatalog({ root: ROOT })
+    const developerJobs = new Set(
+      catalog.stacks
+        .filter((stack) => stack.family === 'Developer Workflows')
+        .map((stack) => stack.job)
+    )
+
+    assert.deepEqual(
+      ['agentic-coding', 'api-contract-design', 'refactor-plan', 'test-strategy'].filter(
+        (job) => !developerJobs.has(job)
+      ),
+      []
+    )
+  })
+
+  test('experimental prompt coverage includes inversion, counterfactual, absence, and prototype workflows', () => {
+    const catalog = buildCatalog({ root: ROOT })
+    const jobs = new Set(catalog.stacks.map((stack) => stack.job))
+
+    assert.deepEqual(
+      ['assumption-inversion', 'counterfactual-roadmap', 'negative-space-critique', 'weird-prototype'].filter(
+        (job) => !jobs.has(job)
+      ),
+      []
+    )
   })
 })
 

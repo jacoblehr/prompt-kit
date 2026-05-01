@@ -3976,6 +3976,123 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.assumption-inversion",
+      "title": "assumption-inversion",
+      "family": "Thinking & Framing",
+      "job": "assumption-inversion",
+      "useWhen": "Generate useful directions by deliberately inverting the assumptions that make the current answer feel obvious.",
+      "stage": "explore",
+      "outputKind": "options",
+      "effort": "deep",
+      "stakes": "medium",
+      "summary": "Generate useful directions by deliberately inverting the assumptions that make the current answer feel obvious.",
+      "tags": [
+        "assumption",
+        "inversion"
+      ],
+      "contract": {
+        "job": "assumption-inversion",
+        "useWhen": "Generate useful directions by deliberately inverting the assumptions that make the current answer feel obvious.",
+        "minimumBlocks": [
+          "mode.create",
+          "strategy.constraint-relaxation",
+          "schema.option-map"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`mode.create`",
+          "`strategy.constraint-relaxation`",
+          "`guardrail.assumption-audit`",
+          "`guardrail.scope-creep`",
+          "`schema.option-map`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Producing random novelty instead of targeted inversions that test a real assumption.",
+        "chooseInsteadWhen": "use `explore-or-exploit` when the real question is whether to keep searching or commit. Use `creative-brief` when the job is to produce a polished creative direction for a known audience."
+      },
+      "io": {
+        "usefulInputs": [
+          "current idea, plan, product, argument, or prompt",
+          "assumptions that seem fixed",
+          "constraints that may or may not be real",
+          "success criteria",
+          "unacceptable outcomes"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:task -> mode:create -> strategy:constraint-relaxation -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:option-map",
+        "primaryMode": "mode.create",
+        "modeRefs": [
+          "mode.create"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "assumption-inversion"
+        ],
+        [
+          "Use when",
+          "Generate useful directions by deliberately inverting the assumptions that make the current answer feel obvious."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:create -> strategy:constraint-relaxation -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:option-map"
+        ],
+        [
+          "Stage",
+          "explore"
+        ],
+        [
+          "Output kind",
+          "options"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Useful inputs",
+          "current idea, plan, product, argument, or prompt, assumptions that seem fixed, constraints that may or may not be real, success criteria, unacceptable outcomes"
+        ],
+        [
+          "Minimum blocks",
+          "mode.create, strategy.constraint-relaxation, schema.option-map"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `mode.create` -> `strategy.constraint-relaxation` -> `guardrail.assumption-audit` -> `guardrail.scope-creep` -> `schema.option-map`"
+        ],
+        [
+          "Choose instead when",
+          "use `explore-or-exploit` when the real question is whether to keep searching or commit. Use `creative-brief` when the job is to produce a polished creative direction for a known audience."
+        ],
+        [
+          "Common failure mode",
+          "Producing random novelty instead of targeted inversions that test a real assumption."
+        ]
+      ],
+      "sourcePath": "stacks/assumption-inversion.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.decide",
       "title": "decide",
       "family": "Deciding & Prioritising",
@@ -4582,6 +4699,125 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.counterfactual-roadmap",
+      "title": "counterfactual-roadmap",
+      "family": "Deciding & Prioritising",
+      "job": "counterfactual-roadmap",
+      "useWhen": "Plan from alternate futures backward so near-term choices account for scenarios that are easy to ignore.",
+      "stage": "decide",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Plan from alternate futures backward so near-term choices account for scenarios that are easy to ignore.",
+      "tags": [
+        "counterfactual",
+        "roadmap"
+      ],
+      "contract": {
+        "job": "counterfactual-roadmap",
+        "useWhen": "Plan from alternate futures backward so near-term choices account for scenarios that are easy to ignore.",
+        "minimumBlocks": [
+          "strategy.scenario-planning",
+          "guardrail.uncertainty",
+          "schema.option-map"
+        ],
+        "fullSequence": [
+          "`frame.success-criteria`",
+          "`mode.explore`",
+          "`strategy.scenario-planning`",
+          "`guardrail.uncertainty`",
+          "`guardrail.disconfirming-evidence`",
+          "`schema.option-map`",
+          "`rubric.decision-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Treating scenarios as decorative narratives instead of using them to change near-term choices.",
+        "chooseInsteadWhen": "use `strategy-to-roadmap` when the strategy is already chosen and the main job is sequencing. Use `risk-decision` when a single high-stakes choice needs explicit risk acceptance."
+      },
+      "io": {
+        "usefulInputs": [
+          "strategic question or plan",
+          "time horizon",
+          "current assumptions",
+          "leading indicators",
+          "known constraints",
+          "decision or investment options"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:success-criteria -> mode:explore -> strategy:scenario-planning -> guardrail:uncertainty -> guardrail:disconfirming-evidence -> schema:option-map -> rubric:decision-quality",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "counterfactual-roadmap"
+        ],
+        [
+          "Use when",
+          "Plan from alternate futures backward so near-term choices account for scenarios that are easy to ignore."
+        ],
+        [
+          "Composition profile",
+          "frame:success-criteria -> mode:explore -> strategy:scenario-planning -> guardrail:uncertainty -> guardrail:disconfirming-evidence -> schema:option-map -> rubric:decision-quality"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Useful inputs",
+          "strategic question or plan, time horizon, current assumptions, leading indicators, known constraints, decision or investment options"
+        ],
+        [
+          "Minimum blocks",
+          "strategy.scenario-planning, guardrail.uncertainty, schema.option-map"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.success-criteria` -> `mode.explore` -> `strategy.scenario-planning` -> `guardrail.uncertainty` -> `guardrail.disconfirming-evidence` -> `schema.option-map` -> `rubric.decision-quality`"
+        ],
+        [
+          "Choose instead when",
+          "use `strategy-to-roadmap` when the strategy is already chosen and the main job is sequencing. Use `risk-decision` when a single high-stakes choice needs explicit risk acceptance."
+        ],
+        [
+          "Common failure mode",
+          "Treating scenarios as decorative narratives instead of using them to change near-term choices."
+        ]
+      ],
+      "sourcePath": "stacks/counterfactual-roadmap.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.research",
       "title": "research",
       "family": "Research & Analysis",
@@ -4780,6 +5016,125 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/experiment-design.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.weird-prototype",
+      "title": "weird-prototype",
+      "family": "Research & Analysis",
+      "job": "weird-prototype",
+      "useWhen": "Turn a strange idea into the smallest prototype that could teach something real before it is normalized or discarded.",
+      "stage": "frame",
+      "outputKind": "brief",
+      "effort": "deep",
+      "stakes": "medium",
+      "summary": "Turn a strange idea into the smallest prototype that could teach something real before it is normalized or discarded.",
+      "tags": [
+        "weird",
+        "prototype"
+      ],
+      "contract": {
+        "job": "weird-prototype",
+        "useWhen": "Turn a strange idea into the smallest prototype that could teach something real before it is normalized or discarded.",
+        "minimumBlocks": [
+          "mode.create",
+          "frame.success-criteria",
+          "schema.experiment-plan"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.audience`",
+          "`mode.create`",
+          "`strategy.constraint-relaxation`",
+          "`frame.success-criteria`",
+          "`schema.experiment-plan`",
+          "`rubric.usability-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Sanding off the weird part before testing whether it creates real signal.",
+        "chooseInsteadWhen": "use `experiment-design` when the hypothesis is already conventional and needs a clean test. Use `creative-brief` when the output should be a polished concept rather than a learning prototype."
+      },
+      "io": {
+        "usefulInputs": [
+          "odd idea, hunch, mechanic, prompt, workflow, or product concept",
+          "target audience or user",
+          "riskiest assumption",
+          "constraints",
+          "learning goal",
+          "available prototype medium"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:task -> frame:audience -> mode:create -> strategy:constraint-relaxation -> frame:success-criteria -> schema:experiment-plan -> rubric:usability-quality",
+        "primaryMode": "mode.create",
+        "modeRefs": [
+          "mode.create"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "weird-prototype"
+        ],
+        [
+          "Use when",
+          "Turn a strange idea into the smallest prototype that could teach something real before it is normalized or discarded."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:audience -> mode:create -> strategy:constraint-relaxation -> frame:success-criteria -> schema:experiment-plan -> rubric:usability-quality"
+        ],
+        [
+          "Stage",
+          "frame"
+        ],
+        [
+          "Output kind",
+          "brief"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Useful inputs",
+          "odd idea, hunch, mechanic, prompt, workflow, or product concept, target audience or user, riskiest assumption, constraints, learning goal, available prototype medium"
+        ],
+        [
+          "Minimum blocks",
+          "mode.create, frame.success-criteria, schema.experiment-plan"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.audience` -> `mode.create` -> `strategy.constraint-relaxation` -> `frame.success-criteria` -> `schema.experiment-plan` -> `rubric.usability-quality`"
+        ],
+        [
+          "Choose instead when",
+          "use `experiment-design` when the hypothesis is already conventional and needs a clean test. Use `creative-brief` when the output should be a polished concept rather than a learning prototype."
+        ],
+        [
+          "Common failure mode",
+          "Sanding off the weird part before testing whether it creates real signal."
+        ]
+      ],
+      "sourcePath": "stacks/weird-prototype.md"
     },
     {
       "section": "Stack",
@@ -6205,6 +6560,124 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.negative-space-critique",
+      "title": "negative-space-critique",
+      "family": "Critique & Review",
+      "job": "negative-space-critique",
+      "useWhen": "Critique an artifact by looking for what is missing, avoided, or silently assumed rather than what is already present.",
+      "stage": "critique",
+      "outputKind": "critique",
+      "effort": "deep",
+      "stakes": "medium",
+      "summary": "Critique an artifact by looking for what is missing, avoided, or silently assumed rather than what is already present.",
+      "tags": [
+        "negative",
+        "space",
+        "critique"
+      ],
+      "contract": {
+        "job": "negative-space-critique",
+        "useWhen": "Critique an artifact by looking for what is missing, avoided, or silently assumed rather than what is already present.",
+        "minimumBlocks": [
+          "mode.critique",
+          "guardrail.assumption-audit",
+          "schema.findings-brief"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`mode.critique`",
+          "`strategy.red-team`",
+          "`guardrail.assumption-audit`",
+          "`guardrail.disconfirming-evidence`",
+          "`schema.findings-brief`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Naming omissions without explaining why each missing piece changes quality, risk, or action.",
+        "chooseInsteadWhen": "use `critique` for a general quality review. Use `pressure-test` when the artifact is a plan and the main job is simulating future failure."
+      },
+      "io": {
+        "usefulInputs": [
+          "draft, plan, design, argument, prompt, or system description",
+          "intended audience or user",
+          "stated goals",
+          "constraints and non-goals",
+          "known objections or excluded alternatives"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:task -> mode:critique -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief",
+        "primaryMode": "mode.critique",
+        "modeRefs": [
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "negative-space-critique"
+        ],
+        [
+          "Use when",
+          "Critique an artifact by looking for what is missing, avoided, or silently assumed rather than what is already present."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:critique -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief"
+        ],
+        [
+          "Stage",
+          "critique"
+        ],
+        [
+          "Output kind",
+          "critique"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "medium"
+        ],
+        [
+          "Useful inputs",
+          "draft, plan, design, argument, prompt, or system description, intended audience or user, stated goals, constraints and non-goals, known objections or excluded alternatives"
+        ],
+        [
+          "Minimum blocks",
+          "mode.critique, guardrail.assumption-audit, schema.findings-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `mode.critique` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `schema.findings-brief`"
+        ],
+        [
+          "Choose instead when",
+          "use `critique` for a general quality review. Use `pressure-test` when the artifact is a plan and the main job is simulating future failure."
+        ],
+        [
+          "Common failure mode",
+          "Naming omissions without explaining why each missing piece changes quality, risk, or action."
+        ]
+      ],
+      "sourcePath": "stacks/negative-space-critique.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.ethical-review",
       "title": "ethical-review",
       "family": "Critique & Review",
@@ -6815,6 +7288,128 @@ globalThis.SITE_DATA = {
     },
     {
       "section": "Stack",
+      "key": "stack.agentic-coding",
+      "title": "agentic-coding",
+      "family": "Developer Workflows",
+      "job": "agentic-coding",
+      "useWhen": "Guide an autonomous coding agent through a bounded repository change with discovery, implementation slices, verification, and handoff.",
+      "stage": "decide",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Guide an autonomous coding agent through a bounded repository change with discovery, implementation slices, verification, and handoff.",
+      "tags": [
+        "agentic",
+        "coding"
+      ],
+      "contract": {
+        "job": "agentic-coding",
+        "useWhen": "Guide an autonomous coding agent through a bounded repository change with discovery, implementation slices, verification, and handoff.",
+        "minimumBlocks": [
+          "frame.task",
+          "mode.explore",
+          "guardrail.scope-creep",
+          "schema.execution-brief"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`mode.explore`",
+          "`strategy.problem-split`",
+          "`recurse.decompose`",
+          "`guardrail.bounded-recursion`",
+          "`guardrail.assumption-audit`",
+          "`guardrail.scope-creep`",
+          "`schema.execution-brief`",
+          "`rubric.plan-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Letting the agent continue exploring or refactoring after the acceptance criteria are already satisfied.",
+        "chooseInsteadWhen": "use `implement-change` for a human-sized bounded edit that does not need agent loop control. Use `review-code` when the main job is critique of an existing diff."
+      },
+      "io": {
+        "usefulInputs": [
+          "user request or issue",
+          "repository constraints and conventions",
+          "files or subsystems likely involved",
+          "acceptance criteria",
+          "allowed tools and verification commands",
+          "stopping or escalation conditions"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:task -> mode:explore -> strategy:problem-split -> recurse:decompose -> guardrail:bounded-recursion -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:execution-brief -> rubric:plan-quality",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": true,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "agentic-coding"
+        ],
+        [
+          "Use when",
+          "Guide an autonomous coding agent through a bounded repository change with discovery, implementation slices, verification, and handoff."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> mode:explore -> strategy:problem-split -> recurse:decompose -> guardrail:bounded-recursion -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:execution-brief -> rubric:plan-quality"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Useful inputs",
+          "user request or issue, repository constraints and conventions, files or subsystems likely involved, acceptance criteria, allowed tools and verification commands, stopping or escalation conditions"
+        ],
+        [
+          "Minimum blocks",
+          "frame.task, mode.explore, guardrail.scope-creep, schema.execution-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `mode.explore` -> `strategy.problem-split` -> `recurse.decompose` -> `guardrail.bounded-recursion` -> `guardrail.assumption-audit` -> `guardrail.scope-creep` -> `schema.execution-brief` -> `rubric.plan-quality`"
+        ],
+        [
+          "Choose instead when",
+          "use `implement-change` for a human-sized bounded edit that does not need agent loop control. Use `review-code` when the main job is critique of an existing diff."
+        ],
+        [
+          "Common failure mode",
+          "Letting the agent continue exploring or refactoring after the acceptance criteria are already satisfied."
+        ]
+      ],
+      "sourcePath": "stacks/agentic-coding.md"
+    },
+    {
+      "section": "Stack",
       "key": "stack.implement-change",
       "title": "implement-change",
       "family": "Developer Workflows",
@@ -6922,6 +7517,359 @@ globalThis.SITE_DATA = {
         ]
       ],
       "sourcePath": "stacks/implement-change.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.test-strategy",
+      "title": "test-strategy",
+      "family": "Developer Workflows",
+      "job": "test-strategy",
+      "useWhen": "Design the smallest useful test plan for a feature, bug fix, refactor, or risky system change.",
+      "stage": "critique",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Design the smallest useful test plan for a feature, bug fix, refactor, or risky system change.",
+      "tags": [
+        "test"
+      ],
+      "contract": {
+        "job": "test-strategy",
+        "useWhen": "Design the smallest useful test plan for a feature, bug fix, refactor, or risky system change.",
+        "minimumBlocks": [
+          "frame.success-criteria",
+          "mode.critique",
+          "schema.execution-brief"
+        ],
+        "fullSequence": [
+          "`frame.success-criteria`",
+          "`mode.explore`",
+          "`mode.critique`",
+          "`guardrail.assumption-audit`",
+          "`schema.execution-brief`",
+          "`rubric.plan-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Maximizing test count instead of covering the behavior, invariants, and failure modes that would change confidence.",
+        "chooseInsteadWhen": "use `debug` when the root cause is still unknown. Use `review-code` when tests already exist and the main job is evaluating a diff."
+      },
+      "io": {
+        "usefulInputs": [
+          "behavior under test",
+          "acceptance criteria or bug reproduction steps",
+          "existing test coverage",
+          "risk areas and invariants",
+          "available test harnesses",
+          "verification budget"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:success-criteria -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore",
+          "mode.critique"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": true,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "test-strategy"
+        ],
+        [
+          "Use when",
+          "Design the smallest useful test plan for a feature, bug fix, refactor, or risky system change."
+        ],
+        [
+          "Composition profile",
+          "frame:success-criteria -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality"
+        ],
+        [
+          "Stage",
+          "critique"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Useful inputs",
+          "behavior under test, acceptance criteria or bug reproduction steps, existing test coverage, risk areas and invariants, available test harnesses, verification budget"
+        ],
+        [
+          "Minimum blocks",
+          "frame.success-criteria, mode.critique, schema.execution-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.success-criteria` -> `mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.execution-brief` -> `rubric.plan-quality`"
+        ],
+        [
+          "Choose instead when",
+          "use `debug` when the root cause is still unknown. Use `review-code` when tests already exist and the main job is evaluating a diff."
+        ],
+        [
+          "Common failure mode",
+          "Maximizing test count instead of covering the behavior, invariants, and failure modes that would change confidence."
+        ]
+      ],
+      "sourcePath": "stacks/test-strategy.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.refactor-plan",
+      "title": "refactor-plan",
+      "family": "Developer Workflows",
+      "job": "refactor-plan",
+      "useWhen": "Plan a behavior-preserving refactor with invariants, migration order, and rollback checkpoints explicit.",
+      "stage": "decide",
+      "outputKind": "plan",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Plan a behavior-preserving refactor with invariants, migration order, and rollback checkpoints explicit.",
+      "tags": [
+        "refactor",
+        "plan"
+      ],
+      "contract": {
+        "job": "refactor-plan",
+        "useWhen": "Plan a behavior-preserving refactor with invariants, migration order, and rollback checkpoints explicit.",
+        "minimumBlocks": [
+          "frame.current-state",
+          "frame.success-criteria",
+          "schema.execution-brief"
+        ],
+        "fullSequence": [
+          "`frame.current-state`",
+          "`frame.success-criteria`",
+          "`mode.explore`",
+          "`guardrail.assumption-audit`",
+          "`strategy.premortem`",
+          "`schema.execution-brief`",
+          "`rubric.plan-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Treating tidier code as success without proving existing behavior, contracts, and operational assumptions still hold.",
+        "chooseInsteadWhen": "use `safe-migration` if the change crosses schema, API, or rollout boundaries. Use `implement-change` if the primary goal is new behavior rather than preserving behavior while improving structure."
+      },
+      "io": {
+        "usefulInputs": [
+          "code smell or structural problem",
+          "current behavior and invariants",
+          "affected files, callers, or services",
+          "constraints and non-goals",
+          "tests or verification commands",
+          "rollout or compatibility requirements"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:current-state -> frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> schema:execution-brief -> rubric:plan-quality",
+        "primaryMode": "mode.explore",
+        "modeRefs": [
+          "mode.explore"
+        ],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "stance",
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "refactor-plan"
+        ],
+        [
+          "Use when",
+          "Plan a behavior-preserving refactor with invariants, migration order, and rollback checkpoints explicit."
+        ],
+        [
+          "Composition profile",
+          "frame:current-state -> frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> schema:execution-brief -> rubric:plan-quality"
+        ],
+        [
+          "Stage",
+          "decide"
+        ],
+        [
+          "Output kind",
+          "plan"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Useful inputs",
+          "code smell or structural problem, current behavior and invariants, affected files, callers, or services, constraints and non-goals, tests or verification commands, rollout or compatibility requirements"
+        ],
+        [
+          "Minimum blocks",
+          "frame.current-state, frame.success-criteria, schema.execution-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.current-state` -> `frame.success-criteria` -> `mode.explore` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.execution-brief` -> `rubric.plan-quality`"
+        ],
+        [
+          "Choose instead when",
+          "use `safe-migration` if the change crosses schema, API, or rollout boundaries. Use `implement-change` if the primary goal is new behavior rather than preserving behavior while improving structure."
+        ],
+        [
+          "Common failure mode",
+          "Treating tidier code as success without proving existing behavior, contracts, and operational assumptions still hold."
+        ]
+      ],
+      "sourcePath": "stacks/refactor-plan.md"
+    },
+    {
+      "section": "Stack",
+      "key": "stack.api-contract-design",
+      "title": "api-contract-design",
+      "family": "Developer Workflows",
+      "job": "api-contract-design",
+      "useWhen": "Design or revise an API contract with consumers, invariants, errors, compatibility, and rollout constraints explicit.",
+      "stage": "frame",
+      "outputKind": "brief",
+      "effort": "deep",
+      "stakes": "high",
+      "summary": "Design or revise an API contract with consumers, invariants, errors, compatibility, and rollout constraints explicit.",
+      "tags": [
+        "api",
+        "contract",
+        "design"
+      ],
+      "contract": {
+        "job": "api-contract-design",
+        "useWhen": "Design or revise an API contract with consumers, invariants, errors, compatibility, and rollout constraints explicit.",
+        "minimumBlocks": [
+          "frame.task",
+          "frame.success-criteria",
+          "schema.requirements-brief"
+        ],
+        "fullSequence": [
+          "`frame.task`",
+          "`frame.stakeholders`",
+          "`frame.success-criteria`",
+          "`strategy.tradeoff-matrix`",
+          "`guardrail.assumption-audit`",
+          "`schema.requirements-brief`",
+          "`rubric.plan-quality`"
+        ],
+        "blockOrderRationale": "",
+        "commonSwaps": "",
+        "commonFailureMode": "Specifying the happy path while leaving error semantics, compatibility promises, or consumer obligations implicit.",
+        "chooseInsteadWhen": "use `architecture-review` when the system structure already exists and needs critique. Use `safe-migration` when the API change is already chosen and the main job is migration sequencing."
+      },
+      "io": {
+        "usefulInputs": [
+          "producer and consumer responsibilities",
+          "user or service workflows",
+          "data model and invariants",
+          "compatibility constraints",
+          "error and retry expectations",
+          "security or authorization boundaries"
+        ]
+      },
+      "composition": {
+        "phaseOrder": "frame:task -> frame:stakeholders -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> schema:requirements-brief -> rubric:plan-quality",
+        "primaryMode": "",
+        "modeRefs": [],
+        "hasSchema": true,
+        "hasQualityGate": true,
+        "hasBoundedRecursion": false,
+        "needsModeHandoff": false,
+        "needsRecursionBoundary": false,
+        "strengths": [
+          "framing",
+          "reasoning",
+          "checks",
+          "output"
+        ]
+      },
+      "body": [
+        [
+          "Job",
+          "api-contract-design"
+        ],
+        [
+          "Use when",
+          "Design or revise an API contract with consumers, invariants, errors, compatibility, and rollout constraints explicit."
+        ],
+        [
+          "Composition profile",
+          "frame:task -> frame:stakeholders -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> schema:requirements-brief -> rubric:plan-quality"
+        ],
+        [
+          "Stage",
+          "frame"
+        ],
+        [
+          "Output kind",
+          "brief"
+        ],
+        [
+          "Effort",
+          "deep"
+        ],
+        [
+          "Stakes",
+          "high"
+        ],
+        [
+          "Useful inputs",
+          "producer and consumer responsibilities, user or service workflows, data model and invariants, compatibility constraints, error and retry expectations, security or authorization boundaries"
+        ],
+        [
+          "Minimum blocks",
+          "frame.task, frame.success-criteria, schema.requirements-brief"
+        ],
+        [
+          "Suggested blocks",
+          "`frame.task` -> `frame.stakeholders` -> `frame.success-criteria` -> `strategy.tradeoff-matrix` -> `guardrail.assumption-audit` -> `schema.requirements-brief` -> `rubric.plan-quality`"
+        ],
+        [
+          "Choose instead when",
+          "use `architecture-review` when the system structure already exists and needs critique. Use `safe-migration` when the API change is already chosen and the main job is migration sequencing."
+        ],
+        [
+          "Common failure mode",
+          "Specifying the happy path while leaving error semantics, compatibility promises, or consumer obligations implicit."
+        ]
+      ],
+      "sourcePath": "stacks/api-contract-design.md"
     },
     {
       "section": "Stack",
