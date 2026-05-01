@@ -5,9 +5,11 @@ Extract reusable learning from a completed project, incident, launch, decision, 
 Blocks:
 1. `mode.reflect`
 2. `frame.cause-mapping`
-3. `frame.extract-insights`
-4. `schema.incident-postmortem`
-5. `schema.execution-brief`
+3. `schema.incident-postmortem`
+
+Optional add-ons:
+- `frame.extract-insights` when raw material needs synthesis before the final artifact.
+- `schema.execution-brief` when the result must become ordered action.
 
 Expected output: Retrospective with causal lessons, reusable insights, and concrete follow-up actions.
 
@@ -19,4 +21,4 @@ Expected output: Retrospective with causal lessons, reusable insights, and concr
 
 **Common failure mode:** Producing a narrative recap without identifying what should change next time.
 
-**Minimum blocks:** `mode.reflect` + `frame.extract-insights` + `schema.execution-brief`
+**Minimum blocks:** `mode.reflect` + `frame.cause-mapping` + `schema.incident-postmortem`

@@ -976,7 +976,11 @@ function createCard(item) {
     card.dataset.stackEffort = item.effort || getStackEffort(item);
     const countBadge = document.createElement("span");
     countBadge.className = "stack-size-badge";
-    countBadge.textContent = `${stackRefs.length} block${stackRefs.length !== 1 ? "s" : ""}`;
+    const optionalBlocks = item.contract && "optionalBlocks" in item.contract && Array.isArray(item.contract.optionalBlocks)
+      ? item.contract.optionalBlocks
+      : [];
+    const optionalCount = optionalBlocks.length;
+    countBadge.textContent = `${stackRefs.length} default${optionalCount > 0 ? ` + ${optionalCount} optional` : ""}`;
     card.querySelector(".card-meta").appendChild(countBadge);
 
     if (cardSubmeta) {
@@ -1012,7 +1016,12 @@ function createCard(item) {
           return `<span class="wf-step-pill">${escHtml(ref)}</span>`;
         });
         const sep = '<span class="wf-step-arrow" aria-hidden="true">›</span>';
-        return `<p><strong>${renderBodyText(labelText)}:</strong></p><div class="wf-steps-row">${pills.join(sep)}</div>`;
+        return `<p><strong>Default blocks:</strong></p><div class="wf-steps-row">${pills.join(sep)}</div>`;
+      }
+      if (labelText === "Optional add-ons") {
+        const items = Array.isArray(text) ? text : String(text || "").split(", ");
+        const lis = items.filter(Boolean).map((entry) => `<li>${renderBodyText(entry)}</li>`).join("");
+        return lis ? `<p><strong>${renderBodyText(labelText)}:</strong></p><ul class="optional-addons">${lis}</ul>` : "";
       }
       return `<p><strong>${renderBodyText(labelText)}:</strong> ${renderBodyText(text)}</p>`;
     }).join("");

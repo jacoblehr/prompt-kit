@@ -3,11 +3,13 @@
 Synthesize customer feedback, interviews, support tickets, or usage notes into decision-useful insight.
 
 Blocks:
-1. `mode.explore`
-2. `frame.extract-insights`
-3. `guardrail.disconfirming-evidence`
-4. `mode.synthesize`
-5. `schema.findings-brief`
+1. `frame.extract-insights`
+2. `mode.synthesize`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
+- `guardrail.disconfirming-evidence` when confirmation bias is a material risk.
 
 Expected output: Ranked customer insights with evidence, counter-signals, implications, and confidence.
 

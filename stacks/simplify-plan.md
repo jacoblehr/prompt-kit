@@ -3,11 +3,13 @@
 Reduce an overcomplicated plan, prompt, process, or feature scope to the smallest version that still achieves the objective.
 
 Blocks:
-1. `frame.task`
-2. `strategy.constraint-relaxation`
-3. `mode.critique`
-4. `guardrail.scope-creep`
-5. `schema.execution-brief`
+1. `strategy.constraint-relaxation`
+2. `guardrail.scope-creep`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `mode.critique` when candidate answers need adversarial review.
 
 Expected output: Simplified plan with real constraints preserved, false constraints challenged, creep removed, and the next version sequenced.
 

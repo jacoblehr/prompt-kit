@@ -3,11 +3,13 @@
 Shape a creative, campaign, content, or concept request into a brief with enough direction to make useful work.
 
 Blocks:
-1. `frame.task`
-2. `frame.audience`
-3. `mode.create`
-4. `frame.success-criteria`
-5. `schema.content-draft`
+1. `frame.audience`
+2. `mode.create`
+3. `schema.content-draft`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `frame.success-criteria` when success needs to be judged before options are compared.
 
 Expected output: Creative brief or first draft with audience, desired response, concept direction, constraints, and success criteria.
 
@@ -19,4 +21,4 @@ Expected output: Creative brief or first draft with audience, desired response, 
 
 **Common failure mode:** Producing clever ideas that are not tied to audience, channel, constraint, or desired response.
 
-**Minimum blocks:** `frame.audience` + `mode.create` + `frame.success-criteria`
+**Minimum blocks:** `frame.audience` + `mode.create` + `schema.content-draft`

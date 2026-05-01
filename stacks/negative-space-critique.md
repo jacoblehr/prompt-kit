@@ -10,12 +10,14 @@ Useful inputs:
 - known objections or excluded alternatives
 
 Blocks:
-1. `frame.task`
-2. `mode.critique`
-3. `strategy.red-team`
-4. `guardrail.assumption-audit`
-5. `guardrail.disconfirming-evidence`
-6. `schema.findings-brief`
+1. `mode.critique`
+2. `guardrail.assumption-audit`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `strategy.red-team` when the artifact needs a stronger opposing test.
+- `guardrail.disconfirming-evidence` when confirmation bias is a material risk.
 
 Expected output: Prioritized omissions, hidden dependencies, missing countercases, consequences of each absence, and concrete fixes.
 

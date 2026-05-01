@@ -3,12 +3,14 @@
 Evaluate whether an interface, workflow, document, onboarding path, or process lets its intended user complete the job without avoidable friction.
 
 Blocks:
-1. `frame.audience`
-2. `frame.current-state`
-3. `strategy.journey-map`
-4. `mode.critique`
-5. `rubric.usability-quality`
-6. `schema.findings-brief`
+1. `strategy.journey-map`
+2. `rubric.usability-quality`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `frame.audience` when audience fit changes the output.
+- `frame.current-state` when the present system state needs a clear baseline.
+- `mode.critique` when candidate answers need adversarial review.
 
 Expected output: Prioritized usability findings tied to journey steps, user friction, failure states, and concrete fixes.
 

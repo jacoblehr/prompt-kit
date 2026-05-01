@@ -70,6 +70,7 @@ interface PromptKitStackContract {
   useWhen?: string;
   minimumBlocks?: string[];
   fullSequence?: string[];
+  optionalBlocks?: string[];
   blockOrderRationale?: string;
   commonSwaps?: string;
   commonFailureMode?: string;

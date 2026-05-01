@@ -1,28 +1,9 @@
 # Prompt
 
-Render this chosen change or direction as a staged rollout plan.
+Render the change as a rollout plan.
+Keep it concise, concrete, and directly usable; omit process notes.
 
-Requirements:
-
-- define the rollout objective and success signal
-- sequence phases from lowest-risk learning to broader release
-- name owners or responsible roles where relevant
-- include stakeholder or audience actions, not only internal tasks
-- specify communication points and monitoring signals
-- include rollback, pause, or escalation triggers
-- include an adoption check after launch
-
-Return:
-
-- rollout objective
-- phases
-- audience or stakeholder actions
-- owner or responsible role
-- communication points
-- monitoring signals
-- rollback or pause trigger
-- adoption check
-- immediate next action
+Return: phases, audience actions, communications, monitoring, risks, rollback trigger, owner.
 
 ---
 context: {context}

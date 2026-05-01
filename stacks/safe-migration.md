@@ -4,11 +4,13 @@ Plan and gate a migration with explicit rollback triggers so existing behavior c
 
 Blocks:
 1. `frame.task`
-2. `mode.explore`
-3. `guardrail.assumption-audit`
-4. `strategy.premortem`
-5. `rubric.plan-quality`
-6. `schema.execution-brief`
+2. `guardrail.assumption-audit`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
+- `strategy.premortem` when failure paths should be surfaced before committing.
+- `rubric.plan-quality` when the plan needs an explicit quality check.
 
 Expected output: Sequenced migration plan with rollback triggers, dependency order, and pre-commit risk inventory.
 

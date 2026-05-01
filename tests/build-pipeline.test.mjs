@@ -121,6 +121,29 @@ describe('stack ref integrity', () => {
     assert.deepEqual(failures, [])
   })
 
+  test('all stack optional add-on refs resolve to a known block', () => {
+    const failures = []
+    for (const stack of stacks) {
+      for (const item of stack.contract?.optionalBlocks ?? []) {
+        const refs = [...item.matchAll(/`([^`]+)`/g)].map((m) => m[1].trim())
+        for (const ref of refs) {
+          if (!knownRefs.has(ref)) {
+            failures.push(`${stack.key}: optionalBlocks ref "${ref}" not found`)
+          }
+        }
+      }
+    }
+    assert.deepEqual(failures, [])
+  })
+
+  test('optional add-ons are emitted separately from default stack steps', () => {
+    const stack = stacks.find((s) => s.job === 'agentic-coding')
+
+    assert.ok(stack, 'agentic-coding stack should exist')
+    assert.ok(stack.contract.optionalBlocks.some((item) => item.includes('`strategy.problem-split`')))
+    assert.equal(stack.contract.fullSequence.includes('`strategy.problem-split`'), false)
+  })
+
   test('all featuredStacks refs resolve to a known block', () => {
     const failures = []
     for (const fs of featuredStacks) {
@@ -182,6 +205,7 @@ describe('CLI output format', () => {
     })
     assert.match(output, /\d+ stack\(s\) found/)
     assert.match(output, new RegExp(`${stacks.length} stack\\(s\\) found`))
+    assert.match(output, /default blocks/)
     assert.doesNotMatch(output, /^\s+README\s+-/m)
   })
 
@@ -234,6 +258,12 @@ describe('browser builder reference coverage', () => {
 
     const failures = [...generatedTypes].filter((type) => !uiTypes.has(type))
     assert.deepEqual(failures, [])
+  })
+
+  test('browser distinguishes default stack blocks from optional add-ons', () => {
+    assert.match(siteJs, /Default blocks/)
+    assert.match(siteJs, /Optional add-ons/)
+    assert.match(siteJs, /optionalBlocks/)
   })
 })
 

@@ -3,11 +3,13 @@
 Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.
 
 Blocks:
-1. `frame.task`
-2. `mode.critique`
-3. `guardrail.disconfirming-evidence`
-4. `strategy.premortem`
-5. `schema.findings-brief`
+1. `mode.critique`
+2. `guardrail.disconfirming-evidence`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `strategy.premortem` when failure paths should be surfaced before committing.
 
 Expected output: Ranked ethical risks with strongest opposing cases considered and structural tradeoffs named.
 
@@ -17,4 +19,4 @@ Expected output: Ranked ethical risks with strongest opposing cases considered a
 
 **Common failure mode:** Treating ethics as a generic concern list instead of specific harm paths with affected parties and mitigation choices.
 
-**Minimum blocks:** `mode.critique` + `strategy.premortem`
+**Minimum blocks:** `mode.critique` + `guardrail.disconfirming-evidence` + `schema.findings-brief`

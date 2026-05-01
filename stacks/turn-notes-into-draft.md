@@ -5,11 +5,13 @@ Turn scattered notes, transcripts, bullets, or research fragments into a useful 
 Blocks:
 1. `frame.audience`
 2. `frame.extract-insights`
-3. `mode.synthesize`
-4. `schema.content-draft`
-5. `rubric.writing-quality`
-6. `recurse.refine`
-7. `guardrail.bounded-recursion`
+3. `schema.content-draft`
+
+Optional add-ons:
+- `mode.synthesize` when several sources must become one coherent output.
+- `rubric.writing-quality` when prose quality or instruction clarity matters.
+- `recurse.refine` when one more bounded improvement pass is useful.
+- `guardrail.bounded-recursion` when recursive or iterative work needs a stopping rule.
 
 Expected output: Audience-fit draft with the main point early, source signal preserved, and one bounded refinement pass against writing quality.
 

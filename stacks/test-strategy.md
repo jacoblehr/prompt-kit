@@ -12,11 +12,13 @@ Useful inputs:
 
 Blocks:
 1. `frame.success-criteria`
-2. `mode.explore`
-3. `mode.critique`
-4. `guardrail.assumption-audit`
-5. `schema.execution-brief`
-6. `rubric.plan-quality`
+2. `mode.critique`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `rubric.plan-quality` when the plan needs an explicit quality check.
 
 Expected output: Test strategy with must-cover behaviors, risk-based test cases, fixtures or harness notes, verification commands, and explicit gaps.
 

@@ -11,13 +11,15 @@ Useful inputs:
 - available prototype medium
 
 Blocks:
-1. `frame.task`
-2. `frame.audience`
-3. `mode.create`
-4. `strategy.constraint-relaxation`
-5. `frame.success-criteria`
-6. `schema.experiment-plan`
-7. `rubric.usability-quality`
+1. `mode.create`
+2. `frame.success-criteria`
+3. `schema.experiment-plan`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `frame.audience` when audience fit changes the output.
+- `strategy.constraint-relaxation` when fixed-looking constraints should be challenged.
+- `rubric.usability-quality` when the workflow must be judged against user completion.
 
 Expected output: Prototype concept, what makes it intentionally strange, the smallest build or simulation, learning metric, test audience, and stop/continue rule.
 

@@ -1,21 +1,9 @@
 # Prompt
 
-Render this chosen direction or decision as a structured memo.
+Render the choice as a decision memo.
+Keep it concise, concrete, and directly usable; omit process notes.
 
-Requirements:
-
-- make the actual choice explicit
-- keep rationale concise and decision-relevant
-- include only the risks and tradeoffs that matter to execution
-
-Return:
-
-- decision
-- rationale
-- tradeoffs
-- risks
-- confidence
-- next action
+Return: decision, rationale, tradeoffs, risks, confidence, next action.
 
 ---
 context: {context}

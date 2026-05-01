@@ -4,10 +4,12 @@ Review code for correctness, contracts, and blast radius before approving it.
 
 Blocks:
 1. `frame.task`
-2. `mode.explore`
-3. `mode.critique`
-4. `guardrail.assumption-audit`
-5. `schema.findings-brief`
+2. `mode.critique`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
 
 Expected output: Prioritized issues with correctness, boundary, and impact findings, each with a concrete fix.
 
@@ -19,4 +21,4 @@ Expected output: Prioritized issues with correctness, boundary, and impact findi
 
 **Common failure mode:** Reporting style or preference issues before correctness, contract, or blast-radius findings.
 
-**Minimum blocks:** `mode.critique` + `schema.findings-brief`
+**Minimum blocks:** `frame.task` + `mode.critique` + `schema.findings-brief`

@@ -12,10 +12,12 @@ Useful inputs:
 Blocks:
 1. `frame.task`
 2. `frame.success-criteria`
-3. `strategy.problem-split`
-4. `guardrail.assumption-audit`
-5. `schema.execution-brief`
-6. `rubric.plan-quality`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `strategy.problem-split` when the work needs implementation slices or subproblems.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `rubric.plan-quality` when the plan needs an explicit quality check.
 
 Expected output: A scoped implementation plan or completed-change brief with files touched, verification steps, risks, and remaining gaps.
 

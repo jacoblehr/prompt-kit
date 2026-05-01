@@ -3,11 +3,13 @@
 Evaluate a system design for structural soundness before committing to it.
 
 Blocks:
-1. `frame.task`
-2. `mode.critique`
-3. `guardrail.assumption-audit`
-4. `strategy.premortem`
-5. `schema.findings-brief`
+1. `mode.critique`
+2. `guardrail.assumption-audit`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `strategy.premortem` when failure paths should be surfaced before committing.
 
 Expected output: Structural risks ranked, hidden assumptions tested, and failure paths named with concrete fixes before any decision is committed.
 
@@ -17,4 +19,4 @@ Expected output: Structural risks ranked, hidden assumptions tested, and failure
 
 **Common failure mode:** Judging architectural elegance instead of naming the failure paths that would change the decision.
 
-**Minimum blocks:** `mode.critique` + `guardrail.assumption-audit`
+**Minimum blocks:** `mode.critique` + `guardrail.assumption-audit` + `schema.findings-brief`

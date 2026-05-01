@@ -3,12 +3,14 @@
 Plan a change, launch, policy, migration, or process update so adoption, monitoring, and rollback are explicit.
 
 Blocks:
-1. `frame.task`
-2. `frame.current-state`
-3. `frame.stakeholders`
-4. `strategy.premortem`
-5. `guardrail.scope-creep`
-6. `schema.rollout-plan`
+1. `frame.stakeholders`
+2. `strategy.premortem`
+3. `schema.rollout-plan`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `frame.current-state` when the present system state needs a clear baseline.
+- `guardrail.scope-creep` when the prompt may expand beyond the objective.
 
 Expected output: Staged rollout plan with stakeholder actions, communication points, monitoring signals, rollback triggers, and the immediate next action.
 

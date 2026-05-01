@@ -476,8 +476,7 @@ function buildBuilderCompositionBrief(stack, inputPlan, orderedItems = []) {
   const lines = [
     "# One-shot prompt",
     "",
-    "Use the blocks below as ordered phases inside a single response. Do not treat them as separate turns or wait for permission between phases.",
-    "Use intermediate phases to improve the answer, but return the expected final artifact unless the user explicitly asks to see the phase work."
+    "Use these blocks as ordered phases; return only the final artifact."
   ];
 
   if (promptItems.length > 1) {
@@ -487,30 +486,20 @@ function buildBuilderCompositionBrief(stack, inputPlan, orderedItems = []) {
   if (handoffSlots.length > 0) {
     lines.push("", "Input handoffs:");
     handoffSlots.forEach((slot) => {
-      lines.push(`- ${slot.blockLabel} ${slot.label}: use the output from ${slot.previousLabel}.`);
+      lines.push(`- ${slot.blockLabel} ${slot.label}: output from ${slot.previousLabel}.`);
     });
   }
 
   if (stack) {
     lines.push("", "## Stack brief", "", `Stack: ${stack.job || stack.title}`, `Goal: ${stack.summary || stack.useWhen || "Complete the requested task."}`);
-
-    if (stack.composition?.phaseOrder) {
-      lines.push(`Composition: ${stack.composition.phaseOrder}`);
-    }
     if (stack.composition?.needsModeHandoff) {
-      lines.push("Mode handoff: apply the modes sequentially as phases; do not blend them into one simultaneous stance.");
+      lines.push("Mode handoff: apply modes sequentially.");
     }
     if (stack.composition?.needsRecursionBoundary) {
-      lines.push("Recursion boundary: keep recursive reasoning bounded and stop when the requested output is directly actionable.");
-    }
-    if (stack.io?.usefulInputs?.length) {
-      lines.push("", "Useful inputs:", asSentenceList(stack.io.usefulInputs));
+      lines.push("Recursion boundary: stop when output is usable.");
     }
     if (stack.io?.expectedOutputs?.length) {
-      lines.push("", "Expected output:", asSentenceList(stack.io.expectedOutputs));
-    }
-    if (stack.contract?.blockOrderRationale) {
-      lines.push("", "Why this order works:", stack.contract.blockOrderRationale);
+      lines.push("Expected:", asSentenceList(stack.io.expectedOutputs));
     }
   }
   return lines.join("\n");

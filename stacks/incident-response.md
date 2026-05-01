@@ -3,11 +3,13 @@
 Contain and diagnose an active incident, then close with a written post-mortem and action plan.
 
 Blocks:
-1. `frame.task`
-2. `mode.explore`
-3. `frame.cause-mapping`
-4. `mode.decide`
-5. `schema.execution-brief`
+1. `frame.cause-mapping`
+2. `mode.decide`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `mode.explore` when premature convergence is a real risk.
 
 Expected output: Incident scoped, likely cause identified, containment or next diagnostic action chosen, and corrective work assigned with urgency.
 

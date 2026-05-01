@@ -1,19 +1,9 @@
 # Prompt
 
-Map the causes behind this outcome or problem.
+Map the visible symptom back to the most likely systemic cause.
+Keep only decision-useful detail; do not invent missing context.
 
-Requirements:
-- start with the visible symptom
-- trace back at least three levels of causation
-- identify where the causal chain branches
-- mark the earliest point where intervention was plausible
-- name the most likely root cause
-
-Return:
-- visible symptom
-- causal chain (at least 3 levels, branching where applicable)
-- earliest plausible intervention point
-- root cause
+Return: symptom, causal chain, branches, earliest intervention point, likely root cause.
 
 ---
 context: {context}

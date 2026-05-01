@@ -1,19 +1,9 @@
 # Prompt
 
-Extract the highest-value insights from this material.
+Extract decision-useful insights from the source material.
+Keep only decision-useful detail; do not invent missing context.
 
-Requirements:
-- prioritise insights that most directly change what to do next
-- when purpose is provided, filter for insights that serve {purpose}
-- keep supporting evidence specific rather than generic
-
-Return:
-For each insight:
-- key insight
-- why it matters
-- supporting evidence
-- action or implication
+Return: key patterns, strongest evidence, tensions, implications, open questions.
 
 ---
 context: {context}
-purpose: {purpose}

@@ -3,11 +3,13 @@
 Design a useful experiment before acting on a hypothesis, product bet, or causal claim.
 
 Blocks:
-1. `frame.task`
-2. `frame.success-criteria`
-3. `guardrail.assumption-audit`
-4. `schema.experiment-plan`
-5. `rubric.research-method`
+1. `frame.success-criteria`
+2. `schema.experiment-plan`
+3. `rubric.research-method`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
 
 Expected output: Experiment plan with hypothesis, method, metric, confounds, and a decision rule set before results are known.
 

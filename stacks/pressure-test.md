@@ -3,12 +3,14 @@
 Stress-test a plan before committing to find failure modes optimism may be obscuring.
 
 Blocks:
-1. `frame.task`
-2. `mode.critique`
-3. `strategy.premortem`
-4. `strategy.red-team`
-5. `guardrail.assumption-audit`
-6. `schema.findings-brief`
+1. `mode.critique`
+2. `strategy.premortem`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `strategy.red-team` when the artifact needs a stronger opposing test.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
 
 Expected output: Prioritized risk inventory with mitigations that materially improve the plan before execution.
 
@@ -20,4 +22,4 @@ Expected output: Prioritized risk inventory with mitigations that materially imp
 
 **Common failure mode:** Producing a long risk list without severity, evidence, or a concrete fix path.
 
-**Minimum blocks:** `mode.critique` + `strategy.premortem` + `guardrail.assumption-audit`
+**Minimum blocks:** `mode.critique` + `strategy.premortem` + `schema.findings-brief`

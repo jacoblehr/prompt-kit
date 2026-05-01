@@ -77,6 +77,16 @@ describe('catalog build API', () => {
       []
     )
   })
+
+  test('stacks can expose optional add-ons separately from default blocks', () => {
+    const catalog = buildCatalog({ root: ROOT })
+    const stack = catalog.stacks.find((item) => item.job === 'agentic-coding')
+
+    assert.ok(stack)
+    assert.ok(Array.isArray(stack.contract.optionalBlocks))
+    assert.ok(stack.contract.optionalBlocks.some((item) => item.includes('`strategy.problem-split`')))
+    assert.equal(stack.contract.fullSequence.includes('`strategy.problem-split`'), false)
+  })
 })
 
 describe('prompt utilities', () => {

@@ -4,10 +4,12 @@ Diagnose a fault systematically before attempting a fix.
 
 Blocks:
 1. `frame.task`
-2. `mode.explore`
-3. `mode.critique`
-4. `frame.cause-mapping`
-5. `schema.execution-brief`
+2. `frame.cause-mapping`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
+- `mode.critique` when candidate answers need adversarial review.
 
 Expected output: Root cause identified, highest-value next experiment named, and fix validated as addressing cause not symptom.
 
@@ -23,4 +25,4 @@ Performance variant:
 
 **Common failure mode:** Jumping to a fix before the candidate cause has survived critique and causal mapping.
 
-**Minimum blocks:** `frame.task` + `frame.cause-mapping`
+**Minimum blocks:** `frame.task` + `frame.cause-mapping` + `schema.execution-brief`

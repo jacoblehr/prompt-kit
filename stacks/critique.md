@@ -3,11 +3,13 @@
 Surface weaknesses, blind spots, and revision targets in any artifact.
 
 Blocks:
-1. `frame.task`
-2. `mode.critique`
-3. `guardrail.assumption-audit`
-4. `guardrail.disconfirming-evidence`
-5. `schema.findings-brief`
+1. `mode.critique`
+2. `guardrail.assumption-audit`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `guardrail.disconfirming-evidence` when confirmation bias is a material risk.
 
 Expected output: Prioritized defects with concrete revision advice and strongest opposing case considered.
 
@@ -19,4 +21,4 @@ Expected output: Prioritized defects with concrete revision advice and strongest
 
 **Common failure mode:** Producing clever objections without ranking which defects matter most or how to fix them.
 
-**Minimum blocks:** `mode.critique` + `schema.findings-brief`
+**Minimum blocks:** `mode.critique` + `guardrail.assumption-audit` + `schema.findings-brief`

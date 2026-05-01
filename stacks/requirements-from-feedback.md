@@ -5,9 +5,11 @@ Turn customer feedback, research notes, support tickets, stakeholder asks, or wo
 Blocks:
 1. `frame.extract-insights`
 2. `guardrail.source-grounding`
-3. `frame.audience`
-4. `frame.success-criteria`
-5. `schema.requirements-brief`
+3. `schema.requirements-brief`
+
+Optional add-ons:
+- `frame.audience` when audience fit changes the output.
+- `frame.success-criteria` when success needs to be judged before options are compared.
 
 Expected output: Requirements brief with user need, acceptance criteria, constraints, edge cases, non-goals, open questions, and source-grounded rationale.
 

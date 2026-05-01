@@ -3,11 +3,13 @@
 Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.
 
 Blocks:
-1. `frame.task`
-2. `mode.critique`
-3. `guardrail.uncertainty`
-4. `rubric.writing-quality`
-5. `schema.prompt-spec`
+1. `mode.critique`
+2. `rubric.writing-quality`
+3. `schema.prompt-spec`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `guardrail.uncertainty` when confidence needs calibration.
 
 Expected output: Rewritten prompt spec with task, output shape, constraints, non-goals, tests, and limitations all explicit.
 
@@ -17,4 +19,4 @@ Expected output: Rewritten prompt spec with task, output shape, constraints, non
 
 **Common failure mode:** Rephrasing the prompt without fixing missing context, constraints, boundaries, or output shape.
 
-**Minimum blocks:** `mode.critique` + `rubric.writing-quality`
+**Minimum blocks:** `mode.critique` + `rubric.writing-quality` + `schema.prompt-spec`

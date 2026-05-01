@@ -1,24 +1,9 @@
 # Prompt
 
-Render these alternatives as an option map.
+Render viable paths as an option map.
+Keep it concise, concrete, and directly usable; omit process notes.
 
-Requirements:
-
-- preserve genuinely different viable paths
-- state when each option is the right choice
-- separate strengths from assumptions
-- flag dominated options that should be dropped
-- name the evidence needed before choosing if the answer is not ready
-
-Return:
-
-- options
-- choose when
-- strengths
-- weaknesses or risks
-- key assumptions
-- evidence needed
-- options to drop
+Return: options, when each fits, assumptions, risks, evidence needed, recommendation if ready.
 
 ---
 context: {context}

@@ -4,10 +4,12 @@ Evaluate a past decision fairly by separating decision quality from outcome qual
 
 Blocks:
 1. `guardrail.assumption-audit`
-2. `guardrail.disconfirming-evidence`
-3. `frame.cause-mapping`
-4. `frame.extract-insights`
-5. `rubric.decision-quality`
+2. `frame.cause-mapping`
+3. `rubric.decision-quality`
+
+Optional add-ons:
+- `guardrail.disconfirming-evidence` when confirmation bias is a material risk.
+- `frame.extract-insights` when raw material needs synthesis before the final artifact.
 
 Expected output: Verdict on decision quality with specific lessons that apply to future decisions of the same type.
 

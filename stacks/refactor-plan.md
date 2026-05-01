@@ -13,11 +13,13 @@ Useful inputs:
 Blocks:
 1. `frame.current-state`
 2. `frame.success-criteria`
-3. `mode.explore`
-4. `guardrail.assumption-audit`
-5. `strategy.premortem`
-6. `schema.execution-brief`
-7. `rubric.plan-quality`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `strategy.premortem` when failure paths should be surfaced before committing.
+- `rubric.plan-quality` when the plan needs an explicit quality check.
 
 Expected output: Refactor plan with preserved behavior, ordered change slices, invariants to protect, verification checkpoints, and rollback triggers.
 

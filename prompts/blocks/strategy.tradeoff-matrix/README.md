@@ -31,7 +31,7 @@ There is only one viable option or the options are not yet concrete enough to co
 - one-factor decisions
 
 ## How to use:
-- compare only criteria that would change the decision
+- compare only criteria capable of changing the decision
 - keep scores qualitative unless the inputs justify numbers
 - name the tradeoff that makes the choice hard
 

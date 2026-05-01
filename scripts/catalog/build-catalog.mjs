@@ -542,6 +542,7 @@ function makeStack(fileName) {
   const useWhen = extractLeadLine(md);
   const inputs = extractSectionItems(md, "Useful inputs:");
   const sequence = extractSectionItems(md, ["Blocks:", "Suggested blocks:", "Suggested sequence:"]);
+  const optionalBlocks = extractSectionItems(md, "Optional add-ons:");
   const outputs = extractSectionItems(md, ["Expected outcome:", "Expected output:"]);
   const minimumBlocksMatch = md.match(/^\*\*Minimum blocks:\*\*\s*(.+)$/m);
   const whyMatch = md.match(/^\*\*Why this order works:\*\*\s*(.+)$/m);
@@ -565,6 +566,7 @@ function makeStack(fileName) {
     useWhen,
     minimumBlocks: parseInlineRefs(minimumBlocksMatch?.[1] || ""),
     fullSequence: sequence,
+    optionalBlocks,
     blockOrderRationale: whyMatch?.[1]?.trim() || "",
     commonSwaps: swapsMatch?.[1]?.trim() || "",
     commonFailureMode: failureMatch?.[1]?.trim() || "",
@@ -603,6 +605,7 @@ function makeStack(fileName) {
       ["Useful inputs", inputs],
       ["Minimum blocks", contract.minimumBlocks],
       ["Suggested blocks", sequence.join(" -> ")],
+      ["Optional add-ons", optionalBlocks],
       ["Why this order works", contract.blockOrderRationale],
       ["Choose instead when", contract.chooseInsteadWhen],
       ["Common swaps", contract.commonSwaps],
@@ -684,6 +687,11 @@ function validateCatalog({ blocks, stacks, featuredStacks }) {
     for (const item of stack.contract?.fullSequence || []) {
       for (const ref of parseInlineRefs(item)) {
         if (!blockRefs.has(ref.toLowerCase())) errors.push(`${stack.key}: fullSequence ref "${ref}" not found`);
+      }
+    }
+    for (const item of stack.contract?.optionalBlocks || []) {
+      for (const ref of parseInlineRefs(item)) {
+        if (!blockRefs.has(ref.toLowerCase())) errors.push(`${stack.key}: optionalBlocks ref "${ref}" not found`);
       }
     }
   });

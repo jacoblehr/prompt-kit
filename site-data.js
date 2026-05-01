@@ -687,7 +687,7 @@ globalThis.SITE_DATA = {
         "scenario",
         "planning"
       ],
-      "copy": "Identify the uncertainties that would most change the decision.\nCreate several meaningfully different plausible scenarios.\nFor each scenario, name the implication, the move that would work, and the indicator that would tell us it is becoming more likely.\nSeparate robust moves from scenario-specific bets.",
+      "copy": "Identify the uncertainties most likely to change the decision.\nCreate several meaningfully different plausible scenarios.\nFor each scenario, name the implication, the move likely to work, and the indicator showing it is becoming more likely.\nSeparate robust moves from scenario-specific bets.",
       "body": [
         [
           "Purpose",
@@ -1035,7 +1035,7 @@ globalThis.SITE_DATA = {
         "frame",
         "input"
       ],
-      "copy": "{task}",
+      "copy": "Identify the input needed to complete this task well.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: required input, optional context, missing details, assumptions, next question.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1107,7 +1107,7 @@ globalThis.SITE_DATA = {
         "frame",
         "task"
       ],
-      "copy": "Restate this raw request or situation as a structured problem frame.\n\nRequirements:\n\n- separate the stated ask from the likely objective\n- state when the objective is inferred rather than explicit\n- keep constraints literal\n- draw the scope boundary explicitly — name what is out of scope and why\n- surface unknowns without pretending to resolve them\n- recommend the next reasoning move rather than a full solution\n\nReturn:\n\n- stated ask\n- likely objective\n- in scope\n- out of scope\n- scope boundary to hold\n- constraints\n- knowns\n- unknowns\n- decision or action this frame is meant to support\n- recommended next reasoning step\n\n---\ncontext: {context}",
+      "copy": "Turn this request into a usable problem frame. Keep constraints literal and mark inferred objectives.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: stated ask, likely objective, in scope, out of scope, constraints, knowns, unknowns, next reasoning move.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1186,7 +1186,7 @@ globalThis.SITE_DATA = {
         "current",
         "state"
       ],
-      "copy": "Map the current state before proposing changes.\n\nRequirements:\n\n- describe what happens today, not the desired future state\n- identify actors, handoffs, inputs, outputs, and dependencies\n- separate pain points from constraints\n- preserve what already works\n- name informal workarounds or hidden coordination\n- identify the risks created by changing this state\n\nReturn:\n\n- current flow or state\n- actors involved\n- inputs and outputs\n- pain points\n- constraints\n- workarounds\n- what already works\n- change risks\n\n---\ncontext: {context}",
+      "copy": "Describe the current state before proposing change.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: current behavior, important constraints, known problems, recent changes, invariants to preserve.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1261,7 +1261,7 @@ globalThis.SITE_DATA = {
         "frame",
         "audience"
       ],
-      "copy": "Frame the audience before producing or revising this artifact.\n\nRequirements:\n\n- identify who the artifact must land with\n- name the action, belief, or decision the audience should reach\n- surface likely objections, anxieties, or misreadings\n- account for the channel and attention constraints\n- choose a tone and detail level that fit the audience\n\nReturn:\n\n- audience\n- desired action or response\n- current belief or context\n- likely objections or anxieties\n- channel constraints\n- tone and detail level\n\n---\ncontext: {context}",
+      "copy": "Frame the intended audience before shaping the artifact.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: audience, desired response, current context, likely objections, channel constraints, tone.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1339,7 +1339,7 @@ globalThis.SITE_DATA = {
         "frame",
         "stakeholders"
       ],
-      "copy": "Map the stakeholders for this change, decision, message, or plan.\n\nRequirements:\n\n- identify affected groups, decision-makers, blockers, operators, and end users separately\n- describe each group's incentive or concern without assuming they are irrational\n- name the behavior change or decision needed from each group\n- distinguish approval power from adoption influence\n- recommend a practical engagement move for each important stakeholder\n- call out any stakeholder that is missing but likely necessary\n\nReturn:\n\n- stakeholder or group\n- role in the outcome\n- current incentive or concern\n- likely objection or friction\n- needed behavior change\n- influence or dependency\n- best engagement move\n- missing stakeholder to verify\n\n---\ncontext: {context}",
+      "copy": "Map who is affected, responsible, or able to block the work.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: stakeholders, needs, concerns, decision rights, communication needs, likely conflicts.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1413,7 +1413,7 @@ globalThis.SITE_DATA = {
         "success",
         "criteria"
       ],
-      "copy": "Define explicit success criteria for this task or context.\n\nRequirements:\n\n- separate must-haves from nice-to-haves\n- include at least one failure condition\n- name the hardest tradeoff to watch\n- keep the criteria concrete enough to judge later\n\nReturn:\n\n- must-haves\n- nice-to-haves\n- failure conditions\n- tradeoffs to watch\n\n---\ncontext: {context}",
+      "copy": "Define what success means before judging options or plans.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: desired outcome, must-haves, nice-to-haves, constraints, failure conditions, acceptance criteria.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1488,7 +1488,7 @@ globalThis.SITE_DATA = {
         "guardrail",
         "uncertainty"
       ],
-      "copy": "State uncertainty explicitly for this current analysis, recommendation, or draft.\n\nRequirements:\n\n- separate facts from interpretation\n- distinguish assumptions from unknowns\n- distinguish \"I don't know\" (absent evidence) from \"evidence is mixed\" (conflicting evidence)\n- express confidence in plain language\n- name the single update that would most change the answer\n\nReturn:\n\n- facts relied on\n- assumptions\n- unknowns\n- confidence level\n- what to verify next\n- what would most change the conclusion\n\n---\nartifact: {artifact}",
+      "copy": "Separate what is known from what is assumed or still uncertain.\nFocus on material issues, not exhaustive commentary.\n\nReturn: facts, assumptions, unknowns, confidence, highest-value next evidence.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1565,7 +1565,7 @@ globalThis.SITE_DATA = {
         "scope",
         "creep"
       ],
-      "copy": "Audit this plan, prompt, recommendation, or scope for creep.\n\nRequirements:\n\n- restate the core objective in one sentence\n- distinguish essential work from nice-to-have expansion\n- identify items that add coordination, risk, or delay without changing the outcome\n- preserve necessary constraints; do not cut risk controls merely because they add effort\n- name the smallest useful next version\n- recommend what to remove, defer, or keep\n\nReturn:\n\n- core objective\n- in-scope items\n- scope creep candidates\n- deferred items\n- items to remove\n- smallest useful next version\n- scope boundary to hold\n\n---\nartifact: {artifact}",
+      "copy": "Keep the work inside the stated objective.\nFocus on material issues, not exhaustive commentary.\n\nReturn: essential work, optional work, out-of-scope items, scope boundary to hold.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1642,7 +1642,7 @@ globalThis.SITE_DATA = {
         "source",
         "grounding"
       ],
-      "copy": "Check whether this artifact is grounded in the supplied source material.\n\nRequirements:\n\n- list the important claims, findings, or recommendations\n- mark each claim as directly supported, inferred, contradicted, or unsupported\n- distinguish evidence from interpretation\n- flag missing sources and source contradictions\n- weaken or remove claims that are stronger than the evidence permits\n- name the revision needed to make the artifact source-faithful\n\nReturn:\n\n- key claim\n- source support\n- evidence type\n- unsupported leap\n- contradiction or missing source\n- revision needed\n- claims to remove or qualify\n\n---\nartifact: {artifact}",
+      "copy": "Check whether claims are grounded in the supplied source material.\nFocus on material issues, not exhaustive commentary.\n\nReturn: supported claims, inferred claims, unsupported claims, contradictions, source gaps.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1716,7 +1716,7 @@ globalThis.SITE_DATA = {
         "disconfirming",
         "evidence"
       ],
-      "copy": "Force a check against disconfirming evidence for this conclusion or recommendation.\n\nRequirements:\n\n- seek the strongest real opposing case, not a manufactured weak one\n- update if the opposing evidence materially changes the conclusion\n\nReturn:\n\n- conclusion under review\n- strongest opposing evidence or argument\n- what would be true if the conclusion were wrong\n- whether it still stands and why\n\n---\nartifact: {artifact}",
+      "copy": "Look for evidence or arguments that weaken the current conclusion.\nFocus on material issues, not exhaustive commentary.\n\nReturn: strongest counterevidence, impact on confidence, what would change the answer.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1792,7 +1792,7 @@ globalThis.SITE_DATA = {
         "assumption",
         "audit"
       ],
-      "copy": "Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.\n\nRequirements:\n\n- focus first on assumptions where being wrong would most damage the outcome\n- separate empirical claims from causal bets and value judgments\n- note whether each assumption is explicit or merely implied\n- do not invent evidence that is not present\n\nReturn:\nFor each assumption:\n\n- assumption\n- explicit or implied\n- type (empirical / causal / value)\n- confidence (high / medium / low)\n- impact if false\n- what would falsify it\n\n---\nartifact: {artifact}",
+      "copy": "Audit the artifact for assumptions that could change the answer.\nFocus on material issues, not exhaustive commentary.\n\nReturn: assumption, why it matters, confidence, how to verify, what changes if false.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1868,7 +1868,7 @@ globalThis.SITE_DATA = {
         "option",
         "map"
       ],
-      "copy": "Render these alternatives as an option map.\n\nRequirements:\n\n- preserve genuinely different viable paths\n- state when each option is the right choice\n- separate strengths from assumptions\n- flag dominated options that should be dropped\n- name the evidence needed before choosing if the answer is not ready\n\nReturn:\n\n- options\n- choose when\n- strengths\n- weaknesses or risks\n- key assumptions\n- evidence needed\n- options to drop\n\n---\ncontext: {context}",
+      "copy": "Render viable paths as an option map.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: options, when each fits, assumptions, risks, evidence needed, recommendation if ready.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1946,7 +1946,7 @@ globalThis.SITE_DATA = {
         "requirements",
         "brief"
       ],
-      "copy": "Render this request, insight, or scoped change as a requirements brief.\n\nRequirements:\n\n- identify the user, actor, or system that must be served\n- state the problem or need without prescribing unnecessary implementation\n- make required behavior observable\n- include acceptance criteria and failure conditions\n- separate constraints from non-goals\n- name edge cases and open questions\n- keep execution sequencing out unless it clarifies a requirement\n\nReturn:\n\n- user or actor\n- problem or need\n- required behavior\n- acceptance criteria\n- constraints\n- non-goals\n- edge cases\n- open questions\n\n---\ncontext: {context}",
+      "copy": "Render the direction as requirements.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: user need, required behavior, acceptance criteria, constraints, non-goals, open questions.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2021,7 +2021,7 @@ globalThis.SITE_DATA = {
         "decision",
         "memo"
       ],
-      "copy": "Render this chosen direction or decision as a structured memo.\n\nRequirements:\n\n- make the actual choice explicit\n- keep rationale concise and decision-relevant\n- include only the risks and tradeoffs that matter to execution\n\nReturn:\n\n- decision\n- rationale\n- tradeoffs\n- risks\n- confidence\n- next action\n\n---\ncontext: {context}",
+      "copy": "Render the choice as a decision memo.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: decision, rationale, tradeoffs, risks, confidence, next action.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2098,7 +2098,7 @@ globalThis.SITE_DATA = {
         "execution",
         "brief"
       ],
-      "copy": "Render this chosen direction, plan, or analysis as a structured execution brief.\n\nRequirements:\n\n- make objective and sequencing explicit\n- name dependencies before milestones drift\n- keep the first checkpoint close enough to catch early failure\n- include the condition that would justify pausing or escalating\n- owner and escalation trigger are optional for solo or internal work\n\nReturn:\n\n- objective\n- owner or responsible role (if applicable)\n- ordered steps or milestones\n- dependencies\n- likely blockers\n- major risks\n- first checkpoint\n- pause or escalation trigger (if applicable)\n- immediate next action\n\n---\ncontext: {context}",
+      "copy": "Render the result as an execution brief.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: objective, owner if relevant, ordered steps, dependencies, blockers, risks, first checkpoint, pause trigger, next action.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2177,7 +2177,7 @@ globalThis.SITE_DATA = {
         "rollout",
         "plan"
       ],
-      "copy": "Render this chosen change or direction as a staged rollout plan.\n\nRequirements:\n\n- define the rollout objective and success signal\n- sequence phases from lowest-risk learning to broader release\n- name owners or responsible roles where relevant\n- include stakeholder or audience actions, not only internal tasks\n- specify communication points and monitoring signals\n- include rollback, pause, or escalation triggers\n- include an adoption check after launch\n\nReturn:\n\n- rollout objective\n- phases\n- audience or stakeholder actions\n- owner or responsible role\n- communication points\n- monitoring signals\n- rollback or pause trigger\n- adoption check\n- immediate next action\n\n---\ncontext: {context}",
+      "copy": "Render the change as a rollout plan.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: phases, audience actions, communications, monitoring, risks, rollback trigger, owner.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2252,7 +2252,7 @@ globalThis.SITE_DATA = {
         "findings",
         "brief"
       ],
-      "copy": "Render this review, critique, or analysis as a ranked findings brief.\n\nRequirements:\n\n- prioritize findings by severity and actionability\n- tie every finding to concrete evidence from the provided material\n- avoid generic risks unless they change a decision or next action\n- include a recommended fix for each finding\n- use confidence to show how certain the finding is, not how severe it is\n\nReturn:\nFor each finding:\n\n- finding\n- severity (critical / high / medium / low)\n- evidence\n- impact\n- recommended fix\n- confidence (high / medium / low)\n\n---\ncontext: {context}",
+      "copy": "Render the analysis as ranked findings.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: finding, evidence, impact, recommendation, confidence, open question.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2329,7 +2329,7 @@ globalThis.SITE_DATA = {
         "experiment",
         "plan"
       ],
-      "copy": "Render this hypothesis or uncertain claim as an experiment plan.\n\nRequirements:\n\n- state the decision the test is meant to inform\n- define the method before interpreting evidence\n- choose metrics or observations that can actually answer the question\n- name confounds, sampling limits, and operational risks\n- include a decision rule before the result is known\n\nReturn:\n\n- hypothesis\n- decision this test informs\n- method\n- metric or observation\n- sample or scope\n- confounds and risks\n- decision rule\n- next action after each outcome\n\n---\ncontext: {context}",
+      "copy": "Render the hypothesis as an experiment plan.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: hypothesis, method, metric, sample or scope, confounds, decision rule, next step.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2404,7 +2404,7 @@ globalThis.SITE_DATA = {
         "content",
         "draft"
       ],
-      "copy": "Render this material as a written draft tailored to the audience and channel.\n\nRequirements:\n\n- put the main point early\n- preserve the facts or claims that matter\n- adapt tone and detail level to the audience\n- make the intended takeaway explicit\n- include the call to action only if the artifact needs one\n- keep revision notes separate from the draft itself\n\nReturn:\n\n- title or subject\n- opening point\n- draft\n- intended takeaway\n- call to action (if applicable)\n- revision notes\n\n---\ncontext: {context}",
+      "copy": "Render the material as audience-fit prose.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: title or subject, opening point, draft, takeaway, call to action if needed, revision notes.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2481,7 +2481,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "playbook"
       ],
-      "copy": "Render this lesson, process, or repeated workflow as a reusable playbook.\n\nRequirements:\n\n- state when the playbook applies and when it does not\n- list the inputs or context needed before starting\n- sequence the procedure as repeatable steps\n- include decision rules for common branches\n- include examples or patterns that make the steps concrete\n- name failure signs and escalation points\n- include notes for keeping the playbook current\n\nReturn:\n\n- when to use\n- inputs needed\n- procedure\n- decision rules\n- examples\n- failure signs\n- escalation path\n- maintenance notes\n\n---\ncontext: {context}",
+      "copy": "Render the work as a reusable playbook.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: trigger, inputs, steps, decision rules, examples, escalation path.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2556,7 +2556,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "spec"
       ],
-      "copy": "Render this prompt design, rewrite, or instruction set as a testable prompt spec.\n\nRequirements:\n\n- make the prompt's job explicit before the prompt text\n- separate operating assumptions from instructions the model must follow\n- state constraints and boundaries as behavior rules, not vague preferences\n- define the expected output shape clearly enough to test\n- include at least two test cases, including one hard or edge case\n- name known limitations rather than hiding them\n\nReturn:\n\n- prompt purpose\n- final prompt\n- context assumptions\n- constraints and boundaries\n- output shape\n- test cases\n- known limitations\n\n---\ncontext: {context}",
+      "copy": "Render the result as a prompt spec.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: final prompt, intent, inputs, constraints, output shape, tests, limitations.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2631,7 +2631,7 @@ globalThis.SITE_DATA = {
         "cause",
         "mapping"
       ],
-      "copy": "Map the causes behind this outcome or problem.\n\nRequirements:\n- start with the visible symptom\n- trace back at least three levels of causation\n- identify where the causal chain branches\n- mark the earliest point where intervention was plausible\n- name the most likely root cause\n\nReturn:\n- visible symptom\n- causal chain (at least 3 levels, branching where applicable)\n- earliest plausible intervention point\n- root cause\n\n---\ncontext: {context}",
+      "copy": "Map the visible symptom back to the most likely systemic cause.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: symptom, causal chain, branches, earliest intervention point, likely root cause.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2705,7 +2705,7 @@ globalThis.SITE_DATA = {
         "extract",
         "insights"
       ],
-      "copy": "Extract the highest-value insights from this material.\n\nRequirements:\n- prioritise insights that most directly change what to do next\n- when purpose is provided, filter for insights that serve {purpose}\n- keep supporting evidence specific rather than generic\n\nReturn:\nFor each insight:\n- key insight\n- why it matters\n- supporting evidence\n- action or implication\n\n---\ncontext: {context}\npurpose: {purpose}",
+      "copy": "Extract decision-useful insights from the source material.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: key patterns, strongest evidence, tensions, implications, open questions.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2781,7 +2781,7 @@ globalThis.SITE_DATA = {
         "frame",
         "compare"
       ],
-      "copy": "Compare a revised prompt against the original so improvements are real and regressions are visible.\n\nRequirements:\n\n- state the job of the original and new version separately before judging either\n- separate structural improvements from style-only edits\n- name any task coverage, constraint, output-shape, or safety detail lost in the revision\n- treat missing capability in the new version as a regression even if the wording is cleaner\n- end with a clear verdict: ready to test or revise again\n\nReturn:\n\n- original prompt job\n- new prompt job\n- structural improvements kept\n- regressions or capability loss\n- unresolved ambiguities\n- verdict: ready to test / revise again\n- next revision move\n\n---\noriginal_prompt: {original_prompt}\nrevised_prompt: {revised_prompt}",
+      "copy": "Compare prompt variants against the intended task and constraints.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: best fit, strengths, weaknesses, missing instructions, risky ambiguity, recommended revision.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2853,7 +2853,7 @@ globalThis.SITE_DATA = {
         "bounded",
         "recursion"
       ],
-      "copy": "Enforce BOUNDED RECURSION on this operation.\n\nBefore every recursive or iterative step, check these limits in order:\n\n1. Max depth reached (> {depth})? → STOP.\n2. Iteration limit reached (> {iterations})? → STOP.\n3. Exit criterion met ({exit})? → STOP.\n4. Only if all three checks pass → proceed with the next step.\n\nReturn:\n- current depth or iteration: N\n- stopping reason: criteria met | depth exceeded | iterations exceeded\n- final state at stopping point\n\nDo not proceed after any limit is reached.\n\n---\ndepth: {depth}\niterations: {iterations}\nexit: {exit}",
+      "copy": "Keep this recursive or iterative work bounded. Stop at max depth, max iterations, or the exit criterion.\nFocus on material issues, not exhaustive commentary.\n\nReturn: current depth or iteration, stopping reason, final state.\n\n---\ndepth: {depth}\niterations: {iterations}\nexit: {exit}",
       "body": [
         [
           "Purpose",
@@ -2925,7 +2925,7 @@ globalThis.SITE_DATA = {
         "branch",
         "prune"
       ],
-      "copy": "Generate competing branches for this problem, then prune weak ones before refinement.\n\nRequirements:\n\n- create only meaningfully distinct branches\n- keep the evaluation criteria explicit when pruning\n- discard weak branches early instead of refining all of them\n- preserve the strongest surviving branches with a short rationale\n\nReturn:\n\n- candidate branches\n- branches kept\n- branches pruned with rationale\n\n---\ncontext: {context}",
+      "copy": "Generate distinct branches, then prune weak ones against explicit criteria.\nStop when remaining branches are meaningfully different and usable.\n\nReturn: candidate branches, kept branches, pruned branches with rationale.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2996,7 +2996,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "decompose"
       ],
-      "copy": "Recursively decompose this problem into smaller units until each leaf is directly actionable or the exit criterion is met.\n\nRequirements:\n\n- preserve the parent-child structure of the decomposition\n- stop splitting when a leaf has one clear job or {exit} is met\n- name the current depth as you go\n- do not invent extra layers once a leaf is already actionable\n\nReturn:\n\n- decomposition tree\n- current depth\n- leaf tasks or stop point\n\n---\ndepth: {depth}\nexit: {exit}\ncontext: {context}",
+      "copy": "Decompose until each leaf is actionable or the exit criterion is met.\nStop when further splitting would add process instead of clarity.\n\nReturn: decomposition tree, current depth, leaf tasks or stop point.\n\n---\ndepth: {depth}\nexit: {exit}\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -3067,7 +3067,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "evaluate"
       ],
-      "copy": "Evaluate this branch or draft before another recursive step.\n\nRequirements:\n\n- judge only against the stated criteria or goal\n- separate what already passes from what still fails\n- decide whether to continue, prune, or stop\n- keep the verdict short enough to hand directly into the next recursive step\n\nReturn:\n\n- passes\n- gaps\n- continue / prune / stop decision\n\n---\nartifact: {artifact}",
+      "copy": "Evaluate this branch or draft before another recursive step.\nJudge only against the stated goal or criteria.\n\nReturn: passes, gaps, continue/prune/stop decision.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -3137,7 +3137,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "refine"
       ],
-      "copy": "Refine this branch or draft using the most recent evaluation gaps.\n\nRequirements:\n\n- preserve strengths that already passed evaluation\n- change only what closes the named gaps\n- keep the revision local unless a gap forces structural change\n- report what remains unresolved after the refinement pass\n\nReturn:\n\n- revised output\n- gaps addressed\n- remaining open gaps\n\n---\nartifact: {artifact}",
+      "copy": "Refine only what closes the latest evaluation gaps.\nPreserve what already works; avoid unrelated rewrites.\n\nReturn: revised output, gaps addressed, remaining gaps.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -3211,7 +3211,7 @@ globalThis.SITE_DATA = {
         "incident",
         "postmortem"
       ],
-      "copy": "Facilitate a structured post-mortem for this incident.\n\nWork through:\n1. Timeline — key events: detection, escalation, diagnosis, resolution\n2. Root cause — deepest systemic cause (apply five-whys or equivalent)\n3. Contributing factors — conditions that made the root cause possible or worsened impact\n4. What went well — detection, communication, or response actions that worked\n5. What to fix — specific, actionable remediation items with suggested owners and urgency\n6. Prevention — at least one structural change that reduces this class of incident\n\nAvoid blame. Focus on system conditions.\n\nReturn:\n- timeline: detection, escalation, diagnosis, resolution\n- systemic cause and contributing factors\n- what went well\n- action items with owners and urgency\n- one structural prevention measure\n\n---\ncontext: {context}\nimpact: {impact}\nduration: {duration}",
+      "copy": "Render the incident as a blameless postmortem.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: timeline, primary cause, contributing factors, what worked, action items, prevention measure.\n\n---\ncontext: {context}\nimpact: {impact}\nduration: {duration}",
       "body": [
         [
           "Purpose",
@@ -3572,7 +3572,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "stage": "frame",
       "outputKind": "clarity",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "low",
       "summary": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
       "tags": [
@@ -3584,14 +3584,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Structure an underspecified request before acting so neither the question nor the answer drifts.",
         "minimumBlocks": [
           "frame.task",
+          "mode.explore",
           "frame.success-criteria"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.task`",
-          "`strategy.problem-split`",
-          "`frame.success-criteria`",
-          "`guardrail.uncertainty`"
+          "`mode.explore`",
+          "`frame.success-criteria`"
+        ],
+        "optionalBlocks": [
+          "`strategy.problem-split` when the work needs implementation slices or subproblems.",
+          "`guardrail.uncertainty` when confidence needs calibration."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -3600,21 +3603,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:task -> strategy:problem-split -> frame:success-criteria -> guardrail:uncertainty",
+        "phaseOrder": "frame:task -> mode:explore -> frame:success-criteria",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore"
         ],
         "hasSchema": false,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
-          "reasoning",
-          "checks"
+          "framing"
         ]
       },
       "body": [
@@ -3628,7 +3629,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:task -> strategy:problem-split -> frame:success-criteria -> guardrail:uncertainty"
+          "frame:task -> mode:explore -> frame:success-criteria"
         ],
         [
           "Stage",
@@ -3640,7 +3641,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -3648,11 +3649,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, frame.success-criteria"
+          "frame.task, mode.explore, frame.success-criteria"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `strategy.problem-split` -> `frame.success-criteria` -> `guardrail.uncertainty`"
+          "`frame.task` -> `mode.explore` -> `frame.success-criteria`"
+        ],
+        [
+          "Optional add-ons",
+          "`strategy.problem-split` when the work needs implementation slices or subproblems., `guardrail.uncertainty` when confidence needs calibration."
         ]
       ],
       "sourcePath": "stacks/frame-problem.md"
@@ -3666,7 +3671,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Generate competing paths, select the best one, and discard the rest before refining.",
       "stage": "explore",
       "outputKind": "options",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Generate competing paths, select the best one, and discard the rest before refining.",
       "tags": [
@@ -3677,15 +3682,18 @@ globalThis.SITE_DATA = {
         "job": "branch-select",
         "useWhen": "Generate competing paths, select the best one, and discard the rest before refining.",
         "minimumBlocks": [
+          "frame.task",
           "recurse.branch-prune",
-          "recurse.evaluate"
+          "guardrail.bounded-recursion"
         ],
         "fullSequence": [
           "`frame.task`",
           "`recurse.branch-prune`",
-          "`recurse.evaluate`",
-          "`recurse.refine`",
           "`guardrail.bounded-recursion`"
+        ],
+        "optionalBlocks": [
+          "`recurse.evaluate` when each branch or draft needs an explicit stop or continue verdict.",
+          "`recurse.refine` when one more bounded improvement pass is useful."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -3694,7 +3702,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> recurse:branch-prune -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion",
+        "phaseOrder": "frame:task -> recurse:branch-prune -> guardrail:bounded-recursion",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": false,
@@ -3719,7 +3727,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> recurse:branch-prune -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion"
+          "frame:task -> recurse:branch-prune -> guardrail:bounded-recursion"
         ],
         [
           "Stage",
@@ -3731,7 +3739,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -3739,11 +3747,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "recurse.branch-prune, recurse.evaluate"
+          "frame.task, recurse.branch-prune, guardrail.bounded-recursion"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `recurse.branch-prune` -> `recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
+          "`frame.task` -> `recurse.branch-prune` -> `guardrail.bounded-recursion`"
+        ],
+        [
+          "Optional add-ons",
+          "`recurse.evaluate` when each branch or draft needs an explicit stop or continue verdict., `recurse.refine` when one more bounded improvement pass is useful."
         ]
       ],
       "sourcePath": "stacks/branch-select.md"
@@ -3757,7 +3769,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
       "stage": "analyze",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
       "tags": [
@@ -3769,13 +3781,16 @@ globalThis.SITE_DATA = {
         "useWhen": "Recursively decompose a complex problem into leaf-level solutions, then synthesize.",
         "minimumBlocks": [
           "frame.task",
-          "recurse.decompose"
+          "recurse.decompose",
+          "guardrail.bounded-recursion"
         ],
         "fullSequence": [
           "`frame.task`",
           "`recurse.decompose`",
-          "`recurse.evaluate`",
           "`guardrail.bounded-recursion`"
+        ],
+        "optionalBlocks": [
+          "`recurse.evaluate` when each branch or draft needs an explicit stop or continue verdict."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -3784,7 +3799,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> recurse:decompose -> recurse:evaluate -> guardrail:bounded-recursion",
+        "phaseOrder": "frame:task -> recurse:decompose -> guardrail:bounded-recursion",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": false,
@@ -3809,7 +3824,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> recurse:decompose -> recurse:evaluate -> guardrail:bounded-recursion"
+          "frame:task -> recurse:decompose -> guardrail:bounded-recursion"
         ],
         [
           "Stage",
@@ -3821,7 +3836,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -3829,11 +3844,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, recurse.decompose"
+          "frame.task, recurse.decompose, guardrail.bounded-recursion"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `recurse.decompose` -> `recurse.evaluate` -> `guardrail.bounded-recursion`"
+          "`frame.task` -> `recurse.decompose` -> `guardrail.bounded-recursion`"
+        ],
+        [
+          "Optional add-ons",
+          "`recurse.evaluate` when each branch or draft needs an explicit stop or continue verdict."
         ]
       ],
       "sourcePath": "stacks/decompose-solve.md"
@@ -3847,7 +3866,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
       "stage": "refine",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Iteratively improve output against explicit criteria until all pass or iteration limit is reached.",
       "tags": [
@@ -3863,10 +3882,12 @@ globalThis.SITE_DATA = {
           "guardrail.bounded-recursion"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`recurse.evaluate`",
           "`recurse.refine`",
           "`guardrail.bounded-recursion`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -3875,7 +3896,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion",
+        "phaseOrder": "recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": false,
@@ -3884,7 +3905,6 @@ globalThis.SITE_DATA = {
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "framing",
           "reasoning",
           "checks"
         ]
@@ -3900,7 +3920,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion"
+          "recurse:evaluate -> recurse:refine -> guardrail:bounded-recursion"
         ],
         [
           "Stage",
@@ -3912,7 +3932,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -3924,7 +3944,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
+          "`recurse.evaluate` -> `recurse.refine` -> `guardrail.bounded-recursion`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit."
         ]
       ],
       "sourcePath": "stacks/refine-loop.md"
@@ -3938,7 +3962,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Reduce an overcomplicated plan, prompt, process, or feature scope to the smallest version that still achieves the objective.",
       "stage": "refine",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Reduce an overcomplicated plan, prompt, process, or feature scope to the smallest version that still achieves the objective.",
       "tags": [
@@ -3954,11 +3978,13 @@ globalThis.SITE_DATA = {
           "schema.execution-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`strategy.constraint-relaxation`",
-          "`mode.critique`",
           "`guardrail.scope-creep`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`mode.critique` when candidate answers need adversarial review."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `schema.requirements-brief` instead of `schema.execution-brief` when the simplified output should become requirements rather than an action sequence.",
@@ -3967,19 +3993,15 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> strategy:constraint-relaxation -> mode:critique -> guardrail:scope-creep -> schema:execution-brief",
-        "primaryMode": "mode.critique",
-        "modeRefs": [
-          "mode.critique"
-        ],
+        "phaseOrder": "strategy:constraint-relaxation -> guardrail:scope-creep -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
-          "framing",
           "reasoning",
           "checks",
           "output"
@@ -3996,7 +4018,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> strategy:constraint-relaxation -> mode:critique -> guardrail:scope-creep -> schema:execution-brief"
+          "strategy:constraint-relaxation -> guardrail:scope-creep -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -4008,7 +4030,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -4020,7 +4042,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `strategy.constraint-relaxation` -> `mode.critique` -> `guardrail.scope-creep` -> `schema.execution-brief`"
+          "`strategy.constraint-relaxation` -> `guardrail.scope-creep` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `mode.critique` when candidate answers need adversarial review."
         ],
         [
           "Choose instead when",
@@ -4046,7 +4072,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Generate useful directions by deliberately inverting the assumptions that make the current answer feel obvious.",
       "stage": "explore",
       "outputKind": "options",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Generate useful directions by deliberately inverting the assumptions that make the current answer feel obvious.",
       "tags": [
@@ -4062,12 +4088,14 @@ globalThis.SITE_DATA = {
           "schema.option-map"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.create`",
           "`strategy.constraint-relaxation`",
-          "`guardrail.assumption-audit`",
-          "`guardrail.scope-creep`",
           "`schema.option-map`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`guardrail.scope-creep` when the prompt may expand beyond the objective."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4084,21 +4112,19 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:task -> mode:create -> strategy:constraint-relaxation -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:option-map",
+        "phaseOrder": "mode:create -> strategy:constraint-relaxation -> schema:option-map",
         "primaryMode": "mode.create",
         "modeRefs": [
           "mode.create"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -4113,7 +4139,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:create -> strategy:constraint-relaxation -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:option-map"
+          "mode:create -> strategy:constraint-relaxation -> schema:option-map"
         ],
         [
           "Stage",
@@ -4125,7 +4151,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -4141,7 +4167,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.create` -> `strategy.constraint-relaxation` -> `guardrail.assumption-audit` -> `guardrail.scope-creep` -> `schema.option-map`"
+          "`mode.create` -> `strategy.constraint-relaxation` -> `schema.option-map`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `guardrail.assumption-audit` when hidden premises could change the answer., `guardrail.scope-creep` when the prompt may expand beyond the objective."
         ],
         [
           "Choose instead when",
@@ -4163,7 +4193,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Move from a set of options to a committed, traceable choice.",
       "stage": "decide",
       "outputKind": "decision",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Move from a set of options to a committed, traceable choice.",
       "tags": [
@@ -4179,10 +4209,12 @@ globalThis.SITE_DATA = {
         ],
         "fullSequence": [
           "`frame.success-criteria`",
-          "`mode.explore`",
-          "`guardrail.assumption-audit`",
           "`mode.decide`",
           "`schema.decision-memo`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Add `guardrail.disconfirming-evidence` before `mode.decide` when a preferred answer already exists. Add `rubric.decision-quality` before `schema.decision-memo` for high-stakes review.",
@@ -4191,21 +4223,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:decision-memo",
-        "primaryMode": "mode.explore",
+        "phaseOrder": "frame:success-criteria -> mode:decide -> schema:decision-memo",
+        "primaryMode": "mode.decide",
         "modeRefs": [
-          "mode.explore",
           "mode.decide"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -4220,7 +4250,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:decision-memo"
+          "frame:success-criteria -> mode:decide -> schema:decision-memo"
         ],
         [
           "Stage",
@@ -4232,7 +4262,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -4244,7 +4274,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.success-criteria` -> `mode.explore` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.decision-memo`"
+          "`frame.success-criteria` -> `mode.decide` -> `schema.decision-memo`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         [
           "Common swaps",
@@ -4266,7 +4300,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Decide whether to keep searching, gather one more signal, or commit now.",
       "stage": "decide",
       "outputKind": "decision",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "medium",
       "summary": "Decide whether to keep searching, gather one more signal, or commit now.",
       "tags": [
@@ -4277,17 +4311,20 @@ globalThis.SITE_DATA = {
         "job": "explore-or-exploit",
         "useWhen": "Decide whether to keep searching, gather one more signal, or commit now.",
         "minimumBlocks": [
+          "mode.explore",
           "guardrail.uncertainty",
           "mode.decide",
           "schema.decision-memo"
         ],
         "fullSequence": [
-          "`frame.success-criteria`",
           "`mode.explore`",
           "`guardrail.uncertainty`",
-          "`strategy.tradeoff-matrix`",
           "`mode.decide`",
           "`schema.decision-memo`"
+        ],
+        "optionalBlocks": [
+          "`frame.success-criteria` when success needs to be judged before options are compared.",
+          "`strategy.tradeoff-matrix` when options need explicit comparison criteria."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `schema.option-map` instead of `schema.decision-memo` when the right answer is to preserve options for stakeholder discussion.",
@@ -4296,7 +4333,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:success-criteria -> mode:explore -> guardrail:uncertainty -> strategy:tradeoff-matrix -> mode:decide -> schema:decision-memo",
+        "phaseOrder": "mode:explore -> guardrail:uncertainty -> mode:decide -> schema:decision-memo",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore",
@@ -4309,8 +4346,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
-          "reasoning",
           "checks",
           "output"
         ]
@@ -4326,7 +4361,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:success-criteria -> mode:explore -> guardrail:uncertainty -> strategy:tradeoff-matrix -> mode:decide -> schema:decision-memo"
+          "mode:explore -> guardrail:uncertainty -> mode:decide -> schema:decision-memo"
         ],
         [
           "Stage",
@@ -4338,7 +4373,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
@@ -4346,11 +4381,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "guardrail.uncertainty, mode.decide, schema.decision-memo"
+          "mode.explore, guardrail.uncertainty, mode.decide, schema.decision-memo"
         ],
         [
           "Suggested blocks",
-          "`frame.success-criteria` -> `mode.explore` -> `guardrail.uncertainty` -> `strategy.tradeoff-matrix` -> `mode.decide` -> `schema.decision-memo`"
+          "`mode.explore` -> `guardrail.uncertainty` -> `mode.decide` -> `schema.decision-memo`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.success-criteria` when success needs to be judged before options are compared., `strategy.tradeoff-matrix` when options need explicit comparison criteria."
         ],
         [
           "Common swaps",
@@ -4372,7 +4411,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Rank competing bets or tasks when several look worthwhile but capacity is constrained.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Rank competing bets or tasks when several look worthwhile but capacity is constrained.",
       "tags": [
@@ -4385,15 +4424,17 @@ globalThis.SITE_DATA = {
         "minimumBlocks": [
           "frame.success-criteria",
           "strategy.tradeoff-matrix",
-          "mode.decide"
+          "schema.execution-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`frame.success-criteria`",
           "`strategy.tradeoff-matrix`",
-          "`guardrail.assumption-audit`",
-          "`mode.decide`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`mode.decide` when the response must close on a recommendation."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `schema.option-map` before `mode.decide` when the portfolio needs discussion before commitment.",
@@ -4402,21 +4443,17 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
-        "primaryMode": "mode.decide",
-        "modeRefs": [
-          "mode.decide"
-        ],
+        "phaseOrder": "frame:success-criteria -> strategy:tradeoff-matrix -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -4431,7 +4468,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
+          "frame:success-criteria -> strategy:tradeoff-matrix -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -4443,7 +4480,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -4451,11 +4488,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.success-criteria, strategy.tradeoff-matrix, mode.decide"
+          "frame.success-criteria, strategy.tradeoff-matrix, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `strategy.tradeoff-matrix` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+          "`frame.success-criteria` -> `strategy.tradeoff-matrix` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `guardrail.assumption-audit` when hidden premises could change the answer., `mode.decide` when the response must close on a recommendation."
         ],
         [
           "Common swaps",
@@ -4477,7 +4518,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Evaluate a past decision fairly by separating decision quality from outcome quality.",
       "stage": "conclude",
       "outputKind": "retrospective",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Evaluate a past decision fairly by separating decision quality from outcome quality.",
       "tags": [
@@ -4494,10 +4535,12 @@ globalThis.SITE_DATA = {
         ],
         "fullSequence": [
           "`guardrail.assumption-audit`",
-          "`guardrail.disconfirming-evidence`",
           "`frame.cause-mapping`",
-          "`frame.extract-insights`",
           "`rubric.decision-quality`"
+        ],
+        "optionalBlocks": [
+          "`guardrail.disconfirming-evidence` when confirmation bias is a material risk.",
+          "`frame.extract-insights` when raw material needs synthesis before the final artifact."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4506,7 +4549,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "guardrail:assumption-audit -> guardrail:disconfirming-evidence -> frame:cause-mapping -> frame:extract-insights -> rubric:decision-quality",
+        "phaseOrder": "guardrail:assumption-audit -> frame:cause-mapping -> rubric:decision-quality",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": false,
@@ -4530,7 +4573,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "guardrail:assumption-audit -> guardrail:disconfirming-evidence -> frame:cause-mapping -> frame:extract-insights -> rubric:decision-quality"
+          "guardrail:assumption-audit -> frame:cause-mapping -> rubric:decision-quality"
         ],
         [
           "Stage",
@@ -4542,7 +4585,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -4554,7 +4597,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `frame.extract-insights` -> `rubric.decision-quality`"
+          "`guardrail.assumption-audit` -> `frame.cause-mapping` -> `rubric.decision-quality`"
+        ],
+        [
+          "Optional add-ons",
+          "`guardrail.disconfirming-evidence` when confirmation bias is a material risk., `frame.extract-insights` when raw material needs synthesis before the final artifact."
         ]
       ],
       "sourcePath": "stacks/review-decision.md"
@@ -4568,7 +4615,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Decide under material risk or uncertain futures where failure would be costly.",
       "stage": "decide",
       "outputKind": "decision",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Decide under material risk or uncertain futures where failure would be costly.",
       "tags": [
@@ -4581,14 +4628,16 @@ globalThis.SITE_DATA = {
         "minimumBlocks": [
           "frame.task",
           "strategy.premortem",
-          "guardrail.assumption-audit"
+          "schema.decision-memo"
         ],
         "fullSequence": [
           "`frame.task`",
-          "`frame.cause-mapping`",
           "`strategy.premortem`",
-          "`guardrail.assumption-audit`",
           "`schema.decision-memo`"
+        ],
+        "optionalBlocks": [
+          "`frame.cause-mapping` when causes or contributing factors need tracing.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4597,18 +4646,17 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:cause-mapping -> strategy:premortem -> guardrail:assumption-audit -> schema:decision-memo",
+        "phaseOrder": "frame:task -> strategy:premortem -> schema:decision-memo",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -4623,7 +4671,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:cause-mapping -> strategy:premortem -> guardrail:assumption-audit -> schema:decision-memo"
+          "frame:task -> strategy:premortem -> schema:decision-memo"
         ],
         [
           "Stage",
@@ -4635,7 +4683,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -4643,11 +4691,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, strategy.premortem, guardrail.assumption-audit"
+          "frame.task, strategy.premortem, schema.decision-memo"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.cause-mapping` -> `strategy.premortem` -> `guardrail.assumption-audit` -> `schema.decision-memo`"
+          "`frame.task` -> `strategy.premortem` -> `schema.decision-memo`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.cause-mapping` when causes or contributing factors need tracing., `guardrail.assumption-audit` when hidden premises could change the answer."
         ]
       ],
       "sourcePath": "stacks/risk-decision.md"
@@ -4661,7 +4713,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Convert a strategic direction or ambiguous bet into a sequenced roadmap that can survive uncertainty and capacity constraints.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Convert a strategic direction or ambiguous bet into a sequenced roadmap that can survive uncertainty and capacity constraints.",
       "tags": [
@@ -4673,15 +4725,17 @@ globalThis.SITE_DATA = {
         "minimumBlocks": [
           "strategy.scenario-planning",
           "strategy.tradeoff-matrix",
-          "mode.decide"
+          "schema.execution-brief"
         ],
         "fullSequence": [
-          "`frame.success-criteria`",
           "`strategy.scenario-planning`",
           "`strategy.tradeoff-matrix`",
-          "`guardrail.assumption-audit`",
-          "`mode.decide`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.success-criteria` when success needs to be judged before options are compared.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`mode.decide` when the response must close on a recommendation."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `schema.decision-memo` instead of `schema.execution-brief` when the roadmap decision needs to be recorded before planning execution.",
@@ -4690,21 +4744,16 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:success-criteria -> strategy:scenario-planning -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
-        "primaryMode": "mode.decide",
-        "modeRefs": [
-          "mode.decide"
-        ],
+        "phaseOrder": "strategy:scenario-planning -> strategy:tradeoff-matrix -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
-          "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -4719,7 +4768,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:success-criteria -> strategy:scenario-planning -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
+          "strategy:scenario-planning -> strategy:tradeoff-matrix -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -4731,7 +4780,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -4739,11 +4788,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "strategy.scenario-planning, strategy.tradeoff-matrix, mode.decide"
+          "strategy.scenario-planning, strategy.tradeoff-matrix, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.success-criteria` -> `strategy.scenario-planning` -> `strategy.tradeoff-matrix` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+          "`strategy.scenario-planning` -> `strategy.tradeoff-matrix` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.success-criteria` when success needs to be judged before options are compared., `guardrail.assumption-audit` when hidden premises could change the answer., `mode.decide` when the response must close on a recommendation."
         ],
         [
           "Choose instead when",
@@ -4769,7 +4822,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Plan from alternate futures backward so near-term choices account for scenarios that are easy to ignore.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Plan from alternate futures backward so near-term choices account for scenarios that are easy to ignore.",
       "tags": [
@@ -4785,13 +4838,15 @@ globalThis.SITE_DATA = {
           "schema.option-map"
         ],
         "fullSequence": [
-          "`frame.success-criteria`",
-          "`mode.explore`",
           "`strategy.scenario-planning`",
           "`guardrail.uncertainty`",
-          "`guardrail.disconfirming-evidence`",
-          "`schema.option-map`",
-          "`rubric.decision-quality`"
+          "`schema.option-map`"
+        ],
+        "optionalBlocks": [
+          "`frame.success-criteria` when success needs to be judged before options are compared.",
+          "`mode.explore` when premature convergence is a real risk.",
+          "`guardrail.disconfirming-evidence` when confirmation bias is a material risk.",
+          "`rubric.decision-quality` when the decision should be evaluated before acting."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -4809,19 +4864,15 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:success-criteria -> mode:explore -> strategy:scenario-planning -> guardrail:uncertainty -> guardrail:disconfirming-evidence -> schema:option-map -> rubric:decision-quality",
-        "primaryMode": "mode.explore",
-        "modeRefs": [
-          "mode.explore"
-        ],
+        "phaseOrder": "strategy:scenario-planning -> guardrail:uncertainty -> schema:option-map",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
-          "framing",
           "reasoning",
           "checks",
           "output"
@@ -4838,7 +4889,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:success-criteria -> mode:explore -> strategy:scenario-planning -> guardrail:uncertainty -> guardrail:disconfirming-evidence -> schema:option-map -> rubric:decision-quality"
+          "strategy:scenario-planning -> guardrail:uncertainty -> schema:option-map"
         ],
         [
           "Stage",
@@ -4850,7 +4901,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -4866,7 +4917,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.success-criteria` -> `mode.explore` -> `strategy.scenario-planning` -> `guardrail.uncertainty` -> `guardrail.disconfirming-evidence` -> `schema.option-map` -> `rubric.decision-quality`"
+          "`strategy.scenario-planning` -> `guardrail.uncertainty` -> `schema.option-map`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.success-criteria` when success needs to be judged before options are compared., `mode.explore` when premature convergence is a real risk., `guardrail.disconfirming-evidence` when confirmation bias is a material risk., `rubric.decision-quality` when the decision should be evaluated before acting."
         ],
         [
           "Choose instead when",
@@ -4888,7 +4943,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "stage": "analyze",
       "outputKind": "summary",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Build a well-grounded view from a body of evidence before deciding or writing a position.",
       "tags": [
@@ -4904,10 +4959,12 @@ globalThis.SITE_DATA = {
         ],
         "fullSequence": [
           "`mode.explore`",
-          "`frame.extract-insights`",
           "`guardrail.disconfirming-evidence`",
-          "`frame.cause-mapping`",
           "`rubric.research-quality`"
+        ],
+        "optionalBlocks": [
+          "`frame.extract-insights` when raw material needs synthesis before the final artifact.",
+          "`frame.cause-mapping` when causes or contributing factors need tracing."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Add `rubric.research-method` before `rubric.research-quality` when the process itself must be audited, not just the final findings.",
@@ -4916,7 +4973,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-quality",
+        "phaseOrder": "mode:explore -> guardrail:disconfirming-evidence -> rubric:research-quality",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore"
@@ -4928,7 +4985,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
           "checks"
         ]
       },
@@ -4943,7 +4999,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> frame:cause-mapping -> rubric:research-quality"
+          "mode:explore -> guardrail:disconfirming-evidence -> rubric:research-quality"
         ],
         [
           "Stage",
@@ -4955,7 +5011,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -4967,7 +5023,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `frame.cause-mapping` -> `rubric.research-quality`"
+          "`mode.explore` -> `guardrail.disconfirming-evidence` -> `rubric.research-quality`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.extract-insights` when raw material needs synthesis before the final artifact., `frame.cause-mapping` when causes or contributing factors need tracing."
         ],
         [
           "Common swaps",
@@ -4989,7 +5049,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design a useful experiment before acting on a hypothesis, product bet, or causal claim.",
       "stage": "frame",
       "outputKind": "brief",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Design a useful experiment before acting on a hypothesis, product bet, or causal claim.",
       "tags": [
@@ -5005,11 +5065,13 @@ globalThis.SITE_DATA = {
           "rubric.research-method"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`frame.success-criteria`",
-          "`guardrail.assumption-audit`",
           "`schema.experiment-plan`",
           "`rubric.research-method`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `hypothesis-test` when evidence already exists and the job is evaluating a causal claim rather than designing a new test.",
@@ -5018,7 +5080,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> schema:experiment-plan -> rubric:research-method",
+        "phaseOrder": "frame:success-criteria -> schema:experiment-plan -> rubric:research-method",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": true,
@@ -5043,7 +5105,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> schema:experiment-plan -> rubric:research-method"
+          "frame:success-criteria -> schema:experiment-plan -> rubric:research-method"
         ],
         [
           "Stage",
@@ -5055,7 +5117,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5067,7 +5129,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `schema.experiment-plan` -> `rubric.research-method`"
+          "`frame.success-criteria` -> `schema.experiment-plan` -> `rubric.research-method`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         [
           "Common swaps",
@@ -5089,7 +5155,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Turn a strange idea into the smallest prototype that could teach something real before it is normalized or discarded.",
       "stage": "frame",
       "outputKind": "brief",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Turn a strange idea into the smallest prototype that could teach something real before it is normalized or discarded.",
       "tags": [
@@ -5105,13 +5171,15 @@ globalThis.SITE_DATA = {
           "schema.experiment-plan"
         ],
         "fullSequence": [
-          "`frame.task`",
-          "`frame.audience`",
           "`mode.create`",
-          "`strategy.constraint-relaxation`",
           "`frame.success-criteria`",
-          "`schema.experiment-plan`",
-          "`rubric.usability-quality`"
+          "`schema.experiment-plan`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`frame.audience` when audience fit changes the output.",
+          "`strategy.constraint-relaxation` when fixed-looking constraints should be challenged.",
+          "`rubric.usability-quality` when the workflow must be judged against user completion."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -5129,21 +5197,19 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:task -> frame:audience -> mode:create -> strategy:constraint-relaxation -> frame:success-criteria -> schema:experiment-plan -> rubric:usability-quality",
+        "phaseOrder": "mode:create -> frame:success-criteria -> schema:experiment-plan",
         "primaryMode": "mode.create",
         "modeRefs": [
           "mode.create"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -5158,7 +5224,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:audience -> mode:create -> strategy:constraint-relaxation -> frame:success-criteria -> schema:experiment-plan -> rubric:usability-quality"
+          "mode:create -> frame:success-criteria -> schema:experiment-plan"
         ],
         [
           "Stage",
@@ -5170,7 +5236,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -5186,7 +5252,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.audience` -> `mode.create` -> `strategy.constraint-relaxation` -> `frame.success-criteria` -> `schema.experiment-plan` -> `rubric.usability-quality`"
+          "`mode.create` -> `frame.success-criteria` -> `schema.experiment-plan`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `frame.audience` when audience fit changes the output., `strategy.constraint-relaxation` when fixed-looking constraints should be challenged., `rubric.usability-quality` when the workflow must be judged against user completion."
         ],
         [
           "Choose instead when",
@@ -5208,7 +5278,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "stage": "analyze",
       "outputKind": "brief",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Design, run, or evaluate a test of a causal claim before acting on it.",
       "tags": [
@@ -5219,16 +5289,18 @@ globalThis.SITE_DATA = {
         "job": "hypothesis-test",
         "useWhen": "Design, run, or evaluate a test of a causal claim before acting on it.",
         "minimumBlocks": [
+          "mode.explore",
           "guardrail.assumption-audit",
-          "guardrail.uncertainty",
           "rubric.research-method"
         ],
         "fullSequence": [
           "`mode.explore`",
           "`guardrail.assumption-audit`",
-          "`guardrail.uncertainty`",
-          "`frame.extract-insights`",
           "`rubric.research-method`"
+        ],
+        "optionalBlocks": [
+          "`guardrail.uncertainty` when confidence needs calibration.",
+          "`frame.extract-insights` when raw material needs synthesis before the final artifact."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Add `rubric.research-quality` after `rubric.research-method` when the final written conclusion also needs a quality gate.",
@@ -5237,7 +5309,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method",
+        "phaseOrder": "mode:explore -> guardrail:assumption-audit -> rubric:research-method",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore"
@@ -5249,7 +5321,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
           "checks"
         ]
       },
@@ -5264,7 +5335,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> guardrail:assumption-audit -> guardrail:uncertainty -> frame:extract-insights -> rubric:research-method"
+          "mode:explore -> guardrail:assumption-audit -> rubric:research-method"
         ],
         [
           "Stage",
@@ -5276,7 +5347,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5284,11 +5355,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "guardrail.assumption-audit, guardrail.uncertainty, rubric.research-method"
+          "mode.explore, guardrail.assumption-audit, rubric.research-method"
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `guardrail.assumption-audit` -> `guardrail.uncertainty` -> `frame.extract-insights` -> `rubric.research-method`"
+          "`mode.explore` -> `guardrail.assumption-audit` -> `rubric.research-method`"
+        ],
+        [
+          "Optional add-ons",
+          "`guardrail.uncertainty` when confidence needs calibration., `frame.extract-insights` when raw material needs synthesis before the final artifact."
         ],
         [
           "Common swaps",
@@ -5310,7 +5385,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Synthesize customer feedback, interviews, support tickets, or usage notes into decision-useful insight.",
       "stage": "conclude",
       "outputKind": "summary",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Synthesize customer feedback, interviews, support tickets, or usage notes into decision-useful insight.",
       "tags": [
@@ -5327,11 +5402,13 @@ globalThis.SITE_DATA = {
           "schema.findings-brief"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.extract-insights`",
-          "`guardrail.disconfirming-evidence`",
           "`mode.synthesize`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`guardrail.disconfirming-evidence` when confirmation bias is a material risk."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Add `rubric.research-quality` when the findings will support a high-stakes product or strategy decision.",
@@ -5340,21 +5417,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> mode:synthesize -> schema:findings-brief",
-        "primaryMode": "mode.explore",
+        "phaseOrder": "frame:extract-insights -> mode:synthesize -> schema:findings-brief",
+        "primaryMode": "mode.synthesize",
         "modeRefs": [
-          "mode.explore",
           "mode.synthesize"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -5369,7 +5444,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:extract-insights -> guardrail:disconfirming-evidence -> mode:synthesize -> schema:findings-brief"
+          "frame:extract-insights -> mode:synthesize -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -5381,7 +5456,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5393,7 +5468,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.extract-insights` -> `guardrail.disconfirming-evidence` -> `mode.synthesize` -> `schema.findings-brief`"
+          "`frame.extract-insights` -> `mode.synthesize` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `guardrail.disconfirming-evidence` when confirmation bias is a material risk."
         ],
         [
           "Common swaps",
@@ -5415,7 +5494,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Turn customer feedback, research notes, support tickets, stakeholder asks, or workflow observations into grounded requirements.",
       "stage": "conclude",
       "outputKind": "brief",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Turn customer feedback, research notes, support tickets, stakeholder asks, or workflow observations into grounded requirements.",
       "tags": [
@@ -5433,9 +5512,11 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`frame.extract-insights`",
           "`guardrail.source-grounding`",
-          "`frame.audience`",
-          "`frame.success-criteria`",
           "`schema.requirements-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.audience` when audience fit changes the output.",
+          "`frame.success-criteria` when success needs to be judged before options are compared."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Add `rubric.research-quality` when the source material is weak or the requirements will drive a high-stakes decision.",
@@ -5444,7 +5525,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:extract-insights -> guardrail:source-grounding -> frame:audience -> frame:success-criteria -> schema:requirements-brief",
+        "phaseOrder": "frame:extract-insights -> guardrail:source-grounding -> schema:requirements-brief",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": true,
@@ -5469,7 +5550,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:extract-insights -> guardrail:source-grounding -> frame:audience -> frame:success-criteria -> schema:requirements-brief"
+          "frame:extract-insights -> guardrail:source-grounding -> schema:requirements-brief"
         ],
         [
           "Stage",
@@ -5481,7 +5562,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5493,7 +5574,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.extract-insights` -> `guardrail.source-grounding` -> `frame.audience` -> `frame.success-criteria` -> `schema.requirements-brief`"
+          "`frame.extract-insights` -> `guardrail.source-grounding` -> `schema.requirements-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.audience` when audience fit changes the output., `frame.success-criteria` when success needs to be judged before options are compared."
         ],
         [
           "Choose instead when",
@@ -5519,7 +5604,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Map audiences and land a change or decision so it is understood and acted on, not just received.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Map audiences and land a change or decision so it is understood and acted on, not just received.",
       "tags": [
@@ -5536,10 +5621,12 @@ globalThis.SITE_DATA = {
         ],
         "fullSequence": [
           "`frame.task`",
-          "`mode.explore`",
-          "`guardrail.assumption-audit`",
           "`mode.decide`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -5548,21 +5635,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief",
-        "primaryMode": "mode.explore",
+        "phaseOrder": "frame:task -> mode:decide -> schema:execution-brief",
+        "primaryMode": "mode.decide",
         "modeRefs": [
-          "mode.explore",
           "mode.decide"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -5577,7 +5662,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> guardrail:assumption-audit -> mode:decide -> schema:execution-brief"
+          "frame:task -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -5589,7 +5674,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5601,7 +5686,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `guardrail.assumption-audit` -> `mode.decide` -> `schema.execution-brief`"
+          "`frame.task` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         [
           "Common failure mode",
@@ -5619,7 +5708,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Extract reusable learning from a completed project, incident, launch, decision, or experiment.",
       "stage": "conclude",
       "outputKind": "retrospective",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Extract reusable learning from a completed project, incident, launch, decision, or experiment.",
       "tags": [
@@ -5632,15 +5721,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Extract reusable learning from a completed project, incident, launch, decision, or experiment.",
         "minimumBlocks": [
           "mode.reflect",
-          "frame.extract-insights",
-          "schema.execution-brief"
+          "frame.cause-mapping",
+          "schema.incident-postmortem"
         ],
         "fullSequence": [
           "`mode.reflect`",
           "`frame.cause-mapping`",
-          "`frame.extract-insights`",
-          "`schema.incident-postmortem`",
-          "`schema.execution-brief`"
+          "`schema.incident-postmortem`"
+        ],
+        "optionalBlocks": [
+          "`frame.extract-insights` when raw material needs synthesis before the final artifact.",
+          "`schema.execution-brief` when the result must become ordered action."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Drop `schema.incident-postmortem` for lightweight project retrospectives where a full timeline would add ceremony.",
@@ -5649,7 +5740,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:reflect -> frame:cause-mapping -> frame:extract-insights -> schema:incident-postmortem -> schema:execution-brief",
+        "phaseOrder": "mode:reflect -> frame:cause-mapping -> schema:incident-postmortem",
         "primaryMode": "mode.reflect",
         "modeRefs": [
           "mode.reflect"
@@ -5676,7 +5767,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:reflect -> frame:cause-mapping -> frame:extract-insights -> schema:incident-postmortem -> schema:execution-brief"
+          "mode:reflect -> frame:cause-mapping -> schema:incident-postmortem"
         ],
         [
           "Stage",
@@ -5688,7 +5779,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5696,11 +5787,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.reflect, frame.extract-insights, schema.execution-brief"
+          "mode.reflect, frame.cause-mapping, schema.incident-postmortem"
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `frame.cause-mapping` -> `frame.extract-insights` -> `schema.incident-postmortem` -> `schema.execution-brief`"
+          "`mode.reflect` -> `frame.cause-mapping` -> `schema.incident-postmortem`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.extract-insights` when raw material needs synthesis before the final artifact., `schema.execution-brief` when the result must become ordered action."
         ],
         [
           "Common swaps",
@@ -5722,7 +5817,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Shape a creative, campaign, content, or concept request into a brief with enough direction to make useful work.",
       "stage": "explore",
       "outputKind": "draft",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "low",
       "summary": "Shape a creative, campaign, content, or concept request into a brief with enough direction to make useful work.",
       "tags": [
@@ -5735,14 +5830,16 @@ globalThis.SITE_DATA = {
         "minimumBlocks": [
           "frame.audience",
           "mode.create",
-          "frame.success-criteria"
+          "schema.content-draft"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`frame.audience`",
           "`mode.create`",
-          "`frame.success-criteria`",
           "`schema.content-draft`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`frame.success-criteria` when success needs to be judged before options are compared."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `schema.option-map` instead of `schema.content-draft` when the output should present multiple creative directions rather than draft one.",
@@ -5751,7 +5848,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:audience -> mode:create -> frame:success-criteria -> schema:content-draft",
+        "phaseOrder": "frame:audience -> mode:create -> schema:content-draft",
         "primaryMode": "mode.create",
         "modeRefs": [
           "mode.create"
@@ -5778,7 +5875,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:audience -> mode:create -> frame:success-criteria -> schema:content-draft"
+          "frame:audience -> mode:create -> schema:content-draft"
         ],
         [
           "Stage",
@@ -5790,7 +5887,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5798,11 +5895,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.audience, mode.create, frame.success-criteria"
+          "frame.audience, mode.create, schema.content-draft"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.audience` -> `mode.create` -> `frame.success-criteria` -> `schema.content-draft`"
+          "`frame.audience` -> `mode.create` -> `schema.content-draft`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `frame.success-criteria` when success needs to be judged before options are compared."
         ],
         [
           "Common swaps",
@@ -5824,7 +5925,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Build and harden a defensible position from evidence.",
       "stage": "refine",
       "outputKind": "draft",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Build and harden a defensible position from evidence.",
       "tags": [
@@ -5840,11 +5941,13 @@ globalThis.SITE_DATA = {
           "rubric.argument-quality"
         ],
         "fullSequence": [
-          "`mode.explore`",
           "`frame.task`",
           "`strategy.steelman`",
-          "`frame.extract-insights`",
           "`rubric.argument-quality`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`frame.extract-insights` when raw material needs synthesis before the final artifact."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -5853,18 +5956,15 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:explore -> frame:task -> strategy:steelman -> frame:extract-insights -> rubric:argument-quality",
-        "primaryMode": "mode.explore",
-        "modeRefs": [
-          "mode.explore"
-        ],
+        "phaseOrder": "frame:task -> strategy:steelman -> rubric:argument-quality",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": false,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
           "reasoning",
           "checks"
@@ -5881,7 +5981,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:explore -> frame:task -> strategy:steelman -> frame:extract-insights -> rubric:argument-quality"
+          "frame:task -> strategy:steelman -> rubric:argument-quality"
         ],
         [
           "Stage",
@@ -5893,7 +5993,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -5905,7 +6005,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.explore` -> `frame.task` -> `strategy.steelman` -> `frame.extract-insights` -> `rubric.argument-quality`"
+          "`frame.task` -> `strategy.steelman` -> `rubric.argument-quality`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `frame.extract-insights` when raw material needs synthesis before the final artifact."
         ]
       ],
       "sourcePath": "stacks/develop-position.md"
@@ -5919,7 +6023,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Turn lessons, repeated work, or a successful workflow into a reusable playbook.",
       "stage": "conclude",
       "outputKind": "brief",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Turn lessons, repeated work, or a successful workflow into a reusable playbook.",
       "tags": [
@@ -5937,9 +6041,11 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`mode.reflect`",
           "`frame.extract-insights`",
-          "`guardrail.assumption-audit`",
-          "`guardrail.scope-creep`",
           "`schema.playbook`"
+        ],
+        "optionalBlocks": [
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`guardrail.scope-creep` when the prompt may expand beyond the objective."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Add `schema.execution-brief` after `schema.playbook` if the playbook needs an implementation or adoption plan.",
@@ -5948,20 +6054,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:reflect -> frame:extract-insights -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:playbook",
+        "phaseOrder": "mode:reflect -> frame:extract-insights -> schema:playbook",
         "primaryMode": "mode.reflect",
         "modeRefs": [
           "mode.reflect"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -5976,7 +6081,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:reflect -> frame:extract-insights -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:playbook"
+          "mode:reflect -> frame:extract-insights -> schema:playbook"
         ],
         [
           "Stage",
@@ -5988,7 +6093,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -6000,7 +6105,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `frame.extract-insights` -> `guardrail.assumption-audit` -> `guardrail.scope-creep` -> `schema.playbook`"
+          "`mode.reflect` -> `frame.extract-insights` -> `schema.playbook`"
+        ],
+        [
+          "Optional add-ons",
+          "`guardrail.assumption-audit` when hidden premises could change the answer., `guardrail.scope-creep` when the prompt may expand beyond the objective."
         ],
         [
           "Choose instead when",
@@ -6037,14 +6146,18 @@ globalThis.SITE_DATA = {
         "useWhen": "Prepare and execute a negotiation with explicit interests, BATNA, and concession strategy.",
         "minimumBlocks": [
           "frame.task",
-          "strategy.steelman"
+          "strategy.steelman",
+          "mode.decide",
+          "schema.execution-brief"
         ],
         "fullSequence": [
           "`frame.task`",
-          "`mode.explore`",
           "`strategy.steelman`",
           "`mode.decide`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -6053,16 +6166,15 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> strategy:steelman -> mode:decide -> schema:execution-brief",
-        "primaryMode": "mode.explore",
+        "phaseOrder": "frame:task -> strategy:steelman -> mode:decide -> schema:execution-brief",
+        "primaryMode": "mode.decide",
         "modeRefs": [
-          "mode.explore",
           "mode.decide"
         ],
         "hasSchema": true,
         "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
@@ -6082,7 +6194,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> strategy:steelman -> mode:decide -> schema:execution-brief"
+          "frame:task -> strategy:steelman -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -6102,11 +6214,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, strategy.steelman"
+          "frame.task, strategy.steelman, mode.decide, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `strategy.steelman` -> `mode.decide` -> `schema.execution-brief`"
+          "`frame.task` -> `strategy.steelman` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk."
         ],
         [
           "Common failure mode",
@@ -6124,7 +6240,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Turn scattered notes, transcripts, bullets, or research fragments into a useful written draft.",
       "stage": "conclude",
       "outputKind": "draft",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Turn scattered notes, transcripts, bullets, or research fragments into a useful written draft.",
       "tags": [
@@ -6143,11 +6259,13 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`frame.audience`",
           "`frame.extract-insights`",
-          "`mode.synthesize`",
-          "`schema.content-draft`",
-          "`rubric.writing-quality`",
-          "`recurse.refine`",
-          "`guardrail.bounded-recursion`"
+          "`schema.content-draft`"
+        ],
+        "optionalBlocks": [
+          "`mode.synthesize` when several sources must become one coherent output.",
+          "`rubric.writing-quality` when prose quality or instruction clarity matters.",
+          "`recurse.refine` when one more bounded improvement pass is useful.",
+          "`guardrail.bounded-recursion` when recursive or iterative work needs a stopping rule."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `schema.findings-brief` instead of `schema.content-draft` when the output should stay as findings rather than prose.",
@@ -6156,21 +6274,16 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:audience -> frame:extract-insights -> mode:synthesize -> schema:content-draft -> rubric:writing-quality -> recurse:refine -> guardrail:bounded-recursion",
-        "primaryMode": "mode.synthesize",
-        "modeRefs": [
-          "mode.synthesize"
-        ],
+        "phaseOrder": "frame:audience -> frame:extract-insights -> schema:content-draft",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
-        "hasBoundedRecursion": true,
+        "hasQualityGate": false,
+        "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
-          "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -6185,7 +6298,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:audience -> frame:extract-insights -> mode:synthesize -> schema:content-draft -> rubric:writing-quality -> recurse:refine -> guardrail:bounded-recursion"
+          "frame:audience -> frame:extract-insights -> schema:content-draft"
         ],
         [
           "Stage",
@@ -6197,7 +6310,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -6209,7 +6322,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.audience` -> `frame.extract-insights` -> `mode.synthesize` -> `schema.content-draft` -> `rubric.writing-quality` -> `recurse.refine` -> `guardrail.bounded-recursion`"
+          "`frame.audience` -> `frame.extract-insights` -> `schema.content-draft`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.synthesize` when several sources must become one coherent output., `rubric.writing-quality` when prose quality or instruction clarity matters., `recurse.refine` when one more bounded improvement pass is useful., `guardrail.bounded-recursion` when recursive or iterative work needs a stopping rule."
         ],
         [
           "Common swaps",
@@ -6231,7 +6348,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Define requirements, success criteria, and failure modes for a feature before building it.",
       "stage": "frame",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Define requirements, success criteria, and failure modes for a feature before building it.",
       "tags": [
@@ -6243,14 +6360,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Define requirements, success criteria, and failure modes for a feature before building it.",
         "minimumBlocks": [
           "frame.task",
-          "frame.success-criteria"
+          "frame.success-criteria",
+          "schema.execution-brief"
         ],
         "fullSequence": [
           "`frame.task`",
           "`frame.success-criteria`",
-          "`guardrail.assumption-audit`",
-          "`rubric.plan-quality`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -6259,17 +6379,16 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> rubric:plan-quality -> schema:execution-brief",
+        "phaseOrder": "frame:task -> frame:success-criteria -> schema:execution-brief",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -6284,7 +6403,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:success-criteria -> guardrail:assumption-audit -> rubric:plan-quality -> schema:execution-brief"
+          "frame:task -> frame:success-criteria -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -6296,7 +6415,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -6304,11 +6423,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, frame.success-criteria"
+          "frame.task, frame.success-criteria, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `guardrail.assumption-audit` -> `rubric.plan-quality` -> `schema.execution-brief`"
+          "`frame.task` -> `frame.success-criteria` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`guardrail.assumption-audit` when hidden premises could change the answer., `rubric.plan-quality` when the plan needs an explicit quality check."
         ]
       ],
       "sourcePath": "stacks/feature-design.md"
@@ -6322,7 +6445,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Plan a change, launch, policy, migration, or process update so adoption, monitoring, and rollback are explicit.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Plan a change, launch, policy, migration, or process update so adoption, monitoring, and rollback are explicit.",
       "tags": [
@@ -6338,12 +6461,14 @@ globalThis.SITE_DATA = {
           "schema.rollout-plan"
         ],
         "fullSequence": [
-          "`frame.task`",
-          "`frame.current-state`",
           "`frame.stakeholders`",
           "`strategy.premortem`",
-          "`guardrail.scope-creep`",
           "`schema.rollout-plan`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`frame.current-state` when the present system state needs a clear baseline.",
+          "`guardrail.scope-creep` when the prompt may expand beyond the objective."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Add `rubric.plan-quality` when the rollout must pass a formal readiness review.",
@@ -6352,18 +6477,17 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:current-state -> frame:stakeholders -> strategy:premortem -> guardrail:scope-creep -> schema:rollout-plan",
+        "phaseOrder": "frame:stakeholders -> strategy:premortem -> schema:rollout-plan",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -6378,7 +6502,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:current-state -> frame:stakeholders -> strategy:premortem -> guardrail:scope-creep -> schema:rollout-plan"
+          "frame:stakeholders -> strategy:premortem -> schema:rollout-plan"
         ],
         [
           "Stage",
@@ -6390,7 +6514,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -6402,7 +6526,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.current-state` -> `frame.stakeholders` -> `strategy.premortem` -> `guardrail.scope-creep` -> `schema.rollout-plan`"
+          "`frame.stakeholders` -> `strategy.premortem` -> `schema.rollout-plan`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `frame.current-state` when the present system state needs a clear baseline., `guardrail.scope-creep` when the prompt may expand beyond the objective."
         ],
         [
           "Choose instead when",
@@ -6428,7 +6556,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Move a feature from defined to shipped with quality gates at each step.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Move a feature from defined to shipped with quality gates at each step.",
       "tags": [
@@ -6440,16 +6568,18 @@ globalThis.SITE_DATA = {
         "useWhen": "Move a feature from defined to shipped with quality gates at each step.",
         "minimumBlocks": [
           "frame.success-criteria",
-          "guardrail.assumption-audit",
+          "strategy.premortem",
           "schema.execution-brief"
         ],
         "fullSequence": [
           "`frame.success-criteria`",
-          "`mode.decide`",
-          "`guardrail.assumption-audit`",
           "`strategy.premortem`",
-          "`rubric.plan-quality`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.decide` when the response must close on a recommendation.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -6458,21 +6588,17 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:success-criteria -> mode:decide -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
-        "primaryMode": "mode.decide",
-        "modeRefs": [
-          "mode.decide"
-        ],
+        "phaseOrder": "frame:success-criteria -> strategy:premortem -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -6487,7 +6613,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:success-criteria -> mode:decide -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
+          "frame:success-criteria -> strategy:premortem -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -6499,7 +6625,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -6507,11 +6633,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.success-criteria, guardrail.assumption-audit, schema.execution-brief"
+          "frame.success-criteria, strategy.premortem, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.success-criteria` -> `mode.decide` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
+          "`frame.success-criteria` -> `strategy.premortem` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.decide` when the response must close on a recommendation., `guardrail.assumption-audit` when hidden premises could change the answer., `rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         [
           "Common failure mode",
@@ -6529,7 +6659,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Surface weaknesses, blind spots, and revision targets in any artifact.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Surface weaknesses, blind spots, and revision targets in any artifact.",
       "tags": [
@@ -6540,14 +6670,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Surface weaknesses, blind spots, and revision targets in any artifact.",
         "minimumBlocks": [
           "mode.critique",
+          "guardrail.assumption-audit",
           "schema.findings-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
-          "`guardrail.disconfirming-evidence`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`guardrail.disconfirming-evidence` when confirmation bias is a material risk."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `rubric.argument-quality` instead of `schema.findings-brief` when the artifact is specifically an argument and you need a pass/fail quality gate.",
@@ -6556,7 +6689,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief",
+        "phaseOrder": "mode:critique -> guardrail:assumption-audit -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -6568,7 +6701,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
           "checks",
           "output"
         ]
@@ -6584,7 +6716,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief"
+          "mode:critique -> guardrail:assumption-audit -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -6596,7 +6728,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -6604,11 +6736,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, schema.findings-brief"
+          "mode.critique, guardrail.assumption-audit, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `schema.findings-brief`"
+          "`mode.critique` -> `guardrail.assumption-audit` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `guardrail.disconfirming-evidence` when confirmation bias is a material risk."
         ],
         [
           "Common swaps",
@@ -6630,7 +6766,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Critique an artifact by looking for what is missing, avoided, or silently assumed rather than what is already present.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Critique an artifact by looking for what is missing, avoided, or silently assumed rather than what is already present.",
       "tags": [
@@ -6647,12 +6783,14 @@ globalThis.SITE_DATA = {
           "schema.findings-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.critique`",
-          "`strategy.red-team`",
           "`guardrail.assumption-audit`",
-          "`guardrail.disconfirming-evidence`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`strategy.red-team` when the artifact needs a stronger opposing test.",
+          "`guardrail.disconfirming-evidence` when confirmation bias is a material risk."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -6669,7 +6807,7 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief",
+        "phaseOrder": "mode:critique -> guardrail:assumption-audit -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -6681,8 +6819,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
-          "reasoning",
           "checks",
           "output"
         ]
@@ -6698,7 +6834,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> strategy:red-team -> guardrail:assumption-audit -> guardrail:disconfirming-evidence -> schema:findings-brief"
+          "mode:critique -> guardrail:assumption-audit -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -6710,7 +6846,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -6726,7 +6862,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `guardrail.disconfirming-evidence` -> `schema.findings-brief`"
+          "`mode.critique` -> `guardrail.assumption-audit` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `strategy.red-team` when the artifact needs a stronger opposing test., `guardrail.disconfirming-evidence` when confirmation bias is a material risk."
         ],
         [
           "Choose instead when",
@@ -6748,7 +6888,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
       "tags": [
@@ -6760,14 +6900,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
         "minimumBlocks": [
           "mode.critique",
-          "strategy.premortem"
+          "guardrail.disconfirming-evidence",
+          "schema.findings-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.critique`",
           "`guardrail.disconfirming-evidence`",
-          "`strategy.premortem`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`strategy.premortem` when failure paths should be surfaced before committing."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -6776,7 +6919,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> schema:findings-brief",
+        "phaseOrder": "mode:critique -> guardrail:disconfirming-evidence -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -6788,8 +6931,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
-          "reasoning",
           "checks",
           "output"
         ]
@@ -6805,7 +6946,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:disconfirming-evidence -> strategy:premortem -> schema:findings-brief"
+          "mode:critique -> guardrail:disconfirming-evidence -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -6817,7 +6958,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -6825,11 +6966,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, strategy.premortem"
+          "mode.critique, guardrail.disconfirming-evidence, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.disconfirming-evidence` -> `strategy.premortem` -> `schema.findings-brief`"
+          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `strategy.premortem` when failure paths should be surfaced before committing."
         ],
         [
           "Common failure mode",
@@ -6847,7 +6992,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Stress-test a plan before committing to find failure modes optimism may be obscuring.",
       "tags": [
@@ -6860,15 +7005,17 @@ globalThis.SITE_DATA = {
         "minimumBlocks": [
           "mode.critique",
           "strategy.premortem",
-          "guardrail.assumption-audit"
+          "schema.findings-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.critique`",
           "`strategy.premortem`",
-          "`strategy.red-team`",
-          "`guardrail.assumption-audit`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`strategy.red-team` when the artifact needs a stronger opposing test.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `guardrail.disconfirming-evidence` instead of `strategy.red-team` when the risk is confirmation bias rather than active attack.",
@@ -6877,21 +7024,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> schema:findings-brief",
+        "phaseOrder": "mode:critique -> strategy:premortem -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -6906,7 +7051,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> strategy:premortem -> strategy:red-team -> guardrail:assumption-audit -> schema:findings-brief"
+          "mode:critique -> strategy:premortem -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -6918,7 +7063,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -6926,11 +7071,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, strategy.premortem, guardrail.assumption-audit"
+          "mode.critique, strategy.premortem, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `strategy.premortem` -> `strategy.red-team` -> `guardrail.assumption-audit` -> `schema.findings-brief`"
+          "`mode.critique` -> `strategy.premortem` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `strategy.red-team` when the artifact needs a stronger opposing test., `guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         [
           "Common swaps",
@@ -6952,7 +7101,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Evaluate whether an interface, workflow, document, onboarding path, or process lets its intended user complete the job without avoidable friction.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Evaluate whether an interface, workflow, document, onboarding path, or process lets its intended user complete the job without avoidable friction.",
       "tags": [
@@ -6968,12 +7117,14 @@ globalThis.SITE_DATA = {
           "schema.findings-brief"
         ],
         "fullSequence": [
-          "`frame.audience`",
-          "`frame.current-state`",
           "`strategy.journey-map`",
-          "`mode.critique`",
           "`rubric.usability-quality`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.audience` when audience fit changes the output.",
+          "`frame.current-state` when the present system state needs a clear baseline.",
+          "`mode.critique` when candidate answers need adversarial review."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Use `schema.requirements-brief` instead of `schema.findings-brief` when the review should become requirements for a redesign.",
@@ -6982,19 +7133,15 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:audience -> frame:current-state -> strategy:journey-map -> mode:critique -> rubric:usability-quality -> schema:findings-brief",
-        "primaryMode": "mode.critique",
-        "modeRefs": [
-          "mode.critique"
-        ],
+        "phaseOrder": "strategy:journey-map -> rubric:usability-quality -> schema:findings-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
-          "framing",
           "reasoning",
           "checks",
           "output"
@@ -7011,7 +7158,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:audience -> frame:current-state -> strategy:journey-map -> mode:critique -> rubric:usability-quality -> schema:findings-brief"
+          "strategy:journey-map -> rubric:usability-quality -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -7023,7 +7170,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -7035,7 +7182,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.audience` -> `frame.current-state` -> `strategy.journey-map` -> `mode.critique` -> `rubric.usability-quality` -> `schema.findings-brief`"
+          "`strategy.journey-map` -> `rubric.usability-quality` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.audience` when audience fit changes the output., `frame.current-state` when the present system state needs a clear baseline., `mode.critique` when candidate answers need adversarial review."
         ],
         [
           "Choose instead when",
@@ -7061,7 +7212,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
       "stage": "refine",
       "outputKind": "prompt",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
       "tags": [
@@ -7072,14 +7223,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Diagnose and rewrite a weak prompt so it produces reliable, well-shaped output.",
         "minimumBlocks": [
           "mode.critique",
-          "rubric.writing-quality"
+          "rubric.writing-quality",
+          "schema.prompt-spec"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.critique`",
-          "`guardrail.uncertainty`",
           "`rubric.writing-quality`",
           "`schema.prompt-spec`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`guardrail.uncertainty` when confidence needs calibration."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7088,7 +7242,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality -> schema:prompt-spec",
+        "phaseOrder": "mode:critique -> rubric:writing-quality -> schema:prompt-spec",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -7100,7 +7254,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
           "checks",
           "output"
         ]
@@ -7116,7 +7269,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:uncertainty -> rubric:writing-quality -> schema:prompt-spec"
+          "mode:critique -> rubric:writing-quality -> schema:prompt-spec"
         ],
         [
           "Stage",
@@ -7128,7 +7281,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -7136,11 +7289,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, rubric.writing-quality"
+          "mode.critique, rubric.writing-quality, schema.prompt-spec"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.uncertainty` -> `rubric.writing-quality` -> `schema.prompt-spec`"
+          "`mode.critique` -> `rubric.writing-quality` -> `schema.prompt-spec`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `guardrail.uncertainty` when confidence needs calibration."
         ],
         [
           "Common failure mode",
@@ -7158,7 +7315,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
       "stage": "frame",
       "outputKind": "prompt",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "medium",
       "summary": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
       "tags": [
@@ -7170,15 +7327,18 @@ globalThis.SITE_DATA = {
         "useWhen": "Design a system prompt or persistent instruction set for an AI agent or workflow.",
         "minimumBlocks": [
           "frame.task",
-          "frame.success-criteria"
+          "frame.prompt-compare",
+          "schema.prompt-spec"
         ],
         "fullSequence": [
           "`frame.task`",
-          "`frame.success-criteria`",
-          "`mode.critique`",
           "`frame.prompt-compare`",
-          "`rubric.writing-quality`",
           "`schema.prompt-spec`"
+        ],
+        "optionalBlocks": [
+          "`frame.success-criteria` when success needs to be judged before options are compared.",
+          "`mode.critique` when candidate answers need adversarial review.",
+          "`rubric.writing-quality` when prose quality or instruction clarity matters."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "Drop `frame.prompt-compare` when creating a prompt from scratch with no baseline to preserve.",
@@ -7187,20 +7347,16 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:prompt-spec",
-        "primaryMode": "mode.critique",
-        "modeRefs": [
-          "mode.critique"
-        ],
+        "phaseOrder": "frame:task -> frame:prompt-compare -> schema:prompt-spec",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -7215,7 +7371,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:success-criteria -> mode:critique -> frame:prompt-compare -> rubric:writing-quality -> schema:prompt-spec"
+          "frame:task -> frame:prompt-compare -> schema:prompt-spec"
         ],
         [
           "Stage",
@@ -7227,7 +7383,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -7235,11 +7391,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, frame.success-criteria"
+          "frame.task, frame.prompt-compare, schema.prompt-spec"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `mode.critique` -> `frame.prompt-compare` -> `rubric.writing-quality` -> `schema.prompt-spec`"
+          "`frame.task` -> `frame.prompt-compare` -> `schema.prompt-spec`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.success-criteria` when success needs to be judged before options are compared., `mode.critique` when candidate answers need adversarial review., `rubric.writing-quality` when prose quality or instruction clarity matters."
         ],
         [
           "Common swaps",
@@ -7261,7 +7421,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Diagnose a fault systematically before attempting a fix.",
       "stage": "analyze",
       "outputKind": "diagnosis",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Diagnose a fault systematically before attempting a fix.",
       "tags": [
@@ -7272,14 +7432,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Diagnose a fault systematically before attempting a fix.",
         "minimumBlocks": [
           "frame.task",
-          "frame.cause-mapping"
+          "frame.cause-mapping",
+          "schema.execution-brief"
         ],
         "fullSequence": [
           "`frame.task`",
-          "`mode.explore`",
-          "`mode.critique`",
           "`frame.cause-mapping`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`mode.critique` when candidate answers need adversarial review."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7288,19 +7451,15 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> mode:critique -> frame:cause-mapping -> schema:execution-brief",
-        "primaryMode": "mode.explore",
-        "modeRefs": [
-          "mode.explore",
-          "mode.critique"
-        ],
+        "phaseOrder": "frame:task -> frame:cause-mapping -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
         "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
           "output"
         ]
@@ -7316,7 +7475,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> mode:critique -> frame:cause-mapping -> schema:execution-brief"
+          "frame:task -> frame:cause-mapping -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -7328,7 +7487,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -7336,11 +7495,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.task, frame.cause-mapping"
+          "frame.task, frame.cause-mapping, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `mode.critique` -> `frame.cause-mapping` -> `schema.execution-brief`"
+          "`frame.task` -> `frame.cause-mapping` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `mode.critique` when candidate answers need adversarial review."
         ],
         [
           "Common failure mode",
@@ -7358,7 +7521,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Guide an autonomous coding agent through a bounded repository change with discovery, implementation slices, verification, and handoff.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "standard",
       "stakes": "high",
       "summary": "Guide an autonomous coding agent through a bounded repository change with discovery, implementation slices, verification, and handoff.",
       "tags": [
@@ -7377,13 +7540,15 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`frame.task`",
           "`mode.explore`",
-          "`strategy.problem-split`",
-          "`recurse.decompose`",
-          "`guardrail.bounded-recursion`",
-          "`guardrail.assumption-audit`",
           "`guardrail.scope-creep`",
-          "`schema.execution-brief`",
-          "`rubric.plan-quality`"
+          "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`strategy.problem-split` when the work needs implementation slices or subproblems.",
+          "`recurse.decompose` when the problem branches across nested subwork.",
+          "`guardrail.bounded-recursion` when recursive or iterative work needs a stopping rule.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7401,20 +7566,19 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> strategy:problem-split -> recurse:decompose -> guardrail:bounded-recursion -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:execution-brief -> rubric:plan-quality",
+        "phaseOrder": "frame:task -> mode:explore -> guardrail:scope-creep -> schema:execution-brief",
         "primaryMode": "mode.explore",
         "modeRefs": [
           "mode.explore"
         ],
         "hasSchema": true,
         "hasQualityGate": true,
-        "hasBoundedRecursion": true,
+        "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "reasoning",
           "checks",
           "output"
         ]
@@ -7430,7 +7594,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> strategy:problem-split -> recurse:decompose -> guardrail:bounded-recursion -> guardrail:assumption-audit -> guardrail:scope-creep -> schema:execution-brief -> rubric:plan-quality"
+          "frame:task -> mode:explore -> guardrail:scope-creep -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -7442,7 +7606,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "standard"
         ],
         [
           "Stakes",
@@ -7458,7 +7622,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `strategy.problem-split` -> `recurse.decompose` -> `guardrail.bounded-recursion` -> `guardrail.assumption-audit` -> `guardrail.scope-creep` -> `schema.execution-brief` -> `rubric.plan-quality`"
+          "`frame.task` -> `mode.explore` -> `guardrail.scope-creep` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`strategy.problem-split` when the work needs implementation slices or subproblems., `recurse.decompose` when the problem branches across nested subwork., `guardrail.bounded-recursion` when recursive or iterative work needs a stopping rule., `guardrail.assumption-audit` when hidden premises could change the answer., `rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         [
           "Choose instead when",
@@ -7480,7 +7648,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Implement a bounded code change with explicit scope, acceptance criteria, and verification.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Implement a bounded code change with explicit scope, acceptance criteria, and verification.",
       "tags": [
@@ -7498,10 +7666,12 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`frame.task`",
           "`frame.success-criteria`",
-          "`strategy.problem-split`",
-          "`guardrail.assumption-audit`",
-          "`schema.execution-brief`",
-          "`rubric.plan-quality`"
+          "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`strategy.problem-split` when the work needs implementation slices or subproblems.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7518,18 +7688,16 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:task -> frame:success-criteria -> strategy:problem-split -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality",
+        "phaseOrder": "frame:task -> frame:success-criteria -> schema:execution-brief",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "framing",
-          "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -7544,7 +7712,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:success-criteria -> strategy:problem-split -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality"
+          "frame:task -> frame:success-criteria -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -7556,7 +7724,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -7572,7 +7740,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.success-criteria` -> `strategy.problem-split` -> `guardrail.assumption-audit` -> `schema.execution-brief` -> `rubric.plan-quality`"
+          "`frame.task` -> `frame.success-criteria` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`strategy.problem-split` when the work needs implementation slices or subproblems., `guardrail.assumption-audit` when hidden premises could change the answer., `rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         [
           "Choose instead when",
@@ -7590,7 +7762,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design the smallest useful test plan for a feature, bug fix, refactor, or risky system change.",
       "stage": "critique",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Design the smallest useful test plan for a feature, bug fix, refactor, or risky system change.",
       "tags": [
@@ -7606,11 +7778,13 @@ globalThis.SITE_DATA = {
         ],
         "fullSequence": [
           "`frame.success-criteria`",
-          "`mode.explore`",
           "`mode.critique`",
-          "`guardrail.assumption-audit`",
-          "`schema.execution-brief`",
-          "`rubric.plan-quality`"
+          "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7628,21 +7802,19 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:success-criteria -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality",
-        "primaryMode": "mode.explore",
+        "phaseOrder": "frame:success-criteria -> mode:critique -> schema:execution-brief",
+        "primaryMode": "mode.critique",
         "modeRefs": [
-          "mode.explore",
           "mode.critique"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -7657,7 +7829,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:success-criteria -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:execution-brief -> rubric:plan-quality"
+          "frame:success-criteria -> mode:critique -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -7669,7 +7841,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -7685,7 +7857,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.success-criteria` -> `mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.execution-brief` -> `rubric.plan-quality`"
+          "`frame.success-criteria` -> `mode.critique` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `guardrail.assumption-audit` when hidden premises could change the answer., `rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         [
           "Choose instead when",
@@ -7707,7 +7883,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Plan a behavior-preserving refactor with invariants, migration order, and rollback checkpoints explicit.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Plan a behavior-preserving refactor with invariants, migration order, and rollback checkpoints explicit.",
       "tags": [
@@ -7725,11 +7901,13 @@ globalThis.SITE_DATA = {
         "fullSequence": [
           "`frame.current-state`",
           "`frame.success-criteria`",
-          "`mode.explore`",
-          "`guardrail.assumption-audit`",
-          "`strategy.premortem`",
-          "`schema.execution-brief`",
-          "`rubric.plan-quality`"
+          "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`strategy.premortem` when failure paths should be surfaced before committing.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7747,21 +7925,16 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:current-state -> frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> schema:execution-brief -> rubric:plan-quality",
-        "primaryMode": "mode.explore",
-        "modeRefs": [
-          "mode.explore"
-        ],
+        "phaseOrder": "frame:current-state -> frame:success-criteria -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
-          "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -7776,7 +7949,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:current-state -> frame:success-criteria -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> schema:execution-brief -> rubric:plan-quality"
+          "frame:current-state -> frame:success-criteria -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -7788,7 +7961,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -7804,7 +7977,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.current-state` -> `frame.success-criteria` -> `mode.explore` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.execution-brief` -> `rubric.plan-quality`"
+          "`frame.current-state` -> `frame.success-criteria` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `guardrail.assumption-audit` when hidden premises could change the answer., `strategy.premortem` when failure paths should be surfaced before committing., `rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         [
           "Choose instead when",
@@ -7826,7 +8003,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Design or revise an API contract with consumers, invariants, errors, compatibility, and rollout constraints explicit.",
       "stage": "frame",
       "outputKind": "brief",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Design or revise an API contract with consumers, invariants, errors, compatibility, and rollout constraints explicit.",
       "tags": [
@@ -7844,12 +8021,14 @@ globalThis.SITE_DATA = {
         ],
         "fullSequence": [
           "`frame.task`",
-          "`frame.stakeholders`",
           "`frame.success-criteria`",
-          "`strategy.tradeoff-matrix`",
-          "`guardrail.assumption-audit`",
-          "`schema.requirements-brief`",
-          "`rubric.plan-quality`"
+          "`schema.requirements-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.stakeholders` when roles or affected groups may disagree.",
+          "`strategy.tradeoff-matrix` when options need explicit comparison criteria.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7867,18 +8046,16 @@ globalThis.SITE_DATA = {
         ]
       },
       "composition": {
-        "phaseOrder": "frame:task -> frame:stakeholders -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> schema:requirements-brief -> rubric:plan-quality",
+        "phaseOrder": "frame:task -> frame:success-criteria -> schema:requirements-brief",
         "primaryMode": "",
         "modeRefs": [],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "framing",
-          "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -7893,7 +8070,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> frame:stakeholders -> frame:success-criteria -> strategy:tradeoff-matrix -> guardrail:assumption-audit -> schema:requirements-brief -> rubric:plan-quality"
+          "frame:task -> frame:success-criteria -> schema:requirements-brief"
         ],
         [
           "Stage",
@@ -7905,7 +8082,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -7921,7 +8098,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `frame.stakeholders` -> `frame.success-criteria` -> `strategy.tradeoff-matrix` -> `guardrail.assumption-audit` -> `schema.requirements-brief` -> `rubric.plan-quality`"
+          "`frame.task` -> `frame.success-criteria` -> `schema.requirements-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.stakeholders` when roles or affected groups may disagree., `strategy.tradeoff-matrix` when options need explicit comparison criteria., `guardrail.assumption-audit` when hidden premises could change the answer., `rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         [
           "Choose instead when",
@@ -7943,7 +8124,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Review code for correctness, contracts, and blast radius before approving it.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Review code for correctness, contracts, and blast radius before approving it.",
       "tags": [
@@ -7954,15 +8135,18 @@ globalThis.SITE_DATA = {
         "job": "review-code",
         "useWhen": "Review code for correctness, contracts, and blast radius before approving it.",
         "minimumBlocks": [
+          "frame.task",
           "mode.critique",
           "schema.findings-brief"
         ],
         "fullSequence": [
           "`frame.task`",
-          "`mode.explore`",
           "`mode.critique`",
-          "`guardrail.assumption-audit`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -7971,21 +8155,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:findings-brief",
-        "primaryMode": "mode.explore",
+        "phaseOrder": "frame:task -> mode:critique -> schema:findings-brief",
+        "primaryMode": "mode.critique",
         "modeRefs": [
-          "mode.explore",
           "mode.critique"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
           "framing",
-          "checks",
           "output"
         ]
       },
@@ -8000,7 +8182,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> mode:critique -> guardrail:assumption-audit -> schema:findings-brief"
+          "frame:task -> mode:critique -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -8012,7 +8194,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -8020,11 +8202,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, schema.findings-brief"
+          "frame.task, mode.critique, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `mode.critique` -> `guardrail.assumption-audit` -> `schema.findings-brief`"
+          "`frame.task` -> `mode.critique` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         [
           "Choose instead when",
@@ -8046,7 +8232,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Evaluate a system design for structural soundness before committing to it.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Evaluate a system design for structural soundness before committing to it.",
       "tags": [
@@ -8058,14 +8244,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Evaluate a system design for structural soundness before committing to it.",
         "minimumBlocks": [
           "mode.critique",
-          "guardrail.assumption-audit"
+          "guardrail.assumption-audit",
+          "schema.findings-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.critique`",
           "`guardrail.assumption-audit`",
-          "`strategy.premortem`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`strategy.premortem` when failure paths should be surfaced before committing."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -8074,7 +8263,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> schema:findings-brief",
+        "phaseOrder": "mode:critique -> guardrail:assumption-audit -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -8086,8 +8275,6 @@ globalThis.SITE_DATA = {
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
-          "reasoning",
           "checks",
           "output"
         ]
@@ -8103,7 +8290,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:premortem -> schema:findings-brief"
+          "mode:critique -> guardrail:assumption-audit -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -8115,7 +8302,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -8123,11 +8310,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, guardrail.assumption-audit"
+          "mode.critique, guardrail.assumption-audit, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `schema.findings-brief`"
+          "`mode.critique` -> `guardrail.assumption-audit` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `strategy.premortem` when failure paths should be surfaced before committing."
         ],
         [
           "Common failure mode",
@@ -8145,7 +8336,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
       "stage": "analyze",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Contain and diagnose an active incident, then close with a written post-mortem and action plan.",
       "tags": [
@@ -8161,11 +8352,13 @@ globalThis.SITE_DATA = {
           "schema.execution-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
-          "`mode.explore`",
           "`frame.cause-mapping`",
           "`mode.decide`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`mode.explore` when premature convergence is a real risk."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -8174,16 +8367,15 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> frame:cause-mapping -> mode:decide -> schema:execution-brief",
-        "primaryMode": "mode.explore",
+        "phaseOrder": "frame:cause-mapping -> mode:decide -> schema:execution-brief",
+        "primaryMode": "mode.decide",
         "modeRefs": [
-          "mode.explore",
           "mode.decide"
         ],
         "hasSchema": true,
         "hasQualityGate": false,
         "hasBoundedRecursion": false,
-        "needsModeHandoff": true,
+        "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
@@ -8202,7 +8394,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> frame:cause-mapping -> mode:decide -> schema:execution-brief"
+          "frame:cause-mapping -> mode:decide -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -8214,7 +8406,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -8226,7 +8418,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `frame.cause-mapping` -> `mode.decide` -> `schema.execution-brief`"
+          "`frame.cause-mapping` -> `mode.decide` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `mode.explore` when premature convergence is a real risk."
         ],
         [
           "Common failure mode",
@@ -8244,7 +8440,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Break a socio-technical loop that keeps recreating the same class of incident.",
       "stage": "conclude",
       "outputKind": "plan",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Break a socio-technical loop that keeps recreating the same class of incident.",
       "tags": [
@@ -8257,13 +8453,16 @@ globalThis.SITE_DATA = {
         "useWhen": "Break a socio-technical loop that keeps recreating the same class of incident.",
         "minimumBlocks": [
           "frame.cause-mapping",
+          "strategy.premortem",
           "schema.execution-brief"
         ],
         "fullSequence": [
-          "`mode.reflect`",
           "`frame.cause-mapping`",
           "`strategy.premortem`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.reflect` when learning from prior action matters."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -8272,18 +8471,15 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:reflect -> frame:cause-mapping -> strategy:premortem -> schema:execution-brief",
-        "primaryMode": "mode.reflect",
-        "modeRefs": [
-          "mode.reflect"
-        ],
+        "phaseOrder": "frame:cause-mapping -> strategy:premortem -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
         "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
           "reasoning",
           "output"
@@ -8300,7 +8496,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:reflect -> frame:cause-mapping -> strategy:premortem -> schema:execution-brief"
+          "frame:cause-mapping -> strategy:premortem -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -8312,7 +8508,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -8320,11 +8516,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "frame.cause-mapping, schema.execution-brief"
+          "frame.cause-mapping, strategy.premortem, schema.execution-brief"
         ],
         [
           "Suggested blocks",
-          "`mode.reflect` -> `frame.cause-mapping` -> `strategy.premortem` -> `schema.execution-brief`"
+          "`frame.cause-mapping` -> `strategy.premortem` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.reflect` when learning from prior action matters."
         ]
       ],
       "sourcePath": "stacks/break-recurring-incident.md"
@@ -8338,7 +8538,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "stage": "decide",
       "outputKind": "plan",
-      "effort": "deep",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Plan and gate a migration with explicit rollback triggers so existing behavior cannot break silently.",
       "tags": [
@@ -8355,11 +8555,13 @@ globalThis.SITE_DATA = {
         ],
         "fullSequence": [
           "`frame.task`",
-          "`mode.explore`",
           "`guardrail.assumption-audit`",
-          "`strategy.premortem`",
-          "`rubric.plan-quality`",
           "`schema.execution-brief`"
+        ],
+        "optionalBlocks": [
+          "`mode.explore` when premature convergence is a real risk.",
+          "`strategy.premortem` when failure paths should be surfaced before committing.",
+          "`rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -8368,20 +8570,16 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief",
-        "primaryMode": "mode.explore",
-        "modeRefs": [
-          "mode.explore"
-        ],
+        "phaseOrder": "frame:task -> guardrail:assumption-audit -> schema:execution-brief",
+        "primaryMode": "",
+        "modeRefs": [],
         "hasSchema": true,
         "hasQualityGate": true,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
-          "stance",
           "framing",
-          "reasoning",
           "checks",
           "output"
         ]
@@ -8397,7 +8595,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:explore -> guardrail:assumption-audit -> strategy:premortem -> rubric:plan-quality -> schema:execution-brief"
+          "frame:task -> guardrail:assumption-audit -> schema:execution-brief"
         ],
         [
           "Stage",
@@ -8409,7 +8607,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "deep"
+          "quick"
         ],
         [
           "Stakes",
@@ -8421,7 +8619,11 @@ globalThis.SITE_DATA = {
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.explore` -> `guardrail.assumption-audit` -> `strategy.premortem` -> `rubric.plan-quality` -> `schema.execution-brief`"
+          "`frame.task` -> `guardrail.assumption-audit` -> `schema.execution-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`mode.explore` when premature convergence is a real risk., `strategy.premortem` when failure paths should be surfaced before committing., `rubric.plan-quality` when the plan needs an explicit quality check."
         ],
         [
           "Common failure mode",
@@ -8439,7 +8641,7 @@ globalThis.SITE_DATA = {
       "useWhen": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
       "stage": "critique",
       "outputKind": "critique",
-      "effort": "standard",
+      "effort": "quick",
       "stakes": "high",
       "summary": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
       "tags": [
@@ -8452,14 +8654,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.",
         "minimumBlocks": [
           "mode.critique",
-          "strategy.red-team"
+          "strategy.red-team",
+          "schema.findings-brief"
         ],
         "fullSequence": [
-          "`frame.task`",
           "`mode.critique`",
-          "`guardrail.assumption-audit`",
           "`strategy.red-team`",
           "`schema.findings-brief`"
+        ],
+        "optionalBlocks": [
+          "`frame.task` when scope or non-goals need to be made explicit.",
+          "`guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         "blockOrderRationale": "",
         "commonSwaps": "",
@@ -8468,21 +8673,19 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:findings-brief",
+        "phaseOrder": "mode:critique -> strategy:red-team -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
         ],
         "hasSchema": true,
-        "hasQualityGate": true,
+        "hasQualityGate": false,
         "hasBoundedRecursion": false,
         "needsModeHandoff": false,
         "needsRecursionBoundary": false,
         "strengths": [
           "stance",
-          "framing",
           "reasoning",
-          "checks",
           "output"
         ]
       },
@@ -8497,7 +8700,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "frame:task -> mode:critique -> guardrail:assumption-audit -> strategy:red-team -> schema:findings-brief"
+          "mode:critique -> strategy:red-team -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -8509,7 +8712,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Effort",
-          "standard"
+          "quick"
         ],
         [
           "Stakes",
@@ -8517,11 +8720,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, strategy.red-team"
+          "mode.critique, strategy.red-team, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`frame.task` -> `mode.critique` -> `guardrail.assumption-audit` -> `strategy.red-team` -> `schema.findings-brief`"
+          "`mode.critique` -> `strategy.red-team` -> `schema.findings-brief`"
+        ],
+        [
+          "Optional add-ons",
+          "`frame.task` when scope or non-goals need to be made explicit., `guardrail.assumption-audit` when hidden premises could change the answer."
         ],
         [
           "Choose instead when",

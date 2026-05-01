@@ -10,12 +10,14 @@ Useful inputs:
 - unacceptable outcomes
 
 Blocks:
-1. `frame.task`
-2. `mode.create`
-3. `strategy.constraint-relaxation`
-4. `guardrail.assumption-audit`
-5. `guardrail.scope-creep`
-6. `schema.option-map`
+1. `mode.create`
+2. `strategy.constraint-relaxation`
+3. `schema.option-map`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `guardrail.scope-creep` when the prompt may expand beyond the objective.
 
 Expected output: Inverted assumptions, plausible weird options, what each option would require to be true, and the smallest test for the best non-obvious direction.
 

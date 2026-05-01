@@ -4,11 +4,13 @@ Move a feature from defined to shipped with quality gates at each step.
 
 Blocks:
 1. `frame.success-criteria`
-2. `mode.decide`
-3. `guardrail.assumption-audit`
-4. `strategy.premortem`
-5. `rubric.plan-quality`
-6. `schema.execution-brief`
+2. `strategy.premortem`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `mode.decide` when the response must close on a recommendation.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `rubric.plan-quality` when the plan needs an explicit quality check.
 
 Expected output: Committed ship plan with success criteria, risk inventory, and go/no-go criteria at each gate.
 
@@ -18,4 +20,4 @@ Expected output: Committed ship plan with success criteria, risk inventory, and 
 
 **Common failure mode:** Treating ship readiness as enthusiasm to release rather than criteria, risks, and gates.
 
-**Minimum blocks:** `frame.success-criteria` + `guardrail.assumption-audit` + `schema.execution-brief`
+**Minimum blocks:** `frame.success-criteria` + `strategy.premortem` + `schema.execution-brief`

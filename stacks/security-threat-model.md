@@ -3,11 +3,13 @@
 Enumerate, prioritize, and plan mitigations for threats before a system ships or changes.
 
 Blocks:
-1. `frame.task`
-2. `mode.critique`
-3. `guardrail.assumption-audit`
-4. `strategy.red-team`
-5. `schema.findings-brief`
+1. `mode.critique`
+2. `strategy.red-team`
+3. `schema.findings-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
 
 Expected output: Threat inventory ranked by impact, with mitigations assigned and highest-risk items flagged for immediate action.
 
@@ -19,4 +21,4 @@ Expected output: Threat inventory ranked by impact, with mitigations assigned an
 
 **Common failure mode:** Listing generic security concerns without tying them to a boundary, attack path, or fix.
 
-**Minimum blocks:** `mode.critique` + `strategy.red-team`
+**Minimum blocks:** `mode.critique` + `strategy.red-team` + `schema.findings-brief`

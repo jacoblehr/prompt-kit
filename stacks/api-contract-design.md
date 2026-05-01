@@ -12,12 +12,14 @@ Useful inputs:
 
 Blocks:
 1. `frame.task`
-2. `frame.stakeholders`
-3. `frame.success-criteria`
-4. `strategy.tradeoff-matrix`
-5. `guardrail.assumption-audit`
-6. `schema.requirements-brief`
-7. `rubric.plan-quality`
+2. `frame.success-criteria`
+3. `schema.requirements-brief`
+
+Optional add-ons:
+- `frame.stakeholders` when roles or affected groups may disagree.
+- `strategy.tradeoff-matrix` when options need explicit comparison criteria.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `rubric.plan-quality` when the plan needs an explicit quality check.
 
 Expected output: API contract brief with endpoints or messages, required behavior, compatibility rules, error semantics, open questions, and validation plan.
 

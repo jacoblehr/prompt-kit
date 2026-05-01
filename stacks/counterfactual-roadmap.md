@@ -11,13 +11,15 @@ Useful inputs:
 - decision or investment options
 
 Blocks:
-1. `frame.success-criteria`
-2. `mode.explore`
-3. `strategy.scenario-planning`
-4. `guardrail.uncertainty`
-5. `guardrail.disconfirming-evidence`
-6. `schema.option-map`
-7. `rubric.decision-quality`
+1. `strategy.scenario-planning`
+2. `guardrail.uncertainty`
+3. `schema.option-map`
+
+Optional add-ons:
+- `frame.success-criteria` when success needs to be judged before options are compared.
+- `mode.explore` when premature convergence is a real risk.
+- `guardrail.disconfirming-evidence` when confirmation bias is a material risk.
+- `rubric.decision-quality` when the decision should be evaluated before acting.
 
 Expected output: Counterfactual scenarios, trigger signals, robust near-term moves, fragile bets, and a decision-ready option map.
 

@@ -72,7 +72,9 @@ listCmd
     console.log(`\n${stacks.length} stack(s) found:\n`)
     stacks.forEach((stack) => {
       const count = stack.contract?.fullSequence?.length || 0
-      console.log(`  ${stack.job || stack.title} - ${truncate(stack.summary, 64)} (${count} blocks)`)
+      const optionalCount = stack.contract?.optionalBlocks?.length || 0
+      const suffix = optionalCount > 0 ? `, ${optionalCount} optional` : ''
+      console.log(`  ${stack.job || stack.title} - ${truncate(stack.summary, 64)} (${count} default blocks${suffix})`)
     })
   })
 

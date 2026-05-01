@@ -1,26 +1,9 @@
 # Prompt
 
-Render this chosen direction, plan, or analysis as a structured execution brief.
+Render the result as an execution brief.
+Keep it concise, concrete, and directly usable; omit process notes.
 
-Requirements:
-
-- make objective and sequencing explicit
-- name dependencies before milestones drift
-- keep the first checkpoint close enough to catch early failure
-- include the condition that would justify pausing or escalating
-- owner and escalation trigger are optional for solo or internal work
-
-Return:
-
-- objective
-- owner or responsible role (if applicable)
-- ordered steps or milestones
-- dependencies
-- likely blockers
-- major risks
-- first checkpoint
-- pause or escalation trigger (if applicable)
-- immediate next action
+Return: objective, owner if relevant, ordered steps, dependencies, blockers, risks, first checkpoint, pause trigger, next action.
 
 ---
 context: {context}

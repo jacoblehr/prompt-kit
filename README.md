@@ -58,14 +58,13 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 
 ## Build Your Own Composition
 
-**Minimal sequence** (works for most tasks):
+**Default sequence** (works for most tasks):
 
-1. `frame.task` — Separate the stated ask from the real objective
-2. `mode.explore` — Widen your search space before converging
-3. `strategy.problem-split` — Break into manageable, sequenced pieces
-4. `frame.success-criteria` — Define what success looks like up front
-5. `guardrail.uncertainty` — Surface hidden assumptions and gaps
-6. `schema.execution-brief` or `schema.findings-brief` — Shape the final artifact
+1. `frame.task` or `frame.success-criteria` — Define the target and boundary
+2. one `mode`, `strategy`, or targeted `guardrail` — Add the reasoning move that matters here
+3. one `schema` or `rubric` — Shape the output or quality check
+
+Saved stacks follow the same bias: the `Blocks` list is the concise default to copy, roughly 100-150 words on average, while `Optional add-ons` names deeper checks for higher-stakes or more ambiguous work.
 
 **Common patterns:**
 

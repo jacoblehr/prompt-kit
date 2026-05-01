@@ -1,19 +1,9 @@
 # Prompt
 
-Generate competing branches for this problem, then prune weak ones before refinement.
+Generate distinct branches, then prune weak ones against explicit criteria.
+Stop when remaining branches are meaningfully different and usable.
 
-Requirements:
-
-- create only meaningfully distinct branches
-- keep the evaluation criteria explicit when pruning
-- discard weak branches early instead of refining all of them
-- preserve the strongest surviving branches with a short rationale
-
-Return:
-
-- candidate branches
-- branches kept
-- branches pruned with rationale
+Return: candidate branches, kept branches, pruned branches with rationale.
 
 ---
 context: {context}

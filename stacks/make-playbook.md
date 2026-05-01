@@ -5,9 +5,11 @@ Turn lessons, repeated work, or a successful workflow into a reusable playbook.
 Blocks:
 1. `mode.reflect`
 2. `frame.extract-insights`
-3. `guardrail.assumption-audit`
-4. `guardrail.scope-creep`
-5. `schema.playbook`
+3. `schema.playbook`
+
+Optional add-ons:
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `guardrail.scope-creep` when the prompt may expand beyond the objective.
 
 Expected output: Reusable playbook with trigger conditions, inputs, procedure, decision rules, examples, failure signs, escalation path, and maintenance notes.
 

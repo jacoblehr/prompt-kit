@@ -4,11 +4,13 @@ Design a system prompt or persistent instruction set for an AI agent or workflow
 
 Blocks:
 1. `frame.task`
-2. `frame.success-criteria`
-3. `mode.critique`
-4. `frame.prompt-compare`
-5. `rubric.writing-quality`
-6. `schema.prompt-spec`
+2. `frame.prompt-compare`
+3. `schema.prompt-spec`
+
+Optional add-ons:
+- `frame.success-criteria` when success needs to be judged before options are compared.
+- `mode.critique` when candidate answers need adversarial review.
+- `rubric.writing-quality` when prose quality or instruction clarity matters.
 
 Expected output: System prompt spec with clear task, constraints, output shape, boundaries, test cases, and known limitations.
 
@@ -20,4 +22,4 @@ Expected output: System prompt spec with clear task, constraints, output shape, 
 
 **Common failure mode:** Producing polished instructions without test cases, boundaries, or a clear output contract.
 
-**Minimum blocks:** `frame.task` + `frame.success-criteria`
+**Minimum blocks:** `frame.task` + `frame.prompt-compare` + `schema.prompt-spec`

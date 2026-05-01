@@ -29,6 +29,12 @@ Why this order works:
 
 ## Composition Rules
 
+### Default stack size
+
+Saved stacks should be concise by default. Treat the `Blocks` list as the prompt a user is most likely to copy: usually a frame, one reasoning move, and an output shape or quality check. The assembled default should feel roughly 100-150 words on average, with deeper checks in `Optional add-ons` instead of making every stack carry them.
+
+This is an editorial norm, not a hard validation rule. A stack can use more blocks when the job genuinely needs a handoff or extra control, but the first path should stay easy to scan and easy to trim.
+
 ### Rule 1: one primary mode
 
 Modes conflict easily. Keep one dominant mode per prompt.
@@ -151,7 +157,7 @@ Common handoff:
 
 ## Minimum Viable Prompts
 
-Not every task needs a full stack. Often two or three blocks are enough.
+Not every task needs a full stack. Often two or three blocks are enough, and saved stacks should keep that as the default feel whenever the task allows it.
 
 | Task shape            | Minimum blocks                            |
 | --------------------- | ----------------------------------------- |

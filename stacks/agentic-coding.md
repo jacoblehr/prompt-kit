@@ -13,13 +13,15 @@ Useful inputs:
 Blocks:
 1. `frame.task`
 2. `mode.explore`
-3. `strategy.problem-split`
-4. `recurse.decompose`
-5. `guardrail.bounded-recursion`
-6. `guardrail.assumption-audit`
-7. `guardrail.scope-creep`
-8. `schema.execution-brief`
-9. `rubric.plan-quality`
+3. `guardrail.scope-creep`
+4. `schema.execution-brief`
+
+Optional add-ons:
+- `strategy.problem-split` when the work needs implementation slices or subproblems.
+- `recurse.decompose` when the problem branches across nested subwork.
+- `guardrail.bounded-recursion` when recursive or iterative work needs a stopping rule.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `rubric.plan-quality` when the plan needs an explicit quality check.
 
 Expected output: Agent work brief with repo findings, implementation slices, files touched, verification run, risks, blockers, and final handoff notes.
 

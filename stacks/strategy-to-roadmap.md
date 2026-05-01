@@ -3,12 +3,14 @@
 Convert a strategic direction or ambiguous bet into a sequenced roadmap that can survive uncertainty and capacity constraints.
 
 Blocks:
-1. `frame.success-criteria`
-2. `strategy.scenario-planning`
-3. `strategy.tradeoff-matrix`
-4. `guardrail.assumption-audit`
-5. `mode.decide`
-6. `schema.execution-brief`
+1. `strategy.scenario-planning`
+2. `strategy.tradeoff-matrix`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `frame.success-criteria` when success needs to be judged before options are compared.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `mode.decide` when the response must close on a recommendation.
 
 Expected output: Roadmap direction with robust moves, deferred bets, key assumptions, sequencing, and the first execution checkpoint.
 
@@ -22,4 +24,4 @@ Expected output: Roadmap direction with robust moves, deferred bets, key assumpt
 
 **Common failure mode:** Producing a timeline of desired outcomes without naming which moves are robust across scenarios and which depend on one future being true.
 
-**Minimum blocks:** `strategy.scenario-planning` + `strategy.tradeoff-matrix` + `mode.decide`
+**Minimum blocks:** `strategy.scenario-planning` + `strategy.tradeoff-matrix` + `schema.execution-brief`

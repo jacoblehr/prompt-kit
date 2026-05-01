@@ -4,10 +4,12 @@ Prepare and execute a negotiation with explicit interests, BATNA, and concession
 
 Blocks:
 1. `frame.task`
-2. `mode.explore`
-3. `strategy.steelman`
-4. `mode.decide`
-5. `schema.execution-brief`
+2. `strategy.steelman`
+3. `mode.decide`
+4. `schema.execution-brief`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
 
 Expected output: Preparation brief with counterpart interests mapped, BATNA stated, and opening position justified.
 
@@ -17,4 +19,4 @@ Expected output: Preparation brief with counterpart interests mapped, BATNA stat
 
 **Common failure mode:** Optimizing the opening position without naming interests, walk-away conditions, or the counterpart's strongest case.
 
-**Minimum blocks:** `frame.task` + `strategy.steelman`
+**Minimum blocks:** `frame.task` + `strategy.steelman` + `mode.decide` + `schema.execution-brief`

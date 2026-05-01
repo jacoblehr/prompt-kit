@@ -4,10 +4,12 @@ Move from a set of options to a committed, traceable choice.
 
 Blocks:
 1. `frame.success-criteria`
-2. `mode.explore`
-3. `guardrail.assumption-audit`
-4. `mode.decide`
-5. `schema.decision-memo`
+2. `mode.decide`
+3. `schema.decision-memo`
+
+Optional add-ons:
+- `mode.explore` when premature convergence is a real risk.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
 
 Expected output: Decision memo with chosen option, rationale, tradeoffs, risks, confidence, and next action.
 

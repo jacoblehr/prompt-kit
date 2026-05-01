@@ -3,10 +3,12 @@
 Iteratively improve output against explicit criteria until all pass or iteration limit is reached.
 
 Blocks:
-1. `frame.task`
-2. `recurse.evaluate`
-3. `recurse.refine`
-4. `guardrail.bounded-recursion`
+1. `recurse.evaluate`
+2. `recurse.refine`
+3. `guardrail.bounded-recursion`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
 
 Expected output: Final output with all criteria passing, iteration count, and stopping reason stated.
 

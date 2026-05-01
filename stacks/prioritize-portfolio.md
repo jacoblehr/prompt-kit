@@ -3,12 +3,14 @@
 Rank competing bets or tasks when several look worthwhile but capacity is constrained.
 
 Blocks:
-1. `frame.task`
-2. `frame.success-criteria`
-3. `strategy.tradeoff-matrix`
-4. `guardrail.assumption-audit`
-5. `mode.decide`
-6. `schema.execution-brief`
+1. `frame.success-criteria`
+2. `strategy.tradeoff-matrix`
+3. `schema.execution-brief`
+
+Optional add-ons:
+- `frame.task` when scope or non-goals need to be made explicit.
+- `guardrail.assumption-audit` when hidden premises could change the answer.
+- `mode.decide` when the response must close on a recommendation.
 
 Expected output: Prioritized portfolio with the winning bet, deferred options, explicit tradeoffs, and first execution checkpoint.
 
@@ -20,4 +22,4 @@ Expected output: Prioritized portfolio with the winning bet, deferred options, e
 
 **Common failure mode:** Ranking by desirability while leaving capacity, dependency, reversibility, or confidence implicit.
 
-**Minimum blocks:** `frame.success-criteria` + `strategy.tradeoff-matrix` + `mode.decide`
+**Minimum blocks:** `frame.success-criteria` + `strategy.tradeoff-matrix` + `schema.execution-brief`

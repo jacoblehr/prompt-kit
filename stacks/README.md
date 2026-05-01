@@ -2,7 +2,7 @@
 
 These are named assemblies of blocks for recurring jobs, not automated pipelines.
 
-Each stack shows a practical sequence of blocks you can combine by hand, along with composition notes explaining why the order works. When a stack is loaded in the browser, Prompt Kit also generates a one-shot composition brief so the copied prompt carries the stack goal, phase order, and expected output.
+Each stack shows a practical default sequence of blocks you can combine by hand, along with composition notes explaining why the order works. The `Blocks` list is intentionally concise; use `Optional add-ons` only when the task needs extra depth. When a stack is loaded in the browser, Prompt Kit also generates a one-shot composition brief so the copied prompt carries the stack goal, phase order, and expected output.
 
 Stacks are grouped by the practical task they help complete.
 The browser keeps `family` as the primary grouping, then lets you filter stacks by stage, output kind, effort, and stakes.
@@ -94,7 +94,8 @@ Use domain overlays only when the task benefits from extra vocabulary or failure
 A strong stack should make these things obvious:
 
 - the job it performs
-- the minimum useful block set
+- the concise default block set
+- which optional add-ons deepen the prompt
 - why the order matters
 - where phase handoffs happen, especially when more than one mode is present
 - what output the one-shot prompt should return

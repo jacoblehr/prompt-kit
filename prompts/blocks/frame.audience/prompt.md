@@ -1,23 +1,9 @@
 # Prompt
 
-Frame the audience before producing or revising this artifact.
+Frame the intended audience before shaping the artifact.
+Keep only decision-useful detail; do not invent missing context.
 
-Requirements:
-
-- identify who the artifact must land with
-- name the action, belief, or decision the audience should reach
-- surface likely objections, anxieties, or misreadings
-- account for the channel and attention constraints
-- choose a tone and detail level that fit the audience
-
-Return:
-
-- audience
-- desired action or response
-- current belief or context
-- likely objections or anxieties
-- channel constraints
-- tone and detail level
+Return: audience, desired response, current context, likely objections, channel constraints, tone.
 
 ---
 context: {context}

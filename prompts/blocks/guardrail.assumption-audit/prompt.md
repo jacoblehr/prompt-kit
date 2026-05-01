@@ -1,23 +1,9 @@
 # Prompt
 
-Enumerate all significant assumptions behind this plan, decision, argument, or recommendation.
+Audit the artifact for assumptions that could change the answer.
+Focus on material issues, not exhaustive commentary.
 
-Requirements:
-
-- focus first on assumptions where being wrong would most damage the outcome
-- separate empirical claims from causal bets and value judgments
-- note whether each assumption is explicit or merely implied
-- do not invent evidence that is not present
-
-Return:
-For each assumption:
-
-- assumption
-- explicit or implied
-- type (empirical / causal / value)
-- confidence (high / medium / low)
-- impact if false
-- what would falsify it
+Return: assumption, why it matters, confidence, how to verify, what changes if false.
 
 ---
 artifact: {artifact}

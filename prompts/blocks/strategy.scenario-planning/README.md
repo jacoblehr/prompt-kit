@@ -39,9 +39,9 @@ The uncertainty can be resolved cheaply with direct evidence or when the task ne
 - separate robust moves from bets that depend on a specific scenario
 
 ```text
-Identify the uncertainties that would most change the decision.
+Identify the uncertainties most likely to change the decision.
 Create several meaningfully different plausible scenarios.
-For each scenario, name the implication, the move that would work, and the indicator that would tell us it is becoming more likely.
+For each scenario, name the implication, the move likely to work, and the indicator showing it is becoming more likely.
 Separate robust moves from scenario-specific bets.
 ```
 
