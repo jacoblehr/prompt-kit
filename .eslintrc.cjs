@@ -86,6 +86,7 @@ module.exports = {
         BUILDER_SECTION_ORDER: 'readonly',
         builderState: 'readonly',
         defaultBuilderSectionForItem: 'readonly',
+        ensureDefaultInstruction: 'readonly',
         escHtml: 'readonly',
         extractPlaceholders: 'readonly',
         fillPromptTemplate: 'readonly',

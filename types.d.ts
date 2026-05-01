@@ -133,7 +133,7 @@ interface PromptKitBuilderItem {
   copy: string;
   contract?: PromptKitBlockContract | PromptKitStackContract | null;
   useWhen?: string;
-  builderSection?: "instruction" | "context" | "reasoning" | "harness" | string;
+  builderSection?: "instruction" | "reasoning" | "output" | "checks" | string;
   managedBy?: "mode" | "lens" | "" | string;
   chains: Record<string, string>;
   inputs: Record<string, string | { source?: "previous" | "original" | "custom" | string; customValue?: string }>;
@@ -221,7 +221,7 @@ interface PromptKitApp {
   };
   assembleBuilderPrompt(options?: { structured?: boolean; inputPlan?: unknown }): string;
   closeBuilder(): void;
-  defaultBuilderSectionForItem(item: Partial<PromptKitItem>, currentItems?: PromptKitBuilderItem[]): string;
+  defaultBuilderSectionForItem(item: Partial<PromptKitItem>, _currentItems?: PromptKitBuilderItem[]): string;
   escHtml(str?: string): string;
   extractPlaceholders(text?: string): string[];
   getBuilderSection(sectionKey?: string): BuilderSectionDefinition;

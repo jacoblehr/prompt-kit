@@ -112,6 +112,7 @@ const STRATEGY_ORDER = [
   "red-team"
 ];
 const PROMPT_BLOCK_ORDER = [
+  "frame.input",
   "frame.task",
   "frame.current-state",
   "frame.audience",

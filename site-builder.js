@@ -70,14 +70,15 @@ let livePromptDebounceTimer = 0;
 function getBuilderWarnings() {
   const instructionCount = builderState.getSectionItems("instruction").length;
   const reasoningItems = builderState.getSectionItems("reasoning");
-  const harnessItems = builderState.getSectionItems("harness");
+  const outputItems = builderState.getSectionItems("output");
+  const checksItems = builderState.getSectionItems("checks");
   const inputPlan = getBuilderInputPlan();
   const missingCustomInputs = inputPlan.slots.filter((slot) => slot.source === "custom" && !slot.customValue.trim());
   const modeCount = reasoningItems.filter((item) => item.blockType === "mode").length;
   const recurseCount = reasoningItems.filter((item) => item.blockType === "recurse").length;
   const hasBoundedRecursion = builderState.items.some((item) => item.key === "guardrail.bounded-recursion" || item.title === "guardrail.bounded-recursion");
-  const hasSchema = harnessItems.some((item) => item.blockType === "schema");
-  const hasQualityGate = harnessItems.some((item) => item.blockType === "guardrail" || item.blockType === "rubric");
+  const hasSchema = outputItems.some((item) => item.blockType === "schema");
+  const hasQualityGate = checksItems.some((item) => item.blockType === "guardrail" || item.blockType === "rubric");
   const advisory = [];
 
   if (builderState.items.length >= 3 && !hasSchema) {
@@ -649,11 +650,16 @@ function renderSectionEmptyState(section) {
     `)
     .join("");
 
+  const useDefaultBtn = section.key === "instruction"
+    ? `<button type="button" class="pb-use-default" data-action="use-default-instruction">Use default</button>`
+    : "";
+
   return `
     <div class="pb-section-empty">
       <div class="pb-section-empty-title">${escHtml(section.emptyLabel)}</div>
       <div class="pb-section-empty-copy">${escHtml(section.emptyPrompt || section.description)}</div>
       ${starters ? `<div class="pb-section-starters">${starters}</div>` : ""}
+      ${useDefaultBtn}
     </div>
   `;
 }
@@ -1266,9 +1272,17 @@ document.getElementById("builder-composition").addEventListener("click", (event)
     if (existingItem) {
       builderState.moveToSection(builderItemKey(existingItem), sectionKey);
     } else {
+      if (sectionKey !== "instruction") ensureDefaultInstruction();
       builderState.add(item, { section: sectionKey });
     }
     builderState.setPickerState("", "");
+    renderBuilder();
+    syncAddButtons();
+    return;
+  }
+
+  if (action === "use-default-instruction") {
+    ensureDefaultInstruction();
     renderBuilder();
     syncAddButtons();
     return;
@@ -1282,6 +1296,7 @@ document.getElementById("builder-composition").addEventListener("click", (event)
     if (existingItem) {
       builderState.moveToSection(builderItemKey(existingItem), sectionKey);
     } else {
+      if (sectionKey !== "instruction") ensureDefaultInstruction();
       builderState.add(item, { section: sectionKey });
     }
     renderBuilder();

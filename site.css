@@ -1973,6 +1973,22 @@ kbd.search-hint {
   font-size: 0.76rem;
 }
 
+.pb-use-default {
+  align-self: start;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.pb-use-default:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
 .pb-block {
   border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--line));
   border-radius: 14px;

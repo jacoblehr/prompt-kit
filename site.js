@@ -35,7 +35,7 @@ const BLOCK_TYPE_RANK = Object.fromEntries(BLOCK_TYPE_ORDER.map((type, index) =>
  * These sections define the only valid drop zones and drive filtering, picker
  * options, warnings, and assembly order.
  */
-const BUILDER_SECTION_ORDER = ["instruction", "context", "reasoning", "harness"];
+const BUILDER_SECTION_ORDER = ["instruction", "reasoning", "checks", "output"];
 const BUILDER_SECTIONS = [
   {
     key: "instruction",
@@ -45,16 +45,6 @@ const BUILDER_SECTIONS = [
     emptyPrompt: "Define the job, goal, and boundaries before anything else.",
     starterRefs: ["frame.task", "frame.success-criteria"],
     required: true,
-    validBlockTypes: ["frame"]
-  },
-  {
-    key: "context",
-    label: "Context",
-    description: "Constraints, references, domain knowledge, and perspective.",
-    emptyLabel: "Add supporting context if the task needs it",
-    emptyPrompt: "Bring in constraints or requirements when they will materially change the answer.",
-    starterRefs: ["frame.cause-mapping", "frame.extract-insights"],
-    required: false,
     validBlockTypes: ["frame"]
   },
   {
@@ -68,14 +58,24 @@ const BUILDER_SECTIONS = [
     validBlockTypes: ["mode", "strategy", "recurse"]
   },
   {
-    key: "harness",
+    key: "checks",
     label: "Checks",
-    description: "Validation, output contracts, and final quality checks.",
+    description: "Guardrails and rubrics for validation and quality assessment.",
     emptyLabel: "Add checks when the stakes justify them",
-    emptyPrompt: "Use guardrails, schemas, and rubrics to make the output safer and easier to evaluate.",
-    starterRefs: ["guardrail.uncertainty", "schema.execution-brief", "rubric.writing-quality"],
+    emptyPrompt: "Use guardrails and rubrics to make the output safer and easier to evaluate.",
+    starterRefs: ["guardrail.uncertainty", "rubric.writing-quality"],
     required: false,
-    validBlockTypes: ["guardrail", "schema", "rubric"]
+    validBlockTypes: ["guardrail", "rubric"]
+  },
+  {
+    key: "output",
+    label: "Output",
+    description: "Output contracts and structure definitions.",
+    emptyLabel: "Add an output schema if the response needs to be easy to use",
+    emptyPrompt: "A schema defines the exact shape and format of the response.",
+    starterRefs: ["schema.execution-brief"],
+    required: false,
+    validBlockTypes: ["schema"]
   }
 ];
 
@@ -268,16 +268,14 @@ function summarizeBuilderSection(items = [], sectionKey = "") {
  * explicit target. Frame blocks can legally live in more than one
  * section, so we bias toward the most product-readable placement.
  */
-function defaultBuilderSectionForItem(item, currentItems = []) {
+function defaultBuilderSectionForItem(item, _currentItems = []) {
   const blockType = item?.blockType || "";
-  if (blockType === "guardrail" || blockType === "schema" || blockType === "rubric") return "harness";
+  if (blockType === "schema") return "output";
+  if (blockType === "guardrail" || blockType === "rubric") return "checks";
   if (blockType === "mode" || blockType === "strategy" || blockType === "recurse") return "reasoning";
-  if (blockType === "lens") return currentItems.some((entry) => entry.builderSection === "context") ? "reasoning" : "context";
+  if (blockType === "lens") return "reasoning";
   if (blockType === "frame") {
-    const title = String(item.title || "").toLowerCase();
-    if (!currentItems.some((entry) => entry.builderSection === "instruction")) return "instruction";
-    if (/(task|clarify|scope|success|objective|goal|role|requirements|brief|prompt)/.test(title)) return "instruction";
-    return "context";
+    return "instruction";
   }
   return "instruction";
 }
@@ -359,8 +357,8 @@ function getManualAddTargets(item = {}) {
     .filter((section) => section.validBlockTypes.includes(item.blockType))
     .map((section) => section.key);
 
-  if (item.blockType === "frame") return ["instruction", "context"];
-  if (item.blockType === "lens") return ["context", "reasoning"];
+  if (item.blockType === "frame") return ["instruction"];
+  if (item.blockType === "lens") return ["reasoning"];
   if (item.blockType === "recurse") return ["reasoning"];
   return validSections;
 }
@@ -812,6 +810,18 @@ function resolveRef(ref = "") {
   return itemRegistry.get(normalizeRef(ref)) || null;
 }
 
+const DEFAULT_INSTRUCTION_REF = "frame.input";
+
+function getDefaultInstructionItem() {
+  return resolveRef(DEFAULT_INSTRUCTION_REF);
+}
+
+function ensureDefaultInstruction() {
+  if (builderState.getSectionItems("instruction").length > 0) return;
+  const defaultItem = getDefaultInstructionItem();
+  if (defaultItem) builderState.add(defaultItem, { section: "instruction" });
+}
+
 function renderBodyText(text = "") {
   return text
     .replace(/&/g, "&amp;")
@@ -891,6 +901,7 @@ function renderRecentItems() {
       const item = resolveRef(btn.dataset.ref || "");
       if (!item) return;
       if (!builderState.has(item)) {
+        if (item.blockType !== "frame") ensureDefaultInstruction();
         builderState.add(item);
         renderBuilder();
         syncAddButtons();
@@ -1040,6 +1051,7 @@ function createCard(item) {
       builderState.clear();
       builderState.setStackName(item.job || slugify(item.title) || "loaded-stack");
       steps.forEach((step) => builderState.add(step));
+      ensureDefaultInstruction();
       loadedStackKey = item.key;
       if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
       renderBuilder();
@@ -1075,6 +1087,7 @@ function createCard(item) {
           if (existingItem) {
             builderState.moveToSection(builderItemKey(existingItem), targetSection);
           } else {
+            if (targetSection !== "instruction") ensureDefaultInstruction();
             builderState.add(item, { section: targetSection });
           }
           if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
@@ -1096,6 +1109,7 @@ function createCard(item) {
             if (existingItem) {
               builderState.moveToSection(builderItemKey(existingItem), targetSection);
             } else {
+              if (targetSection !== "instruction") ensureDefaultInstruction();
               builderState.add(item, { section: targetSection });
             }
             addChooser.hidden = true;
@@ -1566,6 +1580,7 @@ function showStepPopover(pill) {
     spAddBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       if (builderState.has(item)) return;
+      if (defaultBuilderSectionForItem(item) !== "instruction") ensureDefaultInstruction();
       builderState.add(item);
       if (!document.querySelector(".shell").classList.contains("builder-open")) openBuilder();
       renderBuilder();
