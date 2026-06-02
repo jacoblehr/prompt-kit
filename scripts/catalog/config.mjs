@@ -123,6 +123,7 @@ const PROMPT_BLOCK_ORDER = [
   "guardrail.source-grounding",
   "guardrail.disconfirming-evidence",
   "guardrail.assumption-audit",
+  "guardrail.ethical-impact",
   "schema.option-map",
   "schema.requirements-brief",
   "schema.decision-memo",

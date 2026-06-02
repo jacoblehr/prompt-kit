@@ -33,8 +33,8 @@ The problem is already tightly scoped and splitting it would add ceremony withou
 - stop before the parts become trivial administrative fragments
 
 ```text
-Split the problem into the smallest useful parts.
-Name the dependencies between them and suggest the order that reduces coordination or risk.
+For the supplied problem, split it into the smallest useful parts.
+Return subproblems, dependencies, recommended order, and the first slice that reduces the most uncertainty or risk.
 ```
 
 ---

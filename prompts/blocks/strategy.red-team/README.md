@@ -33,8 +33,8 @@ The task is cooperative design exploration with no meaningful adversarial threat
 - prioritize the attacks that are both plausible and damaging
 
 ```text
-Think like an adversary with real incentives.
-Identify the most plausible attack paths, the weakest boundaries, and the mitigations that matter first.
+For the supplied system, plan, or position, think like an adversary with real incentives.
+Return plausible attack paths, weakest boundaries, likely impact, and the mitigations that matter first.
 ```
 
 ---

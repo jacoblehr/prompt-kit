@@ -618,19 +618,23 @@ function makeStack(fileName) {
 
 function makeRubric(baseName) {
   const relPath = `prompts/blocks/rubric.${baseName}/README.md`;
+  const promptPath = `prompts/blocks/rubric.${baseName}/prompt.md`;
   const md = read(relPath);
+  const prompt = fs.existsSync(path.join(ROOT, promptPath)) ? read(promptPath) : "";
   const metadata = extractMetadata(md);
   const title = firstHeading(md);
-  const useWhen = extractLeadLine(md);
+  const purpose = extractSectionText(md, "Purpose");
+  const useWhen = extractSectionText(md, "Use when");
   const questions = extractSectionItems(md, "Questions:");
   const pairsWith = parseInlineRefs(md.match(/^Pairs with:\s*(.+)$/m)?.[1] || "");
   const contract = makeContractFields({
+    purpose,
     useWhen,
     returns: questions,
     pairsWith
   });
 
-  const copy = [title, "", useWhen ? useWhen + "\n" : "", ...questions.map((q) => `- ${q}`)].join("\n").trim();
+  const copy = prompt ? stripFirstHeading(prompt) : [title, "", useWhen ? useWhen + "\n" : "", ...questions.map((q) => `- ${q}`)].join("\n").trim();
 
   return makeBlock({
     canonicalType: metadata.type || "rubric",
@@ -639,18 +643,19 @@ function makeRubric(baseName) {
     key: title,
     aliases: [`rubric.${baseName}`],
     title,
-    summary: ensureSentence(firstSentence(useWhen || title)),
+    summary: ensureSentence(firstSentence(purpose || useWhen || title)),
     tags: resolvedTags(md, title, baseName),
     copy,
     stage: metadata.stage || "",
     strength: metadata.strength || "",
     contract,
     body: bodyFromEntries([
+      ["Purpose", contract.purpose],
       ["Use when", contract.useWhen],
       ["Questions", questions],
       ["Pairs with", contract.pairsWith]
     ]),
-    sourcePath: relPath
+    sourcePath: prompt ? promptPath : relPath
   });
 }
 

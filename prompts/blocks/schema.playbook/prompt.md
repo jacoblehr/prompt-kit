@@ -1,7 +1,7 @@
 # Prompt
 
 Render the work as a reusable playbook.
-Keep it concise, concrete, and directly usable; omit process notes.
+Use terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.
 
 Return: trigger, inputs, steps, decision rules, examples, escalation path.
 

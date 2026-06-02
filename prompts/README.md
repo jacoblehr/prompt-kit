@@ -20,3 +20,5 @@ High-value browse paths:
 - plan hardening and cheap tests
 - synthesis and writing
 - prompt repair
+
+Catalog output: each active block returns compact copy, contract metadata, compatible pairings, and searchable tags for browser and CLI use.

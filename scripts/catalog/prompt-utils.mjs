@@ -1,8 +1,9 @@
 const PLACEHOLDER_RE = /\{[^}\n]{1,80}\}/g;
 const LINTER_VAGUE = /\b(improve|vague|enhance|optimize|better|good|things like|etc\.|something like|sort of|kind of|more effective|more useful)\b/gi;
-const LINTER_OUTPUT = /\b(return|output|format|respond with|give me a list|in json|in markdown|as a table|as bullets?|as numbered|structure your)\b/i;
+const LINTER_OUTPUT = /\b(returns?|outputs?|expected output|output format|format|respond with|give me a list|in json|in markdown|as a table|as bullets?|as numbered|structure your)\b/i;
 const WORD_LIMIT = 700;
-const REPEAT_THRESHOLD = 4;
+const REPEAT_THRESHOLD = 5;
+const REPETITION_SKIP_WORDS = new Set(["a", "an", "and", "for", "if", "in", "of", "or", "the", "to", "when", "with"]);
 
 function extractPlaceholders(text = "") {
   return [...new Set(String(text || "").match(PLACEHOLDER_RE) || [])];
@@ -47,8 +48,9 @@ function analyzePrompt(text = "") {
 
   const hints = [];
   const wordCount = text.trim().split(/\s+/).length;
+  const signalText = text.replace(/`[^`]*`/g, " ");
 
-  const vagueHits = text.match(LINTER_VAGUE) || [];
+  const vagueHits = signalText.match(LINTER_VAGUE) || [];
   if (vagueHits.length >= 2) {
     hints.push({ type: "vague", text: `Vague language (${vagueHits.join(", ")})` });
   }
@@ -61,10 +63,11 @@ function analyzePrompt(text = "") {
     hints.push({ type: "length", text: `~${wordCount} words (>${WORD_LIMIT})` });
   }
 
-  const tokens = text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
+  const tokens = signalText.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
   const grams = new Map();
   for (let i = 0; i < tokens.length - 1; i += 1) {
     const gram = `${tokens[i]} ${tokens[i + 1]}`;
+    if (REPETITION_SKIP_WORDS.has(tokens[i]) || REPETITION_SKIP_WORDS.has(tokens[i + 1])) continue;
     if (gram.length >= 7) grams.set(gram, (grams.get(gram) || 0) + 1);
   }
   const hotGrams = [...grams.entries()].filter(([, count]) => count >= REPEAT_THRESHOLD).sort((a, b) => b[1] - a[1]);

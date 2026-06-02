@@ -37,8 +37,8 @@ The situation is still unfolding and the immediate need is stabilization or deci
 - the main lessons are clear enough to reuse or operationalize
 
 ```text
-Step back from the immediate task.
-Extract what the result teaches, what patterns it revealed, and what should change next time.
+For the supplied outcome or completed work, step back from the immediate task.
+Return what happened, the causal pattern, the lesson, and what should change next time.
 Prefer reusable insight over narrative recap.
 ```
 

@@ -38,9 +38,9 @@ The task still needs broad exploration or new options generated.
 - one option is chosen and justified clearly enough to act
 
 ```text
-Choose the best option first, then justify it.
-Show the tradeoff that made the decision real.
-End with the next action that follows from the choice.
+For the supplied decision, choose the best option first, then justify it.
+Return the choice, criteria, key tradeoff, risks, confidence, and action that follows.
+If the evidence is not decision-ready, state the deciding evidence still needed.
 ```
 
 ---

@@ -1,7 +1,7 @@
 # Prompt
 
 Render the result as a prompt spec.
-Keep it concise, concrete, and directly usable; omit process notes.
+Use terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.
 
 Return: final prompt, intent, inputs, constraints, output shape, tests, limitations.
 

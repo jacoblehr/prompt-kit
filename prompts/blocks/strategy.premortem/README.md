@@ -33,8 +33,9 @@ The task is already in live incident response and the immediate need is stabiliz
 - trace backward from failure to plausible causes and preventive moves
 
 ```text
-It is one year from now. This plan failed.
-Treat that as the starting fact and explain the most plausible reasons why, then identify what should be done now to prevent that outcome.
+For the supplied plan, assume it is one year from now and the plan failed.
+Treat that as the starting fact.
+Return the most plausible failure causes, early warning signs, prevention moves, and the owner or checkpoint for each prevention move.
 ```
 
 ---

@@ -2,7 +2,7 @@
 
 Evaluate this decision against the quality checklist.
 
-For each criterion below, answer yes, partial, or no — and state the evidence in one sentence:
+For each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:
 
 - Is the actual choice explicit?
 - Are the criteria visible?
@@ -12,6 +12,7 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Would a future reviewer understand why this decision was made?
 
 Return:
+- per-criterion verdicts with evidence
 - overall verdict: ready / needs revision
 - highest-leverage fix if revision is needed
 

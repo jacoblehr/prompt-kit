@@ -1,25 +1,29 @@
 # frame.input
 
 ## Purpose
-Pass the user's task or request directly to the model without transformation.
+Identify the information required to complete a task well before reasoning or drafting begins.
 
 ## Use when
-Use as the default instruction block when no other frame block is present. Suitable for any stack that does not require explicit problem framing before reasoning begins.
+The task is under-specified, depends on missing context, or should ask for the highest-value clarification before proceeding.
 
 ## Expects
-A task, question, or request.
+A task, question, request, or partial brief.
 
 ## Adds
-Nothing — passes the input through as-is.
+An input inventory that separates required details from optional context and chooses the next question that would most improve the result.
 
 ## Returns
-The model's response to the task.
+- required input
+- optional context
+- missing details
+- assumptions
+- next question
 
 ## Pairs with
 `mode.explore`, `mode.decide`, `mode.critique`, `strategy.problem-split`
 
 ## Avoid when
-The request is ambiguous or underspecified and would benefit from explicit framing — use `frame.task` instead.
+The task already has enough context to act, or the main problem is scope framing rather than missing input — use `frame.task` instead.
 
 ---
 

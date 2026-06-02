@@ -2,7 +2,7 @@
 
 Evaluate this argument against the quality checklist.
 
-For each criterion below, answer yes, partial, or no — and state the evidence in one sentence:
+For each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:
 
 - Is the core claim stated in one sentence?
 - Is the evidence proportionate to the strength of the claim?
@@ -12,6 +12,7 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Is anything being asserted that should be proven?
 
 Return:
+- per-criterion verdicts with evidence
 - overall verdict: sound / needs revision
 - highest-leverage fix if revision is needed
 

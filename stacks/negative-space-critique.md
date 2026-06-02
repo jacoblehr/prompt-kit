@@ -23,7 +23,7 @@ Expected output: Prioritized omissions, hidden dependencies, missing countercase
 
 ## Composition notes
 
-`frame.task` scopes the artifact and the kind of absence that matters. `mode.critique` turns attention toward failure and incompleteness. `strategy.red-team` actively searches for what the artifact does not defend against. `guardrail.assumption-audit` identifies premises that remain unstated. `guardrail.disconfirming-evidence` finds contrary cases the artifact omits. `schema.findings-brief` turns absence into concrete, ranked findings rather than vague unease.
+`frame.task` scopes the artifact and the absence that matters. `mode.critique` turns attention toward failure and incompleteness. `strategy.red-team` actively searches for what the artifact does not defend against. `guardrail.assumption-audit` identifies premises that remain unstated. `guardrail.disconfirming-evidence` finds contrary cases the artifact omits. `schema.findings-brief` turns absence into concrete, ranked findings rather than diffuse unease.
 
 **Choose instead when:** use `critique` for a general quality review. Use `pressure-test` when the artifact is a plan and the main job is simulating future failure.
 

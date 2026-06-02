@@ -1,7 +1,7 @@
 # Prompt
 
 Render the choice as a decision memo.
-Keep it concise, concrete, and directly usable; omit process notes.
+Use terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.
 
 Return: decision, rationale, tradeoffs, risks, confidence, next action.
 

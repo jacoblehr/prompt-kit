@@ -36,7 +36,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "explore"
       ],
-      "copy": "Survey the space before you narrow it.\nMap plausible directions, unknowns, and what to inspect next.\nDo not choose yet unless the prompt explicitly asks you to close.",
+      "copy": "For the supplied problem, survey the space before you narrow it.\nReturn plausible directions, key unknowns, discriminating evidence, and the next question to inspect.\nDo not choose yet unless the prompt explicitly asks you to close.",
       "body": [
         [
           "Purpose",
@@ -107,7 +107,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "create"
       ],
-      "copy": "Create several meaningfully different directions before choosing one.\nKeep the objective, audience, and constraints visible while drafting.\nSelect the strongest direction and explain why it is the best fit.",
+      "copy": "For the supplied task, create 3-5 meaningfully different directions before choosing one.\nKeep the objective, audience, and constraints visible while drafting.\nReturn the candidate directions, the strongest direction, why it fits, risks to preserve, and the next refinement move.",
       "body": [
         [
           "Purpose",
@@ -178,7 +178,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "synthesize"
       ],
-      "copy": "Synthesize the inputs into one coherent view.\nPreserve meaningful disagreement instead of smoothing it away.\nName the throughline, the unresolved tensions, and what the synthesis implies next.",
+      "copy": "For the supplied inputs, synthesize them into one coherent view.\nPreserve meaningful disagreement instead of smoothing it away.\nReturn the throughline, ranked insights, unresolved tensions, implications, and the next use for the synthesis.",
       "body": [
         [
           "Purpose",
@@ -249,7 +249,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "decide"
       ],
-      "copy": "Choose the best option first, then justify it.\nShow the tradeoff that made the decision real.\nEnd with the next action that follows from the choice.",
+      "copy": "For the supplied decision, choose the best option first, then justify it.\nReturn the choice, criteria, key tradeoff, risks, confidence, and action that follows.\nIf the evidence is not decision-ready, state the deciding evidence still needed.",
       "body": [
         [
           "Purpose",
@@ -319,7 +319,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "critique"
       ],
-      "copy": "Read adversarially.\nAssume the current answer is vulnerable and look for where it breaks.\nPrioritize the flaws that matter most if left unfixed.",
+      "copy": "For the supplied artifact or plan, read adversarially.\nAssume the current answer is vulnerable and look for where it breaks.\nReturn ranked findings with evidence, impact, and the first fix for each material flaw.",
       "body": [
         [
           "Purpose",
@@ -389,7 +389,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "reflect"
       ],
-      "copy": "Step back from the immediate task.\nExtract what the result teaches, what patterns it revealed, and what should change next time.\nPrefer reusable insight over narrative recap.",
+      "copy": "For the supplied outcome or completed work, step back from the immediate task.\nReturn what happened, the causal pattern, the lesson, and what should change next time.\nPrefer reusable insight over narrative recap.",
       "body": [
         [
           "Purpose",
@@ -459,7 +459,7 @@ globalThis.SITE_DATA = {
         "problem",
         "split"
       ],
-      "copy": "Split the problem into the smallest useful parts.\nName the dependencies between them and suggest the order that reduces coordination or risk.",
+      "copy": "For the supplied problem, split it into the smallest useful parts.\nReturn subproblems, dependencies, recommended order, and the first slice that reduces the most uncertainty or risk.",
       "body": [
         [
           "Purpose",
@@ -535,7 +535,7 @@ globalThis.SITE_DATA = {
         "journey",
         "map"
       ],
-      "copy": "Map the journey from the actor's point of view.\nFor each step, state what they are trying to do, what they see or know, where friction appears, and what feedback or recovery path is missing.\nPrioritize the moments that most affect task completion.",
+      "copy": "For the supplied workflow or experience, map the journey from the actor's point of view.\nFor each step, return the actor's goal, visible state, decision, friction, missing feedback or recovery path, and improvement opportunity.\nPrioritize the moments that most affect completion.",
       "body": [
         [
           "Purpose",
@@ -611,7 +611,7 @@ globalThis.SITE_DATA = {
         "constraint",
         "relaxation"
       ],
-      "copy": "List the explicit and implied constraints on this problem.\nClassify each as hard, flexible, unknown, or self-imposed.\nFor the flexible or self-imposed constraints, show what simpler path appears if it is relaxed and what risk that creates.\nRecommend the smallest relaxation that meaningfully improves the solution.",
+      "copy": "For the supplied problem or plan, list the explicit and implied constraints.\nClassify each as hard, flexible, unknown, or inherited.\nReturn the constraint inventory, the simpler path created by relaxing a non-hard limit, the risk created, and the smallest relaxation worth trying.",
       "body": [
         [
           "Purpose",
@@ -687,7 +687,7 @@ globalThis.SITE_DATA = {
         "scenario",
         "planning"
       ],
-      "copy": "Identify the uncertainties most likely to change the decision.\nCreate several meaningfully different plausible scenarios.\nFor each scenario, name the implication, the move likely to work, and the indicator showing it is becoming more likely.\nSeparate robust moves from scenario-specific bets.",
+      "copy": "For the supplied decision or plan, identify the uncertainties most likely to change the decision.\nCreate several meaningfully different plausible scenarios.\nFor each scenario, return the implication, the move likely to work, and the indicator showing it is becoming more likely.\nSeparate robust moves, scenario-specific bets, and the decision to make now.",
       "body": [
         [
           "Purpose",
@@ -760,7 +760,7 @@ globalThis.SITE_DATA = {
         "tradeoff",
         "matrix"
       ],
-      "copy": "Compare the viable options across the criteria that would actually change the choice.\nShow where each option wins, loses, and depends on an assumption.\nName dominated options, the hardest tradeoff, and the next evidence needed if the choice is not yet ready.",
+      "copy": "For the supplied option set, compare the viable options across the criteria that would actually change the choice.\nReturn where each option wins, loses, and depends on an assumption.\nName dominated options, the hardest tradeoff, and the next evidence needed if the choice is not yet ready.",
       "body": [
         [
           "Purpose",
@@ -829,7 +829,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "premortem"
       ],
-      "copy": "It is one year from now. This plan failed.\nTreat that as the starting fact and explain the most plausible reasons why, then identify what should be done now to prevent that outcome.",
+      "copy": "For the supplied plan, assume it is one year from now and the plan failed.\nTreat that as the starting fact.\nReturn the most plausible failure causes, early warning signs, prevention moves, and the owner or checkpoint for each prevention move.",
       "body": [
         [
           "Purpose",
@@ -898,7 +898,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "steelman"
       ],
-      "copy": "State the strongest serious version of the position first.\nMake clear why a reasonable person would hold it before you compare or challenge it.",
+      "copy": "For the supplied position, state the strongest serious version first.\nReturn why a reasonable person would hold it, the conditions that make it compelling, and the strongest fair challenge.",
       "body": [
         [
           "Purpose",
@@ -968,7 +968,7 @@ globalThis.SITE_DATA = {
         "red",
         "team"
       ],
-      "copy": "Think like an adversary with real incentives.\nIdentify the most plausible attack paths, the weakest boundaries, and the mitigations that matter first.",
+      "copy": "For the supplied system, plan, or position, think like an adversary with real incentives.\nReturn plausible attack paths, weakest boundaries, likely impact, and the mitigations that matter first.",
       "body": [
         [
           "Purpose",
@@ -1012,17 +1012,24 @@ globalThis.SITE_DATA = {
       "stage": "frame",
       "strength": "light",
       "contract": {
-        "purpose": "Pass the user's task or request directly to the model without transformation.",
-        "useWhen": "Use as the default instruction block when no other frame block is present. Suitable for any stack that does not require explicit problem framing before reasoning begins.",
-        "expects": "A task, question, or request.",
-        "adds": "Nothing — passes the input through as-is.",
+        "purpose": "Identify the information required to complete a task well before reasoning or drafting begins.",
+        "useWhen": "The task is under-specified, depends on missing context, or should ask for the highest-value clarification before proceeding.",
+        "expects": "A task, question, request, or partial brief.",
+        "adds": "An input inventory that separates required details from optional context and chooses the next question that would most improve the result.",
+        "returns": [
+          "required input",
+          "optional context",
+          "missing details",
+          "assumptions",
+          "next question"
+        ],
         "pairsWith": [
           "mode.explore",
           "mode.decide",
           "mode.critique",
           "strategy.problem-split"
         ],
-        "avoidWhen": "The request is ambiguous or underspecified and would benefit from explicit framing — use `frame.task` instead."
+        "avoidWhen": "The task already has enough context to act, or the main problem is scope framing rather than missing input — use `frame.task` instead."
       },
       "key": "frame.input",
       "aliases": [
@@ -1030,28 +1037,32 @@ globalThis.SITE_DATA = {
         "core.frame-input"
       ],
       "title": "frame.input",
-      "summary": "Pass the user's task or request directly to the model without transformation.",
+      "summary": "Identify the information required to complete a task well before reasoning or drafting begins.",
       "tags": [
         "frame",
         "input"
       ],
-      "copy": "Identify the input needed to complete this task well.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: required input, optional context, missing details, assumptions, next question.\n\n---\ncontext: {context}",
+      "copy": "Identify the input needed to complete this task well.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: required input, optional context, missing details, assumptions, next question.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
-          "Pass the user's task or request directly to the model without transformation."
+          "Identify the information required to complete a task well before reasoning or drafting begins."
         ],
         [
           "Use when",
-          "Use as the default instruction block when no other frame block is present. Suitable for any stack that does not require explicit problem framing before reasoning begins."
+          "The task is under-specified, depends on missing context, or should ask for the highest-value clarification before proceeding."
         ],
         [
           "Expects",
-          "A task, question, or request."
+          "A task, question, request, or partial brief."
         ],
         [
           "Adds",
-          "Nothing — passes the input through as-is."
+          "An input inventory that separates required details from optional context and chooses the next question that would most improve the result."
+        ],
+        [
+          "Returns",
+          "required input, optional context, missing details, assumptions, next question"
         ],
         [
           "Pairs with",
@@ -1059,7 +1070,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Avoid when",
-          "The request is ambiguous or underspecified and would benefit from explicit framing — use `frame.task` instead."
+          "The task already has enough context to act, or the main problem is scope framing rather than missing input — use `frame.task` instead."
         ]
       ],
       "family": "Prompt Blocks",
@@ -1107,7 +1118,7 @@ globalThis.SITE_DATA = {
         "frame",
         "task"
       ],
-      "copy": "Turn this request into a usable problem frame. Keep constraints literal and mark inferred objectives.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: stated ask, likely objective, in scope, out of scope, constraints, knowns, unknowns, next reasoning move.\n\n---\ncontext: {context}",
+      "copy": "Turn this request into a usable problem frame. Keep constraints literal and mark inferred objectives.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: stated ask, likely objective, in scope, out of scope, constraints, knowns, unknowns, next reasoning move.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1186,7 +1197,7 @@ globalThis.SITE_DATA = {
         "current",
         "state"
       ],
-      "copy": "Describe the current state before proposing change.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: current behavior, important constraints, known problems, recent changes, invariants to preserve.\n\n---\ncontext: {context}",
+      "copy": "Describe the current state before proposing change.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: current behavior, important constraints, known problems, recent changes, invariants to preserve.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1261,7 +1272,7 @@ globalThis.SITE_DATA = {
         "frame",
         "audience"
       ],
-      "copy": "Frame the intended audience before shaping the artifact.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: audience, desired response, current context, likely objections, channel constraints, tone.\n\n---\ncontext: {context}",
+      "copy": "Frame the intended audience before shaping the artifact.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: audience, desired response, current context, likely objections, channel constraints, tone.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1339,7 +1350,7 @@ globalThis.SITE_DATA = {
         "frame",
         "stakeholders"
       ],
-      "copy": "Map who is affected, responsible, or able to block the work.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: stakeholders, needs, concerns, decision rights, communication needs, likely conflicts.\n\n---\ncontext: {context}",
+      "copy": "Map who is affected, responsible, or able to block the work.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: stakeholders, needs, concerns, decision rights, communication needs, likely conflicts.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1413,7 +1424,7 @@ globalThis.SITE_DATA = {
         "success",
         "criteria"
       ],
-      "copy": "Define what success means before judging options or plans.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: desired outcome, must-haves, nice-to-haves, constraints, failure conditions, acceptance criteria.\n\n---\ncontext: {context}",
+      "copy": "Define what success means before judging options or plans.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: desired outcome, must-haves, nice-to-haves, constraints, failure conditions, acceptance criteria.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1488,7 +1499,7 @@ globalThis.SITE_DATA = {
         "guardrail",
         "uncertainty"
       ],
-      "copy": "Separate what is known from what is assumed or still uncertain.\nFocus on material issues, not exhaustive commentary.\n\nReturn: facts, assumptions, unknowns, confidence, highest-value next evidence.\n\n---\nartifact: {artifact}",
+      "copy": "Separate what is known from what is assumed or still uncertain.\nFocus on material issues, rank them by impact, and avoid exhaustive commentary.\n\nReturn: facts, assumptions, unknowns, confidence, highest-value next evidence.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1565,7 +1576,7 @@ globalThis.SITE_DATA = {
         "scope",
         "creep"
       ],
-      "copy": "Keep the work inside the stated objective.\nFocus on material issues, not exhaustive commentary.\n\nReturn: essential work, optional work, out-of-scope items, scope boundary to hold.\n\n---\ncontext: {context}",
+      "copy": "Keep the work inside the stated objective.\nFocus on material issues, rank them by impact, and avoid exhaustive commentary.\n\nReturn: essential work, optional work, out-of-scope items, scope boundary to hold.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1642,7 +1653,7 @@ globalThis.SITE_DATA = {
         "source",
         "grounding"
       ],
-      "copy": "Check whether claims are grounded in the supplied source material.\nFocus on material issues, not exhaustive commentary.\n\nReturn: supported claims, inferred claims, unsupported claims, contradictions, source gaps.\n\n---\nartifact: {artifact}",
+      "copy": "Check whether claims are grounded in the supplied source material.\nFocus on material issues, rank them by impact, and avoid exhaustive commentary.\n\nReturn: supported claims, inferred claims, unsupported claims, contradictions, source gaps.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1716,7 +1727,7 @@ globalThis.SITE_DATA = {
         "disconfirming",
         "evidence"
       ],
-      "copy": "Look for evidence or arguments that weaken the current conclusion.\nFocus on material issues, not exhaustive commentary.\n\nReturn: strongest counterevidence, impact on confidence, what would change the answer.\n\n---\nartifact: {artifact}",
+      "copy": "Look for evidence or arguments that weaken the current conclusion.\nFocus on material issues, rank them by impact, and avoid exhaustive commentary.\n\nReturn: strongest counterevidence, impact on confidence, what would change the answer.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1792,7 +1803,7 @@ globalThis.SITE_DATA = {
         "assumption",
         "audit"
       ],
-      "copy": "Audit the artifact for assumptions that could change the answer.\nFocus on material issues, not exhaustive commentary.\n\nReturn: assumption, why it matters, confidence, how to verify, what changes if false.\n\n---\nartifact: {artifact}",
+      "copy": "Audit the artifact for assumptions that could change the answer.\nFocus on material issues, rank them by impact, and avoid exhaustive commentary.\n\nReturn: assumption, why it matters, confidence, how to verify, what changes if false.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -1826,6 +1837,84 @@ globalThis.SITE_DATA = {
       "family": "",
       "group": "",
       "sourcePath": "prompts/blocks/guardrail.assumption-audit/prompt.md"
+    },
+    {
+      "section": "Block",
+      "canonicalType": "guardrail",
+      "blockType": "guardrail",
+      "form": "compact",
+      "sourceKind": "Prompt Block",
+      "stage": "critique",
+      "strength": "medium",
+      "contract": {
+        "purpose": "Surface concrete ethical risks, affected parties, and second-order harms before a decision, design, policy, or recommendation is accepted.",
+        "useWhen": "The work could change access, incentives, safety, autonomy, privacy, fairness, trust, or downstream behavior for people or communities.",
+        "expects": "A proposed decision, design, policy, product change, content plan, model behavior, or operational process.",
+        "adds": "A stakeholder-centered harm check that separates direct harms, second-order effects, distributional tradeoffs, mitigations, and residual risk.",
+        "returns": [
+          "affected parties",
+          "potential harm",
+          "mechanism of harm",
+          "who benefits and who bears cost",
+          "mitigation or alternative",
+          "residual risk",
+          "decision implication"
+        ],
+        "pairsWith": [
+          "frame.stakeholders",
+          "mode.critique",
+          "guardrail.assumption-audit",
+          "guardrail.disconfirming-evidence",
+          "schema.findings-brief"
+        ],
+        "avoidWhen": "The task has no plausible effect on people, access, rights, incentives, safety, privacy, or trust."
+      },
+      "key": "guardrail.ethical-impact",
+      "aliases": [
+        "core.guardrail.ethical-impact",
+        "core.guardrail-ethical-impact"
+      ],
+      "title": "guardrail.ethical-impact",
+      "summary": "Surface concrete ethical risks, affected parties, and second-order harms before a decision, design, policy, or recommendation is accepted.",
+      "tags": [
+        "guardrail",
+        "ethical",
+        "impact"
+      ],
+      "copy": "Check the artifact for concrete ethical impact.\nFocus on affected parties, mechanisms of harm, distributional tradeoffs, mitigations, and residual risk. Avoid generic concern lists.\n\nReturn: affected parties, potential harm, mechanism of harm, who benefits, who bears cost, mitigation or alternative, residual risk, decision implication.\n\n---\nartifact: {artifact}",
+      "body": [
+        [
+          "Purpose",
+          "Surface concrete ethical risks, affected parties, and second-order harms before a decision, design, policy, or recommendation is accepted."
+        ],
+        [
+          "Use when",
+          "The work could change access, incentives, safety, autonomy, privacy, fairness, trust, or downstream behavior for people or communities."
+        ],
+        [
+          "Expects",
+          "A proposed decision, design, policy, product change, content plan, model behavior, or operational process."
+        ],
+        [
+          "Adds",
+          "A stakeholder-centered harm check that separates direct harms, second-order effects, distributional tradeoffs, mitigations, and residual risk."
+        ],
+        [
+          "Returns",
+          "affected parties, potential harm, mechanism of harm, who benefits and who bears cost, mitigation or alternative, residual risk, decision implication"
+        ],
+        [
+          "Pairs with",
+          "frame.stakeholders, mode.critique, guardrail.assumption-audit, guardrail.disconfirming-evidence, schema.findings-brief"
+        ],
+        [
+          "Avoid when",
+          "The task has no plausible effect on people, access, rights, incentives, safety, privacy, or trust."
+        ]
+      ],
+      "family": "",
+      "group": "",
+      "sourcePath": "prompts/blocks/guardrail.ethical-impact/prompt.md"
     },
     {
       "section": "Block",
@@ -1868,7 +1957,7 @@ globalThis.SITE_DATA = {
         "option",
         "map"
       ],
-      "copy": "Render viable paths as an option map.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: options, when each fits, assumptions, risks, evidence needed, recommendation if ready.\n\n---\ncontext: {context}",
+      "copy": "Render viable paths as an option map.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: options, when each fits, assumptions, risks, evidence needed, recommendation if ready.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -1946,7 +2035,7 @@ globalThis.SITE_DATA = {
         "requirements",
         "brief"
       ],
-      "copy": "Render the direction as requirements.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: user need, required behavior, acceptance criteria, constraints, non-goals, open questions.\n\n---\ncontext: {context}",
+      "copy": "Render the direction as requirements.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: user need, required behavior, acceptance criteria, constraints, non-goals, open questions.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2021,7 +2110,7 @@ globalThis.SITE_DATA = {
         "decision",
         "memo"
       ],
-      "copy": "Render the choice as a decision memo.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: decision, rationale, tradeoffs, risks, confidence, next action.\n\n---\ncontext: {context}",
+      "copy": "Render the choice as a decision memo.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: decision, rationale, tradeoffs, risks, confidence, next action.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2098,7 +2187,7 @@ globalThis.SITE_DATA = {
         "execution",
         "brief"
       ],
-      "copy": "Render the result as an execution brief.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: objective, owner if relevant, ordered steps, dependencies, blockers, risks, first checkpoint, pause trigger, next action.\n\n---\ncontext: {context}",
+      "copy": "Render the result as an execution brief.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: objective, owner if relevant, ordered steps, dependencies, blockers, risks, first checkpoint, pause trigger, next action.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2177,7 +2266,7 @@ globalThis.SITE_DATA = {
         "rollout",
         "plan"
       ],
-      "copy": "Render the change as a rollout plan.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: phases, audience actions, communications, monitoring, risks, rollback trigger, owner.\n\n---\ncontext: {context}",
+      "copy": "Render the change as a rollout plan.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: phases, audience actions, communications, monitoring, risks, rollback trigger, owner.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2252,7 +2341,7 @@ globalThis.SITE_DATA = {
         "findings",
         "brief"
       ],
-      "copy": "Render the analysis as ranked findings.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: finding, evidence, impact, recommendation, confidence, open question.\n\n---\ncontext: {context}",
+      "copy": "Render the analysis as ranked findings.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: finding, evidence, impact, recommendation, confidence, open question.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2329,7 +2418,7 @@ globalThis.SITE_DATA = {
         "experiment",
         "plan"
       ],
-      "copy": "Render the hypothesis as an experiment plan.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: hypothesis, method, metric, sample or scope, confounds, decision rule, next step.\n\n---\ncontext: {context}",
+      "copy": "Render the hypothesis as an experiment plan.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: hypothesis, method, metric, sample or scope, confounds, decision rule, next step.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2404,7 +2493,7 @@ globalThis.SITE_DATA = {
         "content",
         "draft"
       ],
-      "copy": "Render the material as audience-fit prose.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: title or subject, opening point, draft, takeaway, call to action if needed, revision notes.\n\n---\ncontext: {context}",
+      "copy": "Render the material as audience-fit prose.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: title or subject, opening point, draft, takeaway, call to action if needed, revision notes.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2481,7 +2570,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "playbook"
       ],
-      "copy": "Render the work as a reusable playbook.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: trigger, inputs, steps, decision rules, examples, escalation path.\n\n---\ncontext: {context}",
+      "copy": "Render the work as a reusable playbook.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: trigger, inputs, steps, decision rules, examples, escalation path.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2556,7 +2645,7 @@ globalThis.SITE_DATA = {
       "tags": [
         "spec"
       ],
-      "copy": "Render the result as a prompt spec.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: final prompt, intent, inputs, constraints, output shape, tests, limitations.\n\n---\ncontext: {context}",
+      "copy": "Render the result as a prompt spec.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: final prompt, intent, inputs, constraints, output shape, tests, limitations.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2631,7 +2720,7 @@ globalThis.SITE_DATA = {
         "cause",
         "mapping"
       ],
-      "copy": "Map the visible symptom back to the most likely systemic cause.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: symptom, causal chain, branches, earliest intervention point, likely root cause.\n\n---\ncontext: {context}",
+      "copy": "Map the visible symptom back to the most likely systemic cause.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: symptom, causal chain, branches, earliest intervention point, likely root cause.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2705,7 +2794,7 @@ globalThis.SITE_DATA = {
         "extract",
         "insights"
       ],
-      "copy": "Extract decision-useful insights from the source material.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: key patterns, strongest evidence, tensions, implications, open questions.\n\n---\ncontext: {context}",
+      "copy": "Extract decision-useful insights from the source material.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: key patterns, strongest evidence, tensions, implications, open questions.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2781,7 +2870,7 @@ globalThis.SITE_DATA = {
         "frame",
         "compare"
       ],
-      "copy": "Compare prompt variants against the intended task and constraints.\nKeep only decision-useful detail; do not invent missing context.\n\nReturn: best fit, strengths, weaknesses, missing instructions, risky ambiguity, recommended revision.\n\n---\ncontext: {context}",
+      "copy": "Compare prompt variants against the intended task and constraints.\nKeep only decision-useful detail; mark missing facts as unknown instead of inventing context.\n\nReturn: best fit, strengths, weaknesses, missing instructions, risky ambiguity, recommended revision.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2853,7 +2942,7 @@ globalThis.SITE_DATA = {
         "bounded",
         "recursion"
       ],
-      "copy": "Keep this recursive or iterative work bounded. Stop at max depth, max iterations, or the exit criterion.\nFocus on material issues, not exhaustive commentary.\n\nReturn: current depth or iteration, stopping reason, final state.\n\n---\ndepth: {depth}\niterations: {iterations}\nexit: {exit}",
+      "copy": "Keep this recursive or iterative work bounded. Stop at max depth, max iterations, or the exit criterion.\nFocus on material issues, rank them by impact, and avoid exhaustive commentary.\n\nReturn: current depth or iteration, stopping reason, final state.\n\n---\ndepth: {depth}\niterations: {iterations}\nexit: {exit}",
       "body": [
         [
           "Purpose",
@@ -2925,7 +3014,7 @@ globalThis.SITE_DATA = {
         "branch",
         "prune"
       ],
-      "copy": "Generate distinct branches, then prune weak ones against explicit criteria.\nStop when remaining branches are meaningfully different and usable.\n\nReturn: candidate branches, kept branches, pruned branches with rationale.\n\n---\ncontext: {context}",
+      "copy": "Generate distinct branches, then prune weak ones against explicit criteria.\nStop when remaining branches are meaningfully different, usable, and worth further work.\n\nReturn: candidate branches, kept branches, pruned branches with rationale, winning branch if ready.\n\n---\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -2996,7 +3085,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "decompose"
       ],
-      "copy": "Decompose until each leaf is actionable or the exit criterion is met.\nStop when further splitting would add process instead of clarity.\n\nReturn: decomposition tree, current depth, leaf tasks or stop point.\n\n---\ndepth: {depth}\nexit: {exit}\ncontext: {context}",
+      "copy": "Decompose until each leaf is actionable or the exit criterion is met.\nStop when further splitting would add process instead of clarity; preserve dependencies between leaves.\n\nReturn: decomposition tree, current depth, leaf tasks, dependencies, stop point.\n\n---\ndepth: {depth}\nexit: {exit}\ncontext: {context}",
       "body": [
         [
           "Purpose",
@@ -3067,7 +3156,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "evaluate"
       ],
-      "copy": "Evaluate this branch or draft before another recursive step.\nJudge only against the stated goal or criteria.\n\nReturn: passes, gaps, continue/prune/stop decision.\n\n---\nartifact: {artifact}",
+      "copy": "Evaluate this branch or draft before another recursive step.\nJudge only against the stated goal or criteria; do not reward unrelated polish.\n\nReturn: pass/fail by criterion, material gaps, continue/prune/stop decision, next bounded step if continuing.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -3137,7 +3226,7 @@ globalThis.SITE_DATA = {
         "recurse",
         "refine"
       ],
-      "copy": "Refine only what closes the latest evaluation gaps.\nPreserve what already works; avoid unrelated rewrites.\n\nReturn: revised output, gaps addressed, remaining gaps.\n\n---\nartifact: {artifact}",
+      "copy": "Refine only what closes the latest evaluation gaps.\nPreserve what already works; avoid unrelated rewrites or style churn.\n\nReturn: revised output, gaps addressed, remaining gaps, next evaluation checkpoint.\n\n---\nartifact: {artifact}",
       "body": [
         [
           "Purpose",
@@ -3211,7 +3300,7 @@ globalThis.SITE_DATA = {
         "incident",
         "postmortem"
       ],
-      "copy": "Render the incident as a blameless postmortem.\nKeep it concise, concrete, and directly usable; omit process notes.\n\nReturn: timeline, primary cause, contributing factors, what worked, action items, prevention measure.\n\n---\ncontext: {context}\nimpact: {impact}\nduration: {duration}",
+      "copy": "Render the incident as a blameless postmortem.\nUse terse labeled sections; keep it concrete and directly usable; omit process notes. Mark unknowns explicitly.\n\nReturn: timeline, primary cause, contributing factors, what worked, action items, prevention measure.\n\n---\ncontext: {context}\nimpact: {impact}\nduration: {duration}",
       "body": [
         [
           "Purpose",
@@ -3255,7 +3344,8 @@ globalThis.SITE_DATA = {
       "stage": "decide",
       "strength": "light",
       "contract": {
-        "useWhen": "## Purpose",
+        "purpose": "Verify that a decision is explicit, traceable, and ready to commit.",
+        "useWhen": "After a decision draft or option comparison, before writing the decision memo or communicating the choice.",
         "returns": [
           "Is the actual choice explicit?",
           "Are the criteria visible?",
@@ -3270,17 +3360,21 @@ globalThis.SITE_DATA = {
         "rubric.decision-quality"
       ],
       "title": "rubric.decision-quality",
-      "summary": "## Purpose.",
+      "summary": "Verify that a decision is explicit, traceable, and ready to commit.",
       "tags": [
         "rubric",
         "decision",
         "quality"
       ],
-      "copy": "rubric.decision-quality\n\n## Purpose\n\n- Is the actual choice explicit?\n- Are the criteria visible?\n- Are tradeoffs named rather than hidden?\n- Is uncertainty acknowledged?\n- Is there a concrete next action?\n- Would future-you understand why this decision was made?",
+      "copy": "Evaluate this decision against the quality checklist.\n\nFor each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:\n\n- Is the actual choice explicit?\n- Are the criteria visible?\n- Are tradeoffs named rather than hidden?\n- Is uncertainty acknowledged?\n- Is there a concrete next action?\n- Would a future reviewer understand why this decision was made?\n\nReturn:\n- per-criterion verdicts with evidence\n- overall verdict: ready / needs revision\n- highest-leverage fix if revision is needed\n\n---\nartifact: {artifact}",
       "body": [
         [
+          "Purpose",
+          "Verify that a decision is explicit, traceable, and ready to commit."
+        ],
+        [
           "Use when",
-          "## Purpose"
+          "After a decision draft or option comparison, before writing the decision memo or communicating the choice."
         ],
         [
           "Questions",
@@ -3289,7 +3383,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/blocks/rubric.decision-quality/README.md"
+      "sourcePath": "prompts/blocks/rubric.decision-quality/prompt.md"
     },
     {
       "section": "Block",
@@ -3300,7 +3394,8 @@ globalThis.SITE_DATA = {
       "stage": "critique",
       "strength": "medium",
       "contract": {
-        "useWhen": "## Purpose",
+        "purpose": "Check whether an argument is structurally sound and ready to present or defend.",
+        "useWhen": "After drafting a position, argument, or persuasive piece where the underlying logic needs vetting.",
         "returns": [
           "Is the core claim stated in one sentence?",
           "Is the evidence proportionate to the strength of the claim?",
@@ -3315,17 +3410,21 @@ globalThis.SITE_DATA = {
         "rubric.argument-quality"
       ],
       "title": "rubric.argument-quality",
-      "summary": "## Purpose.",
+      "summary": "Check whether an argument is structurally sound and ready to present or defend.",
       "tags": [
         "rubric",
         "argument",
         "quality"
       ],
-      "copy": "rubric.argument-quality\n\n## Purpose\n\n- Is the core claim stated in one sentence?\n- Is the evidence proportionate to the strength of the claim?\n- Are the key premises visible?\n- Is the strongest objection acknowledged and addressed?\n- Does the conclusion actually follow from the argument?\n- Is anything being asserted that should be proven?",
+      "copy": "Evaluate this argument against the quality checklist.\n\nFor each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:\n\n- Is the core claim stated in one sentence?\n- Is the evidence proportionate to the strength of the claim?\n- Are the key premises visible?\n- Is the strongest objection acknowledged and addressed?\n- Does the conclusion actually follow from the argument?\n- Is anything being asserted that should be proven?\n\nReturn:\n- per-criterion verdicts with evidence\n- overall verdict: sound / needs revision\n- highest-leverage fix if revision is needed\n\n---\nartifact: {artifact}",
       "body": [
         [
+          "Purpose",
+          "Check whether an argument is structurally sound and ready to present or defend."
+        ],
+        [
           "Use when",
-          "## Purpose"
+          "After drafting a position, argument, or persuasive piece where the underlying logic needs vetting."
         ],
         [
           "Questions",
@@ -3334,7 +3433,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/blocks/rubric.argument-quality/README.md"
+      "sourcePath": "prompts/blocks/rubric.argument-quality/prompt.md"
     },
     {
       "section": "Block",
@@ -3345,7 +3444,8 @@ globalThis.SITE_DATA = {
       "stage": "refine",
       "strength": "light",
       "contract": {
-        "useWhen": "## Purpose",
+        "purpose": "Confirm that a plan is concrete, sequenced, and executable before committing to it.",
+        "useWhen": "After a plan is drafted, before execution begins or before writing the execution brief.",
         "returns": [
           "Are the steps ordered clearly?",
           "Are dependencies visible?",
@@ -3360,17 +3460,21 @@ globalThis.SITE_DATA = {
         "rubric.plan-quality"
       ],
       "title": "rubric.plan-quality",
-      "summary": "## Purpose.",
+      "summary": "Confirm that a plan is concrete, sequenced, and executable before committing to it.",
       "tags": [
         "rubric",
         "plan",
         "quality"
       ],
-      "copy": "rubric.plan-quality\n\n## Purpose\n\n- Are the steps ordered clearly?\n- Are dependencies visible?\n- Are likely blockers named?\n- Is the first action concrete enough to do now?\n- Does the plan avoid unnecessary complexity?\n- Is there a checkpoint after early execution?",
+      "copy": "Evaluate this plan against the quality checklist.\n\nFor each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:\n\n- Are the steps ordered clearly?\n- Are dependencies visible?\n- Are likely blockers named?\n- Is the first action concrete enough to do now?\n- Does the plan avoid unnecessary complexity?\n- Is there a checkpoint after early execution?\n\nReturn:\n- per-criterion verdicts with evidence\n- overall verdict: ready / needs revision\n- highest-leverage fix if revision is needed\n\n---\nartifact: {artifact}",
       "body": [
         [
+          "Purpose",
+          "Confirm that a plan is concrete, sequenced, and executable before committing to it."
+        ],
+        [
           "Use when",
-          "## Purpose"
+          "After a plan is drafted, before execution begins or before writing the execution brief."
         ],
         [
           "Questions",
@@ -3379,7 +3483,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/blocks/rubric.plan-quality/README.md"
+      "sourcePath": "prompts/blocks/rubric.plan-quality/prompt.md"
     },
     {
       "section": "Block",
@@ -3390,7 +3494,8 @@ globalThis.SITE_DATA = {
       "stage": "critique",
       "strength": "medium",
       "contract": {
-        "useWhen": "## Purpose",
+        "purpose": "Check whether an interface, workflow, feature, document, or process is easy enough for its intended user to complete the job.",
+        "useWhen": "After drafting a product flow, tool, documentation path, onboarding sequence, or operational workflow where user friction is the main risk.",
         "returns": [
           "Is the user's job and starting context explicit?",
           "Is the first action obvious?",
@@ -3405,17 +3510,21 @@ globalThis.SITE_DATA = {
         "rubric.usability-quality"
       ],
       "title": "rubric.usability-quality",
-      "summary": "## Purpose.",
+      "summary": "Check whether an interface, workflow, feature, document, or process is easy enough for its intended user to complete the job.",
       "tags": [
         "rubric",
         "usability",
         "quality"
       ],
-      "copy": "rubric.usability-quality\n\n## Purpose\n\n- Is the user's job and starting context explicit?\n- Is the first action obvious?\n- Can the user tell what state they are in?\n- Are errors, empty states, or edge cases handled?\n- Does the flow avoid unnecessary steps or choices?\n- Is success visible to the user when the job is complete?",
+      "copy": "Evaluate this experience or workflow against the usability checklist.\n\nFor each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:\n\n- Is the user's job and starting context explicit?\n- Is the first action obvious?\n- Can the user tell what state they are in?\n- Are errors, empty states, or edge cases handled?\n- Does the flow avoid unnecessary steps or choices?\n- Is success visible to the user when the job is complete?\n\nReturn:\n- per-criterion verdicts with evidence\n- overall verdict: usable / needs revision\n- highest-leverage fix if revision is needed\n\n---\nartifact: {artifact}",
       "body": [
         [
+          "Purpose",
+          "Check whether an interface, workflow, feature, document, or process is easy enough for its intended user to complete the job."
+        ],
+        [
           "Use when",
-          "## Purpose"
+          "After drafting a product flow, tool, documentation path, onboarding sequence, or operational workflow where user friction is the main risk."
         ],
         [
           "Questions",
@@ -3424,7 +3533,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/blocks/rubric.usability-quality/README.md"
+      "sourcePath": "prompts/blocks/rubric.usability-quality/prompt.md"
     },
     {
       "section": "Block",
@@ -3435,7 +3544,8 @@ globalThis.SITE_DATA = {
       "stage": "analyze",
       "strength": "medium",
       "contract": {
-        "useWhen": "## Purpose",
+        "purpose": "Validate that a research pass or investigation method was rigorous enough to trust before relying on its findings.",
+        "useWhen": "After gathering evidence or running an investigation, before treating the process as sound enough to support a decision.",
         "returns": [
           "Is the question scoped clearly enough to investigate or test?",
           "Are the sources, tests, or methods capable of answering that question?",
@@ -3450,17 +3560,21 @@ globalThis.SITE_DATA = {
         "rubric.research-method"
       ],
       "title": "rubric.research-method",
-      "summary": "## Purpose.",
+      "summary": "Validate that a research pass or investigation method was rigorous enough to trust before relying on its findings.",
       "tags": [
         "rubric",
         "research",
         "method"
       ],
-      "copy": "rubric.research-method\n\n## Purpose\n\n- Is the question scoped clearly enough to investigate or test?\n- Are the sources, tests, or methods capable of answering that question?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are confounds, blind spots, or sampling limits named explicitly?\n- Are the strongest counter-arguments represented fairly?\n- Could another reviewer audit how the conclusion was reached?",
+      "copy": "Evaluate how this research or investigation was conducted.\n\nFor each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:\n\n- Is the question scoped clearly enough to investigate or test?\n- Are the sources, tests, or methods capable of answering that question?\n- Has disconfirming evidence been actively sought, not just noted when encountered?\n- Are confounds, blind spots, or sampling limits named explicitly?\n- Are the strongest counter-arguments represented fairly?\n- Could another reviewer audit how the conclusion was reached?\n\nReturn:\n- per-criterion verdicts with evidence\n- overall verdict: ready / needs revision\n- highest-leverage fix if revision is needed\n\n---\nartifact: {artifact}",
       "body": [
         [
+          "Purpose",
+          "Validate that a research pass or investigation method was rigorous enough to trust before relying on its findings."
+        ],
+        [
           "Use when",
-          "## Purpose"
+          "After gathering evidence or running an investigation, before treating the process as sound enough to support a decision."
         ],
         [
           "Questions",
@@ -3469,7 +3583,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/blocks/rubric.research-method/README.md"
+      "sourcePath": "prompts/blocks/rubric.research-method/prompt.md"
     },
     {
       "section": "Block",
@@ -3480,7 +3594,8 @@ globalThis.SITE_DATA = {
       "stage": "analyze",
       "strength": "medium",
       "contract": {
-        "useWhen": "## Purpose",
+        "purpose": "Validate that a research artifact says only what the evidence supports and is clear enough to use in a decision.",
+        "useWhen": "After an investigation has produced findings, before using that output to decide, brief, or write.",
         "returns": [
           "Is the question being answered actually the question that matters for the decision?",
           "Are the key claims clearly tied to evidence rather than asserted?",
@@ -3495,17 +3610,21 @@ globalThis.SITE_DATA = {
         "rubric.research-quality"
       ],
       "title": "rubric.research-quality",
-      "summary": "## Purpose.",
+      "summary": "Validate that a research artifact says only what the evidence supports and is clear enough to use in a decision.",
       "tags": [
         "rubric",
         "research",
         "quality"
       ],
-      "copy": "rubric.research-quality\n\n## Purpose\n\n- Is the question being answered actually the question that matters for the decision?\n- Are the key claims clearly tied to evidence rather than asserted?\n- Are the conclusions limited to what the evidence actually supports?\n- Is the confidence level on each key claim explicit?\n- Are decision-relevant implications separated from speculation or open questions?\n- Would a skeptical reader understand what is known, inferred, and still unresolved?",
+      "copy": "Evaluate this research output against the quality checklist.\n\nFor each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:\n\n- Is the question being answered actually the question that matters for the decision?\n- Are the key claims clearly tied to evidence rather than asserted?\n- Are the conclusions limited to what the evidence actually supports?\n- Is the confidence level on each key claim explicit?\n- Are decision-relevant implications separated from speculation or open questions?\n- Would a skeptical reader understand what is known, inferred, and still unresolved?\n\nReturn:\n- per-criterion verdicts with evidence\n- overall verdict: ready / needs revision\n- highest-leverage fix if revision is needed\n\n---\nartifact: {artifact}",
       "body": [
         [
+          "Purpose",
+          "Validate that a research artifact says only what the evidence supports and is clear enough to use in a decision."
+        ],
+        [
           "Use when",
-          "## Purpose"
+          "After an investigation has produced findings, before using that output to decide, brief, or write."
         ],
         [
           "Questions",
@@ -3514,7 +3633,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/blocks/rubric.research-quality/README.md"
+      "sourcePath": "prompts/blocks/rubric.research-quality/prompt.md"
     },
     {
       "section": "Block",
@@ -3525,7 +3644,8 @@ globalThis.SITE_DATA = {
       "stage": "refine",
       "strength": "light",
       "contract": {
-        "useWhen": "## Purpose",
+        "purpose": "Check whether a written piece is clear, tight, and ready to send.",
+        "useWhen": "After drafting or rewriting, before sharing, publishing, or sending.",
         "returns": [
           "Is the main point clear early?",
           "Is anything redundant?",
@@ -3540,17 +3660,21 @@ globalThis.SITE_DATA = {
         "rubric.writing-quality"
       ],
       "title": "rubric.writing-quality",
-      "summary": "## Purpose.",
+      "summary": "Check whether a written piece is clear, tight, and ready to send.",
       "tags": [
         "rubric",
         "writing",
         "quality"
       ],
-      "copy": "rubric.writing-quality\n\n## Purpose\n\n- Is the main point clear early?\n- Is anything redundant?\n- Are claims stronger than the evidence supports?\n- Is the structure easy to follow?\n- Does each paragraph earn its place?\n- Is the next action or takeaway obvious?",
+      "copy": "Evaluate this writing against the quality checklist.\n\nFor each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:\n\n- Is the main point clear early?\n- Is anything redundant?\n- Are claims stronger than the evidence supports?\n- Is the structure easy to follow?\n- Does each paragraph earn its place?\n- Is the next action or takeaway obvious?\n\nReturn:\n- per-criterion verdicts with evidence\n- overall verdict: ready / needs revision\n- highest-leverage fix if revision is needed\n\n---\nartifact: {artifact}",
       "body": [
         [
+          "Purpose",
+          "Check whether a written piece is clear, tight, and ready to send."
+        ],
+        [
           "Use when",
-          "## Purpose"
+          "After drafting or rewriting, before sharing, publishing, or sending."
         ],
         [
           "Questions",
@@ -3559,7 +3683,7 @@ globalThis.SITE_DATA = {
       ],
       "family": "",
       "group": "",
-      "sourcePath": "prompts/blocks/rubric.writing-quality/README.md"
+      "sourcePath": "prompts/blocks/rubric.writing-quality/prompt.md"
     }
   ],
   "stacks": [
@@ -6900,16 +7024,17 @@ globalThis.SITE_DATA = {
         "useWhen": "Identify ethical risks, second-order harms, and structural tradeoffs before committing to a decision or design.",
         "minimumBlocks": [
           "mode.critique",
-          "guardrail.disconfirming-evidence",
+          "guardrail.ethical-impact",
           "schema.findings-brief"
         ],
         "fullSequence": [
           "`mode.critique`",
-          "`guardrail.disconfirming-evidence`",
+          "`guardrail.ethical-impact`",
           "`schema.findings-brief`"
         ],
         "optionalBlocks": [
           "`frame.task` when scope or non-goals need to be made explicit.",
+          "`guardrail.disconfirming-evidence` when confirmation bias is a material risk.",
           "`strategy.premortem` when failure paths should be surfaced before committing."
         ],
         "blockOrderRationale": "",
@@ -6919,7 +7044,7 @@ globalThis.SITE_DATA = {
       },
       "io": {},
       "composition": {
-        "phaseOrder": "mode:critique -> guardrail:disconfirming-evidence -> schema:findings-brief",
+        "phaseOrder": "mode:critique -> guardrail:ethical-impact -> schema:findings-brief",
         "primaryMode": "mode.critique",
         "modeRefs": [
           "mode.critique"
@@ -6946,7 +7071,7 @@ globalThis.SITE_DATA = {
         ],
         [
           "Composition profile",
-          "mode:critique -> guardrail:disconfirming-evidence -> schema:findings-brief"
+          "mode:critique -> guardrail:ethical-impact -> schema:findings-brief"
         ],
         [
           "Stage",
@@ -6966,15 +7091,15 @@ globalThis.SITE_DATA = {
         ],
         [
           "Minimum blocks",
-          "mode.critique, guardrail.disconfirming-evidence, schema.findings-brief"
+          "mode.critique, guardrail.ethical-impact, schema.findings-brief"
         ],
         [
           "Suggested blocks",
-          "`mode.critique` -> `guardrail.disconfirming-evidence` -> `schema.findings-brief`"
+          "`mode.critique` -> `guardrail.ethical-impact` -> `schema.findings-brief`"
         ],
         [
           "Optional add-ons",
-          "`frame.task` when scope or non-goals need to be made explicit., `strategy.premortem` when failure paths should be surfaced before committing."
+          "`frame.task` when scope or non-goals need to be made explicit., `guardrail.disconfirming-evidence` when confirmation bias is a material risk., `strategy.premortem` when failure paths should be surfaced before committing."
         ],
         [
           "Common failure mode",

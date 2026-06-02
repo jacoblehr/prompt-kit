@@ -109,8 +109,11 @@ When assembling blocks into a prompt, use this sequence as the default:
 4. **Guardrail** — prevent the failure modes most likely for this task
 5. **Schema** — define the output shape after reasoning instructions are set
 6. **Rubric** — add evaluation criteria only when self-checking is needed
+7. **Overlay** — optionally add domain or lens context from `domains/`
 
 See `docs/COMPOSITION.md` for the full composition rules.
+
+Domain and lens overlays are stored in `domains/`. They are not surfaced block types; they add subject-matter checks to an assembled prompt without changing the canonical block taxonomy.
 
 ---
 

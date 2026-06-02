@@ -55,6 +55,7 @@ npx prompt-kit stats
 4. **Add guardrails** for likely failure modes
 5. **Add a schema** if output format matters
 6. **Add a rubric** if stakes justify evaluation
+7. **Add an overlay** from `domains/` if subject matter changes the checks
 
 ## Example Workflows
 

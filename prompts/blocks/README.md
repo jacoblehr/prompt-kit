@@ -12,6 +12,7 @@ Good blocks do one narrow job, such as:
 - formatting a prompt spec
 - bounding scope
 - auditing assumptions
+- checking ethical impact
 - forcing disconfirming evidence
 - standardizing an execution brief
 

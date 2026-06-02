@@ -2,7 +2,7 @@
 
 Evaluate how this research or investigation was conducted.
 
-For each criterion below, answer yes, partial, or no — and state the evidence in one sentence:
+For each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:
 
 - Is the question scoped clearly enough to investigate or test?
 - Are the sources, tests, or methods capable of answering that question?
@@ -12,6 +12,7 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Could another reviewer audit how the conclusion was reached?
 
 Return:
+- per-criterion verdicts with evidence
 - overall verdict: ready / needs revision
 - highest-leverage fix if revision is needed
 

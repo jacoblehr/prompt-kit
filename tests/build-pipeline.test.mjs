@@ -81,6 +81,28 @@ describe('block contract completeness', () => {
   })
 })
 
+describe('domain overlay contract completeness', () => {
+  test('domain and lens overlays are copyable prompt overlays', () => {
+    const files = execSync("find domains -maxdepth 1 -type f -name '*.md' ! -name README.md | sort", {
+      cwd: ROOT,
+      encoding: 'utf8'
+    }).trim().split('\n').filter(Boolean)
+
+    assert.equal(files.length, 12)
+
+    const failures = []
+    for (const file of files) {
+      const content = readFileSync(path.join(ROOT, file), 'utf8')
+      if (!/^# (Domain|Lens): /m.test(content)) failures.push(`${file}: missing overlay heading`)
+      for (const required of ['## Use when', '## Adds', '## Watch for', '```text', 'Return:']) {
+        if (!content.includes(required)) failures.push(`${file}: missing ${required}`)
+      }
+    }
+
+    assert.deepEqual(failures, [])
+  })
+})
+
 // ---------------------------------------------------------------------------
 // 3. Stack ref integrity
 // ---------------------------------------------------------------------------

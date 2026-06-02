@@ -38,9 +38,9 @@ The inputs are still too raw to compare or the task requires faithful summarizat
 - the combined answer is clear enough to brief, decide, write, or act on
 
 ```text
-Synthesize the inputs into one coherent view.
+For the supplied inputs, synthesize them into one coherent view.
 Preserve meaningful disagreement instead of smoothing it away.
-Name the throughline, the unresolved tensions, and what the synthesis implies next.
+Return the throughline, ranked insights, unresolved tensions, implications, and the next use for the synthesis.
 ```
 
 ---

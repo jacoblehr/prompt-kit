@@ -38,8 +38,8 @@ The task already has a committed direction and the job is pressure-testing or ex
 - the next question is evaluative rather than exploratory
 
 ```text
-Survey the space before you narrow it.
-Map plausible directions, unknowns, and what to inspect next.
+For the supplied problem, survey the space before you narrow it.
+Return plausible directions, key unknowns, discriminating evidence, and the next question to inspect.
 Do not choose yet unless the prompt explicitly asks you to close.
 ```
 

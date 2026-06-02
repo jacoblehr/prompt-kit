@@ -36,8 +36,8 @@ There is only one viable option or the options are not yet concrete enough to co
 - name the tradeoff that makes the choice hard
 
 ```text
-Compare the viable options across the criteria that would actually change the choice.
-Show where each option wins, loses, and depends on an assumption.
+For the supplied option set, compare the viable options across the criteria that would actually change the choice.
+Return where each option wins, loses, and depends on an assumption.
 Name dominated options, the hardest tradeoff, and the next evidence needed if the choice is not yet ready.
 ```
 

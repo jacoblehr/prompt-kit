@@ -23,7 +23,7 @@ describe('catalog build API', () => {
   test('buildCatalog returns generated data plus diagnostics without writing', () => {
     const catalog = buildCatalog({ root: ROOT })
 
-    assert.equal(catalog.blocks.length, 51)
+    assert.equal(catalog.blocks.length, 52)
     assert.equal(catalog.stacks.length, 48)
     assert.equal(catalog.featuredStacks.length, 10)
     assert.equal(catalog.diagnostics.blockCount, catalog.blocks.length)
@@ -107,6 +107,19 @@ describe('prompt utilities', () => {
     assert.equal(analysis.estimatedTokens, estimateTokens('Think carefully about this vague thing and make it better.'))
     assert.ok(analysis.hints.some((hint) => hint.type === 'vague'))
     assert.ok(analysis.hints.some((hint) => hint.type === 'format'))
+  })
+
+  test('prompt analysis recognizes returns sections and ignores code refs for wording checks', () => {
+    const analysis = analyzePrompt('Evaluate the draft. Returns: verdict and next action.')
+
+    assert.equal(analysis.hints.some((hint) => hint.type === 'format'), false)
+
+    const refOnly = analyzePrompt('Use `improve-prompt` with `improve-prompt` before `improve-prompt`.')
+    assert.equal(refOnly.hints.some((hint) => hint.type === 'vague'), false)
+    assert.equal(refOnly.hints.some((hint) => hint.type === 'repetition'), false)
+
+    const repeated = analyzePrompt('Return results. risk signal risk signal risk signal risk signal risk signal.')
+    assert.equal(repeated.hints.some((hint) => hint.type === 'repetition'), true)
   })
 })
 

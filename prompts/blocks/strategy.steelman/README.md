@@ -33,8 +33,8 @@ The task is simple error-checking and does not require representing the opposing
 - then compare or challenge it on the strongest grounds
 
 ```text
-State the strongest serious version of the position first.
-Make clear why a reasonable person would hold it before you compare or challenge it.
+For the supplied position, state the strongest serious version first.
+Return why a reasonable person would hold it, the conditions that make it compelling, and the strongest fair challenge.
 ```
 
 ---

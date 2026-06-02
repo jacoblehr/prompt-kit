@@ -29,7 +29,7 @@ Follow the canonical decision rules in [docs/ONTOLOGY.md](./ONTOLOGY.md).
 2. Block types clarify role — they do not multiply ontology layers.
 3. Mode blocks are reasoning stances, not writing styles.
 4. Strategy blocks are methods of thought, not personalities.
-5. Lens blocks are conceptual frames, not task completions.
+5. Domain and lens overlays add subject-matter checks, not personas.
 6. Guardrail blocks target a specific failure mode — they are not decoration.
 7. Schema blocks define output shape — they come after reasoning instructions.
 8. Structured outputs beat eloquent vagueness.

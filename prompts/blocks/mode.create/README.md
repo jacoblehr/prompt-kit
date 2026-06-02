@@ -38,9 +38,9 @@ The task already has a committed artifact and the main job is evaluation, verifi
 - there is at least one promising direction concrete enough to refine or evaluate
 
 ```text
-Create several meaningfully different directions before choosing one.
+For the supplied task, create 3-5 meaningfully different directions before choosing one.
 Keep the objective, audience, and constraints visible while drafting.
-Select the strongest direction and explain why it is the best fit.
+Return the candidate directions, the strongest direction, why it fits, risks to preserve, and the next refinement move.
 ```
 
 ---

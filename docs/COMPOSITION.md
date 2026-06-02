@@ -14,6 +14,7 @@ When building a one-shot prompt from blocks, follow this sequence:
 5. Guardrail  → prevent the failure modes most likely here
 6. Schema     → define the output shape
 7. Rubric     → add evaluation criteria (optional)
+8. Overlay    → add domain or lens context when subject matter changes the checks
 ```
 
 Why this order works:
@@ -24,6 +25,7 @@ Why this order works:
 - Guardrail arrives after reasoning is set — it constrains without blocking.
 - Schema comes late so the prompt reads like a task before it reads like a form.
 - Rubric is optional. Add it when the task needs explicit self-checking.
+- Domain and lens overlays are optional context. Add them only when they change what evidence, risks, or vocabulary should be inspected.
 
 ---
 
@@ -121,6 +123,25 @@ If two blocks are doing the same job, one should go.
 
 Test: remove one block. If the prompt changes meaningfully, keep it. If nothing important is lost, drop it.
 
+### Rule 6: overlays add subject-matter checks, not personas
+
+Use overlays for domain vocabulary, evidence needs, review triggers, and failure modes. Do not use them to add decorative authority such as "act as an expert."
+
+Recommended limits:
+
+- 1 domain overlay for the task's primary subject area
+- 1 lens overlay for a cross-cutting concern such as accessibility, privacy, security, legal risk, or pedagogy
+- more only for high-stakes review, and only when each overlay changes the answer
+
+Examples:
+
+```
+feature-design + domains/product.md + domains/accessibility.md
+research + domains/data.md + domains/privacy.md
+review-code + domains/code.md + domains/security-abuse.md
+build-system-prompt + domains/prompts.md + domains/legal-risk.md
+```
+
 ### Selection guide: guardrails
 
 | Need | Reach for | Why |
@@ -177,6 +198,27 @@ Not every task needs a full stack. Often two or three blocks are enough, and sav
 | Experimental options  | `mode.create` + `strategy.constraint-relaxation` + `schema.option-map` |
 | Counterfactual plan   | `strategy.scenario-planning` + `guardrail.uncertainty` + `schema.option-map` |
 | Missing-piece critique | `mode.critique` + `guardrail.assumption-audit` + `schema.findings-brief` |
+
+---
+
+## Domain And Lens Overlays
+
+Overlays live in `domains/`. They are context-only additions, not block types. Paste one after the assembled stack when subject matter changes the quality bar.
+
+| Need | Overlay |
+| --- | --- |
+| Software correctness, contracts, implementation risk | `domains/code.md` |
+| Data quality, measurement, experiments, research claims | `domains/data.md` |
+| Product adoption, user jobs, prioritization | `domains/product.md` |
+| Prompt quality, agent behavior, instruction conflicts | `domains/prompts.md` |
+| Writing, editing, stakeholder communication | `domains/writing.md` |
+| Process, handoffs, service delivery, operational recurrence | `domains/operations.md` |
+| Budgets, forecasts, unit economics, investment tradeoffs | `domains/finance.md` |
+| Inclusive interaction and assistive technology barriers | `domains/accessibility.md` |
+| Personal data, consent, retention, inference, misuse | `domains/privacy.md` |
+| Legal exposure and qualified-review triggers | `domains/legal-risk.md` |
+| Learning objectives, practice, feedback, assessment | `domains/pedagogy.md` |
+| Threat paths, abuse, trust boundaries, mitigations | `domains/security-abuse.md` |
 
 ---
 

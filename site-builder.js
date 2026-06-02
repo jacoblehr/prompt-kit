@@ -549,7 +549,7 @@ function renderLivePrompt() {
 // The linter surfaces common issues; the pattern strip shows what is present.
 
 const LINTER_VAGUE = /\b(improve|vague|enhance|optimize|better|good|things like|etc\.|something like|sort of|kind of|more effective|more useful)\b/gi;
-const LINTER_OUTPUT = /\b(return|output|format|respond with|give me a list|in json|in markdown|as a table|as bullets?|as numbered|structure your)\b/i;
+const LINTER_OUTPUT = /\b(returns?|outputs?|expected output|output format|format|respond with|give me a list|in json|in markdown|as a table|as bullets?|as numbered|structure your)\b/i;
 const LINTER_ROLE = /\b(act as|you are (?:a|an)|as (?:a|an) (?:senior|expert|experienced)|your role is|imagine you are|you're (?:a|an))\b/i;
 const LINTER_TASK = /\b(analyze|summarize|write|create|identify|find|explain|evaluate|review|generate|compare|describe|list|draft|assess|outline)\b/i;
 const LINTER_CONSTRAINT = /\b(don'?t|do not|never|always|must|limit to?|avoid(?!ance)|only (?!if)|without|no more than|keep it|restrict|exclude|at most)\b/i;
@@ -560,9 +560,10 @@ function analyzePrompt(text) {
 
   const hints = [];
   const wordCount = text.trim().split(/\s+/).length;
+  const signalText = text.replace(/`[^`]*`/g, " ");
 
   // Vague language — require 2+ hits to reduce noise on legitimate uses
-  const vagueHits = text.match(LINTER_VAGUE) || [];
+  const vagueHits = signalText.match(LINTER_VAGUE) || [];
   if (vagueHits.length >= 2) {
     hints.push({ type: "vague", text: "Vague language detected — be specific about what you want." });
   }
@@ -577,14 +578,16 @@ function analyzePrompt(text) {
     hints.push({ type: "length", text: `Long prompt (~${wordCount} words) — cut anything redundant.` });
   }
 
-  // Repetition: 2-grams appearing 3+ times
-  const tokens = text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
+  // Repetition: meaningful 2-grams appearing several times
+  const repetitionSkipWords = new Set(["a", "an", "and", "for", "if", "in", "of", "or", "the", "to", "when", "with"]);
+  const tokens = signalText.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(Boolean);
   const grams = new Map();
   for (let i = 0; i < tokens.length - 1; i++) {
     const gram = `${tokens[i]} ${tokens[i + 1]}`;
+    if (repetitionSkipWords.has(tokens[i]) || repetitionSkipWords.has(tokens[i + 1])) continue;
     if (gram.length >= 7) grams.set(gram, (grams.get(gram) || 0) + 1);
   }
-  if ([...grams.values()].some((c) => c >= 4)) {
+  if ([...grams.values()].some((c) => c >= 5)) {
     hints.push({ type: "repetition", text: "Repeated phrases found — check for redundancy." });
   }
 

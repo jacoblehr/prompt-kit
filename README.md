@@ -50,6 +50,7 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 | `safe-migration` | Risk-managed schema or API migration |
 | `review-code` | Correctness, contracts, and blast-radius review |
 | `negative-space-critique` | Find what an artifact omits, avoids, or silently assumes |
+| `ethical-review` | Identify concrete harms, affected parties, and mitigation tradeoffs |
 | `usability-review` | Evaluate whether a workflow or interface lets users complete the job |
 | `turn-notes-into-draft` | Convert messy source material into an audience-fit draft |
 | `creative-brief` | Shape a creative request into usable concept direction |
@@ -63,6 +64,8 @@ You copy a block or stack into your prompt, fill in your context, and get a stru
 1. `frame.task` or `frame.success-criteria` — Define the target and boundary
 2. one `mode`, `strategy`, or targeted `guardrail` — Add the reasoning move that matters here
 3. one `schema` or `rubric` — Shape the output or quality check
+
+Add one file from `domains/` when subject matter changes the vocabulary, evidence needs, or failure modes. For example: `domains/code.md`, `domains/product.md`, `domains/accessibility.md`, `domains/privacy.md`, or `domains/security-abuse.md`.
 
 Saved stacks follow the same bias: the `Blocks` list is the concise default to copy, roughly 100-150 words on average, while `Optional add-ons` names deeper checks for higher-stakes or more ambiguous work.
 
@@ -110,6 +113,7 @@ Saved stacks follow the same bias: the `Blocks` list is the concise default to c
 | List blocks       | `npx prompt-kit list blocks`              |
 | List stacks       | `npx prompt-kit list stacks`              |
 | Show stats        | `npx prompt-kit stats`                    |
+| Add domain context | paste a file from `domains/` after a stack |
 | Validate assets   | `npm run validate`                        |
 | Build site data   | `npm run build`                           |
 

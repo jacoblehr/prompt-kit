@@ -39,9 +39,9 @@ The task is not sequential, actor-centered, or experience-dependent.
 - name where feedback, recovery, or next action is unclear
 
 ```text
-Map the journey from the actor's point of view.
-For each step, state what they are trying to do, what they see or know, where friction appears, and what feedback or recovery path is missing.
-Prioritize the moments that most affect task completion.
+For the supplied workflow or experience, map the journey from the actor's point of view.
+For each step, return the actor's goal, visible state, decision, friction, missing feedback or recovery path, and improvement opportunity.
+Prioritize the moments that most affect completion.
 ```
 
 ---

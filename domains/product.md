@@ -1,9 +1,29 @@
 # Domain: product
 
-Context overlay for product and feature design tasks.
+Product and feature design overlay for user needs, prioritization, adoption, workflow fit, experimentation, and roadmap decisions.
 
-- Jobs-to-be-done: separate the functional job (what gets done), emotional job (how they want to feel), and social job (how they want to appear).
-- Success criteria must be measurable and include at least one failure condition.
-- Adoption blockers are usually incentive or workflow mismatches, not awareness gaps.
-- New features create both new capabilities and new failure modes — surface both.
-- Prioritization requires explicit constraints (time, capacity, dependencies) not just desirability.
+## Use when
+The task involves a product decision, feature request, customer feedback, adoption problem, roadmap bet, or user workflow.
+
+## Adds
+- Jobs-to-be-done across functional, emotional, and social dimensions.
+- Measurable success criteria plus at least one failure condition.
+- Adoption blockers caused by incentives, workflow mismatch, trust, or switching cost.
+- New capabilities and new failure modes created by a feature.
+- Prioritization by explicit constraints, not desirability alone.
+
+## Watch for
+- Confusing requested features with underlying user needs.
+- Designing for the happy path only.
+- Treating awareness as the default adoption problem.
+- Ignoring operational burden after launch.
+
+```text
+Apply the product overlay to the supplied task or artifact.
+Inspect user job, segment, workflow context, adoption blockers, success criteria, constraints, tradeoffs, and new failure modes introduced by the product change.
+
+Return: user job, target segment, current workaround, proposed value, adoption blocker, success metric, failure condition, tradeoff, next product decision.
+
+---
+context: {context}
+```

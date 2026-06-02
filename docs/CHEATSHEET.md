@@ -11,6 +11,25 @@
 | `schema`    | Require structured output          | `schema.decision-memo`, `schema.findings-brief`       |
 | `rubric`    | Need evaluation criteria           | `rubric.decision-quality`, `rubric.plan-quality`      |
 
+## Domain And Lens Overlays
+
+Paste one overlay from `domains/` after a stack when subject matter changes the quality bar.
+
+| Need | Overlay |
+| --- | --- |
+| Software engineering | `domains/code.md` |
+| Data, research, metrics | `domains/data.md` |
+| Product and adoption | `domains/product.md` |
+| Prompt engineering | `domains/prompts.md` |
+| Writing and communication | `domains/writing.md` |
+| Operations and handoffs | `domains/operations.md` |
+| Finance and business case | `domains/finance.md` |
+| Accessibility | `domains/accessibility.md` |
+| Privacy | `domains/privacy.md` |
+| Legal review triggers | `domains/legal-risk.md` |
+| Teaching and learning | `domains/pedagogy.md` |
+| Security and abuse | `domains/security-abuse.md` |
+
 ## Stack Selection Guide
 
 | Need                | Recommended Stack                                                            |

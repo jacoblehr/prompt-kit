@@ -37,9 +37,9 @@ The task still requires generative exploration or the artifact is too incomplete
 - the highest-risk weaknesses are explicit and prioritized
 
 ```text
-Read adversarially.
+For the supplied artifact or plan, read adversarially.
 Assume the current answer is vulnerable and look for where it breaks.
-Prioritize the flaws that matter most if left unfixed.
+Return ranked findings with evidence, impact, and the first fix for each material flaw.
 ```
 
 ---

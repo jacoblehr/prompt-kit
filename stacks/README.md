@@ -22,9 +22,9 @@ See [docs/COMPOSITION.md](../docs/COMPOSITION.md) for the full composition rules
 
 ## Example starting points
 
-Good first stacks when you want an existing recipe instead of composing from zero.
+Strong first stacks when you want an existing recipe instead of composing from zero.
 
-- `frame-problem` for vague or underframed requests
+- `frame-problem` for ambiguous or underframed requests
 - `decide` for high-stakes option selection
 - `explore-or-exploit` for choosing whether to keep searching or commit
 - `prioritize-portfolio` for ranking competing bets under capacity constraints
@@ -43,7 +43,7 @@ Good first stacks when you want an existing recipe instead of composing from zer
 - `rollout-plan` for staging change with adoption, monitoring, and rollback explicit
 - `agentic-coding` for autonomous repo changes with discovery, bounded implementation, verification, and handoff
 - `test-strategy` for deciding the smallest useful risk-based test plan
-- `refactor-plan` for behavior-preserving structural improvements
+- `refactor-plan` for behavior-preserving structural changes
 - `api-contract-design` for API contracts with consumers, errors, compatibility, and validation explicit
 - `safe-migration` for risky system or API changes
 
@@ -54,6 +54,7 @@ Use these when the job needs a stronger critique or a more explicit execution sh
 - `review-code`
 - `agentic-coding`
 - `negative-space-critique`
+- `ethical-review`
 - `test-strategy`
 - `refactor-plan`
 - `api-contract-design`
@@ -68,7 +69,7 @@ Use these when the job needs a stronger critique or a more explicit execution sh
 
 ## Variant note
 
-`debug` now carries the former performance-fix path as a documented variant. Use the shorter debug sequence when the bottleneck is already scoped and the main job is ranking optimization work.
+`debug` now carries the former performance-fix path as a documented variant. Use the shorter debug sequence when the bottleneck is already scoped and the main job is ranking performance work.
 
 ## Pattern note
 
@@ -78,16 +79,27 @@ Use these when the job needs a stronger critique or a more explicit execution sh
 
 ## Domain overlays worth pairing
 
-Use domain overlays only when the task benefits from extra vocabulary or failure modes:
+Use domain and lens overlays only when the task benefits from extra vocabulary, evidence needs, review triggers, or failure modes:
 
 - `agentic-coding`, `implement-change`, `review-code`, `debug`, `test-strategy`, `refactor-plan`, `api-contract-design`, `safe-migration`, `security-threat-model` -> `domains/code.md`
 - `feature-design`, `ship-feature` -> `domains/product.md`
 - `rollout-plan`, `usability-review`, `weird-prototype` -> `domains/product.md`
 - `experiment-design`, `counterfactual-roadmap`, `customer-insight-synthesis`, `requirements-from-feedback` -> `domains/product.md` or `domains/data.md`
 - `assumption-inversion`, `negative-space-critique` -> use whichever domain overlay matches the artifact under review
+- `ethical-review` -> use whichever domain overlay matches the decision, design, or policy under review
 - `build-system-prompt`, `improve-prompt` -> `domains/prompts.md`
 - `research`, `hypothesis-test` -> `domains/data.md`
 - `align-stakeholders`, `develop-position`, `make-playbook`, `negotiate`, `turn-notes-into-draft`, `creative-brief` -> `domains/writing.md`
+
+Cross-cutting lens overlays:
+
+- use `domains/accessibility.md` when access, assistive technology, plain language, or inclusive interaction matters
+- use `domains/privacy.md` when personal data, consent, retention, inference, or disclosure matters
+- use `domains/legal-risk.md` when the output may need compliance, contract, policy, IP, employment, or qualified legal review
+- use `domains/security-abuse.md` when adversarial misuse, trust boundaries, permissions, fraud, or safety bypasses matter
+- use `domains/pedagogy.md` when the output must teach, assess, coach, or help someone practice
+- use `domains/operations.md` when the work depends on handoffs, staffing, queues, service levels, escalation, or recurrence prevention
+- use `domains/finance.md` when costs, budgets, forecasts, unit economics, runway, or investment tradeoffs matter
 
 ## Stack quality bar
 

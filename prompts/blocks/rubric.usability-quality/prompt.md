@@ -2,7 +2,7 @@
 
 Evaluate this experience or workflow against the usability checklist.
 
-For each criterion below, answer yes, partial, or no — and state the evidence in one sentence:
+For each criterion below, answer yes, partial, or no — and state the evidence in one sentence. Treat missing evidence as no:
 
 - Is the user's job and starting context explicit?
 - Is the first action obvious?
@@ -12,6 +12,7 @@ For each criterion below, answer yes, partial, or no — and state the evidence 
 - Is success visible to the user when the job is complete?
 
 Return:
+- per-criterion verdicts with evidence
 - overall verdict: usable / needs revision
 - highest-leverage fix if revision is needed
 

@@ -40,10 +40,9 @@ Constraints are legal, safety-critical, contractual, or already validated as non
 - preserve constraints whose removal creates unacceptable risk
 
 ```text
-List the explicit and implied constraints on this problem.
-Classify each as hard, flexible, unknown, or self-imposed.
-For the flexible or self-imposed constraints, show what simpler path appears if it is relaxed and what risk that creates.
-Recommend the smallest relaxation that meaningfully improves the solution.
+For the supplied problem or plan, list the explicit and implied constraints.
+Classify each as hard, flexible, unknown, or inherited.
+Return the constraint inventory, the simpler path created by relaxing a non-hard limit, the risk created, and the smallest relaxation worth trying.
 ```
 
 ---

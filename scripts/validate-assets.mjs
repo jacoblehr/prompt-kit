@@ -18,6 +18,10 @@ async function validate() {
   const stacksFile = path.join(rootDir, 'stacks')
   await validateStacks(stacksFile, errors, warnings)
 
+  // Validate domain and lens overlays
+  const domainsDir = path.join(rootDir, 'domains')
+  await validateDomains(domainsDir, errors, warnings)
+
   // Validate build output
   const siteData = path.join(rootDir, 'site-data.js')
   await validateSiteData(siteData, errors, warnings)
@@ -93,6 +97,29 @@ async function validateStacks(dir, _errors, warnings) {
     }
     if (!content.includes('**Minimum blocks:**')) {
       warnings.push(`Stack "${file}" missing minimum blocks`)
+    }
+  }
+}
+
+async function validateDomains(dir, errors, _warnings) {
+  const items = await readdir(dir)
+
+  for (const file of items) {
+    if (!file.endsWith('.md')) continue
+    if (file === 'README.md') continue
+
+    const filePath = path.join(dir, file)
+    const content = await readFile(filePath, 'utf-8')
+
+    const required = ['## Use when', '## Adds', '## Watch for', '```text', 'Return:']
+    for (const section of required) {
+      if (!content.includes(section)) {
+        errors.push(`Domain overlay "${file}" missing required content: ${section}`)
+      }
+    }
+
+    if (!/^# (Domain|Lens): /m.test(content)) {
+      errors.push(`Domain overlay "${file}" must start with "# Domain:" or "# Lens:"`)
     }
   }
 }
